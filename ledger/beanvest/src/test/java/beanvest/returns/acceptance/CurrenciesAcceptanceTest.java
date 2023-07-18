@@ -9,22 +9,6 @@ public class CurrenciesAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
-    void irrelevantPricesAreAllowedAnywhere() {
-        dsl.runCalculateReturns("""
-                account trading
-                currency GBP
-                                
-                2021-01-01 deposit and buy 1 VLS for 100
-                                        
-                2021-01-21 price VLS 300 PLN
-                2021-01-21 price VLS 200 GBP
-                2021-01-21 price VLS 300 USD
-                """);
-
-        dsl.verifyAccountGain("trading", "TOTAL", "100");
-    }
-
-    @Test
     void cashStatsCanBeConverted() {
         dsl.setCurrency("GBP");
 
@@ -163,5 +147,21 @@ public class CurrenciesAcceptanceTest {
                 """);
 
         dsl.verifyAccountGain("trading", "TOTAL", "1");
+    }
+
+    @Test
+    void irrelevantPricesAreAllowedAnywhere() {
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-01 deposit and buy 1 VLS for 100
+                                        
+                2021-01-21 price VLS 300 PLN
+                2021-01-21 price VLS 200 GBP
+                2021-01-21 price VLS 300 USD
+                """);
+
+        dsl.verifyAccountGain("trading", "TOTAL", "100");
     }
 }
