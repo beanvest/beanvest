@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'bb.lib.jsonassert'
+version '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = "17"
+    targetCompatibility = "17"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation libs.jsonAssert
+    testImplementation libs.bundles.testing
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
