@@ -1,7 +1,6 @@
 package beanvest.returns.acceptance;
 
 import beanvest.returns.ReturnsDsl;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class LeveragedReturnsAcceptanceTest {
@@ -24,8 +23,8 @@ public class LeveragedReturnsAcceptanceTest {
                                 
                 2022-01-01 withdraw 100
                 """);
-        dsl.verifyXirr("saving", "TOTAL", "10");
-        dsl.verifyXirr(".*", "TOTAL", "20");
+        dsl.verifyXirrCumulative("saving", "TOTAL", "10");
+        dsl.verifyXirrCumulative(".*", "TOTAL", "20");
     }
 
     @Test
@@ -45,8 +44,8 @@ public class LeveragedReturnsAcceptanceTest {
                                 
                 2022-06-01 withdraw 100
                 """);
-        dsl.verifyXirr("saving", "TOTAL", "10");
-        dsl.verifyXirr(".*", "TOTAL", "14");
+        dsl.verifyXirrCumulative("saving", "TOTAL", "10");
+        dsl.verifyXirrCumulative(".*", "TOTAL", "14");
     }
 
     @Test
@@ -66,7 +65,7 @@ public class LeveragedReturnsAcceptanceTest {
                                 
                 2022-01-01 withdraw 200
                 """);
-        dsl.verifyXirr("saving", "TOTAL", "10");
-        dsl.verifyXirr(".*", "TOTAL", "30");
+        dsl.verifyXirrCumulative("saving", "TOTAL", "10");
+        dsl.verifyXirrCumulative(".*", "TOTAL", "30");
     }
 }

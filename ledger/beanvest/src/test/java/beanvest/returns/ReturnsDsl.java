@@ -2,11 +2,14 @@ package beanvest.returns;
 
 import beanvest.tradingjournal.AccountDto;
 import beanvest.tradingjournal.PortfolioStats;
+import beanvest.tradingjournal.Result;
+import beanvest.tradingjournal.Stat;
 import beanvest.tradingjournal.StatsWithDeltas;
 import bb.lib.testing.AppRunner;
 import bb.lib.testing.CliExecutionResult;
 import bb.lib.testing.AppRunnerFactory;
 import beanvest.BeanvestMain;
+import beanvest.tradingjournal.ValueStat;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.assertj.core.data.Offset;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -31,6 +35,7 @@ public class ReturnsDsl {
     public static final Gson GSON = builderWithProjectDefaults().create();
 
     public static final String TOTAL = "TOTAL";
+    public static final String DEFAULT_OFFSET = "0.05";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -210,39 +215,23 @@ public class ReturnsDsl {
     }
 
     public void verifyFeesTotal(String account, String period, String amount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.fees().stat())
-                .usingComparator(BigDecimal::compareTo)
-                .isEqualTo(new BigDecimal(amount));
+        verifyStat(account, period, amount, StatsWithDeltas::fees);
     }
 
     public void verifyRealizedGains(String account, String period, String amount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.realizedGain().stat())
-                .usingComparator(BigDecimal::compareTo)
-                .isEqualTo(new BigDecimal(amount));
+        verifyStat(account, period, amount, StatsWithDeltas::realizedGain);
     }
 
     public void verifyUnrealizedGains(String account, String period, String amount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.unrealizedGains().stat().getValue())
-                .usingComparator(BigDecimal::compareTo)
-                .isEqualTo(new BigDecimal(amount));
+        verifyValueStat(account, period, amount, StatsWithDeltas::unrealizedGains);
     }
 
     public void verifyDividends(String account, String period, String amount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.dividends().stat())
-                .usingComparator(BigDecimal::compareTo)
-                .isEqualTo(new BigDecimal(amount));
+        verifyStat(account, period, amount, StatsWithDeltas::dividends);
     }
 
     public void verifyCash(String account, String period, String amount) {
-        var accountResults = getAccountResults(account);
-        var result = accountResults.periodStats.get(period);
-        assertThat(result.cash().stat())
-                .usingComparator(BigDecimal::compareTo)
-                .isEqualTo(new BigDecimal(amount));
+        verifyStat(account, period, amount, StatsWithDeltas::cash);
     }
 
     public void setDeltas() {
@@ -254,25 +243,15 @@ public class ReturnsDsl {
     }
 
     public void verifyDeposits(String account, String period, String amount) {
-        var accountResults = getAccountResults(account);
-        var result = accountResults.periodStats.get(period);
-        assertThat(result.deposits().stat())
-                .usingComparator(BigDecimal::compareTo)
-                .isEqualTo(new BigDecimal(amount));
+        verifyStat(account, period, amount, StatsWithDeltas::deposits);
     }
 
     public void verifyWithdrawals(String account, String period, String amount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.withdrawals().stat())
-                .usingComparator(BigDecimal::compareTo)
-                .isEqualTo(new BigDecimal(amount));
+        verifyStat(account, period, amount, StatsWithDeltas::withdrawals);
     }
 
     public void verifyInterest(String account, String period, String amount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.interest().stat())
-                .usingComparator(BigDecimal::compareTo)
-                .isEqualTo(new BigDecimal(amount));
+        verifyStat(account, period, amount, StatsWithDeltas::interest);
     }
 
     public void setGroup() {
@@ -321,19 +300,15 @@ public class ReturnsDsl {
     }
 
     public ReturnsDsl verifyAccountGain(String account, String period, String amount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.accountGain().stat().getValue())
-                .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(amount), Offset.offset(new BigDecimal("0.05")));
+        verifyValueStat(account, period, amount, StatsWithDeltas::accountGain);
         return this;
     }
 
-    public void verifyXirr(String account, String period, String percent) {
-        var result = getAccountResults(account, period).get();
-        var actual = result.xirr().stat().getValue().multiply(new BigDecimal(100));
-        assertThat(actual)
-                .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(percent), Offset.offset(new BigDecimal("0.05")));
+    public void verifyXirrCumulative(String account, String period, String amount) {
+        verifyValueStat(account, period, amount, r -> {
+            var multiplied = r.xirr().stat().getValue().multiply(new BigDecimal(100));
+            return new ValueStat(Result.success(multiplied), Optional.empty());
+        });
     }
 
     private Optional<StatsWithDeltas> getAccountResults(String account, String period) {
@@ -383,15 +358,11 @@ public class ReturnsDsl {
     }
 
     public void verifyEndDateIsToday() {
-
+        // TODO
     }
 
     public void verifyValue(String account, String period, String amount) {
-        var accountResults = getAccountResults(account);
-        var result = accountResults.periodStats.get(period);
-        assertThat(result.accountValue().stat().getValue()) // TODO that should be total value i think, needs adding on backend
-                .usingComparator(BigDecimal::compareTo)
-                .isEqualTo(new BigDecimal(amount));
+        verifyValueStat(account, period, amount, StatsWithDeltas::accountValue);
     }
 
     public void setCliOutput() {
@@ -437,74 +408,71 @@ public class ReturnsDsl {
     }
 
     public void verifyCashDelta(String account, String period, String expected) {
-        var accountResults = getAccountResults(account);
-        var result = accountResults.periodStats.get(period);
-        assertThat(result.cash().delta().get())
-                .usingComparator(BigDecimal::compareTo)
-                .isEqualTo(new BigDecimal(expected));
+        verifyStatDelta(account, period, expected, r -> r.cash().delta());
     }
 
     public void verifyAccountGainDelta(String account, String period, String expectedAmount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.accountGain().delta().get())
-                .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal("0.05")));
+        verifyStatDelta(account, period, expectedAmount, r -> r.accountGain().delta());
     }
 
     public void verifyDepositsDelta(String account, String period, String expectedAmount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.deposits().delta().get())
-                .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal("0.05")));
+        verifyStatDelta(account, period, expectedAmount, r -> r.deposits().delta());
     }
 
     public void verifyWithdrawalsDelta(String account, String period, String expectedAmount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.withdrawals().delta().get())
-                .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal("0.05")));
+        verifyStatDelta(account, period, expectedAmount, r -> r.withdrawals().delta());
     }
 
     public void verifyDividendsDelta(String account, String period, String expectedAmount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.dividends().delta().get())
-                .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal("0.05")));
+        verifyStatDelta(account, period, expectedAmount, r -> r.dividends().delta());
     }
 
     public void verifyInterestDelta(String account, String period, String expectedAmount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.interest().delta().get())
-                .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal("0.05")));
+        verifyStatDelta(account, period, expectedAmount, r -> r.interest().delta());
     }
 
     public void verifyRealizedGainsDelta(String account, String period, String expectedAmount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.realizedGain().delta().get())
-                .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal("0.05")));
+        verifyStatDelta(account, period, expectedAmount, r -> r.realizedGain().delta());
     }
 
     public void verifyUnrealizedGainsDelta(String account, String period, String expectedAmount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.unrealizedGains().delta().get())
-                .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal("0.05")));
+        verifyStatDelta(account, period, expectedAmount, r -> r.unrealizedGains().delta());
     }
 
-    public void verifyValueDelta(String account, String period, String expectedAmount) {
-        var result = getAccountResults(account, period).get();
-        assertThat(result.accountValue().delta().get())
-                .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal("0.05")));
+    public void verifyAccountValueDelta(String account, String period, String expectedAmount) {
+        verifyStatDelta(account, period, expectedAmount, r -> r.accountValue().delta());
     }
 
     public void verifyFeesDelta(String account, String period, String expectedAmount) {
+        verifyStatDelta(account, period, expectedAmount, r -> r.fees().delta());
+    }
+
+    private void verifyStatDelta(String account, String period, String expectedAmount, Function<StatsWithDeltas, Optional<BigDecimal>> statExtractor) {
         var result = getAccountResults(account, period).get();
-        assertThat(result.fees().delta().get())
+        var actual = statExtractor.apply(result).get();
+        assertThat(actual)
                 .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal("0.05")));
+                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
+    }
+
+    private void verifyValueStat(String account, String period, String expectedAmount, Function<StatsWithDeltas, ValueStat> valueStatExtractor) {
+        var result = getAccountResults(account, period).get();
+        var value = valueStatExtractor.apply(result).stat().getValue();
+        assertThat(value)
+                .usingComparator(BigDecimal::compareTo)
+                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
+    }
+
+    private void verifyStat(String account, String period, String expectedAmount, Function<StatsWithDeltas, Stat> valueStatExtractor) {
+        var result = getAccountResults(account, period).get();
+        var value = valueStatExtractor.apply(result).stat();
+        assertThat(value)
+                .usingComparator(BigDecimal::compareTo)
+                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
+    }
+
+    public void verifyXirrPeriodic(String account, String period, String expectedAmount) {
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     static class CliOptions {

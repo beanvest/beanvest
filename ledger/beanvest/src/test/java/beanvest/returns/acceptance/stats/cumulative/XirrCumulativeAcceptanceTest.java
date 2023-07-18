@@ -1,7 +1,6 @@
 package beanvest.returns.acceptance.stats.cumulative;
 
 import beanvest.returns.ReturnsDsl;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class XirrCumulativeAcceptanceTest {
@@ -19,7 +18,7 @@ public class XirrCumulativeAcceptanceTest {
                 2022-12-31 price MSFT 550 GBP
                 """);
 
-        dsl.verifyXirr("pension", "TOTAL", "10");
+        dsl.verifyXirrCumulative("pension", "TOTAL", "10");
     }
 
     @Test
@@ -34,7 +33,7 @@ public class XirrCumulativeAcceptanceTest {
                 2023-01-01 price MSFT 550 GBP
                 """);
 
-        dsl.verifyXirr("pension", "TOTAL", "10");
+        dsl.verifyXirrCumulative("pension", "TOTAL", "10");
     }
 
     @Test
@@ -55,8 +54,8 @@ public class XirrCumulativeAcceptanceTest {
                 2021-12-31 price MSFT 550 GBP
                 """);
 
-        dsl.verifyXirr("smallerGain", "TOTAL", "10");
-        dsl.verifyXirr("biggerGain", "TOTAL", "0");
+        dsl.verifyXirrCumulative("smallerGain", "TOTAL", "10");
+        dsl.verifyXirrCumulative("biggerGain", "TOTAL", "0");
     }
 
     @Test
@@ -74,8 +73,8 @@ public class XirrCumulativeAcceptanceTest {
                 2021-12-15 withdraw 2020
                 """);
 
-        dsl.verifyXirr("savings", "2020", "2");
-        dsl.verifyXirr("savings", "2021", "1"); //averaged down after year of 0 interest
+        dsl.verifyXirrCumulative("savings", "2020", "2");
+        dsl.verifyXirrCumulative("savings", "2021", "1"); //averaged down after year of 0 interest
     }
 
     @Test
@@ -92,7 +91,7 @@ public class XirrCumulativeAcceptanceTest {
                 2020-02-01 withdraw 100
                 2021-12-30 withdraw 100""");
 
-        dsl.verifyXirr("savings", "2021", "0");
+        dsl.verifyXirrCumulative("savings", "2021", "0");
     }
 
     @Test
@@ -107,7 +106,7 @@ public class XirrCumulativeAcceptanceTest {
                 2023-01-01 price VLS 1.20 GBP
                 """);
 
-        dsl.verifyXirr("trading", "TOTAL", "9.5");
+        dsl.verifyXirrCumulative("trading", "TOTAL", "9.5");
     }
 
     @Test
@@ -122,7 +121,7 @@ public class XirrCumulativeAcceptanceTest {
                 2019-01-05 deposit 1000
                 """);
 
-        dsl.verifyXirr("savings", "TOTAL", "0");
+        dsl.verifyXirrCumulative("savings", "TOTAL", "0");
     }
 
     @Test
@@ -138,12 +137,12 @@ public class XirrCumulativeAcceptanceTest {
                 2022-12-31 price VLS 1.00 GBP
                 """);
 
-        dsl.verifyXirr("savings", "2021", "14");
-        dsl.verifyXirr("savings", "2022", "0");
+        dsl.verifyXirrCumulative("savings", "2021", "14");
+        dsl.verifyXirrCumulative("savings", "2022", "0");
     }
 
     @Test
-    void leveragedReturns() {
+    void xirrOnLeveragedReturns() {
         dsl.setYearly();
         dsl.setGroup();
         dsl.setEnd("2023-01-01");
@@ -160,7 +159,7 @@ public class XirrCumulativeAcceptanceTest {
                 2022-01-01 withdraw 100
                 """);
 
-        dsl.verifyXirr(".*", "2022", "200.9");
+        dsl.verifyXirrCumulative(".*", "2022", "200.9");
     }
 
     @Test
@@ -181,8 +180,8 @@ public class XirrCumulativeAcceptanceTest {
                 2022-01-01 withdraw 100
                 """);
 
-        dsl.verifyXirr("savings", "2022", "-25.1"); // lost 50 out of invested 200
-        dsl.verifyXirr(".*", "2022", "-50.1"); // lost 50 out of invested 100
+        dsl.verifyXirrCumulative("savings", "2022", "-25.1"); // lost 50 out of invested 200
+        dsl.verifyXirrCumulative(".*", "2022", "-50.1"); // lost 50 out of invested 100
     }
 
     @Test
@@ -203,7 +202,7 @@ public class XirrCumulativeAcceptanceTest {
                 2022-01-01 withdraw 100
                 """);
 
-        dsl.verifyXirr("savings", "2022", "-50.1");
-        dsl.verifyXirr(".*", "2022", "50.2"); // -50 is not used here. -25 is half of -50.
+        dsl.verifyXirrCumulative("savings", "2022", "-50.1");
+        dsl.verifyXirrCumulative(".*", "2022", "50.2"); // -50 is not used here. -25 is half of -50.
     }
 }

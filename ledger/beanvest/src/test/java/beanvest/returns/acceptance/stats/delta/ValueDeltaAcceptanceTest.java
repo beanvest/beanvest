@@ -1,7 +1,6 @@
 package beanvest.returns.acceptance.stats.delta;
 
 import beanvest.returns.ReturnsDsl;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class ValueDeltaAcceptanceTest {
@@ -21,7 +20,7 @@ public class ValueDeltaAcceptanceTest {
                 2022-12-31 price X 4
                 """);
 
-        dsl.verifyValueDelta("trading", "2021", "3");
-        dsl.verifyValueDelta("trading", "2022", "1");
+        dsl.verifyAccountValueDelta("trading", "2021", "3");
+        dsl.verifyAccountValueDelta("trading", "2022", "1");
     }
 }

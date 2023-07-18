@@ -1,7 +1,6 @@
 package beanvest.returns.acceptance;
 
 import beanvest.returns.ReturnsDsl;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class MultipleAccountsAcceptanceTest {
@@ -26,9 +25,9 @@ public class MultipleAccountsAcceptanceTest {
                 """);
 
         dsl.verifyAccountGain("pension", "TOTAL", "500")
-                .verifyXirr("pension", "TOTAL", "18.9");
+                .verifyXirrCumulative("pension", "TOTAL", "18.9");
         dsl.verifyAccountGain("isa", "TOTAL", "500")
-                .verifyXirr("isa", "TOTAL", "18.9");
+                .verifyXirrCumulative("isa", "TOTAL", "18.9");
     }
 
 
@@ -53,7 +52,7 @@ public class MultipleAccountsAcceptanceTest {
                 """);
 
         dsl.verifyAccountGain(".*", "TOTAL", "60")
-                .verifyXirr(".*", "TOTAL", "6.78");
+                .verifyXirrCumulative(".*", "TOTAL", "6.78");
     }
 
     @Test
