@@ -15,8 +15,6 @@ Application can be built to native binaries using GraalVM. Java 17 is minimum re
 
 ## Running it
 ```
-./ledger/beanvest/build/native/nativeCompile/beanvest returns
-./ledger/beanvest/build/native/nativeCompile/beanvest journal
-./ledger/beanvest/build/native/nativeCompile/beanvest export
-./ledger/beanvest/build/native/nativeCompile/beanvest import
+./ledger/beanvest/build/native/nativeCompile/beanvest journal sample/*
+./ledger/beanvest/build/native/nativeCompile/beanvest returns sample/* --group
 ```
