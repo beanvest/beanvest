@@ -1,0 +1,17 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: local
+    hooks:
+      - id: gradle-build
+        name: gradle build
+        language: system
+        entry: ./gradlew build
+        always_run: true
+        pass_filenames: false
+      - id: gradle-test
+        name: gradle test
+        language: system
+        entry: ./gradlew test
+        always_run: true
+        pass_filenames: false
