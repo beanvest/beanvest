@@ -14,7 +14,7 @@ public class JournalGenerator {
         var savings = new AccountJournalWriter("saving:savings");
         var regularSaver = new AccountJournalWriter("saving:regularSaver");
 
-        var start = LocalDate.parse("2023-01-01");
+        var start = LocalDate.parse("2022-01-01");
         var end = LocalDate.parse("2024-01-01");
 
         var generator = new AccountOperationGenerator(start, end, trading);
