@@ -1,6 +1,5 @@
-package beanvest.generator;
+package bb.scripts.generateexamples.journalgenerator;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 

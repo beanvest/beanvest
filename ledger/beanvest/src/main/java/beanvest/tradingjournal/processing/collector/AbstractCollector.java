@@ -16,13 +16,13 @@ public abstract class AbstractCollector implements Collector {
         var before = balance;
         actuallyProcess(entry);
         if (!before.equals(balance)) {
-            LOGGER.warn("collected: [%s] (%s -> %s) %s".formatted(this.getClass().getSimpleName(), before, balance, entry));
+//            LOGGER.warn("collected: [%s] (%s -> %s) %s".formatted(this.getClass().getSimpleName(), before, balance, entry));
         }
     }
     protected abstract void actuallyProcess(Entry entry);
 
     public BigDecimal balance() {
-        LOGGER.warn("collecting stats [%s] %s".formatted(this.getClass(), balance.toPlainString()));
+//        LOGGER.warn("collecting stats [%s] %s".formatted(this.getClass(), balance.toPlainString()));
         return balance;
     }
 }

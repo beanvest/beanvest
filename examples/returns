@@ -1,0 +1,2 @@
+Print various stats for all accounts and groups on each level of the accounts for whole period:./ledger/beanvest/build/native/nativeCompile/beanvest returns sample/* --group
+Print cumulative deposits and withdrawals for accounts and groups for each quarter:./ledger/beanvest/build/native/nativeCompile/beanvest returns sample/* --group --columns deps,wths --interval=quarter

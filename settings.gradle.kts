@@ -1,11 +1,11 @@
 rootProject.name = "bb"
 include(
         "ledger:beanvest",
-        "ledger:lib",
         "lib:clitable",
         "lib:jsonassert",
         "lib:testing",
         "lib:util",
+        "scripts",
 )
 dependencyResolutionManagement {
     versionCatalogs {

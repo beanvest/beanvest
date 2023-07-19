@@ -10,12 +10,12 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ledger" />
             <option value="$PROJECT_DIR$/ledger/beanvest" />
-            <option value="$PROJECT_DIR$/ledger/lib" />
             <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/lib/clitable" />
             <option value="$PROJECT_DIR$/lib/jsonassert" />
             <option value="$PROJECT_DIR$/lib/testing" />
             <option value="$PROJECT_DIR$/lib/util" />
+            <option value="$PROJECT_DIR$/scripts" />
           </set>
         </option>
       </GradleProjectSettings>

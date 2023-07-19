@@ -1,4 +1,4 @@
-package beanvest.generator;
+package bb.scripts.generateexamples.journalgenerator;
 
 import java.time.LocalDate;
 import java.time.Period;

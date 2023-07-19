@@ -6,7 +6,7 @@ public class JournalNotFoundException extends RuntimeException {
     public final Path journalPath;
 
     public JournalNotFoundException(Path journalPath) {
-        super("Journal `missingJournal` not found");
+        super("Journal `" + journalPath + "` not found");
         this.journalPath = journalPath;
     }
 

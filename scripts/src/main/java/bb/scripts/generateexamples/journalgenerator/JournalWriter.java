@@ -1,4 +1,4 @@
-package beanvest.generator;
+package bb.scripts.generateexamples.journalgenerator;
 
 import java.io.File;
 import java.io.IOException;

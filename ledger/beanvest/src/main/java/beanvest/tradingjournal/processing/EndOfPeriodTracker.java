@@ -36,12 +36,7 @@ public class EndOfPeriodTracker {
 
     private void finishCurrentPeriod() {
         var finishedPeriod = periods.get(currentPeriod);
-        LOGGER.warn("FINISHED PERIOD: " + finishedPeriod);
         currentPeriod++;
-        if (currentPeriod < periods.size()) {
-            var currentPeriod = periods.get(this.currentPeriod);
-            LOGGER.warn("NEW PERIOD: " + currentPeriod);
-        }
         finishedPeriodConsumer.accept(finishedPeriod);
     }
 }
