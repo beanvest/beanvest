@@ -4,9 +4,15 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-import static beanvest.generator.SimpleInstructionMonthlyGenerator.Operation.*;
+import static beanvest.generator.AccountOperationGenerator.Interval.*;
+import static beanvest.generator.AccountOperationGenerator.Operation.*;
 
+/**
+ * Generates sample journals
+ */
 public class JournalGeneratorMain {
+
+
     public static void main(String[] args) throws IOException {
         var journalGenerator = new JournalGeneratorMain();
         var journalWriter = new JournalWriter();
@@ -20,17 +26,21 @@ public class JournalGeneratorMain {
         var savings = new AccountJournalWriter("saving:savings");
         var regularSaver = new AccountJournalWriter("saving:regularSaver");
 
-        var depositGenerator = new SimpleInstructionMonthlyGenerator(LocalDate.parse("2023-01-01"), LocalDate.parse("2024-01-01"));
+        var start = LocalDate.parse("2023-01-01");
+        var end = LocalDate.parse("2024-01-01");
 
-        depositGenerator.generate(trading, "930", DEPOSIT);
-        depositGenerator.generate(trading, "10", FEE);
+        var generator = new AccountOperationGenerator(start, end, trading);
+        generator.generate("930", DEPOSIT, MONTHLY);
+        generator.generate("10", FEE, QUARTERLY);
 
-        depositGenerator.generate(savings, "180", DEPOSIT);
-        depositGenerator.generate(savings, "20", WITHDRAW);
-        depositGenerator.generate(savings, "10", INTEREST);
+        generator = new AccountOperationGenerator(start, end, savings);
+        generator.generate("180", DEPOSIT, MONTHLY);
+        generator.generate("20", WITHDRAW, QUARTERLY);
+        generator.generate("10", INTEREST, MONTHLY);
 
-        depositGenerator.generate(regularSaver, "100", DEPOSIT);
-        depositGenerator.generate(regularSaver, "15", INTEREST);
+        generator = new AccountOperationGenerator(start, end, regularSaver);
+        generator.generate("100", DEPOSIT, MONTHLY);
+        generator.generate("15", INTEREST, MONTHLY);
         return List.of(savings, trading, regularSaver);
     }
 }

@@ -1,29 +1,39 @@
 package beanvest.generator;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountJournalWriter {
 
-    private final StringWriter stringWriter;
     private final String name;
+    private final List<String> lines = new ArrayList<>();
 
     public AccountJournalWriter(String name) {
         this.name = name;
-        stringWriter = new StringWriter();
-        addLine("account " + name);
-        addLine("currency GBP");
-        addLine("");
     }
 
     public void addLine(String line) {
-        stringWriter.append(line).append("\n");
+        lines.add(line);
     }
 
     public CharSequence getContent() {
-        return stringWriter.toString();
+        var content = new ArrayList<String>();
+        var header = createAccountHeader();
+        content.addAll(header);
+        content.addAll(lines.stream().sorted().toList());
+        return String.join("\n", content);
     }
 
     public String getName() {
         return name;
+    }
+
+    private List<String> createAccountHeader() {
+        var header = new ArrayList<String>();
+        header.add("account " + name);
+        header.add("currency GBP");
+        header.add("");
+        return header;
     }
 }
