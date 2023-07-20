@@ -1,4 +1,4 @@
-package bb.scripts.journalgenerator;
+package bb.scripts.generatesamplejournal;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -6,9 +6,9 @@ import java.time.Period;
 class AccountOperationGenerator {
     private final LocalDate startDate;
     private final LocalDate endDate;
-    private final AccountJournalWriter accountWriter;
+    private final AccountJournal accountWriter;
 
-    public AccountOperationGenerator(LocalDate startDate, LocalDate endDate, AccountJournalWriter accountWriter) {
+    public AccountOperationGenerator(LocalDate startDate, LocalDate endDate, AccountJournal accountWriter) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.accountWriter = accountWriter;

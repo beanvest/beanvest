@@ -3,14 +3,14 @@ package bb.lib.util;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.List;
-import java.util.Optional;
 
 public class CmdRunner {
     private final File cwd;
 
-    public CmdRunner() {
-        this.cwd = new File(System.getProperty("user.dir")); // use jdk's cwd
+    public CmdRunner(Path cwd) {
+        this.cwd = cwd.toAbsolutePath().toFile();
     }
 
     public CmdResult runSuccessfully(List<String> command) throws IOException, InterruptedException {

@@ -1,14 +1,14 @@
-package bb.scripts.journalgenerator;
+package bb.scripts.generatesamplejournal;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountJournalWriter {
+public class AccountJournal {
 
     private final String name;
     private final List<String> lines = new ArrayList<>();
 
-    public AccountJournalWriter(String name) {
+    public AccountJournal(String name) {
         this.name = name;
     }
 

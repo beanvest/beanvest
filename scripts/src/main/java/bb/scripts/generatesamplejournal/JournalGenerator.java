@@ -1,13 +1,13 @@
-package bb.scripts.journalgenerator;
+package bb.scripts.generatesamplejournal;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class JournalGenerator {
-    public List<AccountJournalWriter> generateJournals() {
-        var trading = new AccountJournalWriter("trading");
-        var savings = new AccountJournalWriter("saving:savings");
-        var regularSaver = new AccountJournalWriter("saving:regularSaver");
+    public List<AccountJournal> generateJournals() {
+        var trading = new AccountJournal("trading");
+        var savings = new AccountJournal("saving:savings");
+        var regularSaver = new AccountJournal("saving:regularSaver");
 
         var start = LocalDate.parse("2022-01-01");
         var end = LocalDate.parse("2024-01-01");

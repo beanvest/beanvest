@@ -1,6 +1,6 @@
-package bb.scripts.generateexamples;
+package bb.scripts.generateusagedoc;
 
-import bb.scripts.generateexamples.ExampleRunner.ExampleWithOutput;
+import bb.scripts.generateusagedoc.ExampleRunner.ExampleWithOutput;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UsageDocWriter {
-    private final String outputFile;
+    private final Path outputFile;
 
-    public UsageDocWriter(String outputFile) {
+    public UsageDocWriter(Path outputFile) {
 
         this.outputFile = outputFile;
     }
@@ -34,7 +34,7 @@ public class UsageDocWriter {
                                 example.example().description(),
                                 example.example().command(),
                                 indent(example.commandOutput(), 2))));
-        Files.writeString(Path.of(outputFile), stringBuffer);
+        Files.writeString(outputFile, stringBuffer);
     }
 
     private static String indent(String content, int spaces) {

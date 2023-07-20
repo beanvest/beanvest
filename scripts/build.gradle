@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     implementation(project(":lib:util"))
+    implementation(libs.bundles.logging)
 }
 
 test {
@@ -23,11 +24,19 @@ test {
     }
 }
 
-tasks.register('generateExamplesDoc', JavaExec) {
+tasks.register('generateUsageDoc', JavaExec) {
+    dependsOn("generateSampleJournal")
+    group = "Execution";
+    description = "Regenerates usage doc based on generated sample journals"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass =  "bb.scripts.GenerateUsageDocMain"
+    jvmArgs = ["-Dproject.dir=" + project.rootDir]
+}
+tasks.register('generateSampleJournal', JavaExec) {
     dependsOn(":ledger:beanvest:nativeCompile")
     group = "Execution";
-    description = "Run the main class with ExecTask"
+    description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath
-    mainClass =  "bb.scripts.GenerateExamplesMain"
-    jvmArgs = ["-Duser.dir=" + project.rootDir]
+    mainClass =  "bb.scripts.GenerateSampleJournalMain"
+    jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }

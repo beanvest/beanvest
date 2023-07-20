@@ -1,13 +1,14 @@
 package bb.scripts;
 
-import bb.scripts.generateexamples.ExampleRunner;
-import bb.scripts.generateexamples.ExampleRunner.Example;
-import bb.scripts.generateexamples.UsageDocWriter;
+import bb.scripts.generateusagedoc.ExampleRunner;
+import bb.scripts.generateusagedoc.ExampleRunner.Example;
+import bb.scripts.generateusagedoc.UsageDocWriter;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
-public class GenerateExamplesMain {
+public class GenerateUsageDocMain {
     private static final String BEANVEST_BIN = "ledger/beanvest/build/native/nativeCompile/beanvest";
     private static final List<Example> EXAMPLES = List.of(
             new Example(
@@ -22,14 +23,14 @@ public class GenerateExamplesMain {
     );
 
     public static void main(String[] args) throws IOException {
+        var projectDir = Path.of(System.getProperty("project.dir"));
         if (args.length == 0) {
             System.out.println("<OUTPUT_FILE> argument required");
             System.exit(1);
         }
-        var outputFile = args[0];
-
+        var outputFile = Path.of(projectDir + "/" + args[0]);
         var exampleDocWriter = new UsageDocWriter(outputFile);
-        var exampleRunner = new ExampleRunner();
+        var exampleRunner = new ExampleRunner(projectDir);
         var content = exampleRunner.generate(EXAMPLES);
         exampleDocWriter.writeDoc(content);
     }

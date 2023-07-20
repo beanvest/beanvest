@@ -24,6 +24,12 @@ repos:
       - id: generate-usage-doc
         name: generate usage doc
         language: system
-        entry: ./gradlew generateExamplesDoc --args="generated/usage.md"
+        entry: ./gradlew generateUsageDoc --args="generated/usage.md"
+        always_run: true
+        pass_filenames: false
+      - id: generate-sample-journal
+        name: generate sample journal doc
+        language: system
+        entry: ./gradlew generateSampleJournal
         always_run: true
         pass_filenames: false

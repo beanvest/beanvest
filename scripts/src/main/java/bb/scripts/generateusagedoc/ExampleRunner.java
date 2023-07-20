@@ -1,16 +1,18 @@
-package bb.scripts.generateexamples;
+package bb.scripts.generateusagedoc;
 
 import bb.lib.util.CmdRunner;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExampleRunner {
 
-    private final CmdRunner cmdRunner = new CmdRunner();
+    private final CmdRunner cmdRunner;
 
-    public ExampleRunner() {
+    public ExampleRunner(Path cwd) {
+        cmdRunner = new CmdRunner(cwd);
     }
 
     public List<ExampleWithOutput> generate(List<Example> examples) {
