@@ -14,5 +14,9 @@ Java 17 is minimum required. Application can be built to native binaries using G
 ```
 
 ## Running it
-
 See [usage examples](generated/usage.md).
+
+## Contributing
+To save you trouble fixing/reverting commits or going back to regenerate some files project uses
+[pre-commit](https://pre-commit.com/). Run `pre-commit init` to initialize git hooks that will run 
+everything that's needed when you commit any changes.  
