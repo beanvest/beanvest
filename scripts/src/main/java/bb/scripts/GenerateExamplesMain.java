@@ -1,7 +1,7 @@
 package bb.scripts;
 
+import bb.scripts.generateexamples.ExampleRunner;
 import bb.scripts.generateexamples.ExampleRunner.Example;
-import bb.scripts.generateexamples.GenerateExamples;
 import bb.scripts.generateexamples.UsageDocWriter;
 
 import java.io.IOException;
@@ -29,7 +29,8 @@ public class GenerateExamplesMain {
         var outputFile = args[0];
 
         var exampleDocWriter = new UsageDocWriter(outputFile);
-        var generateExamples = new GenerateExamples(exampleDocWriter);
-        generateExamples.run(EXAMPLES);
+        var exampleRunner = new ExampleRunner();
+        var content = exampleRunner.generate(EXAMPLES);
+        exampleDocWriter.writeDoc(content);
     }
 }

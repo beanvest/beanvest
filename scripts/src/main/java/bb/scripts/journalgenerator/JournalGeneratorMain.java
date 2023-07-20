@@ -1,4 +1,4 @@
-package bb.scripts.generateexamples.journalgenerator;
+package bb.scripts.journalgenerator;
 
 import java.io.IOException;
 

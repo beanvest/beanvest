@@ -1,4 +1,4 @@
-package bb.scripts.generateexamples.journalgenerator;
+package bb.scripts.journalgenerator;
 
 import java.time.LocalDate;
 import java.util.List;
