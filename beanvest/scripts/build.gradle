@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'bb.scripts'
+group 'beanvest.scripts'
 version '1.0-SNAPSHOT'
 java {
     sourceCompatibility = "17"
@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":lib:util"))
+    implementation(project(":beanvest:lib:util"))
     implementation(libs.bundles.logging)
 }
 
@@ -33,7 +33,7 @@ tasks.register('generateUsageDoc', JavaExec) {
     jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }
 tasks.register('generateSampleJournal', JavaExec) {
-    dependsOn(":ledger:beanvest:nativeCompile")
+    dependsOn(":beanvest:beanvest:nativeCompile")
     group = "Execution";
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath

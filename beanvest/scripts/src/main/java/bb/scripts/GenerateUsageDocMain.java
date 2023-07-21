@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class GenerateUsageDocMain {
-    private static final String BEANVEST_BIN = "ledger/beanvest/build/native/nativeCompile/beanvest";
+    private static final String BEANVEST_BIN = "beanvest/beanvest/build/native/nativeCompile/beanvest";
     private static final List<Example> EXAMPLES = List.of(
             new Example(
                     BEANVEST_BIN + " returns sample/* --group",

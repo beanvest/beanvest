@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'bb.lib.clitable'
+group 'beanvest.lib.clitable'
 version '1.0-SNAPSHOT'
 java {
     sourceCompatibility = "17"

@@ -2,7 +2,7 @@
 
 - Print various stats for all accounts and groups on each level of the accounts for whole period
   ```
-  ledger/beanvest/build/native/nativeCompile/beanvest returns sample/* --group
+  beanvest/beanvest/build/native/nativeCompile/beanvest returns sample/* --group
   ```
   ```
   account              opened      closed  deps    wths   div    intr   fees   rGain  cash    uGain  eVal   aGain  xirr
@@ -14,7 +14,7 @@
   ```
 - Print cumulative deposits and withdrawals for accounts and groups for each quarter
   ```
-  ledger/beanvest/build/native/nativeCompile/beanvest returns sample/* --group --columns deps,wths --interval=quarter
+  beanvest/beanvest/build/native/nativeCompile/beanvest returns sample/* --group --columns deps,wths --interval=quarter
   ```
   ```
                       ╷ 23q2          ╷ 23q1          ╷ 22q4          ╷ 22q3          ╷ 22q2         ╷ 22q1         ╷
@@ -27,7 +27,7 @@
   ```
 - Inspect journals with daily cumulative stats
   ```
-  ledger/beanvest/build/native/nativeCompile/beanvest journal sample/* | tail -n 20
+  beanvest/beanvest/build/native/nativeCompile/beanvest journal sample/* | tail -n 20
   ```
   ```
   2023-10-01 fee  10

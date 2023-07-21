@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'bb.lib.testing'
+group 'beanvest.lib.util'
 version '1.0-SNAPSHOT'
 java {
     sourceCompatibility = "17"
@@ -13,9 +13,8 @@ repositories {
 }
 
 dependencies {
-    implementation libs.bundles.logging
-    implementation libs.bundles.testing
-    implementation project(":lib:util")
+    implementation libs.gson
+    testImplementation libs.bundles.testing
 }
 
 test {

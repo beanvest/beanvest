@@ -3,7 +3,7 @@ plugins {
     id("org.graalvm.buildtools.native") version "0.9.23"
 }
 
-group = "beanvest"
+group = "beanvest.beanvest"
 version = "1.0-SNAPSHOT"
 
 java {
@@ -19,15 +19,15 @@ repositories {
 
 dependencies {
     implementation(libs.bundles.logging)
-    implementation(project(":lib:clitable"))
-    implementation(project(":lib:jsonassert"))
-    implementation(project(":lib:util"))
+    implementation(project(":beanvest:lib:clitable"))
+    implementation(project(":beanvest:lib:jsonassert"))
+    implementation(project(":beanvest:lib:util"))
     implementation(libs.picocli)
     implementation(libs.gson)
     implementation(libs.openCsv)
     implementation(libs.xirr)
 
-    testImplementation(project(":lib:testing"))
+    testImplementation(project(":beanvest:lib:testing"))
     testImplementation(libs.bundles.testing)
     testImplementation(libs.openCsv)
 }
