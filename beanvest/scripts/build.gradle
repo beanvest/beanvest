@@ -29,7 +29,7 @@ tasks.register('generateUsageDoc', JavaExec) {
     group = "Execution";
     description = "Regenerates usage doc based on generated sample journals"
     classpath = sourceSets.main.runtimeClasspath
-    mainClass =  "bb.scripts.GenerateUsageDocMain"
+    mainClass = "beanvest.scripts.GenerateUsageDocMain"
     jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }
 tasks.register('generateSampleJournal', JavaExec) {
@@ -37,6 +37,6 @@ tasks.register('generateSampleJournal', JavaExec) {
     group = "Execution";
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath
-    mainClass =  "bb.scripts.GenerateSampleJournalMain"
+    mainClass = "beanvest.scripts.GenerateSampleJournalMain"
     jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }

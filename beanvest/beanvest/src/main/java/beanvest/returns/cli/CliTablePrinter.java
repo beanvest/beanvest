@@ -1,10 +1,10 @@
 package beanvest.returns.cli;
 
-import beanvest.tradingjournal.Period;
-import beanvest.tradingjournal.PortfolioStats;
-import beanvest.tradingjournal.CollectionMode;
-import bb.lib.clitable.Column;
-import bb.lib.clitable.TableWriter;
+import beanvest.test.tradingjournal.Period;
+import beanvest.test.tradingjournal.PortfolioStats;
+import beanvest.test.tradingjournal.CollectionMode;
+import beanvest.lib.clitable.Column;
+import beanvest.lib.clitable.TableWriter;
 import beanvest.returns.cli.columns.ColumnId;
 import beanvest.returns.cli.columns.PeriodicColumnSpec;
 import beanvest.returns.cli.columns.ReportColumnsDefinition;

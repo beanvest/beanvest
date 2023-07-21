@@ -1,10 +1,10 @@
 package beanvest.returns.cli.columns;
 
-import beanvest.tradingjournal.Stat;
-import beanvest.tradingjournal.StatsWithDeltas;
-import beanvest.tradingjournal.model.UserErrorId;
-import bb.lib.clitable.Column;
-import bb.lib.clitable.ColumnPadding;
+import beanvest.test.tradingjournal.Stat;
+import beanvest.test.tradingjournal.StatsWithDeltas;
+import beanvest.test.tradingjournal.model.UserErrorId;
+import beanvest.lib.clitable.Column;
+import beanvest.lib.clitable.ColumnPadding;
 import beanvest.returns.cli.AccountPeriod;
 
 import java.util.Optional;

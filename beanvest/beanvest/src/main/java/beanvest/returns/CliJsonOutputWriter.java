@@ -1,16 +1,16 @@
 package beanvest.returns;
 
-import beanvest.tradingjournal.JournalNotFoundException;
-import beanvest.tradingjournal.JournalValidationError;
-import beanvest.tradingjournal.PortfolioStats;
-import beanvest.tradingjournal.model.UserError;
+import beanvest.test.tradingjournal.JournalNotFoundException;
+import beanvest.test.tradingjournal.JournalValidationError;
+import beanvest.test.tradingjournal.PortfolioStats;
+import beanvest.test.tradingjournal.model.UserError;
 import com.google.gson.Gson;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bb.lib.util.gson.GsonFactory.builderWithProjectDefaults;
+import static beanvest.lib.util.gson.GsonFactory.builderWithProjectDefaults;
 
 public class CliJsonOutputWriter implements CliOutputWriter {
     private static final Gson GSON = builderWithProjectDefaults().create();

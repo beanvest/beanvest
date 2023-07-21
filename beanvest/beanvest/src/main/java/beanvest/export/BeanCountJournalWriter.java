@@ -1,17 +1,17 @@
 package beanvest.export;
 
-import beanvest.tradingjournal.model.Journal;
-import beanvest.tradingjournal.model.entry.AccountOperation;
-import beanvest.tradingjournal.model.entry.Buy;
-import beanvest.tradingjournal.model.entry.Close;
-import beanvest.tradingjournal.model.entry.Deposit;
-import beanvest.tradingjournal.model.entry.Dividend;
-import beanvest.tradingjournal.model.entry.Fee;
-import beanvest.tradingjournal.model.entry.Interest;
-import beanvest.tradingjournal.model.entry.Sell;
-import beanvest.tradingjournal.model.entry.Transaction;
-import beanvest.tradingjournal.model.entry.Transfer;
-import beanvest.tradingjournal.model.entry.Withdrawal;
+import beanvest.test.tradingjournal.model.Journal;
+import beanvest.test.tradingjournal.model.entry.AccountOperation;
+import beanvest.test.tradingjournal.model.entry.Buy;
+import beanvest.test.tradingjournal.model.entry.Close;
+import beanvest.test.tradingjournal.model.entry.Deposit;
+import beanvest.test.tradingjournal.model.entry.Dividend;
+import beanvest.test.tradingjournal.model.entry.Fee;
+import beanvest.test.tradingjournal.model.entry.Interest;
+import beanvest.test.tradingjournal.model.entry.Sell;
+import beanvest.test.tradingjournal.model.entry.Transaction;
+import beanvest.test.tradingjournal.model.entry.Transfer;
+import beanvest.test.tradingjournal.model.entry.Withdrawal;
 
 import java.io.IOException;
 import java.io.Writer;

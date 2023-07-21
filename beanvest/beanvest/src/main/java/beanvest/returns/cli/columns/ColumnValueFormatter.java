@@ -1,8 +1,8 @@
 package beanvest.returns.cli.columns;
 
-import beanvest.tradingjournal.Result;
-import beanvest.tradingjournal.model.UserErrorId;
-import beanvest.tradingjournal.model.UserErrors;
+import beanvest.test.tradingjournal.Result;
+import beanvest.test.tradingjournal.model.UserErrorId;
+import beanvest.test.tradingjournal.model.UserErrors;
 
 import java.math.BigDecimal;
 import java.util.Optional;

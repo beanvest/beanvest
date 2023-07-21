@@ -1,12 +1,12 @@
 package beanvest.returns.cli.columns;
 
-import beanvest.tradingjournal.Stats;
-import beanvest.tradingjournal.Result;
-import beanvest.tradingjournal.StatsWithDeltas;
-import beanvest.tradingjournal.model.UserErrorId;
-import beanvest.tradingjournal.model.UserErrors;
-import bb.lib.clitable.Column;
-import bb.lib.clitable.ColumnPadding;
+import beanvest.test.tradingjournal.Stats;
+import beanvest.test.tradingjournal.Result;
+import beanvest.test.tradingjournal.StatsWithDeltas;
+import beanvest.test.tradingjournal.model.UserErrorId;
+import beanvest.test.tradingjournal.model.UserErrors;
+import beanvest.lib.clitable.Column;
+import beanvest.lib.clitable.ColumnPadding;
 import beanvest.returns.cli.AccountPeriod;
 
 import java.util.Optional;

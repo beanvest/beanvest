@@ -1,6 +1,6 @@
 package beanvest.returns;
 
-import beanvest.tradingjournal.JournalParser;
+import beanvest.test.tradingjournal.JournalParser;
 import beanvest.SubCommand;
 import beanvest.returns.cli.CliTablePrinter;
 import picocli.CommandLine;

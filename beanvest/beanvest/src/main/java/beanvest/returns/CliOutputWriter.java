@@ -1,8 +1,8 @@
 package beanvest.returns;
 
-import beanvest.tradingjournal.JournalNotFoundException;
-import beanvest.tradingjournal.PortfolioStats;
-import beanvest.tradingjournal.model.UserError;
+import beanvest.test.tradingjournal.JournalNotFoundException;
+import beanvest.test.tradingjournal.PortfolioStats;
+import beanvest.test.tradingjournal.model.UserError;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package beanvest.returns.cli;
 
-import beanvest.tradingjournal.StatsWithDeltas;
+import beanvest.test.tradingjournal.StatsWithDeltas;
 
 import java.time.LocalDate;
 import java.util.Map;

@@ -1,13 +1,13 @@
 package beanvest.export;
 
 
-import beanvest.tradingjournal.JournalEntryProcessor;
-import beanvest.tradingjournal.JournalParser;
-import beanvest.tradingjournal.SourceLine;
-import beanvest.tradingjournal.model.Journal;
-import beanvest.tradingjournal.model.JournalState;
-import beanvest.tradingjournal.model.entry.Entry;
-import beanvest.tradingjournal.model.entry.Interest;
+import beanvest.test.tradingjournal.JournalEntryProcessor;
+import beanvest.test.tradingjournal.JournalParser;
+import beanvest.test.tradingjournal.SourceLine;
+import beanvest.test.tradingjournal.model.Journal;
+import beanvest.test.tradingjournal.model.JournalState;
+import beanvest.test.tradingjournal.model.entry.Entry;
+import beanvest.test.tradingjournal.model.entry.Interest;
 import beanvest.SubCommand;
 import org.slf4j.Logger;
 import picocli.CommandLine;

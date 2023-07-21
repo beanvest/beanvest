@@ -1,7 +1,7 @@
 package beanvest.importer;
 
-import beanvest.tradingjournal.ValueFormatException;
-import beanvest.tradingjournal.model.Value;
+import beanvest.test.tradingjournal.ValueFormatException;
+import beanvest.test.tradingjournal.model.Value;
 import com.opencsv.CSVReader;
 import org.slf4j.Logger;
 

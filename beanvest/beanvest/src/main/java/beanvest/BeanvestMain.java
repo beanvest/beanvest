@@ -1,6 +1,6 @@
 package beanvest;
 
-import bb.lib.util.apprunner.BaseMain;
+import beanvest.lib.util.apprunner.BaseMain;
 import beanvest.export.ExportCliApp;
 import beanvest.importer.ImportCliApp;
 import beanvest.journal.JournalCliApp;

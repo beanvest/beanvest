@@ -1,6 +1,6 @@
 package beanvest.returns;
 
-import beanvest.tradingjournal.PeriodInterval;
+import beanvest.test.tradingjournal.PeriodInterval;
 import picocli.CommandLine;
 
 import java.nio.file.Path;

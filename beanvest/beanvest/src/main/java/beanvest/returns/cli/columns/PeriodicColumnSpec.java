@@ -1,6 +1,6 @@
 package beanvest.returns.cli.columns;
 
-import bb.lib.clitable.Column;
+import beanvest.lib.clitable.Column;
 import beanvest.returns.cli.AccountPeriod;
 
 import java.util.Optional;

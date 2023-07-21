@@ -1,19 +1,19 @@
 package beanvest.journal;
 
 
-import beanvest.tradingjournal.CashStats;
-import beanvest.tradingjournal.JournalEntryProcessor;
-import beanvest.tradingjournal.JournalParser;
-import beanvest.tradingjournal.JournalValidationError;
-import beanvest.tradingjournal.Result;
-import beanvest.tradingjournal.model.AccountState;
-import beanvest.tradingjournal.model.Holdings;
-import beanvest.tradingjournal.model.Journal;
-import beanvest.tradingjournal.model.JournalState;
-import beanvest.tradingjournal.model.UserError;
-import beanvest.tradingjournal.model.UserErrors;
-import beanvest.tradingjournal.model.entry.Entry;
-import beanvest.tradingjournal.model.entry.Price;
+import beanvest.test.tradingjournal.CashStats;
+import beanvest.test.tradingjournal.JournalEntryProcessor;
+import beanvest.test.tradingjournal.JournalParser;
+import beanvest.test.tradingjournal.JournalValidationError;
+import beanvest.test.tradingjournal.Result;
+import beanvest.test.tradingjournal.model.AccountState;
+import beanvest.test.tradingjournal.model.Holdings;
+import beanvest.test.tradingjournal.model.Journal;
+import beanvest.test.tradingjournal.model.JournalState;
+import beanvest.test.tradingjournal.model.UserError;
+import beanvest.test.tradingjournal.model.UserErrors;
+import beanvest.test.tradingjournal.model.entry.Entry;
+import beanvest.test.tradingjournal.model.entry.Price;
 import beanvest.SubCommand;
 import picocli.CommandLine;
 
