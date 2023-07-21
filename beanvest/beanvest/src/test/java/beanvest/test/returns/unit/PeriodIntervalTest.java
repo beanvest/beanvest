@@ -1,8 +1,8 @@
 package beanvest.test.returns.unit;
 
-import beanvest.test.tradingjournal.Calendar;
-import beanvest.test.tradingjournal.PeriodInterval;
-import beanvest.test.tradingjournal.Period;
+import beanvest.tradingjournal.Calendar;
+import beanvest.tradingjournal.PeriodInterval;
+import beanvest.tradingjournal.Period;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

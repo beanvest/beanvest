@@ -1,9 +1,9 @@
 package beanvest.test.returns.unit;
 
-import beanvest.test.tradingjournal.AccountDto;
-import beanvest.test.tradingjournal.CollectionMode;
-import beanvest.test.tradingjournal.Period;
-import beanvest.test.tradingjournal.PortfolioStats;
+import beanvest.tradingjournal.AccountDto;
+import beanvest.tradingjournal.CollectionMode;
+import beanvest.tradingjournal.Period;
+import beanvest.tradingjournal.PortfolioStats;
 import beanvest.returns.cli.CliTablePrinter;
 import org.junit.jupiter.api.Test;
 

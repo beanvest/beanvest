@@ -1,6 +1,6 @@
 package beanvest.returns;
 
-import beanvest.test.tradingjournal.PeriodInterval;
+import beanvest.tradingjournal.PeriodInterval;
 
 import java.nio.file.Path;
 import java.time.LocalDate;

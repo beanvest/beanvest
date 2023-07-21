@@ -1,7 +1,7 @@
 package beanvest.test.tradingjournal.stats;
 
-import beanvest.test.tradingjournal.processing.AccountGroupResolver;
-import beanvest.test.tradingjournal.processing.Grouping;
+import beanvest.tradingjournal.processing.AccountGroupResolver;
+import beanvest.tradingjournal.processing.Grouping;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

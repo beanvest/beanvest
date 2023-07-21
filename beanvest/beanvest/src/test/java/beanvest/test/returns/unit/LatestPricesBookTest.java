@@ -1,10 +1,10 @@
 package beanvest.test.returns.unit;
 
-import beanvest.test.tradingjournal.model.UserErrorId;
-import beanvest.test.tradingjournal.model.UserErrors;
-import beanvest.test.tradingjournal.model.Value;
-import beanvest.test.tradingjournal.model.entry.Price;
-import beanvest.test.tradingjournal.pricebook.LatestPricesBook;
+import beanvest.tradingjournal.model.UserErrorId;
+import beanvest.tradingjournal.model.UserErrors;
+import beanvest.tradingjournal.model.Value;
+import beanvest.tradingjournal.model.entry.Price;
+import beanvest.tradingjournal.pricebook.LatestPricesBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,12 +1,12 @@
 package beanvest.test.returns.unit;
 
-import beanvest.test.tradingjournal.CashStats;
-import beanvest.test.tradingjournal.Result;
-import beanvest.test.tradingjournal.Stats;
-import beanvest.test.tradingjournal.ValueStats;
-import beanvest.test.tradingjournal.model.UserError;
-import beanvest.test.tradingjournal.model.UserErrors;
-import beanvest.test.tradingjournal.processing.DeltaCalculator;
+import beanvest.tradingjournal.CashStats;
+import beanvest.tradingjournal.Result;
+import beanvest.tradingjournal.Stats;
+import beanvest.tradingjournal.ValueStats;
+import beanvest.tradingjournal.model.UserError;
+import beanvest.tradingjournal.model.UserErrors;
+import beanvest.tradingjournal.processing.DeltaCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

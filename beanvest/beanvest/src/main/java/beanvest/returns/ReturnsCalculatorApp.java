@@ -1,13 +1,13 @@
 package beanvest.returns;
 
-import beanvest.test.tradingjournal.Calendar;
-import beanvest.test.tradingjournal.JournalNotFoundException;
-import beanvest.test.tradingjournal.JournalParser;
-import beanvest.test.tradingjournal.CollectionMode;
-import beanvest.test.tradingjournal.Period;
-import beanvest.test.tradingjournal.processing.calculator.JournalStatsCalculator;
-import beanvest.test.tradingjournal.processing.Grouping;
-import beanvest.test.tradingjournal.PeriodInterval;
+import beanvest.tradingjournal.Calendar;
+import beanvest.tradingjournal.JournalNotFoundException;
+import beanvest.tradingjournal.JournalParser;
+import beanvest.tradingjournal.CollectionMode;
+import beanvest.tradingjournal.Period;
+import beanvest.tradingjournal.processing.calculator.JournalStatsCalculator;
+import beanvest.tradingjournal.processing.Grouping;
+import beanvest.tradingjournal.PeriodInterval;
 
 import java.nio.file.Path;
 import java.time.LocalDate;

@@ -1,9 +1,9 @@
 package beanvest.test.returns.unit;
 
-import beanvest.test.tradingjournal.Stat;
-import beanvest.test.tradingjournal.Result;
-import beanvest.test.tradingjournal.StatsWithDeltas;
-import beanvest.test.tradingjournal.ValueStat;
+import beanvest.tradingjournal.Stat;
+import beanvest.tradingjournal.Result;
+import beanvest.tradingjournal.StatsWithDeltas;
+import beanvest.tradingjournal.ValueStat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

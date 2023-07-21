@@ -1,5 +1,6 @@
 package beanvest.test.tradingjournal.processing;
 
+import beanvest.tradingjournal.processing.Holding;
 import org.assertj.core.util.BigDecimalComparator;
 import org.junit.jupiter.api.Test;
 

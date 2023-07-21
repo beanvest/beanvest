@@ -1,8 +1,8 @@
 package beanvest.export;
 
-import beanvest.test.tradingjournal.model.AccountState;
-import beanvest.test.tradingjournal.model.JournalState;
-import beanvest.test.tradingjournal.model.Value;
+import beanvest.tradingjournal.model.AccountState;
+import beanvest.tradingjournal.model.JournalState;
+import beanvest.tradingjournal.model.Value;
 import org.slf4j.Logger;
 
 import java.math.BigDecimal;

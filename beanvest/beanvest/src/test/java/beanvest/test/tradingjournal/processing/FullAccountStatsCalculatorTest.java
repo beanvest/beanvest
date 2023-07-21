@@ -1,12 +1,13 @@
 package beanvest.test.tradingjournal.processing;
 
-import beanvest.test.tradingjournal.SourceLine;
-import beanvest.test.tradingjournal.Stats;
-import beanvest.test.tradingjournal.model.Value;
-import beanvest.test.tradingjournal.model.entry.Buy;
-import beanvest.test.tradingjournal.model.entry.Price;
-import beanvest.test.tradingjournal.model.entry.Sell;
-import beanvest.test.tradingjournal.pricebook.LatestPricesBook;
+import beanvest.tradingjournal.SourceLine;
+import beanvest.tradingjournal.Stats;
+import beanvest.tradingjournal.model.Value;
+import beanvest.tradingjournal.model.entry.Buy;
+import beanvest.tradingjournal.model.entry.Price;
+import beanvest.tradingjournal.model.entry.Sell;
+import beanvest.tradingjournal.pricebook.LatestPricesBook;
+import beanvest.tradingjournal.processing.FullAccountStatsCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

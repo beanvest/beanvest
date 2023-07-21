@@ -1,0 +1,12 @@
+package beanvest.tradingjournal.model;
+
+public enum UserErrorId {
+    PRICE_NEEDED,
+    ACCOUNT_NOT_OPEN_YET,
+    XIRR_CALCULATION_FAILURE,
+    XIRR_PERIOD_TOO_SHORT,
+    VALIDATION_ERROR,
+    XIRR_NO_TRANSACTIONS,
+    DELTA_NOT_AVAILABLE,
+    CALCULATION_DISABLED
+}

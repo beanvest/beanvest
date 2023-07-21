@@ -1,8 +1,8 @@
 package beanvest.returns.cli.columns;
 
-import beanvest.test.tradingjournal.StatsWithDeltas;
-import beanvest.test.tradingjournal.ValueStat;
-import beanvest.test.tradingjournal.model.UserErrorId;
+import beanvest.tradingjournal.StatsWithDeltas;
+import beanvest.tradingjournal.ValueStat;
+import beanvest.tradingjournal.model.UserErrorId;
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.ColumnPadding;
 import beanvest.returns.cli.AccountPeriod;
