@@ -16,31 +16,19 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
-public class JarRunner implements AppRunner {
+public class NativeBinRunner implements AppRunner {
     public static final String JAVA_HOME = System.getProperty("java.home");
     public static final String JAVA_BIN = JAVA_HOME + "/bin/java";
-    private static final CountDownLatch buildLatch = new CountDownLatch(1);
     public static final Function<String, Boolean> DONT_BLOCK = line -> true;
     public static final Consumer<String> NOOP_CONSUMER = line -> {
     };
-    private static boolean buildingStarted = false;
     private final String jarPath;
-    private final Executor executor;
     private final Optional<String> maybeSubcommand;
 
-    private CountDownLatch countDownLatch;
+    private CountDownLatch waitingForOutputLatch;
 
-    public JarRunner(String jarPath) {
-        this(jarPath, Optional.empty());
-    }
-
-    public JarRunner(String jarPath, Optional<String> subcommand1) {
-        this(jarPath, Executors.newSingleThreadExecutor(), subcommand1);
-    }
-
-    public JarRunner(String jarPath, Executor executor, Optional<String> subcommand) {
+    public NativeBinRunner(String jarPath, Optional<String> subcommand) {
         this.jarPath = jarPath;
-        this.executor = executor;
         this.maybeSubcommand = subcommand;
     }
 
@@ -83,7 +71,7 @@ public class JarRunner implements AppRunner {
                                       List<String> appArgs,
                                       Function<String, Boolean> blockUntilTrue,
                                       Consumer<String> stdoutLineConsumer) {
-        countDownLatch = new CountDownLatch(1);
+        waitingForOutputLatch = new CountDownLatch(1);
         var cmd = new ArrayList<String>();
         cmd.add(JAVA_BIN);
 //        cmd.add("-agentlib:jdwp=transport=dt_socket,address=*:8831,server=y,suspend=y");
@@ -106,7 +94,7 @@ public class JarRunner implements AppRunner {
             var reader = process.inputReader(StandardCharsets.UTF_8);
 
             readOutputWhileRunning(blockUntilTrue, stdoutLineConsumer, outputRead, process, reader);
-            countDownLatch.countDown();
+            waitingForOutputLatch.countDown();
 
             var exitCode = process.exitValue();
 
@@ -142,7 +130,7 @@ public class JarRunner implements AppRunner {
                         outputRead.append(line).append("\n");
                         stdoutLineConsumer.accept(line);
                         if (blockUntilTrue.apply(line)) {
-                            countDownLatch.countDown();
+                            waitingForOutputLatch.countDown();
                             break;
                         }
                     } else {

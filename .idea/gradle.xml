@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/beanvest" />
+            <option value="$PROJECT_DIR$/beanvest/acceptancetests" />
             <option value="$PROJECT_DIR$/beanvest/beanvest" />
             <option value="$PROJECT_DIR$/beanvest/lib" />
             <option value="$PROJECT_DIR$/beanvest/lib/clitable" />
