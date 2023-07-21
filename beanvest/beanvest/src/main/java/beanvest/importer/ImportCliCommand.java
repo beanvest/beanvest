@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.util.List;
 
-public class ImportCliApp implements SubCommand {
+public class ImportCliCommand implements SubCommand {
     public static final CommandLine.Model.CommandSpec CMD_SPEC = CommandLine.Model.CommandSpec.create()
             .name("import")
             .addPositional(CommandLine.Model.PositionalParamSpec.builder()

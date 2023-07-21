@@ -22,7 +22,7 @@ import java.util.Optional;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class ExportCliApp implements SubCommand {
+public class ExportCliCommand implements SubCommand {
     public static final CommandLine.Model.CommandSpec CMD_SPEC = CommandLine.Model.CommandSpec.create()
             .name("export")
             .addPositional(CommandLine.Model.PositionalParamSpec.builder()
@@ -44,7 +44,7 @@ public class ExportCliApp implements SubCommand {
                     .type(String.class)
                     .description("generate fake transaction for stats. Available generators: " + String.join(", ", GainsTransactionGenerator.getAvailableGenerators()))
                     .build());
-    private static final Logger LOGGER = getLogger(ExportCliApp.class.getName());
+    private static final Logger LOGGER = getLogger(ExportCliCommand.class.getName());
     private final JournalEntryProcessor journalEntryProcessor = new JournalEntryProcessor();
 
     public int run(CommandLine.ParseResult subcommand, PrintStream stdOut, PrintStream stdErr) {

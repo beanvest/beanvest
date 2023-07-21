@@ -7,7 +7,7 @@ import picocli.CommandLine;
 
 import java.io.PrintStream;
 
-public class ReturnsCliModule implements SubCommand {
+public class ReturnsCliCommand implements SubCommand {
     private final ReturnsCliParametersParser returnsCliParametersParser = new ReturnsCliParametersParser();
 
     @Override

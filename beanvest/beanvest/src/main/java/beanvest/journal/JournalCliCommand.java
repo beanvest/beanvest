@@ -25,7 +25,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class JournalCliApp implements SubCommand {
+public class JournalCliCommand implements SubCommand {
     public static final String DEFAULT_CURRENCY = "GBP";
     public static final CommandLine.Model.CommandSpec CMD_SPEC = CommandLine.Model.CommandSpec.create()
             .name("journal")

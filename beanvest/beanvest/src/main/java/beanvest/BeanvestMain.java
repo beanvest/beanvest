@@ -1,10 +1,10 @@
 package beanvest;
 
 import beanvest.lib.util.apprunner.BaseMain;
-import beanvest.export.ExportCliApp;
-import beanvest.importer.ImportCliApp;
-import beanvest.journal.JournalCliApp;
-import beanvest.returns.ReturnsCliModule;
+import beanvest.export.ExportCliCommand;
+import beanvest.importer.ImportCliCommand;
+import beanvest.journal.JournalCliCommand;
+import beanvest.returns.ReturnsCliCommand;
 import picocli.CommandLine;
 
 import java.io.PrintWriter;
@@ -12,10 +12,10 @@ import java.util.List;
 
 public class BeanvestMain extends BaseMain {
     private static final List<SubCommand> subCommands = List.of(
-            new ExportCliApp(),
-            new ImportCliApp(),
-            new JournalCliApp(),
-            new ReturnsCliModule());
+            new ExportCliCommand(),
+            new ImportCliCommand(),
+            new JournalCliCommand(),
+            new ReturnsCliCommand());
     private static final CommandLine.Model.CommandSpec SPEC = getSpec();
 
     private static CommandLine.Model.CommandSpec getSpec() {
