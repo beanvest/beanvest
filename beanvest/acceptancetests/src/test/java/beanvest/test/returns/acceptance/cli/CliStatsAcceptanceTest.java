@@ -38,7 +38,6 @@ public class CliStatsAcceptanceTest {
     }
 
     @Test
-    @Disabled("processing refactor")
     void calculatesFeesYearlyDelta() {
         dsl.setEnd("2023-01-01");
         dsl.setYearly();

@@ -19,7 +19,14 @@ record PeriodicCashColumnSpec(ColumnId columnId,
                 title,
                 ColumnPadding.RIGHT,
                 accountPeriodStats -> accountPeriodStats.getStats(period)
-                        .map(stats -> ColumnValueFormatter.formatMoney(exact, extractor.apply(stats).stat()))
+                        .map(stats -> {
+                            if (delta) {
+                                return ColumnValueFormatter.formatMoney(exact, extractor.apply(stats).delta());
+                            } else {
+                                return ColumnValueFormatter.formatMoney(exact, extractor.apply(stats).stat());
+                            }
+                        })
                         .orElseGet(() -> ColumnValueFormatter.formatError(UserErrorId.ACCOUNT_NOT_OPEN_YET)));
     }
+
 }

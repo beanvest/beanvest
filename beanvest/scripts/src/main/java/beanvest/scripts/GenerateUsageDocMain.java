@@ -18,6 +18,9 @@ public class GenerateUsageDocMain {
                     BEANVEST_BIN + " returns sample/* --group --columns deps,wths --interval=quarter",
                     "Print cumulative deposits and withdrawals for accounts and groups for each quarter"),
             new Example(
+                    BEANVEST_BIN + " returns sample/* --group --columns deps,wths --interval=quarter --delta",
+                    "Print changes in deposits and withdrawals for accounts and groups for each quarter"),
+            new Example(
                     BEANVEST_BIN + " journal sample/* | tail -n 20",
                     "Inspect journals with daily cumulative stats")
     );
