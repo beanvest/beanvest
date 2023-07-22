@@ -3,16 +3,6 @@ plugins {
 }
 
 group 'beanvest.lib.jsonassert'
-version '1.0-SNAPSHOT'
-
-java {
-    sourceCompatibility = "17"
-    targetCompatibility = "17"
-}
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     implementation libs.jsonAssert

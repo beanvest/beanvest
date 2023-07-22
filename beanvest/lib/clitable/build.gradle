@@ -3,14 +3,6 @@ plugins {
 }
 
 group 'beanvest.lib.clitable'
-version '1.0-SNAPSHOT'
-java {
-    sourceCompatibility = "17"
-    targetCompatibility = "17"
-}
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     testImplementation libs.bundles.testing

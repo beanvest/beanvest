@@ -4,18 +4,6 @@ plugins {
 }
 
 group = "beanvest.beanvest"
-version = "1.0-SNAPSHOT"
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
-repositories {
-    mavenCentral()
-    gradlePluginPortal()
-
-}
 
 dependencies {
     implementation(libs.bundles.logging)

@@ -3,18 +3,6 @@ plugins {
 }
 
 group = "beanvest.acceptancetests"
-version = "1.0-SNAPSHOT"
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
-repositories {
-    mavenCentral()
-    gradlePluginPortal()
-
-}
 
 dependencies {
     testImplementation(project(":beanvest:beanvest"))
