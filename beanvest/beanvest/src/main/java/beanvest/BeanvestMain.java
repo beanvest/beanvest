@@ -7,16 +7,18 @@ import beanvest.journal.JournalCliCommand;
 import beanvest.returns.ReturnsCliCommand;
 import picocli.CommandLine;
 
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class BeanvestMain extends BaseMain {
+public final class BeanvestMain extends BaseMain {
     private static final List<SubCommand> subCommands = List.of(
             new ExportCliCommand(),
             new ImportCliCommand(),
             new JournalCliCommand(),
             new ReturnsCliCommand());
     private static final CommandLine.Model.CommandSpec SPEC = getSpec();
+    private static final int GENERIC_ERROR_CODE = 1;
 
     private static CommandLine.Model.CommandSpec getSpec() {
         var beanvest = CommandLine.Model.CommandSpec.create()
@@ -37,12 +39,17 @@ public class BeanvestMain extends BaseMain {
     private static int run(CommandLine.ParseResult parseResult) {
         var subcommandParseResult = parseResult.subcommand();
         if (subcommandParseResult == null) {
-            return 0;
+            printUsage(parseResult.commandSpec(), stdErr);
+            return GENERIC_ERROR_CODE;
         }
         var subcommandName = subcommandParseResult.commandSpec().name();
         var subCommand = subCommands.stream()
                 .filter(sc -> sc.getName().equals(subcommandName))
                 .findFirst().get();
         return subCommand.run(subcommandParseResult, stdOut, stdErr);
+    }
+
+    private static void printUsage(CommandLine.Model.CommandSpec parseResult, PrintStream printStream) {
+        parseResult.commandLine().usage(printStream);
     }
 }

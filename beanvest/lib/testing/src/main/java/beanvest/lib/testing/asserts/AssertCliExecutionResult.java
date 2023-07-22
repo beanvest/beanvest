@@ -2,6 +2,7 @@ package beanvest.lib.testing.asserts;
 
 import beanvest.lib.testing.CliExecutionResult;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,6 +25,18 @@ public record AssertCliExecutionResult(CliExecutionResult executionResult) {
         assertThat(executionResult.stdErr())
                 .as("check stdErr structure")
                 .contains("Usage:");
+        return this;
+    }
+
+    public AssertCliExecutionResult hasPrintedCommands(List<String> commands) {
+        assertThat(executionResult.stdErr())
+                .as("check stdErr structure")
+                .contains("Commands:");
+        for (String command : commands) {
+            assertThat(executionResult.stdErr())
+                    .as("check command `%s` is printed")
+                    .matches("[\\s\\S]*\\b" + command + "\\b[\\s\\S]*");
+        }
         return this;
     }
 

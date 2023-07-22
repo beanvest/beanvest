@@ -33,11 +33,6 @@ public class NativeBinRunner implements AppRunner {
     }
 
     @Override
-    public Future<CliExecutionResult> start(List<String> vmArgs, List<String> args) {
-        return null;
-    }
-
-    @Override
     public CliExecutionResult run(List<String> args) {
         return run(List.of(), args);
     }
