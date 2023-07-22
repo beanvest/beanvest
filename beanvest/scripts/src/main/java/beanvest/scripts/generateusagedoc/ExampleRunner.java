@@ -9,9 +9,11 @@ import java.util.List;
 
 public class ExampleRunner {
 
+    private final String beanvestBin;
     private final CmdRunner cmdRunner;
 
-    public ExampleRunner(Path cwd) {
+    public ExampleRunner(String beanvestBin, Path cwd) {
+        this.beanvestBin = beanvestBin;
         cmdRunner = new CmdRunner(cwd);
     }
 
@@ -22,7 +24,7 @@ public class ExampleRunner {
                 var cmd = new ArrayList<String>();
                 cmd.add("bash");
                 cmd.add("-c");
-                cmd.add(example.command);
+                cmd.add(beanvestBin + example.command);
 
                 var output = cmdRunner.runSuccessfully(cmd);
                 result.add(new ExampleWithOutput(example, output.stdOut()));

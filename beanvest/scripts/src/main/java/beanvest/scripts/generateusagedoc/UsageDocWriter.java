@@ -23,7 +23,7 @@ public class UsageDocWriter {
         examples.forEach(example -> stringBuffer
                 .append("""
                         - %s
-                          ```
+                          ```bash
                           %s
                           ```
                           ```

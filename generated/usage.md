@@ -1,8 +1,8 @@
 ## Usage examples
 
 - Print various stats for all accounts and groups on each level of the accounts for whole period
-  ```
-  beanvest/beanvest/build/native/nativeCompile/beanvest returns sample/* --group
+  ```bash
+  beanvest returns sample/* --group
   ```
   ```
   account              opened      closed  deps    wths   div    intr   fees   rGain  cash    uGain  eVal   aGain  xirr
@@ -13,8 +13,8 @@
   trading              2022-01-01  -       17,670      0      0      0    -70      0  17,600      0      0    -70   -0.5
   ```
 - Print cumulative deposits and withdrawals for accounts and groups for each quarter
-  ```
-  beanvest/beanvest/build/native/nativeCompile/beanvest returns sample/* --group --columns deps,wths --interval=quarter
+  ```bash
+  beanvest returns sample/* --group --columns deps,wths --interval=quarter
   ```
   ```
                       ╷ 23q2          ╷ 23q1          ╷ 22q4          ╷ 22q3          ╷ 22q2         ╷ 22q1         ╷
@@ -26,8 +26,8 @@
   trading             │ 16,740      0 │ 13,950      0 │ 11,160      0 │  8,370      0 │ 5,580      0 │ 2,790      0 │
   ```
 - Print changes in deposits and withdrawals for accounts and groups for each quarter
-  ```
-  beanvest/beanvest/build/native/nativeCompile/beanvest returns sample/* --group --columns deps,wths --interval=quarter --delta
+  ```bash
+  beanvest returns sample/* --group --columns deps,wths --interval=quarter --delta
   ```
   ```
                       ╷ 23q2         ╷ 23q1         ╷ 22q4         ╷ 22q3         ╷ 22q2         ╷ 22q1         ╷
@@ -39,8 +39,8 @@
   trading             │ 2,790      0 │ 2,790      0 │ 2,790      0 │ 2,790      0 │ 2,790      0 │ 2,790      0 │
   ```
 - Inspect journals with daily cumulative stats
-  ```
-  beanvest/beanvest/build/native/nativeCompile/beanvest journal sample/* | tail -n 20
+  ```bash
+  beanvest journal sample/* | tail -n 20
   ```
   ```
   2023-10-01 fee  10
