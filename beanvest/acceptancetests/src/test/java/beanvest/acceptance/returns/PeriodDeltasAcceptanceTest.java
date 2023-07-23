@@ -89,25 +89,4 @@ public class PeriodDeltasAcceptanceTest {
         dsl.verifyDepositsDelta("savings", "20m02", "200");
         dsl.verifyDepositsDelta("savings", "20m03", "400");
     }
-
-    @Test
-    @Disabled("TODO refactor")
-    void noOtherPeriodsShownExceptForMatchingOne() {
-        dsl.setStartDate("2020-02-01");
-        dsl.setEnd("2020-03-01");
-        dsl.setMonthly();
-
-        dsl.runCalculateReturns("""
-                account savings
-                currency GBP
-                                
-                2020-01-01 deposit 100
-                2020-02-15 deposit 200
-                2020-03-31 deposit 400
-                """);
-
-        dsl.verifyHasNoStats("savings", "20m01");
-        dsl.verifyDepositsDelta("savings", "20m02", "200");
-        dsl.verifyHasNoStats("savings", "20m03");
-    }
 }
