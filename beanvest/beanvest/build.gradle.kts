@@ -27,47 +27,9 @@ tasks {
             exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
         }
     }
-
-    val uberjar = register<Jar>("uberjar") {
-        manifest.attributes["Main-Class"] = "beanvest.BeanvestMain"
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-        from(configurations.runtimeClasspath.get()
-                .map { if (it.isDirectory) it else zipTree(it) })
-        from(sourceSets.main.get().output)
-
-        @Suppress("UNUSED_VARIABLE")
-        val jarPath: String by extra(archiveFile.get().toString())
-    }
-
-    register<Test>("testfast") {
-        useJUnitPlatform()
-        maxParallelForks = 4
-        testLogging {
-            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-        }
-    }
-    register<Test>("testfull") {
-        dependsOn("testfast")
-        dependsOn("uberjar")
-
-        val jarPath: String by uberjar.get().extra
-        useJUnitPlatform()
-        maxParallelForks = Runtime.getRuntime().availableProcessors()
-        environment("ACCEPTANCE_JAR_PATH", jarPath)
-
-        filter {
-            includeTestsMatching("*AcceptanceTest")
-        }
-
-        testLogging {
-            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-        }
-    }
 }
 
 graalvmNative {
-
     binaries {
         named("main") {
             mainClass.set("beanvest.BeanvestMain")
