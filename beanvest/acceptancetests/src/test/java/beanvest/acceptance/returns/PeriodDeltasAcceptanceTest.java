@@ -73,7 +73,6 @@ public class PeriodDeltasAcceptanceTest {
     }
 
     @Test
-    @Disabled("TODO refactor")
     void monthlyPeriodsContainOnlyDataFromThatPeriod() {
         dsl.setMonthly();
 
@@ -87,8 +86,8 @@ public class PeriodDeltasAcceptanceTest {
                 """);
 
         dsl.verifyDepositsDelta("savings", "20m01", "100");
-        dsl.verifyDeposits("savings", "20m02", "200");
-        dsl.verifyDeposits("savings", "20m03", "400");
+        dsl.verifyDepositsDelta("savings", "20m02", "200");
+        dsl.verifyDepositsDelta("savings", "20m03", "400");
     }
 
     @Test
