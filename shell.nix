@@ -10,6 +10,8 @@ pkgs.mkShell {
 
     pkgs.git
     pkgs.vim
+
+    (pkgs.python3.withPackages(ps: with ps; [cfgv identify]))
   ];
   shellHook =
     ''

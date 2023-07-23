@@ -10,7 +10,7 @@ into configured shell with `nix-shell`. You can see list of tools needed in [she
 pre-commit run
 ```
 
-- bunning tests
+- running tests
 ```bash
 ./gradlew test
 ```
