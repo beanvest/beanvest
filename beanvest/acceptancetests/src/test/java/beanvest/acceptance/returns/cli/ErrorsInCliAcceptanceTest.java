@@ -70,10 +70,9 @@ public class ErrorsInCliAcceptanceTest {
     }
 
     @Test
-    @Disabled("processing refactor")
-    void calculatesDepositsAndWithdrawalsWithoutPricesNeededForXirrAndValuation() {
+    void calculatesCashStatsJustFineWithoutPricesNeededForValueStats() {
         dsl.setEnd("2021-03-15");
-        dsl.setColumns("dw");
+        dsl.setColumns("deps");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -83,7 +82,7 @@ public class ErrorsInCliAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""
-                account  dw
+                account  deps
                 trading  1,000""");
         dsl.verifyNoWarningsShown();
     }
