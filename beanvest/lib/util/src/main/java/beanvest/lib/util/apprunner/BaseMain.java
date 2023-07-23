@@ -59,11 +59,7 @@ public class BaseMain {
     }
 
     private static boolean isRunInInATest() {
-        String property = System.getProperties().getProperty("sun.java.command");
-        if (property == null) {
-            return false;
-        } else {
-            return property.contains("Test Executor");
-        }
+        String property = System.getProperty("sun.java.command");
+        return property != null && (property.contains("Test Executor") || property.contains("JUnitStarter"));
     }
 }

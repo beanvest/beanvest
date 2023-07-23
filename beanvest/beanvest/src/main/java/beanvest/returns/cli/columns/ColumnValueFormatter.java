@@ -25,6 +25,7 @@ public class ColumnValueFormatter {
         return switch (error) {
             case ACCOUNT_NOT_OPEN_YET,
                     XIRR_NO_TRANSACTIONS,
+                    DELTA_NOT_AVAILABLE_NO_VALUE_STATS,
                     DELTA_NOT_AVAILABLE -> "…";
             case XIRR_CALCULATION_FAILURE -> "cf";
             case XIRR_PERIOD_TOO_SHORT -> "pts";

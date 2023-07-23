@@ -1,13 +1,11 @@
 package beanvest.returns.cli.columns;
 
-import beanvest.tradingjournal.Stats;
-import beanvest.tradingjournal.Result;
-import beanvest.tradingjournal.StatsWithDeltas;
-import beanvest.tradingjournal.model.UserErrorId;
-import beanvest.tradingjournal.model.UserErrors;
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.ColumnPadding;
 import beanvest.returns.cli.AccountPeriod;
+import beanvest.tradingjournal.StatsWithDeltas;
+import beanvest.tradingjournal.ValueStat;
+import beanvest.tradingjournal.model.UserErrorId;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -22,13 +20,13 @@ record PeriodicXirrColumnSpec(ColumnId columnId, XirrResultExtractor extractor) 
     }
 
     private String convertResultToString(Optional<StatsWithDeltas> maybeStats) {
-        return maybeStats.map(stats -> stats.xirr().stat().fold(
+        return maybeStats.map(stats -> extractor.apply(stats).stat().fold(
                         gainValue -> ColumnValueFormatter.formatXirr(gainValue.doubleValue()),
                         ColumnValueFormatter::formatError))
                 .orElse(ColumnValueFormatter.formatError(UserErrorId.ACCOUNT_NOT_OPEN_YET));
     }
 
 
-    interface XirrResultExtractor extends Function<Stats, Result<Double, UserErrors>> {
+    interface XirrResultExtractor extends Function<StatsWithDeltas, ValueStat> {
     }
 }

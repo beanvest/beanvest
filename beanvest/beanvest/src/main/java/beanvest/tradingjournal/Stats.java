@@ -25,43 +25,44 @@ public class Stats {
     public Result<BigDecimal, UserErrors> unrealizedGain() {
         return valueBasedStats
                 .<Result<BigDecimal, UserErrors>>map(valueStats -> Result.success(valueStats.unrealizedGains()))
-                .orElseGet(() -> Result.failure(UserError.disabled()));
+                .orElseGet(() -> Result.failure(UserError.deltaNotAvailableNoValueStats()));
     }
 
     public Result<Double, UserErrors> xirr() {
-        return valueBasedStats.map(ValueStats::xirr).orElse(Result.failure(UserError.disabled())); //TODO make it optional
+        return valueBasedStats.map(ValueStats::xirr)
+                .orElse(Result.failure(UserError.deltaNotAvailableNoValueStats())); //TODO make it optional
 
     }
 
     public Result<BigDecimal, UserErrors> xirrAsBigDecimal() {
         return valueBasedStats
                 .map(v -> v.xirr().map(BigDecimal::new))
-                .orElse(Result.failure(UserError.disabled()));
+                .orElse(Result.failure(UserError.deltaNotAvailableNoValueStats()));
 
     }
 
     public Result<BigDecimal, UserErrors> getAccountGain() {
         return valueBasedStats
                 .<Result<BigDecimal, UserErrors>>map(valueStats -> Result.success(valueStats.accountGains()))
-                .orElseGet(() -> Result.failure(UserError.disabled()));
+                .orElseGet(() -> Result.failure(UserError.deltaNotAvailableNoValueStats()));
     }
 
     public Result<BigDecimal, UserErrors> holdingsValue() {
         return valueBasedStats
                 .<Result<BigDecimal, UserErrors>>map(valueStats -> Result.success(valueStats.holdingsValue()))
-                .orElseGet(() -> Result.failure(UserError.disabled()));
+                .orElseGet(() -> Result.failure(UserError.deltaNotAvailableNoValueStats()));
     }
 
     public Result<BigDecimal, UserErrors> accountValue() {
         return valueBasedStats
                 .<Result<BigDecimal, UserErrors>>map(valueStats -> Result.success(valueStats.accountValue()))
-                .orElseGet(() -> Result.failure(UserError.disabled()));
+                .orElseGet(() -> Result.failure(UserError.deltaNotAvailableNoValueStats()));
     }
 
     public Result<BigDecimal, UserErrors> xirrValue() {
         return valueBasedStats
                 .map(valueStats -> valueStats.xirr().map(BigDecimal::new))
-                .orElse(Result.failure(UserError.disabled()));
+                .orElse(Result.failure(UserError.deltaNotAvailableNoValueStats()));
     }
 
     public BigDecimal deposits() {

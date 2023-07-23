@@ -50,6 +50,10 @@ public class UserError {
         return new UserErrors(new UserError(UserErrorId.CALCULATION_DISABLED));
     }
 
+    public static UserErrors deltaNotAvailableNoValueStats() {
+        return new UserErrors(new UserError(UserErrorId.DELTA_NOT_AVAILABLE_NO_VALUE_STATS));
+    }
+
     public static UserErrors priceSearchDepthExhaused() {
         return new UserErrors(new UserError(UserErrorId.PRICE_NEEDED));
     }

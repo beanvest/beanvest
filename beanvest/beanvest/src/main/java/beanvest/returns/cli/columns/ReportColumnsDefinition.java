@@ -28,7 +28,7 @@ public class ReportColumnsDefinition {
             new PeriodicValueColumnSpec(ColumnId.UNREALIZED_GAIN, StatsWithDeltas::unrealizedGains),
             new PeriodicValueColumnSpec(ColumnId.HOLDINGS_VALUE, StatsWithDeltas::holdingsValue),
             new PeriodicValueColumnSpec(ColumnId.ACCOUNT_GAIN, StatsWithDeltas::accountGain),
-            new PeriodicXirrColumnSpec(ColumnId.XIRR, Stats::xirr)
+            new PeriodicXirrColumnSpec(ColumnId.XIRR, StatsWithDeltas::xirr)
     );
     public static final List<ColumnId> COLUMNS_NEEDING_VALUATION = List.of(
             ColumnId.UNREALIZED_GAIN,

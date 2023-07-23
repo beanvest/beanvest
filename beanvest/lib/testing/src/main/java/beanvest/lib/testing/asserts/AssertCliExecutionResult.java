@@ -59,7 +59,7 @@ public record AssertCliExecutionResult(CliExecutionResult executionResult) {
                 .lines()
                 .filter(line -> line.strip().length() > 0)
                 .collect(Collectors.joining("\n"));
-        assertEquals(expectedOutput, stdOut, "cli output");
+        assertThat(expectedOutput).as("cli output").isEqualTo(stdOut);
         return this;
     }
 

@@ -30,7 +30,6 @@ public class ErrorsInCliAcceptanceTest {
     }
 
     @Test
-    @Disabled("processing refactor")
     void printsTableJustFineIfXirrIsNotCalculated() {
         dsl.setEnd("2021-03-15");
         dsl.setColumns("xirr");
@@ -40,12 +39,11 @@ public class ErrorsInCliAcceptanceTest {
                 currency GBP
                                 
                 2021-01-01 deposit and buy 1000 VLS for 1000
-                2021-03-15 price VLS 1.4 GBP
                 """);
 
         dsl.verifyOutput("""                                
                 account  xirr
-                trading    pts""");
+                trading      …""");
     }
 
     @Test
