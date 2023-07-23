@@ -1,6 +1,6 @@
 rootProject.name = "beanvest"
 include(
-        "beanvest:acceptancetests",
+        "beanvest:acceptance",
         "beanvest:beanvest",
         "beanvest:lib:clitable",
         "beanvest:lib:jsonassert",

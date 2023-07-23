@@ -2,7 +2,7 @@ plugins {
     id("java")
 }
 
-group = "beanvest.acceptancetests"
+group = "beanvest.acceptance"
 
 dependencies {
     testImplementation(project(":beanvest:beanvest"))
