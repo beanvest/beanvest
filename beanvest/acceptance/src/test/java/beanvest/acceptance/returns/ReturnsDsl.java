@@ -7,12 +7,12 @@ import beanvest.lib.testing.CliExecutionResult;
 import beanvest.lib.testing.TestFiles;
 import beanvest.lib.testing.asserts.AssertCliExecutionResult;
 import beanvest.lib.util.gson.GsonFactory;
-import beanvest.tradingjournal.AccountDto;
-import beanvest.tradingjournal.PortfolioStats;
-import beanvest.tradingjournal.Result;
-import beanvest.tradingjournal.Stat;
-import beanvest.tradingjournal.StatsWithDeltas;
-import beanvest.tradingjournal.ValueStat;
+import beanvest.processor.AccountDto;
+import beanvest.processor.PortfolioStatsDto;
+import beanvest.result.Result;
+import beanvest.processor.StatDto;
+import beanvest.processor.StatsWithDeltasDto;
+import beanvest.processor.ValueStatDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.assertj.core.data.Offset;
@@ -215,23 +215,23 @@ public class ReturnsDsl {
     }
 
     public void verifyFeesTotal(String account, String period, String amount) {
-        verifyStat(account, period, amount, StatsWithDeltas::fees);
+        verifyStat(account, period, amount, StatsWithDeltasDto::fees);
     }
 
     public void verifyRealizedGains(String account, String period, String amount) {
-        verifyStat(account, period, amount, StatsWithDeltas::realizedGain);
+        verifyStat(account, period, amount, StatsWithDeltasDto::realizedGain);
     }
 
     public void verifyUnrealizedGains(String account, String period, String amount) {
-        verifyValueStat(account, period, amount, StatsWithDeltas::unrealizedGains);
+        verifyValueStat(account, period, amount, StatsWithDeltasDto::unrealizedGains);
     }
 
     public void verifyDividends(String account, String period, String amount) {
-        verifyStat(account, period, amount, StatsWithDeltas::dividends);
+        verifyStat(account, period, amount, StatsWithDeltasDto::dividends);
     }
 
     public void verifyCash(String account, String period, String amount) {
-        verifyStat(account, period, amount, StatsWithDeltas::cash);
+        verifyStat(account, period, amount, StatsWithDeltasDto::cash);
     }
 
     public void setDeltas() {
@@ -243,15 +243,15 @@ public class ReturnsDsl {
     }
 
     public void verifyDeposits(String account, String period, String amount) {
-        verifyStat(account, period, amount, StatsWithDeltas::deposits);
+        verifyStat(account, period, amount, StatsWithDeltasDto::deposits);
     }
 
     public void verifyWithdrawals(String account, String period, String amount) {
-        verifyStat(account, period, amount, StatsWithDeltas::withdrawals);
+        verifyStat(account, period, amount, StatsWithDeltasDto::withdrawals);
     }
 
     public void verifyInterest(String account, String period, String amount) {
-        verifyStat(account, period, amount, StatsWithDeltas::interest);
+        verifyStat(account, period, amount, StatsWithDeltasDto::interest);
     }
 
     public void setGroup() {
@@ -300,18 +300,18 @@ public class ReturnsDsl {
     }
 
     public ReturnsDsl verifyAccountGain(String account, String period, String amount) {
-        verifyValueStat(account, period, amount, StatsWithDeltas::accountGain);
+        verifyValueStat(account, period, amount, StatsWithDeltasDto::accountGain);
         return this;
     }
 
     public void verifyXirrCumulative(String account, String period, String amount) {
         verifyValueStat(account, period, amount, r -> {
             var multiplied = r.xirr().stat().getValue().multiply(new BigDecimal(100));
-            return new ValueStat(Result.success(multiplied), Optional.empty());
+            return new ValueStatDto(Result.success(multiplied), Optional.empty());
         });
     }
 
-    private Optional<StatsWithDeltas> getAccountResults(String account, String period) {
+    private Optional<StatsWithDeltasDto> getAccountResults(String account, String period) {
         var periodStats = getAccountResults(account).periodStats;
         if (!periodStats.containsKey(period)) {
             throw new RuntimeException("Stats for period `" + period + "` for account `" + account + "` requested but not found. Periods available for this account: "
@@ -327,11 +327,11 @@ public class ReturnsDsl {
                 .isFalse();
     }
 
-    private Optional<StatsWithDeltas> getAccountPeriodReturns(String account) {
+    private Optional<StatsWithDeltasDto> getAccountPeriodReturns(String account) {
         return getAccountPeriodReturns(account, TOTAL);
     }
 
-    private Optional<StatsWithDeltas> getAccountPeriodReturns(String account, String period) {
+    private Optional<StatsWithDeltasDto> getAccountPeriodReturns(String account, String period) {
         final AccountDto returnsDslAccountDto = getAccountResults(account);
         return Optional.ofNullable(returnsDslAccountDto.periodStats().get(period));
     }
@@ -362,17 +362,17 @@ public class ReturnsDsl {
     }
 
     public void verifyValue(String account, String period, String amount) {
-        verifyValueStat(account, period, amount, StatsWithDeltas::accountValue);
+        verifyValueStat(account, period, amount, StatsWithDeltasDto::accountValue);
     }
 
     public void setCliOutput() {
         cliOptions.jsonOutput = false;
     }
 
-    private PortfolioStats getResultDto() {
+    private PortfolioStatsDto getResultDto() {
         var stdout = cliRunResult.stdOut();
         try {
-            return GSON.fromJson(stdout, PortfolioStats.class);
+            return GSON.fromJson(stdout, PortfolioStatsDto.class);
         } catch (JsonSyntaxException e) {
             throw new RuntimeException("Exception thrown while parsing json: " + stdout, e);
         }
@@ -447,7 +447,7 @@ public class ReturnsDsl {
         verifyStatDelta(account, period, expectedAmount, r -> r.fees().delta());
     }
 
-    private void verifyStatDelta(String account, String period, String expectedAmount, Function<StatsWithDeltas, Optional<BigDecimal>> statExtractor) {
+    private void verifyStatDelta(String account, String period, String expectedAmount, Function<StatsWithDeltasDto, Optional<BigDecimal>> statExtractor) {
         var result = getAccountResults(account, period).get();
         var actual = statExtractor.apply(result).get();
         assertThat(actual)
@@ -455,7 +455,7 @@ public class ReturnsDsl {
                 .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
     }
 
-    private void verifyValueStat(String account, String period, String expectedAmount, Function<StatsWithDeltas, ValueStat> valueStatExtractor) {
+    private void verifyValueStat(String account, String period, String expectedAmount, Function<StatsWithDeltasDto, ValueStatDto> valueStatExtractor) {
         var result = getAccountResults(account, period).get();
         var value = valueStatExtractor.apply(result).stat().getValue();
         assertThat(value)
@@ -463,7 +463,7 @@ public class ReturnsDsl {
                 .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
     }
 
-    private void verifyStat(String account, String period, String expectedAmount, Function<StatsWithDeltas, Stat> valueStatExtractor) {
+    private void verifyStat(String account, String period, String expectedAmount, Function<StatsWithDeltasDto, StatDto> valueStatExtractor) {
         var result = getAccountResults(account, period).get();
         var value = valueStatExtractor.apply(result).stat();
         assertThat(value)

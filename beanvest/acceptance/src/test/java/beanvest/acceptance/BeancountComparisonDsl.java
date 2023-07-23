@@ -3,7 +3,7 @@ package beanvest.acceptance;
 import beanvest.lib.testing.AppRunner;
 import beanvest.lib.testing.TestFiles;
 import beanvest.lib.util.gson.GsonFactory;
-import beanvest.tradingjournal.PortfolioStats;
+import beanvest.processor.PortfolioStatsDto;
 
 import com.opencsv.exceptions.CsvException;
 import org.junit.jupiter.api.Disabled;
@@ -18,7 +18,7 @@ public class BeancountComparisonDsl {
     private final AppRunner exportRunner;
     private final AppRunner returnsRunner;
     private BeanReport.Holdings bcHoldings;
-    private PortfolioStats bvStats;
+    private PortfolioStatsDto bvStats;
 
     public BeancountComparisonDsl(AppRunner exportRunner, AppRunner returnsRunner) {
 
@@ -32,7 +32,7 @@ public class BeancountComparisonDsl {
 
             var returnsResult = returnsRunner.runSuccessfully(List.of(path.toString(), "--json"));
             var cliOutput = returnsRunner.runSuccessfully(List.of(path.toString()));
-            bvStats = GsonFactory.createWithProjectDefaults().fromJson(returnsResult.stdOut(), PortfolioStats.class);
+            bvStats = GsonFactory.createWithProjectDefaults().fromJson(returnsResult.stdOut(), PortfolioStatsDto.class);
 
             var exportResult = exportRunner.runSuccessfully(List.of(path.toString()));
             var bcJournalFile = TestFiles.writeToTempFile(exportResult.stdOut() + """

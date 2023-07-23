@@ -1,10 +1,10 @@
 package beanvest;
 
 import beanvest.lib.util.apprunner.BaseMain;
-import beanvest.export.ExportCliCommand;
-import beanvest.importer.ImportCliCommand;
-import beanvest.journal.JournalCliCommand;
-import beanvest.returns.ReturnsCliCommand;
+import beanvest.module.export.ExportCliCommand;
+import beanvest.module.importer.ImportCliCommand;
+import beanvest.module.journal.JournalCliCommand;
+import beanvest.module.returns.ReturnsCliCommand;
 import picocli.CommandLine;
 
 import java.io.PrintStream;
