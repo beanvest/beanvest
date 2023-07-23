@@ -1,14 +1,21 @@
 # Beanvest
 
-## Supported JDK
-Java 17 is minimum required. Application can be built to native binaries using GraalVM. It can be downloaded from official website: https://www.graalvm.org/downloads/#
+## Dev env
+Nix shell configuration for development is provided. Once you get [Nix](https://nixos.org/) you can get straight
+into configured shell with `nix-shell`. You can see list of tools needed in [shell.nix](shell.nix)
 
-## Running tests
+## Building
+- building everything
+```bash
+pre-commit run
+```
+
+- bunning tests
 ```bash
 ./gradlew test
 ```
 
-## Building binaries
+- building binaries
 ```bash
 ./gradlew nativeCompile
 ```
