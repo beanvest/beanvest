@@ -32,7 +32,9 @@ public class AccountStatsCollector {
             var sortedTimepoints = new TreeSet<>(periods);
 
             for (var timePoint : sortedTimepoints) {
-                if (!accountMetadata.firstActivity().isAfter(timePoint.endDate())) {
+                var isOpenYet = !accountMetadata.firstActivity().isAfter(timePoint.endDate());
+                var isClosedAlready = accountMetadata.closingDate().map(date -> date.isBefore(timePoint.startDate())).orElse(false);
+                if (isOpenYet && !isClosedAlready) {
                     var stats = results.get(account).get(timePoint);
                     statsByPeriod.put(timePoint.title(), stats);
                 }

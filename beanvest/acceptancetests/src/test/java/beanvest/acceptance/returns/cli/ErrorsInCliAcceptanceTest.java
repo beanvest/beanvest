@@ -47,7 +47,6 @@ public class ErrorsInCliAcceptanceTest {
     }
 
     @Test
-    @Disabled("processing refactor")
     void printsTripleDotIfAccountWasClosedInTheInterval() {
         dsl.setStartDate("2020-01-15");
         dsl.setEnd("2022-01-01");
