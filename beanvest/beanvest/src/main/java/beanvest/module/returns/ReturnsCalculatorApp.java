@@ -36,14 +36,13 @@ public class ReturnsCalculatorApp {
                       Optional<PeriodInterval> maybeInterval) {
         boolean isSuccessful = true;
         try {
-            var fullJournal = journalParser.parse(journalsPaths);
-            var filteredJournal = fullJournal.filterByAccount(accountFilter);
-            var startDate = maybeStart.orElse(fullJournal.getStartDate());
-            var periods = maybeInterval.map(interval -> calendar.calculatePeriods(interval, filteredJournal.getStartDate(), endDate))
+            var journal = journalParser.parse(journalsPaths);
+            var startDate = maybeStart.orElse(journal.getStartDate());
+            var periods = maybeInterval.map(interval -> calendar.calculatePeriods(interval, journal.getStartDate(), endDate))
                     .orElseGet(() -> List.of(new Period(startDate, endDate, "TOTAL")));
             var statsMode = deltas ? CollectionMode.DELTA : CollectionMode.CUMULATIVE;
             var grouping = group ? Grouping.WITH_GROUPS : Grouping.NO_GROUPS;
-            var statsResult = statsCalculator.calculateStats(filteredJournal, periods, grouping);
+            var statsResult = statsCalculator.calculateStats(journal, accountFilter, periods, grouping);
 
             if (statsResult.hasError()) {
                 outputWriter.outputInputErrors(statsResult.getError().errors);

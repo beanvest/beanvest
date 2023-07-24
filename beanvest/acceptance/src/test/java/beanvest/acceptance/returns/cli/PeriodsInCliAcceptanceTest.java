@@ -79,6 +79,30 @@ public class PeriodsInCliAcceptanceTest {
     }
 
     @Test
+    @Disabled
+    void showsResultsOnlyStartingFromStartDate() {
+        dsl.setEnd("2023-01-01");
+        dsl.setStartDate("2021-01-01");
+        dsl.setYearly();
+        dsl.setDeltas();
+        dsl.setColumns("deps");
+
+        dsl.runCalculateReturns("""
+                account isa
+                currency GBP
+                                
+                2020-01-01 deposit 100
+                2021-01-01 deposit 100
+                2022-01-01 deposit 100
+                """);
+
+        dsl.verifyOutput("""
+                        ╷ 2022  ╷ 2021  ╷
+                account │ Δdeps │ Δdeps │
+                isa     │   100 │   100 │""");
+    }
+
+    @Test
     @Disabled("moving deltas to postprocess")
     void calculatesDeltasInQuarterlyIntervalsPeriodic() {
         dsl.setEnd("2021-05-01");

@@ -1,32 +1,37 @@
 package beanvest.processor;
 
-import beanvest.processor.calendar.Period;
-import beanvest.result.Result;
 import beanvest.journal.Journal;
-import beanvest.result.UserErrors;
+import beanvest.processor.calendar.Period;
 import beanvest.processor.processing.EndOfPeriodTracker;
 import beanvest.processor.processing.Grouping;
 import beanvest.processor.processing.StatsCollectingJournalProcessor;
 import beanvest.processor.processing.collector.AccountStatsGatherer;
+import beanvest.result.Result;
+import beanvest.result.UserErrors;
 
 import java.util.List;
 
 public class JournalProcessor {
     private final AccountStatsGatherer periodStatsCollector = new AccountStatsGatherer();
+    private final PredicateFactory predicateFactory = new PredicateFactory();
 
     public Result<PortfolioStatsDto, UserErrors> calculateStats(
             Journal journal,
+            String accountFilter,
             List<Period> periods,
             Grouping grouping) {
 
+
         var journalProcessor = new StatsCollectingJournalProcessor(grouping);
         var endOfPeriodTracker = new EndOfPeriodTracker(periods, period -> finishPeriod(period, journalProcessor));
+
+        var predicate = predicateFactory.buildPredicate(accountFilter, periods);
+
         journal.process(entry -> {
-            if (entry.date().isAfter(periods.get(periods.size()-1).endDate())) {
-                return;
+            if (predicate.test(entry)) {
+                endOfPeriodTracker.process(entry);
+                journalProcessor.process(entry);
             }
-            endOfPeriodTracker.process(entry);
-            journalProcessor.process(entry);
         });
         endOfPeriodTracker.finishRemainingPeriods();
 
