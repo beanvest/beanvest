@@ -4,6 +4,7 @@ import beanvest.processor.ValueStatsDto;
 import beanvest.journal.entry.Entry;
 import beanvest.processor.processing.calculator.AccountGainCalculator;
 import beanvest.processor.processing.calculator.AccountValueCalculator;
+import beanvest.processor.processing.calculator.TotalFeesCalculator;
 import beanvest.processor.processing.calculator.TotalValueCalculator;
 import beanvest.processor.processing.collector.DepositCollector;
 import beanvest.processor.processing.collector.DividendCollector;
@@ -43,14 +44,16 @@ public class FullAccountStatsCalculator implements Collector {
     private final RealizedGainsCollector realizedGainsCollector = new RealizedGainsCollector(holdingsCollector);
     private final AccountOpenDatesCollector accountOpenDatesCollector = new AccountOpenDatesCollector();
     private final FullCashFlowCollector fullCashFlowCollector = new FullCashFlowCollector();
-    private final HoldingsValueCalculator holdingsValueCalculator;
-    private final XirrCalculator xirrCalculator;
+
+    private final AccountGainCalculator accountGainCalculator;
+    private final AccountValueCalculator accountValueCalculator;
     private final CashCalculator cashCalculator;
     private final HoldingsCostCalculator holdingsCostCalculator;
-    private final AccountGainCalculator accountGainCalculator;
+    private final HoldingsValueCalculator holdingsValueCalculator;
+    private final TotalFeesCalculator totalFeesCalculator;
     private final TotalValueCalculator totalValueCalculator;
     private final UnrealizedGainsCalculator unrealizedGainsCalculator;
-    private final AccountValueCalculator accountValueCalculator;
+    private final XirrCalculator xirrCalculator;
     private final List<Collector> collectors = List.of(
             holdingsCollector,
             realizedGainsCollector,
@@ -77,6 +80,7 @@ public class FullAccountStatsCalculator implements Collector {
         xirrCalculator = new XirrCalculator(fullCashFlowCollector, totalValueCalculator);
         accountValueCalculator = new AccountValueCalculator(holdingsValueCalculator, cashCalculator);
         accountGainCalculator = new AccountGainCalculator(depositCollector, withdrawalsCollector, accountValueCalculator);
+        totalFeesCalculator = new TotalFeesCalculator(simpleFeeCollector, transactionFeeCollector);
     }
 
     @Override
@@ -90,7 +94,7 @@ public class FullAccountStatsCalculator implements Collector {
         var cashStats = new CashStats(depositCollector.balance(),
                 withdrawalsCollector.balance(),
                 interestCollector.balance(),
-                simpleFeeCollector.balance().add(transactionFeeCollector.balance()),
+                totalFeesCalculator.balance(),
                 dividendCollector.balance(),
                 realizedGainsCollector.balance(),
                 cashCalculator.balance()
