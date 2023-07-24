@@ -1,7 +1,7 @@
 package beanvest.module.returns.cli.columns;
 
 import beanvest.result.Result;
-import beanvest.result.UserErrorId;
+import beanvest.result.ErrorEnum;
 import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
@@ -18,10 +18,10 @@ public class ColumnValueFormatter {
 
     public static String formatMoney(boolean exact, Optional<BigDecimal> delta) {
         return delta.map(val -> String.format(exact ? "%,.2f" : "%,.0f", val))
-                .orElseGet(() -> formatError(UserErrorId.DELTA_NOT_AVAILABLE));
+                .orElseGet(() -> formatError(ErrorEnum.DELTA_NOT_AVAILABLE));
     }
 
-    public static String formatError(UserErrorId error) {
+    public static String formatError(ErrorEnum error) {
         return switch (error) {
             case ACCOUNT_NOT_OPEN_YET,
                     XIRR_NO_TRANSACTIONS,
@@ -37,7 +37,7 @@ public class ColumnValueFormatter {
     }
 
     public static String formatError(UserErrors err) {
-        return formatError(err.errors.get(0).id);
+        return formatError(err.errors.get(0).error());
     }
 
     public static String formatXirr(double value) {

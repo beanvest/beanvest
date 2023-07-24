@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class EmptyAccountClosingValidator implements JournalValidator {
     @Override
-    public List<JournalValidationError> validate(List<Entry> dayops, Map<String, AccountState> accounts) {
+    public List<JournalValidationErrorErrorWithMessage> validate(List<Entry> dayops, Map<String, AccountState> accounts) {
         Close closeEntry = null;
         for (var op : dayops) {
             if (op instanceof Close c && c.security().isEmpty()) {
@@ -26,8 +26,8 @@ public class EmptyAccountClosingValidator implements JournalValidator {
         var holdings1 = account.getHoldings();
         if (!holdings1.isEmpty() || hasCash) {
             return List.of(
-                    new JournalValidationError("Account `" + closeEntry.account() + "` is not empty on "
-                            + dayops.get(0).date() + " and can't be closed. Inventory: " + holdings1.asList() + " and " + cash + " GBP cash", closeEntry.originalLine().toString(), List.of()));
+                    new JournalValidationErrorErrorWithMessage("Account `" + closeEntry.account() + "` is not empty on "
+                                                               + dayops.get(0).date() + " and can't be closed. Inventory: " + holdings1.asList() + " and " + cash + " GBP cash", closeEntry.originalLine().toString()));
         } else {
             return List.of();
         }

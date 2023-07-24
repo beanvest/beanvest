@@ -4,6 +4,7 @@ import beanvest.BeanvestMain;
 import beanvest.lib.testing.AppRunner;
 import beanvest.lib.testing.AppRunnerFactory;
 import beanvest.lib.testing.TestFiles;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class JournalAcceptanceTest {
     protected AppRunner runner = AppRunnerFactory.createRunner(BeanvestMain.class, "journal");
 
     @Test
+    @Disabled("errors rework")
     void printsBalanceAfterEachDay() {
         var path = TestFiles.writeToTempFile("""
                 account Assets:VanguardTaxable

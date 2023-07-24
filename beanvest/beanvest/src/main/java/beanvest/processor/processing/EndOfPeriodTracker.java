@@ -23,7 +23,8 @@ public class EndOfPeriodTracker {
     public void process(Entry entry) {
         if (this.currentPeriod == null) {
             currentPeriod = 0;
-        } else if (entry.date().isAfter(periods.get(currentPeriod).endDate())) {
+        }
+        while (entry.date().isAfter(periods.get(currentPeriod).endDate())) {
             finishCurrentPeriod();
         }
     }

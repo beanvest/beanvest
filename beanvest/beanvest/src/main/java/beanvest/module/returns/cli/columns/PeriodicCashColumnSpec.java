@@ -2,7 +2,7 @@ package beanvest.module.returns.cli.columns;
 
 import beanvest.processor.StatDto;
 import beanvest.processor.StatsWithDeltasDto;
-import beanvest.result.UserErrorId;
+import beanvest.result.ErrorEnum;
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.ColumnPadding;
 import beanvest.module.returns.cli.AccountPeriod;
@@ -26,7 +26,7 @@ record PeriodicCashColumnSpec(ColumnId columnId,
                                 return ColumnValueFormatter.formatMoney(exact, extractor.apply(stats).stat());
                             }
                         })
-                        .orElseGet(() -> ColumnValueFormatter.formatError(UserErrorId.ACCOUNT_NOT_OPEN_YET)));
+                        .orElseGet(() -> ColumnValueFormatter.formatError(ErrorEnum.ACCOUNT_NOT_OPEN_YET)));
     }
 
 }

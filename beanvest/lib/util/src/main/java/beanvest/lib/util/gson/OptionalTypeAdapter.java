@@ -13,6 +13,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Optional;
 
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class OptionalTypeAdapter<E> extends TypeAdapter<Optional<E>> {
 
     public static final TypeAdapterFactory FACTORY = new TypeAdapterFactory() {

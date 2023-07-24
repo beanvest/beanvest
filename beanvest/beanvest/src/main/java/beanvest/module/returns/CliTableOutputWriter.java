@@ -1,10 +1,10 @@
 package beanvest.module.returns;
 
 import beanvest.processor.JournalNotFoundException;
-import beanvest.processor.validation.JournalValidationError;
+import beanvest.processor.validation.JournalValidationErrorErrorWithMessage;
 import beanvest.processor.PortfolioStatsDto;
-import beanvest.result.UserError;
 import beanvest.module.returns.cli.CliTablePrinter;
+import beanvest.result.UserError;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -32,8 +32,8 @@ public class CliTableOutputWriter implements CliOutputWriter {
         if (errors.size() > 0) {
             stdErr.println("====> Ooops! Validation " + (errors.size() > 1 ? "errors:" : "error:"));
             errors.forEach(err -> {
-                if (err instanceof JournalValidationError vErr) {
-                    stdErr.println(vErr.message + "\n  @ " + vErr.journalLine);
+                if (err instanceof JournalValidationErrorErrorWithMessage vErr) {
+                    stdErr.println(vErr.getMessage());
                 } else {
                     throw new UnsupportedOperationException("Unsupported error: " + err.getClass().getName());
                 }
@@ -46,9 +46,10 @@ public class CliTableOutputWriter implements CliOutputWriter {
         stdErr.printf("Journal `%s` not found%n%n", e.journalPath);
     }
 
-    private void displayWarnings(List<UserError> userErrors) {
-        userErrors
-                .forEach(e -> stdErr.println(e.message));
+    private void displayWarnings(List<UserError> plainErrors) {
+        plainErrors
+                .stream().filter(UserError::hasMessage)
+                .forEach(e -> stdErr.println(e.getMessage()));
     }
 
     private List<UserError> extractPricesMissingErrors(PortfolioStatsDto periodStats) {

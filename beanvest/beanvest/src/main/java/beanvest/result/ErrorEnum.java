@@ -1,6 +1,6 @@
 package beanvest.result;
 
-public enum UserErrorId {
+public enum ErrorEnum {
     PRICE_NEEDED,
     ACCOUNT_NOT_OPEN_YET,
     XIRR_CALCULATION_FAILURE,

@@ -5,7 +5,7 @@ import beanvest.lib.clitable.ColumnPadding;
 import beanvest.module.returns.cli.AccountPeriod;
 import beanvest.processor.StatsWithDeltasDto;
 import beanvest.processor.ValueStatDto;
-import beanvest.result.UserErrorId;
+import beanvest.result.ErrorEnum;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -23,7 +23,7 @@ record PeriodicXirrColumnSpec(ColumnId columnId, XirrResultExtractor extractor) 
         return maybeStats.map(stats -> extractor.apply(stats).stat().fold(
                         gainValue -> ColumnValueFormatter.formatXirr(gainValue.doubleValue()),
                         ColumnValueFormatter::formatError))
-                .orElse(ColumnValueFormatter.formatError(UserErrorId.ACCOUNT_NOT_OPEN_YET));
+                .orElse(ColumnValueFormatter.formatError(ErrorEnum.ACCOUNT_NOT_OPEN_YET));
     }
 
 

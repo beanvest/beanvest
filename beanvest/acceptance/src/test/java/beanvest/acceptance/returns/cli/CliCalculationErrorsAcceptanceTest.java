@@ -42,7 +42,7 @@ public class CliCalculationErrorsAcceptanceTest {
 
         dsl.verifyOutput("""                                
                 account  xirr
-                trading      …""");
+                trading     PN""");
     }
 
     @Test

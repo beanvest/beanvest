@@ -1,8 +1,9 @@
-package beanvest.processor.pricebook;
+package beanvest.processor.deprecated;
 
+import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.result.Result;
 import beanvest.journal.Holdings;
-import beanvest.result.UserError;
+import beanvest.result.ErrorFactory;
 import beanvest.result.UserErrors;
 import beanvest.journal.Value;
 import beanvest.journal.entry.Price;
@@ -14,6 +15,12 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+/**
+ * @see LatestPricesBook
+ * @deprecated with latest refactoring we don't need to store historic prices anymore
+ *      which greatly simplifies implementation
+ */
+@Deprecated
 public class PriceBook {
     public static final int DEPTH_LIMIT = 1;
     private final Map<CurrencyPair, List<Price>> prices = new HashMap<>();
@@ -39,12 +46,12 @@ public class PriceBook {
         var lastPrice = last.get();
 
         if (lastPrice == null) {
-            return Result.failure(UserError.priceNotFound(commodity, currency, date));
+            return Result.failure(ErrorFactory.priceNotFound(commodity, currency, date, Optional.empty()));
         }
 
         var daysSinceLastPrice = DAYS.between(lastPrice.date(), date);
         if (daysSinceLastPrice > 7) {
-            return Result.failure(UserError.priceNotFound(commodity, currency, date, lastPrice));
+            return Result.failure(ErrorFactory.priceNotFound(commodity, currency, date, Optional.of(lastPrice)));
         }
 
         return Result.success(lastPrice.price());
@@ -80,7 +87,7 @@ public class PriceBook {
 
     private Result<Value, UserErrors> convertInternal(LocalDate date, String targetCurrency, Value value, int depth) {
         if (depth > DEPTH_LIMIT) {
-            return Result.failure(UserError.priceSearchDepthExhaused());
+            return Result.failure(ErrorFactory.priceSearchDepthExhaused());
         }
         if (targetCurrency.equals(value.commodity())) {
             return Result.success(value);

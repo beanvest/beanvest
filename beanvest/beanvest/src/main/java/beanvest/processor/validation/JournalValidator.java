@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface JournalValidator {
-    List<JournalValidationError> validate(List<Entry> dayops, Map<String, AccountState> accounts);
+    List<JournalValidationErrorErrorWithMessage> validate(List<Entry> dayops, Map<String, AccountState> accounts);
 }

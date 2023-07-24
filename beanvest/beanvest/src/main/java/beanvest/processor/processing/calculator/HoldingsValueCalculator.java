@@ -20,15 +20,15 @@ public class HoldingsValueCalculator {
         this.pricesBook = pricesBook;
     }
 
-    public Result<Value, UserErrors> calculateValue(LocalDate endingDate, String targetCurrency) {
+    public Result<BigDecimal, UserErrors> calculateValue(LocalDate endingDate, String targetCurrency) {
         BigDecimal total = BigDecimal.ZERO;
         for (Holding holding : holdingsCollector.getHoldings()) {
             var converted = pricesBook.convert(endingDate, targetCurrency, holding.asValue());
             if (converted.hasError()) {
-                return converted;
+                return converted.map(Value::amount);
             }
             total = total.add(converted.getValue().amount());
         }
-        return Result.success(Value.of(total, targetCurrency));
+        return Result.success(total);
     }
 }

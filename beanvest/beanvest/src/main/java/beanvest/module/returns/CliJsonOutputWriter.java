@@ -1,7 +1,7 @@
 package beanvest.module.returns;
 
 import beanvest.processor.JournalNotFoundException;
-import beanvest.processor.validation.JournalValidationError;
+import beanvest.processor.validation.JournalValidationErrorErrorWithMessage;
 import beanvest.processor.PortfolioStatsDto;
 import beanvest.result.UserError;
 import com.google.gson.Gson;
@@ -33,8 +33,8 @@ public class CliJsonOutputWriter implements CliOutputWriter {
         if (errors.size() > 0) {
             stdErr.println("====> Ooops! Validation " + (errors.size() > 1 ? "errors:" : "error:"));
             errors.forEach(err -> {
-                if (err instanceof JournalValidationError vErr) {
-                    stdErr.println(vErr.message + "\n  @ " + vErr.journalLine);
+                if (err instanceof JournalValidationErrorErrorWithMessage vErr) {
+                    stdErr.println(vErr.getMessage());
                 } else {
                     throw new UnsupportedOperationException("Unsupported error: " + err.getClass().getName());
                 }
@@ -47,9 +47,9 @@ public class CliJsonOutputWriter implements CliOutputWriter {
         stdErr.printf("Journal `%s` not found%n%n", e.journalPath);
     }
 
-    private void displayWarnings(List<UserError> userErrors) {
-        userErrors
-                .forEach(e -> stdErr.println(e.message));
+    private void displayWarnings(List<UserError> errors) {
+        errors
+                .forEach(e -> stdErr.println(e.maybeMessage()));
     }
 
     private List<UserError> extractPricesMissingErrors(PortfolioStatsDto periodStats) {

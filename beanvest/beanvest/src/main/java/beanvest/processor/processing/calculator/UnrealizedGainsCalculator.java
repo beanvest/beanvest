@@ -18,6 +18,6 @@ public class UnrealizedGainsCalculator {
     public Result<BigDecimal, UserErrors> calculate(LocalDate endingDate, String targetCurrency)
     {
         var holdingsValue = holdingsValueCalculator.calculateValue(endingDate, targetCurrency);
-        return holdingsValue.map(value -> value.amount().subtract(holdingsCostCalculator.get()));
+        return holdingsValue.map(value -> value.subtract(holdingsCostCalculator.get()));
     }
 }

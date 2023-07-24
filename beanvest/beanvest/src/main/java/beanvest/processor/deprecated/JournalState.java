@@ -1,9 +1,8 @@
 package beanvest.processor.deprecated;
 
-import beanvest.processor.validation.JournalValidationError;
+import beanvest.processor.validation.JournalValidationErrorErrorWithMessage;
 import beanvest.journal.CashFlow;
 import beanvest.journal.Holdings;
-import beanvest.processor.pricebook.PriceBook;
 import beanvest.processor.processing.StatsCollectingJournalProcessor;
 
 import java.time.LocalDate;
@@ -18,7 +17,7 @@ import java.util.stream.Stream;
 @Deprecated
 public record JournalState(LocalDate date, Map<String, AccountState> accounts, PriceBook priceBook,
                            List<CashFlow> cashFlows,
-                           List<JournalValidationError> validationErrors) {
+                           List<JournalValidationErrorErrorWithMessage> validationErrors) {
 
     public List<AccountState> getAccounts(String accountPattern) {
         return accounts.entrySet()

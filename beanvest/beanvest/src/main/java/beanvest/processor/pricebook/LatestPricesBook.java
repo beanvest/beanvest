@@ -1,7 +1,7 @@
 package beanvest.processor.pricebook;
 
 import beanvest.result.Result;
-import beanvest.result.UserError;
+import beanvest.result.ErrorFactory;
 import beanvest.result.UserErrors;
 import beanvest.journal.Value;
 import beanvest.journal.entry.Price;
@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -26,7 +27,7 @@ public class LatestPricesBook {
         var currencyPair = getCurrencyPair(commodity, currency);
         var latestPrice = this.prices.get(currencyPair);
         if (latestPrice == null) {
-            return Result.failure(UserError.priceNotFound(commodity, currency, date));
+            return Result.failure(ErrorFactory.priceNotFound(commodity, currency, date, Optional.empty()));
         }
 
         if (latestPrice.date().isAfter(date)) {
@@ -35,7 +36,7 @@ public class LatestPricesBook {
 
         var daysSinceLastPrice = DAYS.between(latestPrice.date(), date);
         if (daysSinceLastPrice > 7) {
-            return Result.failure(UserError.priceNotFound(commodity, currency, date, latestPrice));
+            return Result.failure(ErrorFactory.priceNotFound(commodity, currency, date, Optional.of(latestPrice)));
         }
 
         return Result.success(latestPrice.price());
@@ -55,7 +56,7 @@ public class LatestPricesBook {
 
     private Result<Value, UserErrors> convertRecursively(LocalDate date, String targetCurrency, Value value, int depth) {
         if (depth > DEPTH_LIMIT) {
-            return Result.failure(UserError.priceSearchDepthExhaused());
+            return Result.failure(ErrorFactory.priceSearchDepthExhaused());
         }
 
         if (value.amount().compareTo(BigDecimal.ZERO) == 0) {

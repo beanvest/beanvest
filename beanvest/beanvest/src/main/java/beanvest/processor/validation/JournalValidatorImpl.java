@@ -12,7 +12,7 @@ public class JournalValidatorImpl {
             new BalanceValidator()
     );
 
-    public List<JournalValidationError> validate(AccountStatesSet accountStatesSet, List<Entry> dayops) {
+    public List<JournalValidationErrorErrorWithMessage> validate(AccountStatesSet accountStatesSet, List<Entry> dayops) {
         return validators.stream()
                 .flatMap(v -> v.validate(dayops, accountStatesSet.getAccounts()).stream())
                 .toList();

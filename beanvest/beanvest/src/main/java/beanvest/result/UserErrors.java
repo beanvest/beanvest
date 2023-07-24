@@ -6,8 +6,8 @@ import java.util.List;
 public class UserErrors {
     public List<UserError> errors = new ArrayList<>();
 
-    public UserErrors(UserErrorId id, String error) {
-        errors.add(new UserError(id, error));
+    public UserErrors(ErrorEnum id) {
+        errors.add(new UserError(id));
     }
 
     public UserErrors(UserError err) {
@@ -18,8 +18,10 @@ public class UserErrors {
         this.errors.addAll(errors);
     }
 
-    public List<UserErrorId> getIds() {
-        return errors.stream().map(e -> e.id).toList();
+    public List<ErrorEnum> getEnums() {
+        return errors.stream()
+                .map(UserError::error)
+                .toList();
     }
 
     public void addAll(UserErrors errors) {
@@ -28,12 +30,5 @@ public class UserErrors {
 
     public boolean isEmpty() {
         return errors.isEmpty();
-    }
-
-    @Override
-    public String toString() {
-        return "UserErrors{" +
-                "errors=" + errors +
-                '}';
     }
 }

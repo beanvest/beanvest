@@ -4,6 +4,7 @@ import beanvest.journal.CashStats;
 import beanvest.result.Result;
 import beanvest.journal.Stats;
 import beanvest.processor.ValueStatsDto;
+import beanvest.result.ErrorFactory;
 import beanvest.result.UserError;
 import beanvest.result.UserErrors;
 import beanvest.processor.processing.DeltaCalculator;
@@ -73,14 +74,25 @@ class DeltaCalculatorTest {
 
     Stats buildStats(String deposit) {
         return new Stats(new CashStats(new BigDecimal(deposit), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO),
-                Optional.empty());
+                new ValueStatsDto(
+                        Result.failure(ErrorFactory.accountNotOpenYet()),
+                        Result.failure(ErrorFactory.accountNotOpenYet()),
+                        Result.failure(ErrorFactory.accountNotOpenYet()),
+                        Result.failure(ErrorFactory.accountNotOpenYet()),
+                        Result.failure(ErrorFactory.accountNotOpenYet())
+                ));
     }
 
     Stats buildStats(String deposit, Optional<String> xirr) {
-        var bigDecimalObjectResult = xirr
+        var xirrResult = xirr
                 .<Result<BigDecimal, UserErrors>>map(result -> Result.success(new BigDecimal(result)))
-                .orElseGet(() -> Result.failure(UserError.disabled()));
+                .orElseGet(() -> Result.failure(ErrorFactory.disabled()));
         return new Stats(new CashStats(new BigDecimal(deposit), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO),
-                Optional.of(new ValueStatsDto(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, bigDecimalObjectResult.map(BigDecimal::doubleValue))));
+                new ValueStatsDto(
+                        Result.failure(ErrorFactory.accountNotOpenYet()),
+                        Result.failure(ErrorFactory.accountNotOpenYet()),
+                        Result.failure(ErrorFactory.accountNotOpenYet()),
+                        Result.failure(ErrorFactory.accountNotOpenYet()),
+                        xirrResult));
     }
 }

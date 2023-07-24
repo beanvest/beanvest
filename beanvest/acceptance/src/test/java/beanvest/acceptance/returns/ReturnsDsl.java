@@ -9,6 +9,7 @@ import beanvest.lib.testing.asserts.AssertCliExecutionResult;
 import beanvest.lib.util.gson.GsonFactory;
 import beanvest.processor.AccountDto;
 import beanvest.processor.PortfolioStatsDto;
+import beanvest.result.ErrorEnum;
 import beanvest.result.Result;
 import beanvest.processor.StatDto;
 import beanvest.processor.StatsWithDeltasDto;
@@ -473,6 +474,12 @@ public class ReturnsDsl {
 
     public void verifyXirrPeriodic(String account, String period, String expectedAmount) {
         throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    public void verifyXirrError(String account, String period, String error) {
+        var result = getAccountPeriodReturns(account, period).get();
+        assertThat(result.xirr().stat().getError().getEnums())
+                .isEqualTo(List.of(ErrorEnum.valueOf(error)));
     }
 
     static class CliOptions {

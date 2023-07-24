@@ -2,7 +2,7 @@ package beanvest.processor.processing.calculator;
 
 import beanvest.result.Result;
 import beanvest.journal.CashFlow;
-import beanvest.result.UserError;
+import beanvest.result.ErrorFactory;
 import beanvest.result.UserErrors;
 import beanvest.processor.processing.collector.FullCashFlowCollector;
 import org.decampo.xirr.NonconvergenceException;
@@ -32,23 +32,25 @@ public class XirrCalculator {
         this.totalValueCalculator = totalValueCalculator;
     }
 
-    public Result<Double, UserErrors> xirr(final LocalDate endDate) {
-        var endingValue = totalValueCalculator.calculateValue(endDate, TARGET_CURRENCY).getValue();
+    public Result<BigDecimal, UserErrors> xirr(final LocalDate endDate) {
+        var totalValueResult = totalValueCalculator.calculateValue(endDate, TARGET_CURRENCY);
+        if (totalValueResult.hasError()) {
+            return totalValueResult;
+        }
         var xirrTransactions = convertToXirrTransactions(
-                fullCashFlowCollector.get(), endingValue.amount(),
+                fullCashFlowCollector.get(), totalValueResult.getValue(),
                 endDate);
 
-        Result<Double, UserErrors> err = xirrTransactions.size() >= 2
+        return xirrTransactions.size() >= 2
                 ? calculateStats(xirrTransactions)
-                : Result.failure(UserError.xirrNoTransactions());
-        return err;
+                : Result.failure(ErrorFactory.xirrNoTransactions());
     }
 
-    private Result<Double, UserErrors> calculateStats(List<Transaction> transactions) {
+    private Result<BigDecimal, UserErrors> calculateStats(List<Transaction> transactions) {
         try {
-            return Result.success(Xirr.builder().withGuess(10).withTransactions(transactions).xirr());
+            return Result.success(BigDecimal.valueOf(Xirr.builder().withGuess(10).withTransactions(transactions).xirr()));
         } catch (NonconvergenceException | OverflowException e) {
-            return Result.failure(UserError.xirrCalculationsFailed());
+            return Result.failure(ErrorFactory.xirrCalculationsFailed());
         }
     }
 

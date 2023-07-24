@@ -1,6 +1,6 @@
 package beanvest.processor.deprecated;
 
-import beanvest.processor.validation.JournalValidationError;
+import beanvest.processor.validation.JournalValidationErrorErrorWithMessage;
 import beanvest.processor.validation.JournalValidatorImpl;
 import beanvest.result.Result;
 import beanvest.journal.CashFlowCollector;
@@ -33,7 +33,7 @@ public class JournalEntryProcessor {
 
         var nextSubmitPoint = submitPoints.removeFirst();
         List<UserError> errors = new ArrayList<>();
-        List<JournalValidationError> newErrors = new ArrayList<>();
+        List<JournalValidationErrorErrorWithMessage> newErrors = new ArrayList<>();
         var dayEntriesIterator = journal.getEntriesGroupedByDay().values().iterator();
         var cashflowCollector = new CashFlowCollector();
         var shouldFinish = false;

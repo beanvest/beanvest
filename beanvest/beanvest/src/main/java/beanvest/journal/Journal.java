@@ -3,7 +3,7 @@ package beanvest.journal;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Price;
-import beanvest.processor.pricebook.PriceBook;
+import beanvest.processor.deprecated.PriceBook;
 
 import java.time.LocalDate;
 import java.util.*;

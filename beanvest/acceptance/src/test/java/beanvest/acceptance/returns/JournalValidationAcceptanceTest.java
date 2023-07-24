@@ -3,29 +3,28 @@ package beanvest.acceptance.returns;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("processing refactor")
 public class JournalValidationAcceptanceTest {
     protected ReturnsDsl dsl = new ReturnsDsl();
     @Test
     void shouldNotShowStatsForPeriodIfPriceGapIsTooBig() {
-        dsl.setEnd("2021-12-31");
+        dsl.setEnd("2021-01-01");
         dsl.setYearly();
 
         dsl.runCalculateReturns("""
                 account pension
                 currency GBP
                                 
-                2019-01-01 deposit and buy 1 MSFT for 1000
-                2019-12-31 price MSFT 1001 GBP
-                2021-12-31 price MSFT 1002 GBP
+                2020-01-01 deposit and buy 1 MSFT for 1000
+                2020-12-20 price MSFT 1001 GBP
                 """);
 
-        dsl.verifyHasStats("pension", "2019");
-        dsl.verifyHasNoStats("pension", "2020"); //lack of price needed for calculation of ending value
-        dsl.verifyHasNoStats("pension", "2021"); //lack of price needed for calculation of starting value
+        dsl.verifyCash("pension", "2020", "0");
+        dsl.verifyXirrNotPresent("pension", "2020");
+        dsl.verifyXirrError("pension", "2020", "PRICE_NEEDED");
     }
 
     @Test
+    @Disabled
     void shouldWarnIfPriceGapIsTooBig() {
         dsl.setEnd("2022-01-01");
         dsl.setYearly();

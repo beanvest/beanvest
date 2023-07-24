@@ -4,13 +4,12 @@ package beanvest.module.journal;
 import beanvest.journal.CashStats;
 import beanvest.processor.deprecated.JournalEntryProcessor;
 import beanvest.parser.JournalParser;
-import beanvest.processor.validation.JournalValidationError;
+import beanvest.processor.validation.JournalValidationErrorErrorWithMessage;
 import beanvest.result.Result;
 import beanvest.processor.deprecated.AccountState;
 import beanvest.journal.Holdings;
 import beanvest.journal.Journal;
 import beanvest.processor.deprecated.JournalState;
-import beanvest.result.PriceNeeded;
 import beanvest.result.UserErrors;
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Price;
@@ -106,9 +105,9 @@ public class JournalCliCommand implements SubCommand {
         return true;
     }
 
-    private void printErrors(PrintStream stdOut, List<JournalValidationError> errors) {
+    private void printErrors(PrintStream stdOut, List<JournalValidationErrorErrorWithMessage> errors) {
         stdOut.println("====> Ooops! Validation error" + (errors.size() > 1 ? "s" : "") + ":");
-        errors.forEach(e -> stdOut.println(e.message + "\n  @ " + e.journalLine));
+        errors.forEach(e -> stdOut.println(e.getMessage()));
     }
 
     private void printSummary(PrintStream stdOut, JournalState journalState, AccountState baseStats, Holdings holdings, Result<BigDecimal, UserErrors> valuationResult) {
@@ -118,13 +117,7 @@ public class JournalCliCommand implements SubCommand {
                 getStatsString(difference, currentStats.getCash()));
         valuationResult.ifSuccessfulOrElse(
                 (value) -> stdOut.format("  holdings: %.2f GBP %s%n", value, holdings.asList()),
-                (calculationError) -> {
-                    var pricesNeeded = calculationError.errors.stream()
-                            .map(e -> ((PriceNeeded) e))
-                            .map(e -> e.commodity + "@" + e.queriedDate)
-                            .collect(Collectors.joining(", "));
-                    stdOut.format("  holdings: n/a %s (prices needed: %s)%n", holdings.asList(), pricesNeeded);
-                });
+                (calculationError) -> {});
         stdOut.println();
     }
 

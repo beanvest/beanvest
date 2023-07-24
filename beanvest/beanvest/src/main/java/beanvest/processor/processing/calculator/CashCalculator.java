@@ -1,4 +1,12 @@
-package beanvest.processor.processing.collector;
+package beanvest.processor.processing.calculator;
+
+import beanvest.processor.processing.collector.DepositCollector;
+import beanvest.processor.processing.collector.DividendCollector;
+import beanvest.processor.processing.collector.EarnedCollector;
+import beanvest.processor.processing.collector.InterestCollector;
+import beanvest.processor.processing.collector.SimpleFeeCollector;
+import beanvest.processor.processing.collector.SpentCollector;
+import beanvest.processor.processing.collector.WithdrawalCollector;
 
 import java.math.BigDecimal;
 

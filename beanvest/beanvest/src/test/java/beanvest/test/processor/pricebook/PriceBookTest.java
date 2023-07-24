@@ -1,10 +1,10 @@
 package beanvest.test.processor.pricebook;
 
-import beanvest.result.UserErrorId;
+import beanvest.result.ErrorEnum;
 import beanvest.result.UserErrors;
 import beanvest.journal.Value;
 import beanvest.journal.entry.Price;
-import beanvest.processor.pricebook.PriceBook;
+import beanvest.processor.deprecated.PriceBook;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -45,7 +45,7 @@ class PriceBookTest {
     void returnsErrorIfPriceNotFound() {
         var result = priceBook.getPrice(LocalDate.parse("2020-01-01"), "GBP", "PLN");
         assertThat(result.getError()).isInstanceOf(UserErrors.class);
-        assertThat(result.getError().getIds()).isEqualTo(List.of(UserErrorId.PRICE_NEEDED));
+        assertThat(result.getError().getEnums()).isEqualTo(List.of(ErrorEnum.PRICE_NEEDED));
     }
 
     @Test
@@ -55,7 +55,7 @@ class PriceBookTest {
 
         var result = priceBook.getPrice(LocalDate.parse("2021-01-10"), "GBP", "PLN");
         assertThat(result.getError()).isInstanceOf(UserErrors.class);
-        assertThat(result.getError().getIds()).isEqualTo(List.of(UserErrorId.PRICE_NEEDED));
+        assertThat(result.getError().getEnums()).isEqualTo(List.of(ErrorEnum.PRICE_NEEDED));
     }
 
     private static Price price(String dateString, String currency, String valueString) {

@@ -1,6 +1,6 @@
 package beanvest.processor.deprecated;
 
-import beanvest.processor.validation.JournalValidationError;
+import beanvest.processor.validation.JournalValidationErrorErrorWithMessage;
 import beanvest.processor.validation.JournalValidator;
 import beanvest.journal.entry.Balance;
 import beanvest.journal.entry.Entry;
@@ -18,7 +18,7 @@ import java.util.Objects;
 @Deprecated
 public class BalanceValidator implements JournalValidator {
     @Override
-    public List<JournalValidationError> validate(List<Entry> dayEntries, Map<String, AccountState> accounts) {
+    public List<JournalValidationErrorErrorWithMessage> validate(List<Entry> dayEntries, Map<String, AccountState> accounts) {
         List<Balance> balanceEntries = new ArrayList<>();
         for (var entry : dayEntries) {
             if (entry instanceof Balance balance) {
@@ -35,7 +35,7 @@ public class BalanceValidator implements JournalValidator {
 
                     if (heldAmount.compareTo(balance.units()) != 0) {
                         var commodityString = balance.commodity().map(c -> " " + c).orElse("");
-                        return new JournalValidationError(
+                        return new JournalValidationErrorErrorWithMessage(
                                 String.format("%s does not match. Expected: %s%s. Actual: %s%s",
                                         balance.commodity().map(c -> "Holding balance").orElse("Cash balance"),
                                         balance.units().toPlainString(),
@@ -43,7 +43,7 @@ public class BalanceValidator implements JournalValidator {
                                         heldAmount,
                                         commodityString
                                 ),
-                                balance.originalLine().toString(), List.of());
+                                balance.originalLine().toString());
                     } else {
                         return null;
                     }

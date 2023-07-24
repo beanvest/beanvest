@@ -3,8 +3,8 @@ package beanvest.processor.processing.calculator;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 import beanvest.journal.Value;
-import beanvest.processor.processing.collector.CashCalculator;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class TotalValueCalculator {
@@ -16,7 +16,7 @@ public class TotalValueCalculator {
         this.cashCalculator = cashCalculator;
     }
     
-    public Result<Value, UserErrors> calculateValue(LocalDate endingDate, String targetCurrency)
+    public Result<BigDecimal, UserErrors> calculateValue(LocalDate endingDate, String targetCurrency)
     {
         return
                 holdingsValueCalculator.calculateValue(endingDate, targetCurrency)
