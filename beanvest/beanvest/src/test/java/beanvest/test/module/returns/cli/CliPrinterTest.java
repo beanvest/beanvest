@@ -26,7 +26,7 @@ class CliPrinterTest {
                 new Period(LocalDate.parse("2021-01-01"), LocalDate.parse("2021-12-31"), "2021"),
                 new Period(LocalDate.parse("2022-01-01"), LocalDate.parse("2022-12-31"), "2022")
         );
-        var res = new PortfolioStatsDto(List.of("Trading:Serious"), CollectionMode.CUMULATIVE, periods,
+        var res = new PortfolioStatsDto(List.of("Trading:Serious"), periods,
                 List.of(new AccountDto("Trading:Serious",
                         LocalDate.parse("2020-01-01"),
                         Optional.empty(),
@@ -45,7 +45,7 @@ class CliPrinterTest {
 
         var outputStream = new ByteArrayOutputStream();
         var printStream = new PrintStream(outputStream, true, StandardCharsets.UTF_8);
-        cliPrinter.printCliOutput(res, printStream, selectedColumns);
+        cliPrinter.printCliOutput(res, printStream, selectedColumns, CollectionMode.CUMULATIVE);
         printStream.flush();
 
         var s = outputStream.toString();

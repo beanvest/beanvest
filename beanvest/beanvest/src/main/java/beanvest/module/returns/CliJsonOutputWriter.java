@@ -1,5 +1,6 @@
 package beanvest.module.returns;
 
+import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.validation.JournalValidationErrorErrorWithMessage;
 import beanvest.processor.PortfolioStatsDto;
@@ -23,7 +24,7 @@ public class CliJsonOutputWriter implements CliOutputWriter {
     }
 
     @Override
-    public void outputResult(List<String> selectedColumns, PortfolioStatsDto portfolioStats) {
+    public void outputResult(List<String> selectedColumns, PortfolioStatsDto portfolioStats, CollectionMode collectionMode) {
         displayWarnings(extractPricesMissingErrors(portfolioStats));
         stdOut.println(GSON.toJson(portfolioStats));
     }

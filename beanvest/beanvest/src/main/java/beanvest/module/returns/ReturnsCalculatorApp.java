@@ -43,13 +43,13 @@ public class ReturnsCalculatorApp {
                     .orElseGet(() -> List.of(new Period(startDate, endDate, "TOTAL")));
             var statsMode = deltas ? CollectionMode.DELTA : CollectionMode.CUMULATIVE;
             var grouping = group ? Grouping.WITH_GROUPS : Grouping.NO_GROUPS;
-            var statsResult = statsCalculator.calculateStats(filteredJournal, periods, grouping, statsMode);
+            var statsResult = statsCalculator.calculateStats(filteredJournal, periods, grouping);
 
             if (statsResult.hasError()) {
                 outputWriter.outputInputErrors(statsResult.getError().errors);
                 isSuccessful = false;
             } else {
-                outputWriter.outputResult(selectedColumns, statsResult.getValue());
+                outputWriter.outputResult(selectedColumns, statsResult.getValue(), statsMode);
             }
         } catch (JournalNotFoundException e) {
             outputWriter.outputException(e);

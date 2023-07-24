@@ -17,9 +17,9 @@ public class JournalProcessor {
     public Result<PortfolioStatsDto, UserErrors> calculateStats(
             Journal journal,
             List<Period> periods,
-            Grouping grouping,
-            CollectionMode collectionMode) {
-        var journalProcessor =  new StatsCollectingJournalProcessor(grouping);
+            Grouping grouping) {
+
+        var journalProcessor = new StatsCollectingJournalProcessor(grouping);
         var endOfPeriodTracker = new EndOfPeriodTracker(periods, period -> finishPeriod(period, journalProcessor));
         journal.process(entry -> {
             if (entry.date().isAfter(periods.get(periods.size()-1).endDate())) {
@@ -34,7 +34,6 @@ public class JournalProcessor {
         return Result.success(
                 new PortfolioStatsDto(
                         periodStatsCollector.getAccountsSorted(),
-                        collectionMode,
                         periodStatsCollector.getTimePointsSorted(),
                         periodStatsCollector.getStats(metadata)));
     }

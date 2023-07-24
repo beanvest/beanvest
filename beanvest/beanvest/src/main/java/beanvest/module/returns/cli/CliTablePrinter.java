@@ -26,8 +26,8 @@ public class CliTablePrinter implements ValuationNeededChecker {
         this.exact = exact;
     }
 
-    public void printCliOutput(PortfolioStatsDto stats, PrintStream output, List<String> selectedColumns) {
-        List<Column<AccountPeriod>> columns = createColumns(selectedColumns, stats.collectionMode, stats.periods);
+    public void printCliOutput(PortfolioStatsDto stats, PrintStream output, List<String> selectedColumns, CollectionMode collectionMode) {
+        List<Column<AccountPeriod>> columns = createColumns(selectedColumns, collectionMode, stats.periods);
 
         var rows = stats.stats.stream()
                 .sorted(Comparator.comparing(accStats -> accStats.account))

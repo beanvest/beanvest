@@ -1,5 +1,6 @@
 package beanvest.module.returns;
 
+import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.validation.JournalValidationErrorErrorWithMessage;
 import beanvest.processor.PortfolioStatsDto;
@@ -22,9 +23,9 @@ public class CliTableOutputWriter implements CliOutputWriter {
     }
 
     @Override
-    public void outputResult(List<String> selectedColumns, PortfolioStatsDto portfolioStats) {
+    public void outputResult(List<String> selectedColumns, PortfolioStatsDto portfolioStats, CollectionMode collectionMode) {
         displayWarnings(extractPricesMissingErrors(portfolioStats));
-        this.cliTablePrinter.printCliOutput(portfolioStats, stdOut, selectedColumns);
+        this.cliTablePrinter.printCliOutput(portfolioStats, stdOut, selectedColumns, collectionMode);
     }
 
     @Override
