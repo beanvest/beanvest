@@ -31,4 +31,11 @@ public class UserErrors {
     public boolean isEmpty() {
         return errors.isEmpty();
     }
+
+    @Override
+    public String toString() {
+        return "UserErrors{" +
+               "errors=" + errors +
+               '}';
+    }
 }

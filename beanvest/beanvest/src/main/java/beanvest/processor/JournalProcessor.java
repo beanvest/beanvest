@@ -1,7 +1,9 @@
 package beanvest.processor;
 
 import beanvest.journal.Journal;
+import beanvest.processor.calendar.Calendar;
 import beanvest.processor.calendar.Period;
+import beanvest.processor.calendar.PeriodInterval;
 import beanvest.processor.processing.EndOfPeriodTracker;
 import beanvest.processor.processing.Grouping;
 import beanvest.processor.processing.StatsCollectingJournalProcessor;
@@ -9,18 +11,21 @@ import beanvest.processor.processing.collector.AccountStatsGatherer;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 
-import java.util.List;
+import java.time.LocalDate;
 
 public class JournalProcessor {
-    private final AccountStatsGatherer periodStatsCollector = new AccountStatsGatherer();
+    private final AccountStatsGatherer accountStatsGatherer = new AccountStatsGatherer();
     private final PredicateFactory predicateFactory = new PredicateFactory();
+    private final Calendar calendar = new Calendar();
 
     public Result<PortfolioStatsDto, UserErrors> calculateStats(
             Journal journal,
             String accountFilter,
-            List<Period> periods,
-            Grouping grouping) {
+            Grouping grouping,
+            PeriodInterval interval,
+            LocalDate endDate) {
 
+        var periods = calendar.calculatePeriods(interval, journal.getStartDate(), endDate);
 
         var journalProcessor = new StatsCollectingJournalProcessor(grouping);
         var endOfPeriodTracker = new EndOfPeriodTracker(periods, period -> finishPeriod(period, journalProcessor));
@@ -38,13 +43,13 @@ public class JournalProcessor {
         var metadata = journalProcessor.getMetadata();
         return Result.success(
                 new PortfolioStatsDto(
-                        periodStatsCollector.getAccountsSorted(),
-                        periodStatsCollector.getTimePointsSorted(),
-                        periodStatsCollector.getStats(metadata)));
+                        accountStatsGatherer.getAccountsSorted(),
+                        accountStatsGatherer.getTimePointsSorted(),
+                        accountStatsGatherer.getStats(metadata)));
     }
 
     private void finishPeriod(Period period, StatsCollectingJournalProcessor statsCollectingJournalProcessor) {
         var periodStats = statsCollectingJournalProcessor.getPeriodStats(period);
-        periodStatsCollector.collectPeriodStats(period, periodStats);
+        accountStatsGatherer.collectPeriodStats(period, periodStats);
     }
 }

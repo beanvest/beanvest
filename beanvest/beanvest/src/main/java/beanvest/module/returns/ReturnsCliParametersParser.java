@@ -23,10 +23,8 @@ public class ReturnsCliParametersParser {
 
         var exactValues = parseResult.matchedOptionValue("--exact", false);
         var jsonFormat = parseResult.matchedOptionValue("--json", false);
-        final String intervalRaw = parseResult.matchedOptionValue("--interval", null);
-        final Optional<PeriodInterval> period = intervalRaw == null
-                ? Optional.empty()
-                : Optional.of(PeriodInterval.valueOf(intervalRaw.toUpperCase(Locale.ROOT)));
+        final String intervalRaw = parseResult.matchedOptionValue("--interval", "WHOLE");
+        final PeriodInterval period = PeriodInterval.valueOf(intervalRaw.toUpperCase(Locale.ROOT));
 
         var group = parseResult.matchedOptionValue("--group", false);
         var onlyDeltas = parseResult.matchedOptionValue("--delta", false);

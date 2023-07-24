@@ -38,5 +38,4 @@ public class FeesAcceptanceTest {
 
         dsl.verifyFeesTotal("trading", "TOTAL", "-0.2");
     }
-
 }

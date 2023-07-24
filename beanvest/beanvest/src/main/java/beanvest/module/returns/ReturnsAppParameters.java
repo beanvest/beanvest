@@ -17,7 +17,7 @@ public record ReturnsAppParameters(
         List<String> selectedColumns,
         Boolean exactValues,
         Boolean jsonFormat,
-        Optional<PeriodInterval> period,
+        PeriodInterval period,
         Boolean group,
         Boolean onlyDeltas,
         String total

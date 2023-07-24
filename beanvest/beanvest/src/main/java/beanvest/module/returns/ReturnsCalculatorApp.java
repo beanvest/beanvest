@@ -4,7 +4,6 @@ import beanvest.processor.calendar.Calendar;
 import beanvest.processor.JournalNotFoundException;
 import beanvest.parser.JournalParser;
 import beanvest.processor.CollectionMode;
-import beanvest.processor.calendar.Period;
 import beanvest.processor.JournalProcessor;
 import beanvest.processor.processing.Grouping;
 import beanvest.processor.calendar.PeriodInterval;
@@ -33,16 +32,13 @@ public class ReturnsCalculatorApp {
                       Boolean deltas,
                       Boolean group,
                       Optional<LocalDate> maybeStart,
-                      Optional<PeriodInterval> maybeInterval) {
+                      PeriodInterval interval) {
         boolean isSuccessful = true;
         try {
             var journal = journalParser.parse(journalsPaths);
-            var startDate = maybeStart.orElse(journal.getStartDate());
-            var periods = maybeInterval.map(interval -> calendar.calculatePeriods(interval, journal.getStartDate(), endDate))
-                    .orElseGet(() -> List.of(new Period(startDate, endDate, "TOTAL")));
             var statsMode = deltas ? CollectionMode.DELTA : CollectionMode.CUMULATIVE;
             var grouping = group ? Grouping.WITH_GROUPS : Grouping.NO_GROUPS;
-            var statsResult = statsCalculator.calculateStats(journal, accountFilter, periods, grouping);
+            var statsResult = statsCalculator.calculateStats(journal, accountFilter, grouping, interval, endDate);
 
             if (statsResult.hasError()) {
                 outputWriter.outputInputErrors(statsResult.getError().errors);

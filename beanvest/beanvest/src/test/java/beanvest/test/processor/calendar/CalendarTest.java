@@ -45,4 +45,15 @@ class CalendarTest {
                 new Period(LocalDate.parse("2023-01-01"), LocalDate.parse("2023-01-31"), "23m01")
         ));
     }
+
+    @Test
+    void whole() {
+        var periods = new Calendar().calculatePeriods(PeriodInterval.WHOLE,
+                LocalDate.of(2022, 12, 1),
+                LocalDate.MAX
+        );
+        assertThat(periods).isEqualTo(List.of(
+                new Period(LocalDate.parse("2022-12-01"), LocalDate.MAX, "TOTAL")
+        ));
+    }
 }
