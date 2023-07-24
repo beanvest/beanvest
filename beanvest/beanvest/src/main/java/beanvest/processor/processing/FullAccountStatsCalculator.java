@@ -29,6 +29,7 @@ import beanvest.processor.processing.collector.WithdrawalCollector;
 import java.time.LocalDate;
 import java.util.List;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class FullAccountStatsCalculator implements Collector {
     private final DepositCollector depositCollector = new DepositCollector();
     private final WithdrawalCollector withdrawalsCollector = new WithdrawalCollector();
@@ -86,7 +87,7 @@ public class FullAccountStatsCalculator implements Collector {
     }
 
     public Stats calculateStats(LocalDate endingDate, String targetCurrency) {
-        CashStats cashStats = new CashStats(depositCollector.balance(),
+        var cashStats = new CashStats(depositCollector.balance(),
                 withdrawalsCollector.balance(),
                 interestCollector.balance(),
                 simpleFeeCollector.balance().add(transactionFeeCollector.balance()),
