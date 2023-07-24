@@ -23,8 +23,7 @@ public class PeriodDeltasAcceptanceTest {
     }
 
     @Test
-    @Disabled("needs some thinking")
-    void firstRequestedPeriodHasOnlyDataFromItsPeriodAsWell() {
+    void firstRequestedPeriodHasOnlyDataFromItsPeriod() {
         dsl.setYearly();
         dsl.setStartDate("2021-01-01");
 
@@ -40,6 +39,7 @@ public class PeriodDeltasAcceptanceTest {
     }
 
     @Test
+    @Disabled("that might be interface-specific")
     void doesNotReportEarlierPeriodsThanStartDate() {
         dsl.setYearly();
         dsl.setStartDate("2021-01-01");

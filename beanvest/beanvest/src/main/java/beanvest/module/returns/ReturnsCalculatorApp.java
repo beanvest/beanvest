@@ -39,7 +39,7 @@ public class ReturnsCalculatorApp {
             var fullJournal = journalParser.parse(journalsPaths);
             var filteredJournal = fullJournal.filterByAccount(accountFilter);
             var startDate = maybeStart.orElse(fullJournal.getStartDate());
-            var periods = maybeInterval.map(interval -> calendar.calculatePeriods(interval, startDate, endDate))
+            var periods = maybeInterval.map(interval -> calendar.calculatePeriods(interval, filteredJournal.getStartDate(), endDate))
                     .orElseGet(() -> List.of(new Period(startDate, endDate, "TOTAL")));
             var statsMode = deltas ? CollectionMode.DELTA : CollectionMode.CUMULATIVE;
             var grouping = group ? Grouping.WITH_GROUPS : Grouping.NO_GROUPS;
