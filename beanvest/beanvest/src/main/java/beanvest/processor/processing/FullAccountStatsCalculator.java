@@ -32,18 +32,18 @@ import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class FullAccountStatsCalculator implements Collector {
+    private final AccountOpenDatesCollector accountOpenDatesCollector = new AccountOpenDatesCollector();
     private final DepositCollector depositCollector = new DepositCollector();
-    private final WithdrawalCollector withdrawalsCollector = new WithdrawalCollector();
-    private final SimpleFeeCollector simpleFeeCollector = new SimpleFeeCollector();
-    private final TransactionFeeCollector transactionFeeCollector = new TransactionFeeCollector();
-    private final InterestCollector interestCollector = new InterestCollector();
     private final DividendCollector dividendCollector = new DividendCollector();
     private final EarnedCollector earnedCollector = new EarnedCollector();
-    private final SpentCollector spentCollector = new SpentCollector();
-    private final HoldingsCollector holdingsCollector = new HoldingsCollector();
-    private final RealizedGainsCollector realizedGainsCollector = new RealizedGainsCollector(holdingsCollector);
-    private final AccountOpenDatesCollector accountOpenDatesCollector = new AccountOpenDatesCollector();
     private final FullCashFlowCollector fullCashFlowCollector = new FullCashFlowCollector();
+    private final HoldingsCollector holdingsCollector = new HoldingsCollector();
+    private final InterestCollector interestCollector = new InterestCollector();
+    private final RealizedGainsCollector realizedGainsCollector = new RealizedGainsCollector();
+    private final SimpleFeeCollector simpleFeeCollector = new SimpleFeeCollector();
+    private final SpentCollector spentCollector = new SpentCollector();
+    private final TransactionFeeCollector transactionFeeCollector = new TransactionFeeCollector();
+    private final WithdrawalCollector withdrawalsCollector = new WithdrawalCollector();
 
     private final AccountGainCalculator accountGainCalculator;
     private final AccountValueCalculator accountValueCalculator;
@@ -55,18 +55,18 @@ public class FullAccountStatsCalculator implements Collector {
     private final UnrealizedGainsCalculator unrealizedGainsCalculator;
     private final XirrCalculator xirrCalculator;
     private final List<Collector> collectors = List.of(
-            holdingsCollector,
-            realizedGainsCollector,
+            accountOpenDatesCollector,
             depositCollector,
-            withdrawalsCollector,
-            simpleFeeCollector,
-            transactionFeeCollector,
-            interestCollector,
             dividendCollector,
             earnedCollector,
+            fullCashFlowCollector,
+            holdingsCollector,
+            interestCollector,
+            realizedGainsCollector,
+            simpleFeeCollector,
             spentCollector,
-            accountOpenDatesCollector,
-            fullCashFlowCollector
+            transactionFeeCollector,
+            withdrawalsCollector
     );
 
     public FullAccountStatsCalculator(LatestPricesBook pricesBook) {
