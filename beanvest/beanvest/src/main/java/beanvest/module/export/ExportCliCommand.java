@@ -91,8 +91,8 @@ public class ExportCliCommand implements SubCommand {
 
     private static void exportGains(String accountPrefix, ArrayList<JournalState> states, PrintWriter writer, List<String> selectedStats, String gainsAccount) {
         var transfers = new GainsTransactionGenerator(selectedStats).generateFakeGainsTransfers(states);
-        final List<? extends Entry> tt = transfers.stream()
-                .map(t -> new Interest(t.date(), t.account() + ":Stats", t.value(), Optional.of("autogains"), SourceLine.GENERATED_LINE))
+        final List<Entry> tt = transfers.stream()
+                .map(t -> (Entry)new Interest(t.date(), t.account() + ":Stats", t.value(), Optional.of("autogains"), SourceLine.GENERATED_LINE))
                 .toList();
         var journal1 = new Journal(tt, List.of());
         var beanCountJournalWriter = new BeanCountJournalWriter(accountPrefix, false, "Income:Stats", gainsAccount);

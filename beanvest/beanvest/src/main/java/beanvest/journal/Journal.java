@@ -16,14 +16,15 @@ public class Journal {
     private final TreeMap<LocalDate, List<Entry>> entries;
     private final PriceBook priceBook;
     private final Map<String, AccountDetails> accounts = new HashMap<>();
+    private final List<Entry> sortedEntries;
 
-    public Journal(List<? extends Entry> journalEntries, Collection<AccountDetails> accounts) {
+    public Journal(List<Entry> journalEntries, Collection<AccountDetails> accounts) {
         accounts.forEach(acc -> {
             assert !this.accounts.containsKey(acc.pattern()) : "account `" + acc.pattern() + "` is already imported";
             this.accounts.put(acc.pattern(), acc);
         });
         var entriesGroupedByDay = new TreeMap<LocalDate, List<Entry>>();
-        var sortedEntries = new ArrayList<>(journalEntries).stream()
+        sortedEntries = new ArrayList<>(journalEntries).stream()
                 .sorted(Comparator.comparing(Entry::date))
                 .toList();
         var prices = new ArrayList<Price>();
@@ -50,10 +51,6 @@ public class Journal {
 
     public List<Entry> getEntries() {
         return streamEntries().toList();
-    }
-
-    public void process(Consumer<Entry> consumer) {
-        streamEntries().forEach(consumer);
     }
 
     public void add(Entry entry) {
@@ -108,10 +105,8 @@ public class Journal {
     }
 
 
-    private Stream<Entry> streamEntries() {
-        return entries.navigableKeySet()
-                .stream()
-                .flatMap(date -> entries.get(date).stream());
+    public Stream<Entry> streamEntries() {
+        return sortedEntries.stream();
     }
 
     public List<AccountDetails> getAccountsAndGroups(boolean groups) {

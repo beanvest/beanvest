@@ -27,12 +27,12 @@ public class JournalProcessor {
 
         var predicate = predicateFactory.buildPredicate(accountFilter, periods);
 
-        journal.process(entry -> {
-            if (predicate.test(entry)) {
-                endOfPeriodTracker.process(entry);
-                journalProcessor.process(entry);
-            }
-        });
+        journal.streamEntries()
+                .filter(predicate)
+                .forEach(entry -> {
+                    endOfPeriodTracker.process(entry);
+                    journalProcessor.process(entry);
+                });
         endOfPeriodTracker.finishRemainingPeriods();
 
         var metadata = journalProcessor.getMetadata();
