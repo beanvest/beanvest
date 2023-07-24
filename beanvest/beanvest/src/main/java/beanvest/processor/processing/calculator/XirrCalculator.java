@@ -22,8 +22,6 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 public class XirrCalculator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(XirrCalculator.class.getName());
-    public static final String TARGET_CURRENCY = "GBP";
     private final FullCashFlowCollector fullCashFlowCollector;
     private final TotalValueCalculator totalValueCalculator;
 
@@ -32,8 +30,8 @@ public class XirrCalculator {
         this.totalValueCalculator = totalValueCalculator;
     }
 
-    public Result<BigDecimal, UserErrors> xirr(final LocalDate endDate) {
-        var totalValueResult = totalValueCalculator.calculateValue(endDate, TARGET_CURRENCY);
+    public Result<BigDecimal, UserErrors> xirr(final LocalDate endDate, String targetCurrency) {
+        var totalValueResult = totalValueCalculator.calculateValue(endDate, targetCurrency);
         if (totalValueResult.hasError()) {
             return totalValueResult;
         }

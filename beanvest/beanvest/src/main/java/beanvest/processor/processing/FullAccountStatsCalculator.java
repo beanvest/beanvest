@@ -105,7 +105,7 @@ public class FullAccountStatsCalculator implements Collector {
                 accountGainCalculator.calculate(endingDate, targetCurrency),
                 holdingsValueCalculator.calculateValue(endingDate, targetCurrency),
                 accountValueCalculator.calculate(endingDate, targetCurrency),
-                xirrCalculator.xirr(endingDate));
+                xirrCalculator.xirr(endingDate, targetCurrency));
 
         return new Stats(cashStats, valueStats);
     }
