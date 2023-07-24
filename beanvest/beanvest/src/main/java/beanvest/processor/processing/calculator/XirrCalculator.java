@@ -9,8 +9,6 @@ import org.decampo.xirr.NonconvergenceException;
 import org.decampo.xirr.OverflowException;
 import org.decampo.xirr.Transaction;
 import org.decampo.xirr.Xirr;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,7 +28,7 @@ public class XirrCalculator {
         this.totalValueCalculator = totalValueCalculator;
     }
 
-    public Result<BigDecimal, UserErrors> xirr(final LocalDate endDate, String targetCurrency) {
+    public Result<BigDecimal, UserErrors> calculate(final LocalDate endDate, String targetCurrency) {
         var totalValueResult = totalValueCalculator.calculateValue(endDate, targetCurrency);
         if (totalValueResult.hasError()) {
             return totalValueResult;

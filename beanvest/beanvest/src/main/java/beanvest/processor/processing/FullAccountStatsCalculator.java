@@ -103,9 +103,9 @@ public class FullAccountStatsCalculator implements Collector {
         var valueStats = new ValueStatsDto(
                 unrealizedGainsCalculator.calculate(endingDate, targetCurrency),
                 accountGainCalculator.calculate(endingDate, targetCurrency),
-                holdingsValueCalculator.calculateValue(endingDate, targetCurrency),
+                holdingsValueCalculator.calculate(endingDate, targetCurrency),
                 accountValueCalculator.calculate(endingDate, targetCurrency),
-                xirrCalculator.xirr(endingDate, targetCurrency));
+                xirrCalculator.calculate(endingDate, targetCurrency));
 
         return new Stats(cashStats, valueStats);
     }

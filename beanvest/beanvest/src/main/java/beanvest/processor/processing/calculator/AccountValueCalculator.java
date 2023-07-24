@@ -18,6 +18,6 @@ public class AccountValueCalculator {
     }
     public Result<BigDecimal, UserErrors> calculate(LocalDate endingDate, String targetCurrency)
     {
-        return holdingsValueCalculator.calculateValue(endingDate, targetCurrency).map(v -> v.add(cashCalculator.balance()));
+        return holdingsValueCalculator.calculate(endingDate, targetCurrency).map(v -> v.add(cashCalculator.balance()));
     }
 }
