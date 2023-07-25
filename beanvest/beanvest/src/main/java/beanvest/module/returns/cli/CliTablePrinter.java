@@ -29,7 +29,7 @@ public class CliTablePrinter implements ValuationNeededChecker {
     public void printCliOutput(PortfolioStatsDto stats, PrintStream output, List<String> selectedColumns, CollectionMode collectionMode) {
         List<Column<AccountPeriod>> columns = createColumns(selectedColumns, collectionMode, stats.periods);
 
-        var rows = stats.stats.stream()
+        var rows = stats.accountDtos.stream()
                 .sorted(Comparator.comparing(accStats -> accStats.account))
                 .map(accStats -> new AccountPeriod(accStats.account, accStats.openingDate, accStats.closingDate, accStats.periodStats))
                 .toList();

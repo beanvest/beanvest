@@ -8,7 +8,6 @@ import beanvest.result.UserError;
 import com.google.gson.Gson;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import static beanvest.lib.util.gson.GsonFactory.builderWithProjectDefaults;
@@ -18,6 +17,8 @@ public class CliJsonOutputWriter implements CliOutputWriter {
     private final PrintStream stdOut;
     private final PrintStream stdErr;
 
+    private final ErrorMessagesExtractor errorMessagesExtractor = new ErrorMessagesExtractor();
+
     public CliJsonOutputWriter(PrintStream stdOut, PrintStream stdErr) {
         this.stdOut = stdOut;
         this.stdErr = stdErr;
@@ -25,7 +26,8 @@ public class CliJsonOutputWriter implements CliOutputWriter {
 
     @Override
     public void outputResult(List<String> selectedColumns, PortfolioStatsDto portfolioStats, CollectionMode collectionMode) {
-        displayWarnings(extractPricesMissingErrors(portfolioStats));
+        errorMessagesExtractor.extractErrorsMessages(portfolioStats)
+                .forEach(stdErr::println);
         stdOut.println(GSON.toJson(portfolioStats));
     }
 
@@ -46,14 +48,5 @@ public class CliJsonOutputWriter implements CliOutputWriter {
     @Override
     public void outputException(JournalNotFoundException e) {
         stdErr.printf("Journal `%s` not found%n%n", e.journalPath);
-    }
-
-    private void displayWarnings(List<UserError> errors) {
-        errors
-                .forEach(e -> stdErr.println(e.maybeMessage()));
-    }
-
-    private List<UserError> extractPricesMissingErrors(PortfolioStatsDto periodStats) {
-        return new ArrayList<>();
     }
 }

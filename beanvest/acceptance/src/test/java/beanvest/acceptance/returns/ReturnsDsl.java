@@ -177,7 +177,7 @@ public class ReturnsDsl {
     }
 
     public void verifyHasNoStats(String account) {
-        var accountFound = getResultDto().stats.stream().anyMatch(s -> s.account.equals(account));
+        var accountFound = getResultDto().accountDtos.stream().anyMatch(s -> s.account.equals(account));
         assertThat(accountFound)
                 .as("account `" + account + "` should not be in the results")
                 .isFalse();
@@ -276,7 +276,7 @@ public class ReturnsDsl {
     }
 
     private boolean isAccountInResults(String account) {
-        return getResultDto().stats.stream()
+        return getResultDto().accountDtos.stream()
                 .anyMatch(accountReturns -> accountReturns.account().equals(account));
     }
 
@@ -339,13 +339,13 @@ public class ReturnsDsl {
 
     private AccountDto getAccountResults(String account) {
         var resultDto = getResultDto();
-        var first = resultDto.stats.stream()
+        var first = resultDto.accountDtos.stream()
                 .filter(accountReturns -> accountReturns.account().equals(account))
                 .findFirst();
         assertThat(first)
                 .as("Result expected to contain stats for account `" + account + "` but it doesn't. "
                     + "Accounts that actually have some stats: `"
-                    + resultDto.stats.stream().map(s -> s.account).collect(Collectors.joining("`, `")) + "`")
+                    + resultDto.accountDtos.stream().map(s -> s.account).collect(Collectors.joining("`, `")) + "`")
                 .isPresent();
         return first.get();
     }

@@ -47,7 +47,7 @@ public class BeancountComparisonDsl {
     }
 
     public void verifyCashMatchesInBeancountAndBeanvest() {
-        var bvResult = bvStats.stats.get(0).periodStats.get("TOTAL").cash().stat();
+        var bvResult = bvStats.accountDtos.get(0).periodStats.get("TOTAL").cash().stat();
         var bcResult = bcHoldings.get("Assets:Savings:Cash", "GBP").units();
         assertThat(bcResult)
                 .as("beancount shows GBP holding of `" + bcResult + "` while in beanvest it's `" + bvResult + "`")

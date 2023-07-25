@@ -8,13 +8,13 @@ import beanvest.module.returns.cli.CliTablePrinter;
 import beanvest.result.UserError;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CliTableOutputWriter implements CliOutputWriter {
     private final PrintStream stdOut;
     private final PrintStream stdErr;
     private final CliTablePrinter cliTablePrinter;
+    private final ErrorMessagesExtractor errorMessagesExtractor = new ErrorMessagesExtractor();
 
     public CliTableOutputWriter(PrintStream stdOut, PrintStream stdErr, CliTablePrinter cliTablePrinter) {
         this.stdOut = stdOut;
@@ -24,7 +24,8 @@ public class CliTableOutputWriter implements CliOutputWriter {
 
     @Override
     public void outputResult(List<String> selectedColumns, PortfolioStatsDto portfolioStats, CollectionMode collectionMode) {
-        displayWarnings(extractPricesMissingErrors(portfolioStats));
+        errorMessagesExtractor.extractErrorsMessages(portfolioStats)
+                .forEach(stdErr::println);
         this.cliTablePrinter.printCliOutput(portfolioStats, stdOut, selectedColumns, collectionMode);
     }
 
@@ -47,13 +48,4 @@ public class CliTableOutputWriter implements CliOutputWriter {
         stdErr.printf("Journal `%s` not found%n%n", e.journalPath);
     }
 
-    private void displayWarnings(List<UserError> plainErrors) {
-        plainErrors
-                .stream().filter(UserError::hasMessage)
-                .forEach(e -> stdErr.println(e.getMessage()));
-    }
-
-    private List<UserError> extractPricesMissingErrors(PortfolioStatsDto periodStats) {
-        return new ArrayList<>();
-    }
 }

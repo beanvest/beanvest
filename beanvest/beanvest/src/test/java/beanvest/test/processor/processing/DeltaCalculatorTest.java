@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -80,7 +81,7 @@ class DeltaCalculatorTest {
                         Result.failure(ErrorFactory.accountNotOpenYet()),
                         Result.failure(ErrorFactory.accountNotOpenYet()),
                         Result.failure(ErrorFactory.accountNotOpenYet())
-                ));
+                ), List.of());
     }
 
     Stats buildStats(String deposit, Optional<String> xirr) {
@@ -93,6 +94,6 @@ class DeltaCalculatorTest {
                         Result.failure(ErrorFactory.accountNotOpenYet()),
                         Result.failure(ErrorFactory.accountNotOpenYet()),
                         Result.failure(ErrorFactory.accountNotOpenYet()),
-                        xirrResult));
+                        xirrResult), List.of());
     }
 }

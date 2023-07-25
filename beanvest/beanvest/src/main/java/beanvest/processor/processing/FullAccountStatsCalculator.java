@@ -1,5 +1,6 @@
 package beanvest.processor.processing;
 
+import beanvest.processor.ValueStatDto;
 import beanvest.processor.ValueStatsDto;
 import beanvest.journal.entry.Entry;
 import beanvest.processor.processing.calculator.AccountGainCalculator;
@@ -26,9 +27,14 @@ import beanvest.processor.processing.collector.RealizedGainsCollector;
 import beanvest.processor.processing.collector.SimpleFeeCollector;
 import beanvest.processor.processing.collector.SpentCollector;
 import beanvest.processor.processing.collector.WithdrawalCollector;
+import beanvest.result.Result;
+import beanvest.result.UserError;
+import beanvest.result.UserErrors;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class FullAccountStatsCalculator implements Collector {
@@ -99,7 +105,6 @@ public class FullAccountStatsCalculator implements Collector {
                 realizedGainsCollector.balance(),
                 cashCalculator.balance()
         );
-
         var valueStats = new ValueStatsDto(
                 unrealizedGainsCalculator.calculate(endingDate, targetCurrency),
                 accountGainCalculator.calculate(endingDate, targetCurrency),
@@ -107,7 +112,8 @@ public class FullAccountStatsCalculator implements Collector {
                 accountValueCalculator.calculate(endingDate, targetCurrency),
                 xirrCalculator.calculate(endingDate, targetCurrency));
 
-        return new Stats(cashStats, valueStats);
+        var errorMessages = valueStats.getErrorMessages();
+        return new Stats(cashStats, valueStats, errorMessages);
     }
 
     public AccountMetadata getMetadata() {

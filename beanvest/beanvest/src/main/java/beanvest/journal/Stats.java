@@ -1,22 +1,24 @@
 package beanvest.journal;
 
 import beanvest.processor.ValueStatsDto;
-import beanvest.result.ErrorFactory;
 import beanvest.result.UserErrors;
 import beanvest.result.Result;
 
 import java.math.BigDecimal;
-import java.util.Optional;
+import java.util.Collection;
 
 public class Stats {
     private final CashStats cashStats;
     private final ValueStatsDto valueBasedStats;
+    private final Collection<String> errors;
 
     public Stats(
             CashStats cashStats,
-            ValueStatsDto valueStats) {
+            ValueStatsDto valueStats,
+            Collection<String> errors) {
         this.cashStats = cashStats;
         this.valueBasedStats = valueStats;
+        this.errors = errors;
     }
 
     public Result<BigDecimal, UserErrors> unrealizedGain() {
@@ -69,5 +71,9 @@ public class Stats {
 
     public BigDecimal cash() {
         return cashStats.cash();
+    }
+
+    public Collection<String> errors() {
+        return errors;
     }
 }

@@ -1,5 +1,7 @@
 package beanvest.processor;
 
+import java.util.Collection;
+
 public record StatsWithDeltasDto(StatDto deposits,
                                  StatDto withdrawals,
                                  StatDto interest,
@@ -11,5 +13,6 @@ public record StatsWithDeltasDto(StatDto deposits,
                                  ValueStatDto accountGain,
                                  ValueStatDto holdingsValue,
                                  ValueStatDto accountValue,
-                                 ValueStatDto xirr) {
+                                 ValueStatDto xirr,
+                                 Collection<String> errors) {
 }

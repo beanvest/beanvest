@@ -24,7 +24,6 @@ public class JournalValidationAcceptanceTest {
     }
 
     @Test
-    @Disabled
     void shouldWarnIfPriceGapIsTooBig() {
         dsl.setEnd("2022-01-01");
         dsl.setYearly();

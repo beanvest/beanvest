@@ -38,7 +38,7 @@ public class ErrorFactory {
         var message = latestKnown.map(latest ->
                         String.format("Price gap is too big for %s/%s on %s. Last price is %s from %s.",
                                 commodity, currency, queriedDate, latest.price(), latest.date()))
-                .orElseGet(() -> String.format("No price set for %s/%s on %s", commodity, currency, queriedDate));
+                .orElseGet(() -> String.format("No price set for %s/%s before or on %s", commodity, currency, queriedDate));
         return new UserErrors(new UserError(ErrorEnum.PRICE_NEEDED, message));
     }
 }

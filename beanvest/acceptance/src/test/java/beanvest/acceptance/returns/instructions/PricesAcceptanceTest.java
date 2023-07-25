@@ -1,10 +1,8 @@
 package beanvest.acceptance.returns.instructions;
 
 import beanvest.acceptance.returns.ReturnsDsl;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("processing refactor")
 public class PricesAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -39,6 +37,6 @@ public class PricesAcceptanceTest {
                 2021-03-10 price X 10 GBP
                 """);
 
-        dsl.verifyStdErrContains("No price set for X/GBP on 2021-03-09");
+        dsl.verifyStdErrContains("No price set for X/GBP before or on 2021-03-09");
     }
 }

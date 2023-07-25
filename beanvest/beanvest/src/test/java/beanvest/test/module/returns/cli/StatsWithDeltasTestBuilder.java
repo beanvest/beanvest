@@ -7,6 +7,7 @@ import beanvest.processor.ValueStatDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class StatsWithDeltasTestBuilder {
@@ -87,7 +88,7 @@ public class StatsWithDeltasTestBuilder {
                 new ValueStatDto(Result.success(accountGain), Optional.empty()),
                 new ValueStatDto(Result.success(holdingsValue), Optional.empty()),
                 new ValueStatDto(Result.success(accountValue), Optional.empty()),
-                new ValueStatDto(Result.success(xirr), Optional.empty())
-        );
+                new ValueStatDto(Result.success(xirr), Optional.empty()),
+                List.of());
     }
 }
