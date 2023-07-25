@@ -1,8 +1,8 @@
 package beanvest.processor.processing.collector;
 
-import beanvest.processor.calendar.Period;
 import beanvest.processor.AccountDto;
 import beanvest.processor.StatsWithDeltasDto;
+import beanvest.processor.time.Period;
 import beanvest.processor.processing.AccountMetadata;
 
 import java.util.*;

@@ -2,9 +2,10 @@ package beanvest.test.module.returns.cli;
 
 import beanvest.processor.AccountDto;
 import beanvest.processor.CollectionMode;
-import beanvest.processor.calendar.Period;
 import beanvest.processor.PortfolioStatsDto;
 import beanvest.module.returns.cli.CliTablePrinter;
+import beanvest.processor.time.Period;
+import beanvest.processor.time.PeriodInterval;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -23,8 +24,8 @@ class CliPrinterTest {
         var cliPrinter = new CliTablePrinter(false);
 
         List<Period> periods = List.of(
-                new Period(LocalDate.parse("2021-01-01"), LocalDate.parse("2021-12-31"), "2021"),
-                new Period(LocalDate.parse("2022-01-01"), LocalDate.parse("2022-12-31"), "2022")
+                Period.createPeriodCoveringDate(LocalDate.parse("2021-01-01"), LocalDate.MAX, PeriodInterval.YEAR),
+                Period.createPeriodCoveringDate(LocalDate.parse("2022-01-01"), LocalDate.MAX, PeriodInterval.YEAR)
         );
         var res = new PortfolioStatsDto(List.of("Trading:Serious"), periods,
                 List.of(new AccountDto("Trading:Serious",

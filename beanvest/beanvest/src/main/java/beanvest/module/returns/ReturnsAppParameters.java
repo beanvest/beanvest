@@ -1,6 +1,6 @@
 package beanvest.module.returns;
 
-import beanvest.processor.calendar.PeriodInterval;
+import beanvest.processor.time.PeriodInterval;
 
 import java.nio.file.Path;
 import java.time.LocalDate;

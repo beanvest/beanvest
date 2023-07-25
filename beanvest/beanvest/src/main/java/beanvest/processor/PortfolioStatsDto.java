@@ -1,6 +1,6 @@
 package beanvest.processor;
 
-import beanvest.processor.calendar.Period;
+import beanvest.processor.time.Period;
 
 import java.util.List;
 

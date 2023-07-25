@@ -1,7 +1,7 @@
 package beanvest.module.returns;
 
 import beanvest.module.returns.cli.columns.ColumnId;
-import beanvest.processor.calendar.PeriodInterval;
+import beanvest.processor.time.PeriodInterval;
 import picocli.CommandLine;
 
 import java.nio.file.Path;

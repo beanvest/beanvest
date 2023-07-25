@@ -1,9 +1,8 @@
 package beanvest.processor;
 
 import beanvest.journal.Journal;
-import beanvest.processor.calendar.Calendar;
-import beanvest.processor.calendar.Period;
-import beanvest.processor.calendar.PeriodInterval;
+import beanvest.processor.time.Period;
+import beanvest.processor.time.PeriodInterval;
 import beanvest.processor.processing.EndOfPeriodTracker;
 import beanvest.processor.processing.Grouping;
 import beanvest.processor.processing.StatsCollectingJournalProcessor;
@@ -13,10 +12,11 @@ import beanvest.result.UserErrors;
 
 import java.time.LocalDate;
 
+import static beanvest.processor.processing.EndOfPeriodTracker.PeriodInclusion.EXCLUDE_UNFINISHED;
+
 public class JournalProcessor {
     private final AccountStatsGatherer accountStatsGatherer = new AccountStatsGatherer();
     private final PredicateFactory predicateFactory = new PredicateFactory();
-    private final Calendar calendar = new Calendar();
 
     public Result<PortfolioStatsDto, UserErrors> calculateStats(
             Journal journal,
@@ -25,12 +25,10 @@ public class JournalProcessor {
             PeriodInterval interval,
             LocalDate endDate) {
 
-        var periods = calendar.calculatePeriods(interval, journal.getStartDate(), endDate);
-
         var journalProcessor = new StatsCollectingJournalProcessor(grouping);
-        var endOfPeriodTracker = new EndOfPeriodTracker(periods, period -> finishPeriod(period, journalProcessor));
+        var endOfPeriodTracker = new EndOfPeriodTracker(EXCLUDE_UNFINISHED, interval, endDate, period -> finishPeriod(period, journalProcessor));
 
-        var predicate = predicateFactory.buildPredicate(accountFilter, periods);
+        var predicate = predicateFactory.buildPredicate(accountFilter, endDate);
 
         journal.streamEntries()
                 .filter(predicate)
@@ -38,7 +36,8 @@ public class JournalProcessor {
                     endOfPeriodTracker.process(entry);
                     journalProcessor.process(entry);
                 });
-        endOfPeriodTracker.finishRemainingPeriods();
+
+        endOfPeriodTracker.finishPeriodsUpToEndDate();
 
         var metadata = journalProcessor.getMetadata();
         return Result.success(

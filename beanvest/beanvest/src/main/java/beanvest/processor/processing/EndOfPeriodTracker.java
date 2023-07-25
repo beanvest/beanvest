@@ -1,43 +1,63 @@
 package beanvest.processor.processing;
 
-import beanvest.processor.calendar.Period;
+import beanvest.journal.entry.Price;
 import beanvest.journal.entry.Entry;
+import beanvest.processor.time.Period;
+import beanvest.processor.time.PeriodInterval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
+import java.time.LocalDate;
 import java.util.function.Consumer;
 
 public class EndOfPeriodTracker {
     private static final Logger LOGGER = LoggerFactory.getLogger(EndOfPeriodTracker.class.getName());
+    private final LocalDate endDate;
     private final Consumer<Period> finishedPeriodConsumer;
-    private final List<Period> periods;
-    private Integer currentPeriod;
+    private final PeriodInclusion inclusion;
+    private final PeriodInterval interval;
+    private Period currentPeriod;
 
 
-    public EndOfPeriodTracker(List<Period> periods, Consumer<Period> finishedPeriodConsumer) {
-        this.periods = periods;
+    public EndOfPeriodTracker(PeriodInclusion periodInclusion, PeriodInterval interval, LocalDate endDate, Consumer<Period> finishedPeriodConsumer) {
+        this.inclusion = periodInclusion;
+        this.interval = interval;
+        this.endDate = Period.calculateActualEndDate(interval, periodInclusion, endDate);
         this.finishedPeriodConsumer = finishedPeriodConsumer;
     }
 
     public void process(Entry entry) {
-        if (this.currentPeriod == null) {
-            currentPeriod = 0;
+        if (this.currentPeriod == null && entry instanceof Price) {
+            return;
         }
-        while (entry.date().isAfter(periods.get(currentPeriod).endDate())) {
+        if (this.currentPeriod == null) {
+            currentPeriod = Period.createPeriodCoveringDate(entry.date(), endDate, interval);
+        }
+        while (entry.date().isAfter(currentPeriod.endDate())) {
             finishCurrentPeriod();
         }
     }
 
-    public void finishRemainingPeriods() {
-        while (currentPeriod < periods.size()) {
+    public void finishPeriodsUpToEndDate() {
+        if (currentPeriod.interval() == PeriodInterval.WHOLE) {
             finishCurrentPeriod();
+        } else {
+            while (!currentPeriod.startDate().isAfter(endDate)) {
+                finishCurrentPeriod();
+            }
         }
     }
 
     private void finishCurrentPeriod() {
-        var finishedPeriod = periods.get(currentPeriod);
-        currentPeriod++;
-        finishedPeriodConsumer.accept(finishedPeriod);
+        finishedPeriodConsumer.accept(currentPeriod);
+        if (currentPeriod.interval() != PeriodInterval.WHOLE) {
+            currentPeriod = currentPeriod.next();
+        }
+    }
+
+    public enum PeriodInclusion
+    {
+        INCLUDE_UNFINISHED,
+        EXCLUDE_UNFINISHED,
     }
 }

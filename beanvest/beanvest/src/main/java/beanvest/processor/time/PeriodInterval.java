@@ -1,4 +1,4 @@
-package beanvest.processor.calendar;
+package beanvest.processor.time;
 
 import java.time.LocalDate;
 

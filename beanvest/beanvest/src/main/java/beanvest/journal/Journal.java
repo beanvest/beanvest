@@ -7,7 +7,6 @@ import beanvest.processor.deprecated.PriceBook;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -50,7 +49,7 @@ public class Journal {
     }
 
     public List<Entry> getEntries() {
-        return streamEntries().toList();
+        return sortedEntries;
     }
 
     public void add(Entry entry) {

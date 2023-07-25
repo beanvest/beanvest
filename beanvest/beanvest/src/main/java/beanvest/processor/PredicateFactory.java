@@ -2,22 +2,21 @@ package beanvest.processor;
 
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Entry;
-import beanvest.processor.calendar.Period;
 
-import java.util.List;
+import java.time.LocalDate;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class PredicateFactory {
-    public Predicate<Entry> buildPredicate(String accountFilter, List<Period> periods) {
+    public Predicate<Entry> buildPredicate(String accountFilter, LocalDate endDate) {
         return e -> Stream.of(
                 createAccountFilterPredicate(accountFilter),
-                createEndDateCutOffPredicate(periods)
+                createEndDateCutOffPredicate(endDate)
         ).allMatch(p -> p.test(e));
     }
 
-    private static Predicate<Entry> createEndDateCutOffPredicate(List<Period> periods) {
-        return (e) -> !e.date().isAfter(periods.get(periods.size() - 1).endDate());
+    private static Predicate<Entry> createEndDateCutOffPredicate(LocalDate endDate) {
+        return (e) -> !e.date().isAfter(endDate);
     }
 
     private static Predicate<Entry> createAccountFilterPredicate(String accountFilter) {

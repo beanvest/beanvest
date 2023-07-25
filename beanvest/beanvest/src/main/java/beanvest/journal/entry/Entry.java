@@ -5,7 +5,7 @@ import beanvest.parser.SourceLine;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public interface Entry {
+public sealed interface Entry permits AccountOperation, Price {
     LocalDate date();
 
     String toJournalLine();

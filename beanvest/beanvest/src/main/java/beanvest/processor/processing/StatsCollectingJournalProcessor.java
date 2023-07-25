@@ -1,10 +1,10 @@
 package beanvest.processor.processing;
 
-import beanvest.processor.calendar.Period;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Price;
 import beanvest.processor.StatsWithDeltasDto;
+import beanvest.processor.time.Period;
 import beanvest.processor.pricebook.LatestPricesBook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

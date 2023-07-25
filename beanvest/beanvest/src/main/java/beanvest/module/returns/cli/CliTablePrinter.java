@@ -1,6 +1,5 @@
 package beanvest.module.returns.cli;
 
-import beanvest.processor.calendar.Period;
 import beanvest.processor.PortfolioStatsDto;
 import beanvest.processor.CollectionMode;
 import beanvest.lib.clitable.Column;
@@ -8,6 +7,7 @@ import beanvest.lib.clitable.TableWriter;
 import beanvest.module.returns.cli.columns.ColumnId;
 import beanvest.module.returns.cli.columns.PeriodicColumnSpec;
 import beanvest.module.returns.cli.columns.ReportColumnsDefinition;
+import beanvest.processor.time.Period;
 
 import java.io.IOException;
 import java.io.PrintStream;

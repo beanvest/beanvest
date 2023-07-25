@@ -1,12 +1,11 @@
 package beanvest.module.returns;
 
-import beanvest.processor.calendar.Calendar;
-import beanvest.processor.JournalNotFoundException;
 import beanvest.parser.JournalParser;
 import beanvest.processor.CollectionMode;
+import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.JournalProcessor;
+import beanvest.processor.time.PeriodInterval;
 import beanvest.processor.processing.Grouping;
-import beanvest.processor.calendar.PeriodInterval;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -17,7 +16,6 @@ public class ReturnsCalculatorApp {
     private final JournalParser journalParser;
     private final CliOutputWriter outputWriter;
     private final JournalProcessor statsCalculator = new JournalProcessor();
-    private final Calendar calendar = new Calendar();
 
     public ReturnsCalculatorApp(CliOutputWriter outputWriter,
                                 JournalParser journalParser) {
