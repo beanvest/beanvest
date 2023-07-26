@@ -13,16 +13,14 @@ import java.util.function.Consumer;
 public class EndOfPeriodTracker {
     private static final Logger LOGGER = LoggerFactory.getLogger(EndOfPeriodTracker.class.getName());
     private final LocalDate endDate;
+    private final PeriodSpec periodSpec;
     private final Consumer<Period> finishedPeriodConsumer;
-    private final PeriodInclusion inclusion;
-    private final PeriodInterval interval;
     private Period currentPeriod;
 
 
-    public EndOfPeriodTracker(PeriodInclusion periodInclusion, PeriodInterval interval, LocalDate endDate, Consumer<Period> finishedPeriodConsumer) {
-        this.inclusion = periodInclusion;
-        this.interval = interval;
-        this.endDate = Period.calculateActualEndDate(interval, periodInclusion, endDate);
+    public EndOfPeriodTracker(PeriodSpec periodSpec, Consumer<Period> finishedPeriodConsumer) {
+        this.endDate = Period.calculateActualEndDate(periodSpec.interval(), periodSpec.periodsInclusion(), periodSpec.end());
+        this.periodSpec = periodSpec;
         this.finishedPeriodConsumer = finishedPeriodConsumer;
     }
 
@@ -31,7 +29,7 @@ public class EndOfPeriodTracker {
             return;
         }
         if (this.currentPeriod == null) {
-            currentPeriod = Period.createPeriodCoveringDate(entry.date(), endDate, interval);
+            currentPeriod = Period.createPeriodCoveringDate(entry.date(), endDate, periodSpec.interval());
         }
         while (entry.date().isAfter(currentPeriod.endDate())) {
             finishCurrentPeriod();
@@ -39,7 +37,7 @@ public class EndOfPeriodTracker {
     }
 
     public void finishPeriodsUpToEndDate() {
-        if (currentPeriod.interval() == PeriodInterval.WHOLE) {
+        if (currentPeriod.interval() == PeriodInterval.NONE) {
             finishCurrentPeriod();
         } else {
             while (!currentPeriod.startDate().isAfter(endDate)) {
@@ -50,14 +48,9 @@ public class EndOfPeriodTracker {
 
     private void finishCurrentPeriod() {
         finishedPeriodConsumer.accept(currentPeriod);
-        if (currentPeriod.interval() != PeriodInterval.WHOLE) {
+        if (currentPeriod.interval() != PeriodInterval.NONE) {
             currentPeriod = currentPeriod.next();
         }
     }
 
-    public enum PeriodInclusion
-    {
-        INCLUDE_UNFINISHED,
-        EXCLUDE_UNFINISHED,
-    }
 }

@@ -4,13 +4,15 @@ import beanvest.parser.JournalParser;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.JournalProcessor;
+import beanvest.processor.processing.PeriodSpec;
 import beanvest.processor.time.PeriodInterval;
 import beanvest.processor.processing.Grouping;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+
+import static beanvest.processor.processing.PeriodInclusion.EXCLUDE_UNFINISHED;
 
 public class ReturnsCalculatorApp {
     private final JournalParser journalParser;
@@ -29,14 +31,15 @@ public class ReturnsCalculatorApp {
                       String accountFilter,
                       Boolean deltas,
                       Boolean group,
-                      Optional<LocalDate> maybeStart,
+                      LocalDate startDate,
                       PeriodInterval interval) {
         boolean isSuccessful = true;
         try {
             var journal = journalParser.parse(journalsPaths);
             var statsMode = deltas ? CollectionMode.DELTA : CollectionMode.CUMULATIVE;
             var grouping = group ? Grouping.WITH_GROUPS : Grouping.NO_GROUPS;
-            var statsResult = statsCalculator.calculateStats(journal, accountFilter, grouping, interval, endDate);
+            var intervalConfig = new PeriodSpec(startDate, endDate, interval, EXCLUDE_UNFINISHED);
+            var statsResult = statsCalculator.calculateStats(journal, accountFilter, grouping, intervalConfig);
 
             if (statsResult.hasError()) {
                 outputWriter.outputInputErrors(statsResult.getError().errors);

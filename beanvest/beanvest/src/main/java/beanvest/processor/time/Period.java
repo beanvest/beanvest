@@ -1,6 +1,6 @@
 package beanvest.processor.time;
 
-import beanvest.processor.processing.EndOfPeriodTracker.PeriodInclusion;
+import beanvest.processor.processing.PeriodInclusion;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -13,7 +13,7 @@ public final class Period implements Comparable<Period> {
     private Period(LocalDate start, LocalDate end, PeriodInterval interval) {
         this.start = start;
         this.interval = interval;
-        this.end = interval == PeriodInterval.WHOLE ? end : calculateEndDate(interval, start);
+        this.end = interval == PeriodInterval.NONE ? end : calculateEndDate(interval, start);
     }
 
     public static Period createPeriodCoveringDate(LocalDate parse, LocalDate end, PeriodInterval periodInterval) {
@@ -22,7 +22,7 @@ public final class Period implements Comparable<Period> {
 
     public static LocalDate calculateActualEndDate(PeriodInterval interval, PeriodInclusion periodInclusion, LocalDate endDate) {
         var start1 = Period.createPeriodCoveringDate(endDate, endDate, interval);
-        if (start1.interval == PeriodInterval.WHOLE) { // ugh not sure if it fits here after all
+        if (start1.interval == PeriodInterval.NONE) { // ugh not sure if it fits here after all
             return endDate;
         }
         if (periodInclusion == PeriodInclusion.INCLUDE_UNFINISHED) {
@@ -41,7 +41,7 @@ public final class Period implements Comparable<Period> {
             case MONTH -> date.plusMonths(1);
             case QUARTER -> date.plusMonths(3);
             case YEAR -> date.plusYears(1);
-            case WHOLE -> throw new UnsupportedOperationException("that doesnt make any sense");
+            case NONE -> throw new UnsupportedOperationException("that doesnt make any sense");
         };
     }
 
@@ -50,7 +50,7 @@ public final class Period implements Comparable<Period> {
             case MONTH -> LocalDate.of(start.getYear(), start.getMonth(), 1);
             case QUARTER -> LocalDate.of(start.getYear(), 1 + start.getMonthValue() / 3 * 3, 1);
             case YEAR -> LocalDate.of(start.getYear(), 1, 1);
-            case WHOLE -> LocalDate.MIN;
+            case NONE -> LocalDate.MIN;
         };
     }
 

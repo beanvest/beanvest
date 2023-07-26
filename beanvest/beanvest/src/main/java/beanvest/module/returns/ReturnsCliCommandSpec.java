@@ -21,7 +21,7 @@ public class ReturnsCliCommandSpec {
                     .required(true)
                     .arity("1..*")
                     .build())
-            .addOption(CommandLine.Model.OptionSpec.builder("--start", "-s")
+            .addOption(CommandLine.Model.OptionSpec.builder("--startDate", "-s")
                     .type(LocalDate.class)
                     .description("Start date")
                     .build())

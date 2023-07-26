@@ -1,18 +1,14 @@
 package beanvest.processor;
 
 import beanvest.journal.Journal;
+import beanvest.processor.processing.PeriodSpec;
 import beanvest.processor.time.Period;
-import beanvest.processor.time.PeriodInterval;
 import beanvest.processor.processing.EndOfPeriodTracker;
 import beanvest.processor.processing.Grouping;
 import beanvest.processor.processing.StatsCollectingJournalProcessor;
 import beanvest.processor.processing.collector.AccountStatsGatherer;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
-
-import java.time.LocalDate;
-
-import static beanvest.processor.processing.EndOfPeriodTracker.PeriodInclusion.EXCLUDE_UNFINISHED;
 
 public class JournalProcessor {
     private final AccountStatsGatherer accountStatsGatherer = new AccountStatsGatherer();
@@ -22,13 +18,12 @@ public class JournalProcessor {
             Journal journal,
             String accountFilter,
             Grouping grouping,
-            PeriodInterval interval,
-            LocalDate endDate) {
+            PeriodSpec periodSpec) {
 
         var journalProcessor = new StatsCollectingJournalProcessor(grouping);
-        var endOfPeriodTracker = new EndOfPeriodTracker(EXCLUDE_UNFINISHED, interval, endDate, period -> finishPeriod(period, journalProcessor));
+        var endOfPeriodTracker = new EndOfPeriodTracker(periodSpec, period -> finishPeriod(period, journalProcessor));
 
-        var predicate = predicateFactory.buildPredicate(accountFilter, endDate);
+        var predicate = predicateFactory.buildPredicate(accountFilter, periodSpec.end());
 
         journal.streamEntries()
                 .filter(predicate)

@@ -44,9 +44,9 @@ public class JournalCliCommand implements SubCommand {
                     .description("currency")
                     .defaultValue(DEFAULT_CURRENCY)
                     .build())
-            .addOption(CommandLine.Model.OptionSpec.builder("--start", "-s")
+            .addOption(CommandLine.Model.OptionSpec.builder("--startDate", "-s")
                     .type(LocalDate.class)
-                    .description("start date")
+                    .description("startDate date")
                     .build())
             .addOption(CommandLine.Model.OptionSpec.builder("--end", "-e")
                     .type(LocalDate.class)
@@ -57,7 +57,7 @@ public class JournalCliCommand implements SubCommand {
 
     public int run(CommandLine.ParseResult parseResult, PrintStream stdOut, PrintStream stdErr) {
         var journalsPaths = parseResult.matchedPositionalValue(0, new ArrayList<Path>());
-        final Optional<LocalDate> start = Optional.ofNullable(parseResult.matchedOptionValue("--start", null));
+        final Optional<LocalDate> start = Optional.ofNullable(parseResult.matchedOptionValue("--startDate", null));
         final Optional<LocalDate> end = Optional.ofNullable(parseResult.matchedOptionValue("--end", null));
         final String currency = parseResult.matchedOptionValue("--currency", DEFAULT_CURRENCY);
         final String account = parseResult.matchedOptionValue("--account", null);

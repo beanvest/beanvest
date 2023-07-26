@@ -65,7 +65,7 @@ public class ReturnsDsl {
             args.add("--end=" + cliOptions.end);
         }
         if (cliOptions.start != null) {
-            args.add("--start=" + cliOptions.start);
+            args.add("--startDate=" + cliOptions.start);
         }
         args.addAll(List.of(ledgerFiles));
         if (cliOptions.jsonOutput) {

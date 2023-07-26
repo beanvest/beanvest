@@ -11,7 +11,7 @@ import java.util.Optional;
 public record ReturnsAppParameters(
         ArrayList<Path> journalsPaths,
         LocalDate endDate,
-        Optional<LocalDate> maybeStart,
+        LocalDate startDate,
         String accountFilter,
         Optional<String> reportCurrency,
         List<String> selectedColumns,

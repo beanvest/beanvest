@@ -107,7 +107,7 @@ public class JournalAcceptanceTest {
                 2022-02-04 deposit 10
                 """);
 
-        var result = runner.runSuccessfully(List.of(journalA.toString(), "--start=2022-02-03", "--end=2022-02-04"));
+        var result = runner.runSuccessfully(List.of(journalA.toString(), "--startDate=2022-02-03", "--end=2022-02-04"));
 
         assertEquals("""
                 2022-02-03 deposit 10 GBP
