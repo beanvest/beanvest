@@ -6,12 +6,16 @@ import beanvest.journal.entry.Price;
 import beanvest.processor.StatsWithDeltasDto;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.time.Period;
+import beanvest.processor.validation.ValidatorError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class StatsCollectingJournalProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatsCollectingJournalProcessor.class.getName());
@@ -19,6 +23,11 @@ public class StatsCollectingJournalProcessor {
     private final AccountGroupResolver accountGroupResolver;
     private final LatestPricesBook latestPricesBook = new LatestPricesBook();
     private final DeltaCalculator deltaCalculator = new DeltaCalculator();
+    private final List<ValidatorError> validatorErrors = new ArrayList<>();
+
+    public List<ValidatorError> getValidatorErrors() {
+        return validatorErrors;
+    }
 
     public StatsCollectingJournalProcessor(Grouping grouping) {
         collectorByAccount = new HashMap<>();
@@ -29,11 +38,13 @@ public class StatsCollectingJournalProcessor {
         if (entry instanceof Price p) {
             latestPricesBook.add(p);
         } else if (entry instanceof AccountOperation op) {
-            accountGroupResolver
-                    .resolveAccountPatterns(op.account())
-                    .forEach(accountPattern -> collectorByAccount
-                            .computeIfAbsent(accountPattern, acc -> new FullAccountStatsCalculator(latestPricesBook))
-                            .process(entry));
+            for (String accountPattern : accountGroupResolver
+                    .resolveAccountPatterns(op.account())) {
+                var validationErrors = collectorByAccount
+                        .computeIfAbsent(accountPattern, acc -> new FullAccountStatsCalculator(latestPricesBook))
+                        .process(entry);
+                validatorErrors.addAll(validationErrors);
+            }
         }
     }
 
@@ -55,5 +66,9 @@ public class StatsCollectingJournalProcessor {
         var result = new HashMap<String, AccountMetadata>();
         collectorByAccount.forEach((account, collector) -> result.put(account, collector.getMetadata()));
         return result;
+    }
+
+    public boolean hasValidationErrors() {
+        return !validatorErrors.isEmpty();
     }
 }

@@ -2,10 +2,9 @@ package beanvest.module.returns;
 
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
-import beanvest.processor.validation.JournalValidationErrorErrorWithMessage;
+import beanvest.processor.validation.ValidatorError;
 import beanvest.processor.PortfolioStatsDto;
 import beanvest.module.returns.cli.CliTablePrinter;
-import beanvest.result.UserError;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -30,16 +29,10 @@ public class CliTableOutputWriter implements CliOutputWriter {
     }
 
     @Override
-    public void outputInputErrors(List<UserError> errors) {
+    public void outputInputErrors(List<ValidatorError> errors) {
         if (errors.size() > 0) {
             stdErr.println("====> Ooops! Validation " + (errors.size() > 1 ? "errors:" : "error:"));
-            errors.forEach(err -> {
-                if (err instanceof JournalValidationErrorErrorWithMessage vErr) {
-                    stdErr.println(vErr.getMessage());
-                } else {
-                    throw new UnsupportedOperationException("Unsupported error: " + err.getClass().getName());
-                }
-            });
+            errors.forEach(err -> stdErr.println(err.message()));
         }
     }
 

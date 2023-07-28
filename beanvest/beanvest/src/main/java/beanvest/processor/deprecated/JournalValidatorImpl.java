@@ -1,18 +1,23 @@
-package beanvest.processor.validation;
+package beanvest.processor.deprecated;
 
-import beanvest.processor.deprecated.AccountStatesSet;
-import beanvest.processor.deprecated.BalanceValidator;
 import beanvest.journal.entry.Entry;
+import beanvest.processor.processing.StatsCollectingJournalProcessor;
+import beanvest.processor.validation.ValidatorError;
 
 import java.util.List;
 
+/**
+ * @see StatsCollectingJournalProcessor
+ * @deprecated processing model was rewritten, this is legacy and will be removed
+ */
+@Deprecated
 public class JournalValidatorImpl {
     private final List<JournalValidator> validators = List.of(
             new EmptyAccountClosingValidator(),
             new BalanceValidator()
     );
 
-    public List<JournalValidationErrorErrorWithMessage> validate(AccountStatesSet accountStatesSet, List<Entry> dayops) {
+    public List<ValidatorError> validate(AccountStatesSet accountStatesSet, List<Entry> dayops) {
         return validators.stream()
                 .flatMap(v -> v.validate(dayops, accountStatesSet.getAccounts()).stream())
                 .toList();

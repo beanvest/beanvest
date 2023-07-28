@@ -1,13 +1,13 @@
 package beanvest.processor.processing.collector;
 
 import beanvest.journal.entry.Entry;
-import beanvest.processor.processing.Collector;
+import beanvest.processor.processing.Processor;
 import beanvest.journal.entry.Close;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
-public class AccountOpenDatesCollector implements Collector {
+public class AccountOpenDatesCollector implements Processor {
     private LocalDate firstActivity;
     private LocalDate closingDate;
 

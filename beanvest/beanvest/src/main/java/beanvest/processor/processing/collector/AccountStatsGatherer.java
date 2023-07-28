@@ -8,7 +8,7 @@ import beanvest.processor.processing.AccountMetadata;
 
 import java.util.*;
 
-public class AccountStatsGatherer {
+public class AccountStatsGatherer { //TODO move to calculators
     Map<String, Map<String, StatsWithDeltasDto>> results = new HashMap<>();
     List<Period> periods = new ArrayList<>();
     Set<String> processedPeriodTitles = new HashSet<>();

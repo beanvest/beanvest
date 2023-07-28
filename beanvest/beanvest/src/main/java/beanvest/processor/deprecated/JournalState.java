@@ -1,6 +1,6 @@
 package beanvest.processor.deprecated;
 
-import beanvest.processor.validation.JournalValidationErrorErrorWithMessage;
+import beanvest.processor.validation.ValidatorError;
 import beanvest.journal.CashFlow;
 import beanvest.journal.Holdings;
 import beanvest.processor.processing.StatsCollectingJournalProcessor;
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 @Deprecated
 public record JournalState(LocalDate date, Map<String, AccountState> accounts, PriceBook priceBook,
                            List<CashFlow> cashFlows,
-                           List<JournalValidationErrorErrorWithMessage> validationErrors) {
+                           List<ValidatorError> validationErrors) {
 
     public List<AccountState> getAccounts(String accountPattern) {
         return accounts.entrySet()

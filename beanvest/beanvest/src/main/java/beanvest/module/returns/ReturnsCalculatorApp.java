@@ -42,7 +42,7 @@ public class ReturnsCalculatorApp {
             var statsResult = statsCalculator.calculateStats(journal, accountFilter, grouping, intervalConfig, EXCLUDE_UNFINISHED);
 
             if (statsResult.hasError()) {
-                outputWriter.outputInputErrors(statsResult.getError().errors);
+                outputWriter.outputInputErrors(statsResult.getError());
                 isSuccessful = false;
             } else {
                 outputWriter.outputResult(selectedColumns, statsResult.getValue(), statsMode);

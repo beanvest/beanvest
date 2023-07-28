@@ -1,13 +1,13 @@
 package beanvest.processor.processing.collector;
 
 import beanvest.journal.entry.Entry;
-import beanvest.processor.processing.Collector;
+import beanvest.processor.processing.Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 
-public abstract class AbstractCollector implements Collector {
+public abstract class AbstractCollector implements Processor {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractCollector.class.getName());
     protected BigDecimal balance = BigDecimal.ZERO;
 

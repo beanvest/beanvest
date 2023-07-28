@@ -1,6 +1,5 @@
 package beanvest.processor.processing;
 
-import beanvest.processor.ValueStatDto;
 import beanvest.processor.ValueStatsDto;
 import beanvest.journal.entry.Entry;
 import beanvest.processor.processing.calculator.AccountGainCalculator;
@@ -27,17 +26,15 @@ import beanvest.processor.processing.collector.RealizedGainsCollector;
 import beanvest.processor.processing.collector.SimpleFeeCollector;
 import beanvest.processor.processing.collector.SpentCollector;
 import beanvest.processor.processing.collector.WithdrawalCollector;
-import beanvest.result.Result;
-import beanvest.result.UserError;
-import beanvest.result.UserErrors;
+import beanvest.processor.processing.validator.BalanceValidator;
+import beanvest.processor.validation.ValidatorError;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 @SuppressWarnings("FieldCanBeLocal")
-public class FullAccountStatsCalculator implements Collector {
+public class FullAccountStatsCalculator {
     private final AccountOpenDatesCollector accountOpenDatesCollector = new AccountOpenDatesCollector();
     private final DepositCollector depositCollector = new DepositCollector();
     private final DividendCollector dividendCollector = new DividendCollector();
@@ -60,7 +57,10 @@ public class FullAccountStatsCalculator implements Collector {
     private final TotalValueCalculator totalValueCalculator;
     private final UnrealizedGainsCalculator unrealizedGainsCalculator;
     private final XirrCalculator xirrCalculator;
-    private final List<Collector> collectors = List.of(
+
+    private final List<ValidatorError> validationErrors = new ArrayList<>();
+    private final BalanceValidator balanceValidator = new BalanceValidator(validationErrors::add);;
+    private final List<Processor> collectors = List.of(
             accountOpenDatesCollector,
             depositCollector,
             dividendCollector,
@@ -72,7 +72,8 @@ public class FullAccountStatsCalculator implements Collector {
             simpleFeeCollector,
             spentCollector,
             transactionFeeCollector,
-            withdrawalsCollector
+            withdrawalsCollector,
+            balanceValidator
     );
 
     public FullAccountStatsCalculator(LatestPricesBook pricesBook) {
@@ -87,13 +88,15 @@ public class FullAccountStatsCalculator implements Collector {
         accountValueCalculator = new AccountValueCalculator(holdingsValueCalculator, cashCalculator);
         accountGainCalculator = new AccountGainCalculator(depositCollector, withdrawalsCollector, accountValueCalculator);
         totalFeesCalculator = new TotalFeesCalculator(simpleFeeCollector, transactionFeeCollector);
+
     }
 
-    @Override
-    public void process(Entry entry) {
-        for (Collector collector : collectors) {
+    public List<ValidatorError> process(Entry entry) {
+        for (Processor collector : collectors) {
             collector.process(entry);
         }
+
+        return validationErrors;
     }
 
     public Stats calculateStats(LocalDate endingDate, String targetCurrency) {

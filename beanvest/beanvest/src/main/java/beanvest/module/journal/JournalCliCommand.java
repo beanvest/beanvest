@@ -4,7 +4,7 @@ package beanvest.module.journal;
 import beanvest.journal.CashStats;
 import beanvest.processor.deprecated.JournalEntryProcessor;
 import beanvest.parser.JournalParser;
-import beanvest.processor.validation.JournalValidationErrorErrorWithMessage;
+import beanvest.processor.validation.ValidatorError;
 import beanvest.result.Result;
 import beanvest.processor.deprecated.AccountState;
 import beanvest.journal.Holdings;
@@ -22,7 +22,6 @@ import java.math.RoundingMode;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class JournalCliCommand implements SubCommand {
     public static final String DEFAULT_CURRENCY = "GBP";
@@ -105,9 +104,9 @@ public class JournalCliCommand implements SubCommand {
         return true;
     }
 
-    private void printErrors(PrintStream stdOut, List<JournalValidationErrorErrorWithMessage> errors) {
+    private void printErrors(PrintStream stdOut, List<ValidatorError> errors) {
         stdOut.println("====> Ooops! Validation error" + (errors.size() > 1 ? "s" : "") + ":");
-        errors.forEach(e -> stdOut.println(e.getMessage()));
+        errors.forEach(e -> stdOut.println(e.message()));
     }
 
     private void printSummary(PrintStream stdOut, JournalState journalState, AccountState baseStats, Holdings holdings, Result<BigDecimal, UserErrors> valuationResult) {

@@ -2,11 +2,11 @@ package beanvest.processor.processing.collector;
 
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Sell;
-import beanvest.processor.processing.Collector;
+import beanvest.processor.processing.Processor;
 
 import java.math.BigDecimal;
 
-public class RealizedGainsCollector implements Collector {
+public class RealizedGainsCollector implements Processor {
     private BigDecimal balance = BigDecimal.ZERO;
     private final HoldingsCollector holdingsCollector = new HoldingsCollector();
 

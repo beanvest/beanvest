@@ -4,7 +4,6 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("processing refactor")
 public class BalanceAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -21,6 +20,7 @@ public class BalanceAcceptanceTest {
     }
 
     @Test
+    @Disabled("rewrite needed")
     void validationFailsIfCashBalanceDoesNotMatch() {
         dsl.setAllowNonZeroExitCodes();
         dsl.runCalculateReturns("""
@@ -59,6 +59,7 @@ public class BalanceAcceptanceTest {
     }
 
     @Test
+    @Disabled("rewrite needed")
     void validationMightFailOnMultipleBalanceEntries() {
         dsl.setAllowNonZeroExitCodes();
         dsl.setEnd("2021-01-02");

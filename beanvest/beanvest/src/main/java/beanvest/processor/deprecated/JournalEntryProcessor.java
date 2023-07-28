@@ -1,7 +1,6 @@
 package beanvest.processor.deprecated;
 
-import beanvest.processor.validation.JournalValidationErrorErrorWithMessage;
-import beanvest.processor.validation.JournalValidatorImpl;
+import beanvest.processor.validation.ValidatorError;
 import beanvest.result.Result;
 import beanvest.journal.CashFlowCollector;
 import beanvest.journal.Journal;
@@ -25,15 +24,15 @@ import java.util.function.Consumer;
 public class JournalEntryProcessor {
     private final JournalValidatorImpl journalValidator = new JournalValidatorImpl();
 
-    public Result<Void, UserErrors> processEntries(final Journal journal, final Collection<LocalDate> submitDates, final Consumer<JournalState> consumer) {
+    public Result<Void, List<ValidatorError>> processEntries(final Journal journal, final Collection<LocalDate> submitDates, final Consumer<JournalState> consumer) {
         var accountStatesSet = new AccountStatesSet();
         var submitPoints = new ArrayDeque<LocalDate>();
         submitPoints.add(journal.getStartDate().minusDays(1));
         submitPoints.addAll(submitDates.stream().sorted().toList());
 
         var nextSubmitPoint = submitPoints.removeFirst();
-        List<UserError> errors = new ArrayList<>();
-        List<JournalValidationErrorErrorWithMessage> newErrors = new ArrayList<>();
+        List<ValidatorError> errors = new ArrayList<>();
+        List<ValidatorError> newErrors = new ArrayList<>();
         var dayEntriesIterator = journal.getEntriesGroupedByDay().values().iterator();
         var cashflowCollector = new CashFlowCollector();
         var shouldFinish = false;
@@ -77,6 +76,6 @@ public class JournalEntryProcessor {
             errors.addAll(newErrors);
         }
 
-        return errors.isEmpty() ? Result.success(null) : Result.failure(new UserErrors(errors));
+        return errors.isEmpty() ? Result.success(null) : Result.failure(errors);
     }
 }

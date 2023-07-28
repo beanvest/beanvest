@@ -104,8 +104,8 @@ public class Journal {
     }
 
 
-    public Stream<Entry> streamEntries() {
-        return sortedEntries.stream();
+    public List<Entry> sortedEntries() {
+        return sortedEntries;
     }
 
     public List<AccountDetails> getAccountsAndGroups(boolean groups) {

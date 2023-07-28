@@ -3,7 +3,7 @@ package beanvest.processor.processing.collector;
 import beanvest.journal.entry.Buy;
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Sell;
-import beanvest.processor.processing.Collector;
+import beanvest.processor.processing.Processor;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class HoldingsCollector implements Collector {
+public class HoldingsCollector implements Processor {
     private final Map<String, Holding> holdings = new HashMap<>();
 
     @Override
