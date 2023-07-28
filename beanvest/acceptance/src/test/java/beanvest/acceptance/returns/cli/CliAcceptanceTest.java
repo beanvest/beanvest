@@ -15,6 +15,7 @@ public class CliAcceptanceTest {
     @Test
     void calculatesStatsOnWholeJournalByDefault() {
         dsl.setColumns("cash");
+        dsl.setGroupingDisabled();
 
         dsl.runCalculateReturns(
                 """
@@ -49,6 +50,7 @@ public class CliAcceptanceTest {
     @Test
     void statsAreCalculatedForAllAccounts() {
         dsl.setEnd("2023-01-01");
+        dsl.setGroupingDisabled();
         dsl.setColumns("cash");
 
         dsl.runCalculateReturns("""

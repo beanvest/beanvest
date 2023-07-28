@@ -16,15 +16,13 @@ public class AccountGroupResolver {
         }
         var result = new ArrayList<String>();
 
-        var doGroups = List.of(Grouping.WITH_GROUPS, Grouping.ONLY_GROUPS).contains(grouping);
-        if (doGroups) {
+        if (grouping.includesGroups()) {
             result.addAll(figureOutGroups(account));
         }
-
-        var doAccounts = grouping != Grouping.ONLY_GROUPS;
-        if (doAccounts) {
+        if (grouping.includesAccounts()) {
             result.add(account);
         }
+
         resolved.put(account, Collections.unmodifiableList(result));
 
         return result;

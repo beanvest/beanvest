@@ -12,13 +12,13 @@ public class GenerateUsageDocMain {
     private static final String BEANVEST_BIN = "beanvest/beanvest/build/native/nativeCompile/";
     private static final List<Example> EXAMPLES = List.of(
             new Example(
-                    "beanvest returns sample/* --group --end=2023-07-01",
+                    "beanvest returns sample/* --end=2023-07-01",
                     "Print various stats for all accounts and groups on each level of the accounts for whole period"),
             new Example(
-                    "beanvest returns sample/* --group --columns deps,wths --interval=quarter",
+                    "beanvest returns sample/* --columns deps,wths --interval=quarter",
                     "Print cumulative deposits and withdrawals for accounts and groups for each quarter"),
             new Example(
-                    "beanvest returns sample/* --group --columns deps,wths --interval=quarter --delta",
+                    "beanvest returns sample/* --columns deps,wths --interval=quarter --delta",
                     "Print changes in deposits and withdrawals for accounts and groups for each quarter"),
             new Example(
                     "beanvest journal sample/* | tail -n 20",

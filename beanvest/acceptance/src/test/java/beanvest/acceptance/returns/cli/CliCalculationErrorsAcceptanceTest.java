@@ -33,6 +33,7 @@ public class CliCalculationErrorsAcceptanceTest {
     void printsTableJustFineIfXirrIsNotCalculated() {
         dsl.setEnd("2021-03-15");
         dsl.setColumns("xirr");
+        dsl.setGroupingDisabled();
 
         dsl.runCalculateReturns("""
                 account trading
@@ -80,6 +81,7 @@ public class CliCalculationErrorsAcceptanceTest {
         dsl.setStartDate("2020-01-15");
         dsl.setEnd("2022-01-01");
         dsl.setColumns("deps");
+        dsl.setGroupingDisabled();
         dsl.setDeltas();
         dsl.setYearly();
 

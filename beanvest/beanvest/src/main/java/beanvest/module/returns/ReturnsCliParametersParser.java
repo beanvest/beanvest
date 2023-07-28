@@ -1,5 +1,7 @@
 package beanvest.module.returns;
 
+import beanvest.parser.AccountGroupingCliArg;
+import beanvest.processor.processing.Grouping;
 import beanvest.processor.time.PeriodInterval;
 import picocli.CommandLine;
 
@@ -17,18 +19,18 @@ public class ReturnsCliParametersParser {
         var endDate = LocalDate.parse(parseResult.matchedOptionValue("--end", today.toString()));
         final LocalDate startDate = parseResult.matchedOptionValue("--startDate", LocalDate.MIN);
         final String accountFilter = parseResult.matchedOptionValue("--account", ".*");
-        final Optional<String> reportCurrency = Optional.ofNullable(parseResult.matchedOptionValue("--currency", "")).filter(v -> !v.equals(""));
+        final Optional<String> reportCurrency = Optional.ofNullable(parseResult.matchedOptionValue("--currency", ""));
         var selectedColumns = getSelectedColumns(parseResult.matchedOptionValue("--columns", ""));
 
         var exactValues = parseResult.matchedOptionValue("--exact", false);
         var jsonFormat = parseResult.matchedOptionValue("--json", false);
         final String intervalRaw = parseResult.matchedOptionValue("--interval", PeriodInterval.NONE.name());
         final PeriodInterval period = PeriodInterval.valueOf(intervalRaw.toUpperCase(Locale.ROOT));
-
-        var group = parseResult.matchedOptionValue("--group", false);
+        var grouping = parseResult.matchedOptionValue("--groups", AccountGroupingCliArg.DEFAULT).mappedValue;
         var onlyDeltas = parseResult.matchedOptionValue("--delta", false);
 
-        return new ReturnsAppParameters(journalsPaths, endDate, startDate, accountFilter, reportCurrency, selectedColumns, exactValues, jsonFormat, period, group, onlyDeltas, "TOTAL");
+        return new ReturnsAppParameters(journalsPaths, endDate, startDate, accountFilter, reportCurrency, selectedColumns,
+                exactValues, jsonFormat, period, grouping, onlyDeltas, "TOTAL");
     }
 
     private List<String> getSelectedColumns(String rawSelectedColumns) {

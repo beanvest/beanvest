@@ -18,6 +18,7 @@ public class PeriodsInCliAcceptanceTest {
         dsl.setEnd("2022-01-01");
         dsl.setYearly();
         dsl.setColumns("deps");
+        dsl.setGroupingDisabled();
 
         dsl.runCalculateReturns("""
                 account isa
@@ -38,6 +39,7 @@ public class PeriodsInCliAcceptanceTest {
     void calculatesInQuarterlyIntervalsPeriodic() {
         dsl.setEnd("2021-05-01");
         dsl.setQuarterly();
+        dsl.setGroupingDisabled();
         dsl.setColumns("deps");
 
         dsl.runCalculateReturns("""
@@ -152,6 +154,7 @@ public class PeriodsInCliAcceptanceTest {
         dsl.setEnd("2021-01-01");
         dsl.setYearly();
         dsl.setColumns("cash");
+        dsl.setGroupingDisabled();
 
         dsl.runCalculateReturns("""
                 account openedEarlier
@@ -177,6 +180,7 @@ public class PeriodsInCliAcceptanceTest {
         dsl.setEnd("2021-01-01");
         dsl.setStartDate("2019-01-01");
         dsl.setDeltas();
+        dsl.setGroupingDisabled();
         dsl.setColumns("deps");
 
         dsl.runCalculateReturns("""

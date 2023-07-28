@@ -2,7 +2,7 @@
 
 - Print various stats for all accounts and groups on each level of the accounts for whole period
   ```bash
-  beanvest returns sample/* --group --end=2023-07-01
+  beanvest returns sample/* --end=2023-07-01
   ```
   ```
   account              opened      closed  deps    wths   div    intr   fees   rGain  cash    uGain  eVal   aGain  xirr
@@ -14,7 +14,7 @@
   ```
 - Print cumulative deposits and withdrawals for accounts and groups for each quarter
   ```bash
-  beanvest returns sample/* --group --columns deps,wths --interval=quarter
+  beanvest returns sample/* --columns deps,wths --interval=quarter
   ```
   ```
                       ╷ 23q2          ╷ 23q1          ╷ 22q4          ╷ 22q3          ╷ 22q2         ╷ 22q1         ╷
@@ -27,7 +27,7 @@
   ```
 - Print changes in deposits and withdrawals for accounts and groups for each quarter
   ```bash
-  beanvest returns sample/* --group --columns deps,wths --interval=quarter --delta
+  beanvest returns sample/* --columns deps,wths --interval=quarter --delta
   ```
   ```
                       ╷ 23q2         ╷ 23q1         ╷ 22q4         ╷ 22q3         ╷ 22q2         ╷ 22q1         ╷

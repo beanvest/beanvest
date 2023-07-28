@@ -16,6 +16,8 @@ public class CliStatsAcceptanceTest {
     void calculatesFeesTotal() {
         dsl.setColumns("fees");
         dsl.setExact();
+        dsl.setGroupingDisabled();
+
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -41,6 +43,7 @@ public class CliStatsAcceptanceTest {
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
         dsl.setDeltas();
+        dsl.setGroupingDisabled();
         dsl.setColumns("fees");
         dsl.setExact();
         dsl.runCalculateReturns("""

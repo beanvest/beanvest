@@ -30,14 +30,13 @@ public class ReturnsCalculatorApp {
                       LocalDate endDate,
                       String accountFilter,
                       Boolean deltas,
-                      Boolean group,
+                      Grouping grouping,
                       LocalDate startDate,
                       PeriodInterval interval) {
         boolean isSuccessful = true;
         try {
             var journal = journalParser.parse(journalsPaths);
             var statsMode = deltas ? CollectionMode.DELTA : CollectionMode.CUMULATIVE;
-            var grouping = group ? Grouping.WITH_GROUPS : Grouping.NO_GROUPS;
             var intervalConfig = new PeriodSpec(startDate, endDate, interval);
             var statsResult = statsCalculator.calculateStats(journal, accountFilter, grouping, intervalConfig, EXCLUDE_UNFINISHED);
 

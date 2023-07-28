@@ -1,5 +1,6 @@
 package beanvest.module.returns;
 
+import beanvest.processor.processing.Grouping;
 import beanvest.processor.time.PeriodInterval;
 
 import java.nio.file.Path;
@@ -18,7 +19,7 @@ public record ReturnsAppParameters(
         Boolean exactValues,
         Boolean jsonFormat,
         PeriodInterval period,
-        Boolean group,
+        Grouping grouping,
         Boolean onlyDeltas,
         String total
 ) {

@@ -12,10 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 public class StatsCollectingJournalProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatsCollectingJournalProcessor.class.getName());
@@ -23,18 +23,14 @@ public class StatsCollectingJournalProcessor {
     private final AccountGroupResolver accountGroupResolver;
     private final LatestPricesBook latestPricesBook = new LatestPricesBook();
     private final DeltaCalculator deltaCalculator = new DeltaCalculator();
-    private final List<ValidatorError> validatorErrors = new ArrayList<>();
-
-    public List<ValidatorError> getValidatorErrors() {
-        return validatorErrors;
-    }
+    private final LinkedHashSet<ValidatorError> validatorErrors = new LinkedHashSet<>();
 
     public StatsCollectingJournalProcessor(Grouping grouping) {
         collectorByAccount = new HashMap<>();
         accountGroupResolver = new AccountGroupResolver(grouping);
     }
 
-    public void process(Entry entry) {
+    public Set<ValidatorError> process(Entry entry) {
         if (entry instanceof Price p) {
             latestPricesBook.add(p);
         } else if (entry instanceof AccountOperation op) {
@@ -46,6 +42,7 @@ public class StatsCollectingJournalProcessor {
                 validatorErrors.addAll(validationErrors);
             }
         }
+        return validatorErrors;
     }
 
     public List<String> getAccounts() {

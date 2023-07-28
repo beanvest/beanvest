@@ -8,7 +8,7 @@ public class LeveragedReturnsAcceptanceTest {
     @Test
     void shouldCalculateLeveragedReturnsWithOnlyInclusionOfCreditAccount() {
         dsl.setCurrentDate("2023-01-01");
-        dsl.setGroup();
+        dsl.setGroupingEnabled();
         dsl.runCalculateReturns("""
                 account saving
                 currency GBP
@@ -29,7 +29,7 @@ public class LeveragedReturnsAcceptanceTest {
     @Test
     void shouldCalculateResultsWhenLeveragedFromAnyArbitraryMoment() {
         dsl.setCurrentDate("2023-01-01");
-        dsl.setGroup();
+        dsl.setGroupingEnabled();
         dsl.runCalculateReturns("""
                 account saving
                 currency GBP
@@ -50,7 +50,7 @@ public class LeveragedReturnsAcceptanceTest {
     @Test
     void shouldCalculateReturnsIfLeverageIsLargerThanCapital() {
         dsl.setCurrentDate("2023-01-01");
-        dsl.setGroup();
+        dsl.setGroupingEnabled();
         dsl.runCalculateReturns("""
                 account saving
                 currency GBP

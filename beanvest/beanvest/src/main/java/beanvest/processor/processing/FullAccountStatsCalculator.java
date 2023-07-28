@@ -1,37 +1,40 @@
 package beanvest.processor.processing;
 
-import beanvest.processor.ValueStatsDto;
+import beanvest.journal.CashStats;
+import beanvest.journal.Stats;
 import beanvest.journal.entry.Entry;
+import beanvest.processor.ValueStatsDto;
+import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.calculator.AccountGainCalculator;
 import beanvest.processor.processing.calculator.AccountValueCalculator;
+import beanvest.processor.processing.calculator.CashCalculator;
+import beanvest.processor.processing.calculator.HoldingsCostCalculator;
+import beanvest.processor.processing.calculator.HoldingsValueCalculator;
 import beanvest.processor.processing.calculator.TotalFeesCalculator;
 import beanvest.processor.processing.calculator.TotalValueCalculator;
+import beanvest.processor.processing.calculator.UnrealizedGainsCalculator;
+import beanvest.processor.processing.calculator.XirrCalculator;
+import beanvest.processor.processing.collector.AccountOpenDatesCollector;
 import beanvest.processor.processing.collector.DepositCollector;
 import beanvest.processor.processing.collector.DividendCollector;
 import beanvest.processor.processing.collector.EarnedCollector;
-import beanvest.processor.processing.collector.TransactionFeeCollector;
-import beanvest.journal.CashStats;
-import beanvest.journal.Stats;
-import beanvest.processor.processing.calculator.XirrCalculator;
-import beanvest.processor.pricebook.LatestPricesBook;
-import beanvest.processor.processing.calculator.HoldingsCostCalculator;
-import beanvest.processor.processing.calculator.HoldingsValueCalculator;
-import beanvest.processor.processing.calculator.UnrealizedGainsCalculator;
-import beanvest.processor.processing.collector.AccountOpenDatesCollector;
-import beanvest.processor.processing.calculator.CashCalculator;
 import beanvest.processor.processing.collector.FullCashFlowCollector;
 import beanvest.processor.processing.collector.HoldingsCollector;
 import beanvest.processor.processing.collector.InterestCollector;
 import beanvest.processor.processing.collector.RealizedGainsCollector;
 import beanvest.processor.processing.collector.SimpleFeeCollector;
 import beanvest.processor.processing.collector.SpentCollector;
+import beanvest.processor.processing.collector.TransactionFeeCollector;
 import beanvest.processor.processing.collector.WithdrawalCollector;
 import beanvest.processor.processing.validator.BalanceValidator;
 import beanvest.processor.validation.ValidatorError;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.NavigableSet;
+import java.util.Set;
+import java.util.SortedSet;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class FullAccountStatsCalculator {
@@ -58,7 +61,7 @@ public class FullAccountStatsCalculator {
     private final UnrealizedGainsCalculator unrealizedGainsCalculator;
     private final XirrCalculator xirrCalculator;
 
-    private final List<ValidatorError> validationErrors = new ArrayList<>();
+    private final LinkedHashSet<ValidatorError> validationErrors = new LinkedHashSet<>();
     private final BalanceValidator balanceValidator = new BalanceValidator(validationErrors::add,
             new CashCalculator(depositCollector, withdrawalsCollector, interestCollector, simpleFeeCollector,
                     dividendCollector, spentCollector, earnedCollector));
@@ -93,7 +96,7 @@ public class FullAccountStatsCalculator {
 
     }
 
-    public List<ValidatorError> process(Entry entry) {
+    public LinkedHashSet<ValidatorError> process(Entry entry) {
         for (Processor collector : collectors) {
             collector.process(entry);
         }

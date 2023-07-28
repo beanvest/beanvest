@@ -15,7 +15,7 @@ public class GroupingCliAcceptanceTest {
     @Test
     void calculatesInYearlyIntervalsPeriodic() {
         dsl.setEnd("2022-01-01");
-        dsl.setGroup();
+        dsl.setGroupingEnabled();
         dsl.setColumns("deps");
 
         dsl.runCalculateReturns("""

@@ -144,7 +144,7 @@ public class XirrCumulativeAcceptanceTest {
     @Test
     void xirrOnLeveragedReturns() {
         dsl.setYearly();
-        dsl.setGroup();
+        dsl.setGroupingEnabled();
         dsl.setEnd("2023-01-01");
         dsl.runCalculateReturns("""
                 account savings
@@ -165,7 +165,7 @@ public class XirrCumulativeAcceptanceTest {
     @Test
     void xirrOnLeveragedLoss() {
         dsl.setYearly();
-        dsl.setGroup();
+        dsl.setGroupingEnabled();
         dsl.setEnd("2023-01-01");
         dsl.runCalculateReturns("""
                 account savings
@@ -187,7 +187,7 @@ public class XirrCumulativeAcceptanceTest {
     @Test
     void xirrOnLoanWithLoss() {
         dsl.setYearly();
-        dsl.setGroup();
+        dsl.setGroupingEnabled();
         dsl.setEnd("2023-01-01");
         dsl.runCalculateReturns("""
                 account savings

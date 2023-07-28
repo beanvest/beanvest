@@ -1,6 +1,5 @@
 package beanvest.acceptance.returns;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class AccountFilteringAcceptanceTest {
@@ -63,9 +62,8 @@ public class AccountFilteringAcceptanceTest {
     }
 
     @Test
-    @Disabled("--no-accounts needs reimplementing")
     void mightSkipCalculatingAllTheAccountsSeparately() {
-        dsl.setNoAccounts();
+        dsl.setGroupsOnly();
 
         dsl.runCalculateReturns("""
                 account saving
@@ -82,6 +80,6 @@ public class AccountFilteringAcceptanceTest {
                 """);
         dsl.verifyResultsNotReturnedForAccount("trading");
         dsl.verifyResultsNotReturnedForAccount("saving");
-        dsl.verifyResultsReturnedForAccount("TOTAL");
+        dsl.verifyResultsReturnedForAccount(".*");
     }
 }

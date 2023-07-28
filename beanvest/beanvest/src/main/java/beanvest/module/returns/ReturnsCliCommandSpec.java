@@ -1,6 +1,7 @@
 package beanvest.module.returns;
 
 import beanvest.module.returns.cli.columns.ColumnId;
+import beanvest.parser.AccountGroupingCliArg;
 import beanvest.processor.time.PeriodInterval;
 import picocli.CommandLine;
 
@@ -39,9 +40,9 @@ public class ReturnsCliCommandSpec {
             .addOption(CommandLine.Model.OptionSpec.builder("--columns", "-c")
                     .type(String.class)
                     .description("Comma-separated column selection. Eg 'rgain,xirr'. Available columns: "
-                            + Arrays.stream(ColumnId.values())
-                            .map(c -> "\n  * \"" + c.header.toLowerCase(Locale.ROOT) + "\" - " + c.name)
-                            .collect(Collectors.joining(", ")))
+                                 + Arrays.stream(ColumnId.values())
+                                         .map(c -> "\n  * \"" + c.header.toLowerCase(Locale.ROOT) + "\" - " + c.name)
+                                         .collect(Collectors.joining(", ")))
                     .build())
             .addOption(CommandLine.Model.OptionSpec.builder("--account", "-a")
                     .defaultValue(".*")
@@ -64,15 +65,22 @@ public class ReturnsCliCommandSpec {
                     .type(Boolean.class)
                     .description("calculates changes of stats between periods")
                     .build())
-            .addOption(CommandLine.Model.OptionSpec.builder("--group")
-                    .type(Boolean.class)
-                    .description("groups nested accounts and calculates stats for groups")
+            .addOption(CommandLine.Model.OptionSpec.builder("--groups")
+                    .type(Enum.class)
+                    .auxiliaryTypes(AccountGroupingCliArg.class)
+                    .description("groups nested accounts and calculates stats for groups. "
+                                 + printValidValues(AccountGroupingCliArg.valuesAsStrings()))
+                    .defaultValue(String.valueOf(AccountGroupingCliArg.DEFAULT))
                     .build())
             .addOption(CommandLine.Model.OptionSpec.builder("--interval")
                     .type(String.class)
                     .description("Report stats in intervals of specified length. Valid values:\n"
-                            + Arrays.stream(PeriodInterval.values())
-                            .map(Enum::toString)
-                            .collect(Collectors.joining(", ")))
+                                 + Arrays.stream(PeriodInterval.values())
+                                         .map(Enum::toString)
+                                         .collect(Collectors.joining(", ")))
                     .build());
+
+    private static String printValidValues(String[] elements) {
+        return "Valid values: " + String.join(", ", elements);
+    }
 }

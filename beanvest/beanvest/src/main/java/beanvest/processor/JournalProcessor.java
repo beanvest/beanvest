@@ -11,9 +11,9 @@ import beanvest.processor.processing.collector.AccountStatsGatherer;
 import beanvest.processor.time.Period;
 import beanvest.processor.validation.ValidatorError;
 import beanvest.result.Result;
-import beanvest.result.UserErrors;
 
 import java.util.List;
+import java.util.Set;
 
 public class JournalProcessor {
     private final AccountStatsGatherer accountStatsGatherer = new AccountStatsGatherer();
@@ -38,10 +38,10 @@ public class JournalProcessor {
                 continue;
             }
             endOfPeriodTracker.process(entry);
-            journalProcessor.process(entry);
+            var validationErrors = journalProcessor.process(entry);
 
-            if (journalProcessor.hasValidationErrors()) {
-                return Result.failure(journalProcessor.getValidatorErrors());
+            if (!validationErrors.isEmpty()) {
+                return Result.failure(validationErrors.stream().toList());
             }
         }
         endOfPeriodTracker.finishPeriodsUpToEndDate();

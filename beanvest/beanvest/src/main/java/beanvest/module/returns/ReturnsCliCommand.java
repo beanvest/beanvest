@@ -33,7 +33,8 @@ public class ReturnsCliCommand implements SubCommand {
         return returnsCalculator.run(
                 params.journalsPaths(),
                 params.selectedColumns(), params.endDate(),
-                params.accountFilter(), params.onlyDeltas(), params.group(), params.startDate(),
+                params.accountFilter(), params.onlyDeltas(),
+                params.grouping(), params.startDate(),
                 params.period()
         );
     }

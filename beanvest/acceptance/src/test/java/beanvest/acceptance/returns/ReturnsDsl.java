@@ -77,17 +77,17 @@ public class ReturnsDsl {
         if (cliOptions.account != null) {
             args.add("--account=" + cliOptions.account);
         }
-        if (cliOptions.noAccounts) {
-            args.add("--no-accounts");
+        if (cliOptions.groups == Groups.ONLY) {
+            args.add("--groups=only");
+        }
+        if (cliOptions.groups == Groups.NO) {
+            args.add("--groups=no");
         }
         if (cliOptions.onlyFinishedPeriods) {
             args.add("--finished-periods");
         }
         if (cliOptions.delta) {
             args.add("--delta");
-        }
-        if (cliOptions.group) {
-            args.add("--group");
         }
         if (cliOptions.interval != null) {
             args.add("--interval=" + cliOptions.interval);
@@ -211,8 +211,12 @@ public class ReturnsDsl {
         assertThat(isAccountInResults(account)).isTrue();
     }
 
-    public void setNoAccounts() {
-        cliOptions.noAccounts = true;
+    public void setGroupsOnly() {
+        cliOptions.groups = Groups.ONLY;
+    }
+
+    public void setGroupingDisabled() {
+        this.cliOptions.groups = Groups.NO;
     }
 
     public void verifyFeesTotal(String account, String period, String amount) {
@@ -255,8 +259,8 @@ public class ReturnsDsl {
         verifyStat(account, period, amount, StatsWithDeltasDto::interest);
     }
 
-    public void setGroup() {
-        cliOptions.group = true;
+    public void setGroupingEnabled() {
+        cliOptions.groups = Groups.YES;
     }
 
     public void setQuarterly() {
@@ -412,6 +416,7 @@ public class ReturnsDsl {
         verifyStatDelta(account, period, expected, r -> r.cash().delta());
     }
 
+
     public void verifyAccountGainDelta(String account, String period, String expectedAmount) {
         verifyStatDelta(account, period, expectedAmount, r -> r.accountGain().delta());
     }
@@ -482,13 +487,18 @@ public class ReturnsDsl {
                 .isEqualTo(List.of(ErrorEnum.valueOf(error)));
     }
 
+    private enum Groups {
+        YES,
+        NO,
+        ONLY
+    }
+
     static class CliOptions {
 
-        public boolean noAccounts;
+        public Groups groups;
         public boolean onlyFinishedPeriods = false;
         public boolean delta = false;
         public boolean exact = false;
-        public boolean group = false;
         public String interval = null;
         public boolean showClosed = false;
         public String currency;

@@ -33,7 +33,7 @@ public class MultipleAccountsAcceptanceTest {
     @Test
     void calculatesCombinedReturns() {
         dsl.setEnd("2023-01-01");
-        dsl.setGroup();
+        dsl.setGroupingEnabled();
 
         dsl.runCalculateReturns("""
                 account pension
@@ -57,7 +57,7 @@ public class MultipleAccountsAcceptanceTest {
     @Test
     void calculatesCombinedReturnsWithOneOfTheAccountsClosed() {
         dsl.setEnd("2023-01-01");
-        dsl.setGroup();
+        dsl.setGroupingEnabled();
 
         dsl.runCalculateReturns("""
                 account pension
