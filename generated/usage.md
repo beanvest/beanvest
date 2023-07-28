@@ -7,9 +7,9 @@
   ```
   account              opened      closed  deps    wths   div    intr   fees   rGain  cash    uGain  eVal   aGain  xirr
   .*                   2022-01-01  -       22,990   -140      0    475    -70      0  23,255      0      0    405    2.2
-  saving:.*            2022-01-01  -        5,320   -140      0    475      0      0   5,655      0      0    475   11.2
-  saving:regularSaver  2022-01-01  -        1,900      0      0    285      0      0   2,185      0      0    285   18.2
-  saving:savings       2022-01-01  -        3,420   -140      0    190      0      0   3,470      0      0    190    7.1
+  saving:.*            2022-01-01  -        5,320   -140      0    475      0      0   5,655      0      0    475   11.1
+  saving:regularSaver  2022-01-01  -        1,900      0      0    285      0      0   2,185      0      0    285   18.1
+  saving:savings       2022-01-01  -        3,420   -140      0    190      0      0   3,470      0      0    190    7.0
   trading              2022-01-01  -       17,670      0      0      0    -70      0  17,600      0      0    -70   -0.5
   ```
 - Print cumulative deposits and withdrawals for accounts and groups for each quarter

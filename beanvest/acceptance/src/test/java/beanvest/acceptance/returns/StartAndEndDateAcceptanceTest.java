@@ -37,10 +37,8 @@ public class StartAndEndDateAcceptanceTest {
     }
 
     @Test
-    @Disabled("refactor")
     void startDateForStatsCalculationCanBeProvided() {
         dsl.setStartDate("2021-03-01");
-        dsl.setDeltas();
 
         dsl.runCalculateReturns("""
                 account trading
@@ -51,7 +49,7 @@ public class StartAndEndDateAcceptanceTest {
                 $$TODAY$$  price VLS 100 GBP
                 """);
 
-        dsl.verifyAccountGain("trading", "TOTAL", "20");
+        dsl.verifyAccountGainDelta("trading", "TOTAL", "20");
     }
 
 

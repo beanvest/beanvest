@@ -1,6 +1,7 @@
 package beanvest.processor.time;
 
 import beanvest.processor.processing.PeriodInclusion;
+import beanvest.processor.processing.PeriodSpec;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -8,35 +9,50 @@ import java.util.Objects;
 public final class Period implements Comparable<Period> {
     private final LocalDate start;
     private final LocalDate end;
-    private final PeriodInterval interval;
+    private final PeriodSpec spec;
 
-    private Period(LocalDate start, LocalDate end, PeriodInterval interval) {
+    private Period(LocalDate start, LocalDate end, PeriodSpec periodSpec) {
         this.start = start;
-        this.interval = interval;
-        this.end = interval == PeriodInterval.NONE ? end : calculateEndDate(interval, start);
+        this.end = end;
+        spec = periodSpec;
     }
 
-    public static Period createPeriodCoveringDate(LocalDate parse, LocalDate end, PeriodInterval periodInterval) {
-        return new Period(calculatePeriodStart(periodInterval, parse), end, periodInterval);
+    public static Period createPeriodCoveringDate(LocalDate entryDate, PeriodSpec periodSpec) {
+        var start = calculatePeriodStart(entryDate, periodSpec);
+        var end = calculateActualEndDate(entryDate, start, periodSpec);
+        var spec = periodSpec;
+        return new Period(start, end, spec);
     }
 
-    public static LocalDate calculateActualEndDate(PeriodInterval interval, PeriodInclusion periodInclusion, LocalDate endDate) {
-        var start1 = Period.createPeriodCoveringDate(endDate, endDate, interval);
-        if (start1.interval == PeriodInterval.NONE) { // ugh not sure if it fits here after all
-            return endDate;
+    private static LocalDate calculateActualEndDate(LocalDate entryDate, LocalDate periodStart, PeriodSpec spec) {
+        if (spec.interval() == PeriodInterval.NONE) { // ugh not sure if it fits here after all
+            if (!periodStart.equals(LocalDate.MIN)) {
+                return spec.end();
+            }
+            return entryDate.isBefore(spec.start()) ? spec.start().minusDays(1) : spec.end();
         }
-        if (periodInclusion == PeriodInclusion.INCLUDE_UNFINISHED) {
-            return start1.endDate();
-        } else {
-            return start1.startDate().minusDays(1);
-        }
+        return calculateEndDate(spec.interval(), periodStart);
     }
+
+    private static LocalDate calculatePeriodStart(LocalDate start, PeriodSpec periodSpec) {
+        return switch (periodSpec.interval()) {
+            case MONTH -> LocalDate.of(start.getYear(), start.getMonth(), 1);
+            case QUARTER -> {
+                var quarter = (((start.getMonthValue() - 1) / 3)) * 3 + 1;
+                yield LocalDate.of(start.getYear(), quarter, 1);
+            }
+            case YEAR -> LocalDate.of(start.getYear(), 1, 1);
+            case NONE -> !start.isAfter(periodSpec.start()) ? LocalDate.MIN : periodSpec.start();
+        };
+    }
+
 
     public Period next() {
-        return new Period(calculateNextPeriodStartDate(interval, start), end, interval);
+        var start = this.end.plusDays(1);
+        return new Period(start, calculateActualEndDate(start, start, spec), spec);
     }
 
-    private LocalDate calculateNextPeriodStartDate(PeriodInterval interval, LocalDate date) {
+    private static LocalDate calculateNextPeriodStartDate(PeriodInterval interval, LocalDate date) {
         return switch (interval) {
             case MONTH -> date.plusMonths(1);
             case QUARTER -> date.plusMonths(3);
@@ -45,22 +61,13 @@ public final class Period implements Comparable<Period> {
         };
     }
 
-    private static LocalDate calculatePeriodStart(PeriodInterval interval, LocalDate start) {
-        return switch (interval) {
-            case MONTH -> LocalDate.of(start.getYear(), start.getMonth(), 1);
-            case QUARTER -> LocalDate.of(start.getYear(), 1 + start.getMonthValue() / 3 * 3, 1);
-            case YEAR -> LocalDate.of(start.getYear(), 1, 1);
-            case NONE -> LocalDate.MIN;
-        };
-    }
-
 
     @Override
     public int compareTo(Period o) {
-        return this.start.compareTo(o.start);
+        return this.startDate().compareTo(o.startDate());
     }
 
-    private LocalDate calculateEndDate(PeriodInterval interval, LocalDate startDate) {
+    private static LocalDate calculateEndDate(PeriodInterval interval, LocalDate startDate) {
         return calculateNextPeriodStartDate(interval, startDate).minusDays(1);
     }
 
@@ -69,28 +76,7 @@ public final class Period implements Comparable<Period> {
     }
 
     public PeriodInterval interval() {
-        return interval;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (Period) obj;
-        return Objects.equals(this.start, that.start) &&
-               Objects.equals(this.interval, that.interval);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(start, interval);
-    }
-
-    @Override
-    public String toString() {
-        return "Period2[" +
-               "startDate=" + start + ", " +
-               "interval=" + interval + ']';
+        return spec.interval();
     }
 
     public LocalDate endDate() {
@@ -98,6 +84,15 @@ public final class Period implements Comparable<Period> {
     }
 
     public String title() {
-        return interval.getTitle(startDate());
+        return getTitle(startDate());
+    }
+
+    private String getTitle(LocalDate date) {
+        return switch (this.interval()) {
+            case NONE -> "TOTAL";
+            case YEAR -> String.valueOf(date.getYear());
+            case QUARTER -> String.format("%dq%d", date.getYear() % 100, (date.getMonthValue() - 1) / 3 + 1);
+            case MONTH -> String.format("%dm%02d", date.getYear() % 100, date.getMonthValue());
+        };
     }
 }

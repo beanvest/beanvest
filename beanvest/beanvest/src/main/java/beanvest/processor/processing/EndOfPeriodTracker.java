@@ -3,25 +3,38 @@ package beanvest.processor.processing;
 import beanvest.journal.entry.Price;
 import beanvest.journal.entry.Entry;
 import beanvest.processor.time.Period;
-import beanvest.processor.time.PeriodInterval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.function.Consumer;
 
+import static beanvest.processor.processing.PeriodInclusion.INCLUDE_UNFINISHED;
+import static beanvest.processor.processing.Relevant.NOT_RELEVANT;
+import static beanvest.processor.processing.Relevant.RELEVANT;
+import static beanvest.processor.time.PeriodInterval.NONE;
+
 public class EndOfPeriodTracker {
     private static final Logger LOGGER = LoggerFactory.getLogger(EndOfPeriodTracker.class.getName());
-    private final LocalDate endDate;
     private final PeriodSpec periodSpec;
     private final Consumer<Period> finishedPeriodConsumer;
+    private final LocalDate end;
     private Period currentPeriod;
 
 
-    public EndOfPeriodTracker(PeriodSpec periodSpec, Consumer<Period> finishedPeriodConsumer) {
-        this.endDate = Period.calculateActualEndDate(periodSpec.interval(), periodSpec.periodsInclusion(), periodSpec.end());
+    public EndOfPeriodTracker(PeriodSpec periodSpec, PeriodInclusion periodInclusion, Consumer<Period> finishedPeriodConsumer) {
         this.periodSpec = periodSpec;
         this.finishedPeriodConsumer = finishedPeriodConsumer;
+        if (periodInclusion == INCLUDE_UNFINISHED) {
+            end = periodSpec.end();
+        } else if (periodSpec.interval() == NONE) {
+            end = periodSpec.start().equals(LocalDate.MIN) ? LocalDate.MIN : periodSpec.start().minusDays(1);
+        } else {
+            end = Period
+                    .createPeriodCoveringDate(periodSpec.end(), periodSpec)
+                    .startDate()
+                    .minusDays(1);
+        }
     }
 
     public void process(Entry entry) {
@@ -29,28 +42,37 @@ public class EndOfPeriodTracker {
             return;
         }
         if (this.currentPeriod == null) {
-            currentPeriod = Period.createPeriodCoveringDate(entry.date(), endDate, periodSpec.interval());
+            currentPeriod = Period.createPeriodCoveringDate(entry.date(), periodSpec);
         }
         while (entry.date().isAfter(currentPeriod.endDate())) {
-            finishCurrentPeriod();
+            finishCurrentPeriodAndStartNewOne();
         }
     }
 
     public void finishPeriodsUpToEndDate() {
-        if (currentPeriod.interval() == PeriodInterval.NONE) {
-            finishCurrentPeriod();
-        } else {
-            while (!currentPeriod.startDate().isAfter(endDate)) {
+        if (currentPeriod.interval() == NONE) {
+            var finishedOne = false;
+            if (currentPeriod.startDate().equals(LocalDate.MIN)) {
+                finishCurrentPeriodAndStartNewOne();
+                finishedOne = true;
+            }
+            if (!finishedOne || !currentPeriod.endDate().equals(periodSpec.end())) {
                 finishCurrentPeriod();
+            }
+        }
+        if (currentPeriod.interval() != NONE) {
+            while (!currentPeriod.startDate().isAfter(end)) {
+                finishCurrentPeriodAndStartNewOne();
             }
         }
     }
 
-    private void finishCurrentPeriod() {
-        finishedPeriodConsumer.accept(currentPeriod);
-        if (currentPeriod.interval() != PeriodInterval.NONE) {
-            currentPeriod = currentPeriod.next();
-        }
+    private void finishCurrentPeriodAndStartNewOne() {
+        finishCurrentPeriod();
+        currentPeriod = currentPeriod.next();
     }
 
+    private void finishCurrentPeriod() {
+        finishedPeriodConsumer.accept(currentPeriod);
+    }
 }

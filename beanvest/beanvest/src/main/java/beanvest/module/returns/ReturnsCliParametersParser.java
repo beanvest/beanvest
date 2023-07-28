@@ -14,8 +14,7 @@ public class ReturnsCliParametersParser {
         var journalsPaths = parseResult.matchedPositionalValue(0, new ArrayList<Path>());
         final Optional<LocalDate> overrideToday = Optional.ofNullable(parseResult.matchedOptionValue("--override-today", null));
         var today = overrideToday.orElseGet(LocalDate::now);
-        var endValue = parseResult.matchedOptionValue("--end", today.toString());
-        var endDate = getEndDateFromParamValue(endValue, today);
+        var endDate = LocalDate.parse(parseResult.matchedOptionValue("--end", today.toString()));
         final LocalDate startDate = parseResult.matchedOptionValue("--startDate", LocalDate.MIN);
         final String accountFilter = parseResult.matchedOptionValue("--account", ".*");
         final Optional<String> reportCurrency = Optional.ofNullable(parseResult.matchedOptionValue("--currency", "")).filter(v -> !v.equals(""));
