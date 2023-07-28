@@ -13,7 +13,7 @@ import java.util.List;
 import static beanvest.lib.util.gson.GsonFactory.builderWithProjectDefaults;
 
 public class CliJsonOutputWriter implements CliOutputWriter {
-    private static final Gson GSON = builderWithProjectDefaults().create();
+    public static final Gson GSON = builderWithProjectDefaults().create();
     private final PrintStream stdOut;
     private final PrintStream stdErr;
 

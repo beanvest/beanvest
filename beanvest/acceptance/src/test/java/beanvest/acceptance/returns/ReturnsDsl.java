@@ -487,6 +487,10 @@ public class ReturnsDsl {
                 .isEqualTo(List.of(ErrorEnum.valueOf(error)));
     }
 
+    public void dumpJson() {
+        throw new RuntimeException(cliRunResult.stdOut());
+    }
+
     private enum Groups {
         YES,
         NO,

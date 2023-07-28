@@ -1,10 +1,8 @@
 package beanvest.processor.time;
 
-import beanvest.processor.processing.PeriodInclusion;
 import beanvest.processor.processing.PeriodSpec;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public final class Period implements Comparable<Period> {
     private final LocalDate start;

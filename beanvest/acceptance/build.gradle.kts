@@ -21,11 +21,11 @@ tasks {
             exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
         }
     }
-    register<Test>("acceptanceTests") {
+    register<Test>("nativeTest") {
         dependsOn(":beanvest:beanvest:nativeCompile")
 
         maxParallelForks = Runtime.getRuntime().availableProcessors()
-        environment("ACCEPTANCE_BIN_PATH", "beanvest/beanvest/build/native/nativeCompile/beanvest")
+        environment("ACCEPTANCE_BIN_PATH", "${project.rootDir}/beanvest/beanvest/build/native/nativeCompile/beanvest")
         useJUnitPlatform()
         testLogging {
             exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL

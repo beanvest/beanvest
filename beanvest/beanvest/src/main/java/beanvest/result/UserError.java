@@ -4,8 +4,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class UserError {
-    private final ErrorEnum error;
-    private final Optional<String> maybeMessage;
+    public ErrorEnum error;
+    public Optional<String> maybeMessage;
+
+    public UserError() {
+    }
 
     public UserError(ErrorEnum errorEnum, String message) {
         this.error=errorEnum;

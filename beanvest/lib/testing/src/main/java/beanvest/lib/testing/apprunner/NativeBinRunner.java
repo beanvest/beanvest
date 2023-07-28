@@ -22,13 +22,13 @@ public class NativeBinRunner implements AppRunner {
     public static final Function<String, Boolean> DONT_BLOCK = line -> true;
     public static final Consumer<String> NOOP_CONSUMER = line -> {
     };
-    private final String jarPath;
+    private final String binaryPath;
     private final Optional<String> maybeSubcommand;
 
     private CountDownLatch waitingForOutputLatch;
 
-    public NativeBinRunner(String jarPath, Optional<String> subcommand) {
-        this.jarPath = jarPath;
+    public NativeBinRunner(String binaryPath, Optional<String> subcommand) {
+        this.binaryPath = binaryPath;
         this.maybeSubcommand = subcommand;
     }
 
@@ -68,11 +68,8 @@ public class NativeBinRunner implements AppRunner {
                                       Consumer<String> stdoutLineConsumer) {
         waitingForOutputLatch = new CountDownLatch(1);
         var cmd = new ArrayList<String>();
-        cmd.add(JAVA_BIN);
 //        cmd.add("-agentlib:jdwp=transport=dt_socket,address=*:8831,server=y,suspend=y");
-        cmd.addAll(vmParams);
-        cmd.add("-jar");
-        cmd.add(jarPath);
+        cmd.add(binaryPath);
         maybeSubcommand.ifPresent(cmd::add);
         cmd.addAll(appArgs);
 

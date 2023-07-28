@@ -21,6 +21,12 @@ repos:
         entry: ./gradlew nativeCompile
         always_run: true
         pass_filenames: false
+      - id: gradle-native-test
+        name: gradle nativeTest
+        language: system
+        entry: ./gradlew nativeTest
+        always_run: true
+        pass_filenames: false
       - id: generate-usage-doc
         name: generate usage doc
         language: system

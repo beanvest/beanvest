@@ -6,6 +6,9 @@ import java.util.List;
 public class UserErrors {
     public List<UserError> errors = new ArrayList<>();
 
+    public UserErrors() {
+    }
+
     public UserErrors(ErrorEnum id) {
         errors.add(new UserError(id));
     }
