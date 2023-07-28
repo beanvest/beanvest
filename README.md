@@ -1,9 +1,5 @@
 # Beanvest
 
-## Dev env
-Nix shell configuration for development is provided. Once you get [Nix](https://nixos.org/) you can get straight
-into configured shell with `nix-shell`. You can see list of tools needed in [shell.nix](shell.nix)
-
 ## Building
 - building everything
 ```bash
@@ -25,6 +21,16 @@ pre-commit run
 See [usage examples](generated/usage.md).
 
 ## Contributing
-To save you trouble fixing/reverting commits or going back to regenerate some files project uses
-[pre-commit](https://pre-commit.com/). Run `pre-commit init` to initialize git hooks that will run 
-everything that's needed when you commit any changes.  
+
+There are two important bits to get it ready for dev:
+
+- nix env
+  
+  Nix shell configuration for development is provided. Once you grab [Nix](https://nixos.org/) you can get straight
+  into configured shell with all the tools needed with `nix-shell`. You can see dependencies in [shell.nix](shell.nix)
+  
+- pre-commit
+  
+  To save you trouble fixing/reverting commits or going back to regenerate some files project uses
+  [pre-commit](https://pre-commit.com/). Run `pre-commit init` to initialize git hooks
+  and then all the checks will be done automatically when you commit any changes.  
