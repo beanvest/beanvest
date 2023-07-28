@@ -20,7 +20,6 @@ public class BalanceAcceptanceTest {
     }
 
     @Test
-    @Disabled("rewrite needed")
     void validationFailsIfCashBalanceDoesNotMatch() {
         dsl.setAllowNonZeroExitCodes();
         dsl.runCalculateReturns("""
@@ -55,31 +54,6 @@ public class BalanceAcceptanceTest {
                 ====> Ooops! Validation error:
                 Holding balance does not match. Expected: 1.1 X. Actual: 1 X
                   @ /tmp/*.tmp:5 2021-01-01 balance 1.1 X
-                """);
-    }
-
-    @Test
-    @Disabled("rewrite needed")
-    void validationMightFailOnMultipleBalanceEntries() {
-        dsl.setAllowNonZeroExitCodes();
-        dsl.setEnd("2021-01-02");
-        dsl.runCalculateReturns("""
-                account trading
-                currency GBP
-                                
-                2021-01-01 deposit and buy 1 X for 10
-                2021-01-01 balance 5
-                2021-01-01 balance 2 X
-                2021-01-01 price X 10
-                """);
-
-        dsl.verifyNonZeroExitCode();
-        dsl.verifyReturnedAnError("""
-                ====> Ooops! Validation errors:
-                Cash balance does not match. Expected: 5. Actual: 0
-                  @ /tmp/*.tmp:5 2021-01-01 balance 5
-                Holding balance does not match. Expected: 2 X. Actual: 1 X
-                  @ /tmp/*.tmp:6 2021-01-01 balance 2 X
                 """);
     }
 }

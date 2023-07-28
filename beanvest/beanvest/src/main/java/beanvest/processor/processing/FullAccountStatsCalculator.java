@@ -59,7 +59,9 @@ public class FullAccountStatsCalculator {
     private final XirrCalculator xirrCalculator;
 
     private final List<ValidatorError> validationErrors = new ArrayList<>();
-    private final BalanceValidator balanceValidator = new BalanceValidator(validationErrors::add);;
+    private final BalanceValidator balanceValidator = new BalanceValidator(validationErrors::add,
+            new CashCalculator(depositCollector, withdrawalsCollector, interestCollector, simpleFeeCollector,
+                    dividendCollector, spentCollector, earnedCollector));
     private final List<Processor> collectors = List.of(
             accountOpenDatesCollector,
             depositCollector,
