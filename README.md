@@ -13,6 +13,7 @@ pre-commit run
 - running tests
 ```bash
 ./gradlew test
+./gradlew nativeTest
 ```
 
 - building binaries
