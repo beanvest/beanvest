@@ -48,7 +48,6 @@ public class CurrenciesAcceptanceTest {
 
     @Test
     void interestIsConvertedAtTheDateWhenTheyHappen() {
-        dsl.setDeltas();
         dsl.setYearly();
         dsl.setCurrency("GBP");
 

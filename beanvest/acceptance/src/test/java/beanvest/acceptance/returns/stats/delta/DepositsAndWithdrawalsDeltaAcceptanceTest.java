@@ -29,7 +29,6 @@ public class DepositsAndWithdrawalsDeltaAcceptanceTest {
     void calculatesWithdrawalsYearlyDelta() {
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
-        dsl.setDeltas();
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP

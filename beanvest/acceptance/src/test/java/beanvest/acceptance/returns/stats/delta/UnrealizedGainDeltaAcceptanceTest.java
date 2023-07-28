@@ -10,7 +10,6 @@ public class UnrealizedGainDeltaAcceptanceTest {
     void calculatesUnrealizedGainDeltasYearly() {
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
-        dsl.setDeltas();
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP

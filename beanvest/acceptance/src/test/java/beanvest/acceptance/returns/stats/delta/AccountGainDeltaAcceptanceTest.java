@@ -45,7 +45,6 @@ public class AccountGainDeltaAcceptanceTest {
     @Test
     void accountGainIncludesInterest() {
         dsl.setEnd("2021-03-01");
-        dsl.setDeltas();
         dsl.setMonthly();
 
         dsl.runCalculateReturns("""
@@ -58,8 +57,8 @@ public class AccountGainDeltaAcceptanceTest {
                 """
         );
 
-        dsl.verifyAccountGain("trading", "21m01", "0");
-        dsl.verifyAccountGain("trading", "21m02", "5");
+        dsl.verifyAccountGainDelta("trading", "21m01", "0");
+        dsl.verifyAccountGainDelta("trading", "21m02", "5");
     }
 
     @Test
