@@ -12,7 +12,7 @@ public class GenerateUsageDocMain {
     private static final String BEANVEST_BIN = "beanvest/beanvest/build/native/nativeCompile/";
     private static final List<Example> EXAMPLES = List.of(
             new Example(
-                    "beanvest returns sample/* --group",
+                    "beanvest returns sample/* --group --end=2023-07-01",
                     "Print various stats for all accounts and groups on each level of the accounts for whole period"),
             new Example(
                     "beanvest returns sample/* --group --columns deps,wths --interval=quarter",
