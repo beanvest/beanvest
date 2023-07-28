@@ -3,7 +3,7 @@ package beanvest.processor.processing;
 import beanvest.journal.CashStats;
 import beanvest.journal.Stats;
 import beanvest.journal.entry.Entry;
-import beanvest.processor.ValueStatsDto;
+import beanvest.processor.dto.ValueStatsDto;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.calculator.AccountGainCalculator;
 import beanvest.processor.processing.calculator.AccountValueCalculator;
@@ -32,9 +32,6 @@ import beanvest.processor.validation.ValidatorError;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.NavigableSet;
-import java.util.Set;
-import java.util.SortedSet;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class FullAccountStatsCalculator {

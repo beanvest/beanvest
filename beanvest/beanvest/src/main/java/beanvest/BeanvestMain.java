@@ -5,6 +5,8 @@ import beanvest.module.export.ExportCliCommand;
 import beanvest.module.importer.ImportCliCommand;
 import beanvest.module.journal.JournalCliCommand;
 import beanvest.module.returns.ReturnsCliCommand;
+import beanvest.module.returns.cli.args.ColumnCliArg;
+import beanvest.module.returns.cli.args.ColumnCliArgConverter;
 import picocli.CommandLine;
 
 import java.io.PrintStream;
@@ -29,6 +31,8 @@ public final class BeanvestMain extends BaseMain {
 
     public static void main(String[] args) {
         var code = new CommandLine(SPEC)
+                .setCaseInsensitiveEnumValuesAllowed(true)
+                .registerConverter(ColumnCliArg[].class, ColumnCliArgConverter::convert)
                 .setOut(new PrintWriter(stdOut))
                 .setErr(new PrintWriter(stdErr))
                 .setExecutionStrategy(BeanvestMain::run)

@@ -1,14 +1,15 @@
 package beanvest.module.returns;
 
+import beanvest.module.returns.cli.columns.ColumnId;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
-import beanvest.processor.PortfolioStatsDto;
+import beanvest.processor.dto.PortfolioStatsDto;
 import beanvest.processor.validation.ValidatorError;
 
 import java.util.List;
 
 public interface CliOutputWriter {
-    void outputResult(List<String> selectedColumns, PortfolioStatsDto portfolioStats, CollectionMode collectionMode);
+    void outputResult(List<ColumnId> selectedColumns, PortfolioStatsDto portfolioStats, CollectionMode collectionMode);
 
     void outputInputErrors(List<ValidatorError> errors);
 

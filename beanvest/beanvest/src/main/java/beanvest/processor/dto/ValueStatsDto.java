@@ -1,4 +1,4 @@
-package beanvest.processor;
+package beanvest.processor.dto;
 
 import beanvest.result.Result;
 import beanvest.result.UserError;

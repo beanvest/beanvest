@@ -1,22 +1,7 @@
 package beanvest.test.module.returns.cli;
 
-import beanvest.processor.AccountDto;
-import beanvest.processor.CollectionMode;
-import beanvest.processor.PortfolioStatsDto;
-import beanvest.module.returns.cli.CliTablePrinter;
-import beanvest.processor.processing.PeriodSpec;
-import beanvest.processor.time.Period;
-import beanvest.processor.time.PeriodInterval;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

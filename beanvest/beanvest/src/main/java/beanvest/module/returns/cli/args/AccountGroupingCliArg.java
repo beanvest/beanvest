@@ -1,9 +1,8 @@
-package beanvest.parser;
+package beanvest.module.returns.cli.args;
 
 import beanvest.processor.processing.Grouping;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import static beanvest.processor.processing.Grouping.*;
 

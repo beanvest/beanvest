@@ -1,5 +1,6 @@
 package beanvest.module.returns;
 
+import beanvest.processor.CollectionMode;
 import beanvest.processor.processing.Grouping;
 import beanvest.processor.time.PeriodInterval;
 
@@ -15,12 +16,12 @@ public record ReturnsAppParameters(
         LocalDate startDate,
         String accountFilter,
         Optional<String> reportCurrency,
-        List<String> selectedColumns,
+        List<beanvest.module.returns.cli.columns.ColumnId> selectedColumns,
         Boolean exactValues,
         Boolean jsonFormat,
         PeriodInterval period,
         Grouping grouping,
-        Boolean onlyDeltas,
+        CollectionMode collectionMode,
         String total
 ) {
 }

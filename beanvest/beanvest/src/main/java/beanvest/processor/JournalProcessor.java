@@ -2,6 +2,7 @@ package beanvest.processor;
 
 import beanvest.journal.Journal;
 import beanvest.journal.entry.Entry;
+import beanvest.processor.dto.PortfolioStatsDto;
 import beanvest.processor.processing.PeriodInclusion;
 import beanvest.processor.processing.PeriodSpec;
 import beanvest.processor.processing.EndOfPeriodTracker;
@@ -13,7 +14,6 @@ import beanvest.processor.validation.ValidatorError;
 import beanvest.result.Result;
 
 import java.util.List;
-import java.util.Set;
 
 public class JournalProcessor {
     private final AccountStatsGatherer accountStatsGatherer = new AccountStatsGatherer();

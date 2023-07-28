@@ -1,8 +1,10 @@
 package beanvest.module.returns;
 
-import beanvest.parser.JournalParser;
 import beanvest.SubCommand;
 import beanvest.module.returns.cli.CliTablePrinter;
+import beanvest.module.returns.cli.args.ReturnsCliCommandSpec;
+import beanvest.module.returns.cli.args.ReturnsCliParametersParser;
+import beanvest.parser.JournalParser;
 import picocli.CommandLine;
 
 import java.io.PrintStream;
@@ -33,9 +35,9 @@ public class ReturnsCliCommand implements SubCommand {
         return returnsCalculator.run(
                 params.journalsPaths(),
                 params.selectedColumns(), params.endDate(),
-                params.accountFilter(), params.onlyDeltas(),
+                params.accountFilter(),
                 params.grouping(), params.startDate(),
-                params.period()
+                params.period(), params.collectionMode()
         );
     }
 }

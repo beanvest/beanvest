@@ -1,11 +1,11 @@
 package beanvest.module.returns.cli.columns;
 
-import beanvest.processor.StatDto;
-import beanvest.processor.StatsWithDeltasDto;
+import beanvest.processor.dto.StatDto;
+import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.result.ErrorEnum;
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.ColumnPadding;
-import beanvest.module.returns.cli.AccountPeriod;
+import beanvest.processor.dto.AccountPeriodDto;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -13,7 +13,7 @@ import java.util.function.Function;
 record PeriodicCashColumnSpec(ColumnId columnId,
                               Function<StatsWithDeltasDto, StatDto> extractor) implements PeriodicColumnSpec {
     @Override
-    public Column<AccountPeriod> toColumn(Optional<String> group, String period, boolean exact, boolean delta, String title) {
+    public Column<AccountPeriodDto> toColumn(Optional<String> group, String period, boolean exact, boolean delta, String title) {
         return new Column<>(
                 group,
                 title,

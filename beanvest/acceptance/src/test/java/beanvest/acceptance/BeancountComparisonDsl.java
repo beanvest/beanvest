@@ -3,7 +3,7 @@ package beanvest.acceptance;
 import beanvest.lib.testing.AppRunner;
 import beanvest.lib.testing.TestFiles;
 import beanvest.lib.util.gson.GsonFactory;
-import beanvest.processor.PortfolioStatsDto;
+import beanvest.processor.dto.PortfolioStatsDto;
 
 import com.opencsv.exceptions.CsvException;
 import org.junit.jupiter.api.Disabled;

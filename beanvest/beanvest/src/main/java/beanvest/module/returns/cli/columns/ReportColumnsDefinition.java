@@ -1,9 +1,9 @@
 package beanvest.module.returns.cli.columns;
 
-import beanvest.processor.StatsWithDeltasDto;
+import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.ColumnPadding;
-import beanvest.module.returns.cli.AccountPeriod;
+import beanvest.processor.dto.AccountPeriodDto;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -11,8 +11,8 @@ import java.util.List;
 
 public class ReportColumnsDefinition {
     public static final String ALWAYS_VISIBLE = "account";
-    public static final List<Column<AccountPeriod>> COLUMNS_BASIC = List.of(
-            new Column<>(ALWAYS_VISIBLE, ColumnPadding.LEFT, AccountPeriod::account),
+    public static final List<Column<AccountPeriodDto>> COLUMNS_BASIC = List.of(
+            new Column<>(ALWAYS_VISIBLE, ColumnPadding.LEFT, AccountPeriodDto::account),
             new Column<>(ColumnId.OPENED.header, ColumnPadding.LEFT, r -> r.openingDate().toString()),
             new Column<>(ColumnId.CLOSED.header, ColumnPadding.LEFT, r -> r.closingDate().map(LocalDate::toString).orElse("-")));
 

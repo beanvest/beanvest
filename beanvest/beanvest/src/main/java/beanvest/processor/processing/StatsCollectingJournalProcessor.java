@@ -3,14 +3,13 @@ package beanvest.processor.processing;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Price;
-import beanvest.processor.StatsWithDeltasDto;
+import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.time.Period;
 import beanvest.processor.validation.ValidatorError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;

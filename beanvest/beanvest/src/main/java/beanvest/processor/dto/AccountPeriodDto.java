@@ -1,12 +1,10 @@
-package beanvest.module.returns.cli;
-
-import beanvest.processor.StatsWithDeltasDto;
+package beanvest.processor.dto;
 
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 
-public record AccountPeriod(
+public record AccountPeriodDto(
         String account,
         LocalDate openingDate,
         Optional<LocalDate> closingDate,

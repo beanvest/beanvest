@@ -5,7 +5,7 @@
   beanvest returns sample/* --end=2023-07-01
   ```
   ```
-  account              opened      closed  deps    wths   div    intr   fees   rGain  cash    uGain  eVal   aGain  xirr
+  account              opened      closed  deps    wths   div    intr   fees   rGain  cash    uGain  hVal   aGain  xirr
   .*                   2022-01-01  -       22,990   -140      0    475    -70      0  23,255      0      0    405    2.4
   saving:.*            2022-01-01  -        5,320   -140      0    475      0      0   5,655      0      0    475   12.2
   saving:regularSaver  2022-01-01  -        1,900      0      0    285      0      0   2,185      0      0    285   20.0

@@ -1,5 +1,6 @@
 package beanvest.module.returns;
 
+import beanvest.module.returns.cli.columns.ColumnId;
 import beanvest.parser.JournalParser;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
@@ -26,17 +27,16 @@ public class ReturnsCalculatorApp {
     }
 
     public Result run(List<Path> journalsPaths,
-                      List<String> selectedColumns,
+                      List<ColumnId> selectedColumns,
                       LocalDate endDate,
                       String accountFilter,
-                      Boolean deltas,
                       Grouping grouping,
                       LocalDate startDate,
-                      PeriodInterval interval) {
+                      PeriodInterval interval,
+                      CollectionMode statsMode) {
         boolean isSuccessful = true;
         try {
             var journal = journalParser.parse(journalsPaths);
-            var statsMode = deltas ? CollectionMode.DELTA : CollectionMode.CUMULATIVE;
             var intervalConfig = new PeriodSpec(startDate, endDate, interval);
             var statsResult = statsCalculator.calculateStats(journal, accountFilter, grouping, intervalConfig, EXCLUDE_UNFINISHED);
 

@@ -1,9 +1,10 @@
 package beanvest.module.returns;
 
+import beanvest.module.returns.cli.columns.ColumnId;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.validation.ValidatorError;
-import beanvest.processor.PortfolioStatsDto;
+import beanvest.processor.dto.PortfolioStatsDto;
 import com.google.gson.Gson;
 
 import java.io.PrintStream;
@@ -24,7 +25,7 @@ public class CliJsonOutputWriter implements CliOutputWriter {
     }
 
     @Override
-    public void outputResult(List<String> selectedColumns, PortfolioStatsDto portfolioStats, CollectionMode collectionMode) {
+    public void outputResult(List<ColumnId> selectedColumns, PortfolioStatsDto portfolioStats, CollectionMode collectionMode) {
         errorMessagesExtractor.extractErrorsMessages(portfolioStats)
                 .forEach(stdErr::println);
         stdOut.println(GSON.toJson(portfolioStats));

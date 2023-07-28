@@ -1,8 +1,7 @@
 package beanvest.processor.processing.collector;
 
-import beanvest.processor.AccountDto;
-import beanvest.processor.StatsWithDeltasDto;
-import beanvest.processor.processing.StatsPeriodDao;
+import beanvest.processor.dto.AccountDto;
+import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.processor.time.Period;
 import beanvest.processor.processing.AccountMetadata;
 

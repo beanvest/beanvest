@@ -1,6 +1,7 @@
 package beanvest.module.returns.cli;
 
-import beanvest.processor.PortfolioStatsDto;
+import beanvest.processor.dto.AccountPeriodDto;
+import beanvest.processor.dto.PortfolioStatsDto;
 import beanvest.processor.CollectionMode;
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.TableWriter;
@@ -27,11 +28,11 @@ public class CliTablePrinter implements ValuationNeededChecker {
     }
 
     public void printCliOutput(PortfolioStatsDto stats, PrintStream output, List<String> selectedColumns, CollectionMode collectionMode) {
-        List<Column<AccountPeriod>> columns = createColumns(selectedColumns, collectionMode, stats.periods);
+        List<Column<AccountPeriodDto>> columns = createColumns(selectedColumns, collectionMode, stats.periods);
 
         var rows = stats.accountDtos.stream()
                 .sorted(Comparator.comparing(accStats -> accStats.account))
-                .map(accStats -> new AccountPeriod(accStats.account, accStats.openingDate, accStats.closingDate, accStats.periodStats))
+                .map(accStats -> new AccountPeriodDto(accStats.account, accStats.openingDate, accStats.closingDate, accStats.periodStats))
                 .toList();
 
         var writer = new StringWriter();
@@ -50,7 +51,7 @@ public class CliTablePrinter implements ValuationNeededChecker {
                 .anyMatch(s -> ReportColumnsDefinition.COLUMNS_NEEDING_VALUATION.contains(s.columnId()));
     }
 
-    private List<Column<AccountPeriod>> createColumns(List<String> selectedColumns, CollectionMode collectionMode, List<Period> periods) {
+    private List<Column<AccountPeriodDto>> createColumns(List<String> selectedColumns, CollectionMode collectionMode, List<Period> periods) {
         var periodTitles = periods.stream().map(Period::title).toList();
         var lowercaseSelectedColumns = prepareSelectedColumnsOrGetDefault(selectedColumns, periodTitles.size());
 
@@ -67,7 +68,7 @@ public class CliTablePrinter implements ValuationNeededChecker {
         return columns;
     }
 
-    private List<Column<AccountPeriod>> createPeriodicColumns(List<String> selectedColumns, String period, Optional<String> group, CollectionMode collectionMode) {
+    private List<Column<AccountPeriodDto>> createPeriodicColumns(List<String> selectedColumns, String period, Optional<String> group, CollectionMode collectionMode) {
         var deltas = collectionMode == CollectionMode.DELTA;
         final Function<ColumnId, String> title = (ColumnId columnId) -> (deltas ? SYMBOL_DELTA : "") + columnId.header;
         return streamSelectedColumns(selectedColumns)
@@ -87,7 +88,7 @@ public class CliTablePrinter implements ValuationNeededChecker {
                 ? ReportColumnsDefinition.DEFAULT_COLUMNS_SINGLE_PERIOD
                 : ReportColumnsDefinition.DEFAULT_COLUMNS_MULTIPLE_PERIODS;
         return defaultColumns.stream()
-                .map(column -> column.id)
+                .map(column -> column.header)
                 .toList();
     }
 
@@ -96,7 +97,7 @@ public class CliTablePrinter implements ValuationNeededChecker {
                 .filter(col -> selectedColumnsOrDefaultSet.contains(col.columnId().header.toLowerCase(Locale.ROOT)));
     }
 
-    private static List<Column<AccountPeriod>> getMainColumns(List<String> selectedColumns) {
+    private static List<Column<AccountPeriodDto>> getMainColumns(List<String> selectedColumns) {
         var columnsToKeep = new ArrayList<>(selectedColumns);
         columnsToKeep.add(ReportColumnsDefinition.ALWAYS_VISIBLE);
         return ReportColumnsDefinition.COLUMNS_BASIC.stream()

@@ -70,5 +70,24 @@ public class CliAcceptanceTest {
                 isa         20
                 pension     15""");
     }
+
+    @Test
+    void shouldShowSpecifiedColumns() {
+        dsl.setEnd("2023-01-01");
+        dsl.setGroupingDisabled();
+        dsl.setColumns("deps,wths");
+
+        dsl.runCalculateReturns("""
+                account isa
+                currency GBP
+                                
+                2021-01-01 deposit 20
+                2021-01-01 withdraw 10
+                """);
+
+        dsl.verifyOutput("""
+                account  deps   wths
+                isa         20    -10""");
+    }
 }
 

@@ -2,16 +2,16 @@ package beanvest.module.returns.cli.columns;
 
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.ColumnPadding;
-import beanvest.module.returns.cli.AccountPeriod;
-import beanvest.processor.StatsWithDeltasDto;
-import beanvest.processor.ValueStatDto;
+import beanvest.processor.dto.AccountPeriodDto;
+import beanvest.processor.dto.StatsWithDeltasDto;
+import beanvest.processor.dto.ValueStatDto;
 import beanvest.result.ErrorEnum;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 record PeriodicXirrColumnSpec(ColumnId columnId, XirrResultExtractor extractor) implements PeriodicColumnSpec {
-    public Column<AccountPeriod> toColumn(Optional<String> group, String period, boolean exact, boolean delta, String title) {
+    public Column<AccountPeriodDto> toColumn(Optional<String> group, String period, boolean exact, boolean delta, String title) {
         return new Column<>(
                 group,
                 title,

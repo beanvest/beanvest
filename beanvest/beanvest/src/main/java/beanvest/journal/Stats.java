@@ -1,6 +1,6 @@
 package beanvest.journal;
 
-import beanvest.processor.ValueStatsDto;
+import beanvest.processor.dto.ValueStatsDto;
 import beanvest.result.UserErrors;
 import beanvest.result.Result;
 

@@ -1,9 +1,9 @@
 package beanvest.processor.processing;
 
-import beanvest.processor.StatDto;
+import beanvest.processor.dto.StatDto;
 import beanvest.journal.Stats;
-import beanvest.processor.StatsWithDeltasDto;
-import beanvest.processor.ValueStatDto;
+import beanvest.processor.dto.StatsWithDeltasDto;
+import beanvest.processor.dto.ValueStatDto;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

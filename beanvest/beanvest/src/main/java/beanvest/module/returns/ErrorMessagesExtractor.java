@@ -1,6 +1,6 @@
 package beanvest.module.returns;
 
-import beanvest.processor.PortfolioStatsDto;
+import beanvest.processor.dto.PortfolioStatsDto;
 
 import java.util.ArrayList;
 import java.util.List;

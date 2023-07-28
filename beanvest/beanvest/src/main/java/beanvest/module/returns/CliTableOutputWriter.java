@@ -1,13 +1,15 @@
 package beanvest.module.returns;
 
+import beanvest.module.returns.cli.columns.ColumnId;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.validation.ValidatorError;
-import beanvest.processor.PortfolioStatsDto;
+import beanvest.processor.dto.PortfolioStatsDto;
 import beanvest.module.returns.cli.CliTablePrinter;
 
 import java.io.PrintStream;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CliTableOutputWriter implements CliOutputWriter {
     private final PrintStream stdOut;
@@ -22,10 +24,11 @@ public class CliTableOutputWriter implements CliOutputWriter {
     }
 
     @Override
-    public void outputResult(List<String> selectedColumns, PortfolioStatsDto portfolioStats, CollectionMode collectionMode) {
+    public void outputResult(List<ColumnId> selectedColumns, PortfolioStatsDto portfolioStats, CollectionMode collectionMode) {
         errorMessagesExtractor.extractErrorsMessages(portfolioStats)
                 .forEach(stdErr::println);
-        this.cliTablePrinter.printCliOutput(portfolioStats, stdOut, selectedColumns, collectionMode);
+        var columnsStringIds = selectedColumns.stream().map(s -> s.header).collect(Collectors.toList());
+        this.cliTablePrinter.printCliOutput(portfolioStats, stdOut, columnsStringIds, collectionMode);
     }
 
     @Override
