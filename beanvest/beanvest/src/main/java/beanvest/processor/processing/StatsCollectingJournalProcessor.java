@@ -36,7 +36,7 @@ public class StatsCollectingJournalProcessor {
             for (String accountPattern : accountGroupResolver
                     .resolveAccountPatterns(op.account())) {
                 var validationErrors = collectorByAccount
-                        .computeIfAbsent(accountPattern, acc -> new FullAccountStatsCalculator(latestPricesBook))
+                        .computeIfAbsent(accountPattern, acc -> new FullAccountStatsCalculator(latestPricesBook, acc.contains("*")))
                         .process(entry);
                 validatorErrors.addAll(validationErrors);
             }

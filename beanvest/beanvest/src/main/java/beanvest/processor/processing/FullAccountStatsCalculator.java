@@ -27,9 +27,12 @@ import beanvest.processor.processing.collector.SpentCollector;
 import beanvest.processor.processing.collector.TransactionFeeCollector;
 import beanvest.processor.processing.collector.WithdrawalCollector;
 import beanvest.processor.processing.validator.BalanceValidator;
+import beanvest.processor.processing.validator.CloseValidator;
+import beanvest.processor.processing.validator.Validator;
 import beanvest.processor.validation.ValidatorError;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -62,6 +65,8 @@ public class FullAccountStatsCalculator {
     private final BalanceValidator balanceValidator = new BalanceValidator(validationErrors::add,
             new CashCalculator(depositCollector, withdrawalsCollector, interestCollector, simpleFeeCollector,
                     dividendCollector, spentCollector, earnedCollector));
+    private final CloseValidator closeValidator = new CloseValidator(validationErrors::add, new CashCalculator(depositCollector, withdrawalsCollector, interestCollector, simpleFeeCollector,
+            dividendCollector, spentCollector, earnedCollector));
     private final List<Processor> collectors = List.of(
             accountOpenDatesCollector,
             depositCollector,
@@ -74,11 +79,16 @@ public class FullAccountStatsCalculator {
             simpleFeeCollector,
             spentCollector,
             transactionFeeCollector,
-            withdrawalsCollector,
-            balanceValidator
-    );
+            withdrawalsCollector);
+    private final List<Validator> validators = List.of(
+            balanceValidator,
+            closeValidator);
+    private final List<Processor> processors = new ArrayList<>();
+    private final boolean isGroup;
 
-    public FullAccountStatsCalculator(LatestPricesBook pricesBook) {
+    public FullAccountStatsCalculator(LatestPricesBook pricesBook, boolean isGroup) {
+        this.isGroup = isGroup;
+
         holdingsValueCalculator = new HoldingsValueCalculator(holdingsCollector, pricesBook);
         holdingsCostCalculator = new HoldingsCostCalculator(holdingsCollector);
         unrealizedGainsCalculator = new UnrealizedGainsCalculator(holdingsValueCalculator, holdingsCostCalculator);
@@ -91,10 +101,14 @@ public class FullAccountStatsCalculator {
         accountGainCalculator = new AccountGainCalculator(depositCollector, withdrawalsCollector, accountValueCalculator);
         totalFeesCalculator = new TotalFeesCalculator(simpleFeeCollector, transactionFeeCollector);
 
+        this.processors.addAll(collectors);
+        if (!isGroup) {
+            this.processors.addAll(validators);
+        }
     }
 
     public LinkedHashSet<ValidatorError> process(Entry entry) {
-        for (Processor collector : collectors) {
+        for (Processor collector : processors) {
             collector.process(entry);
         }
 

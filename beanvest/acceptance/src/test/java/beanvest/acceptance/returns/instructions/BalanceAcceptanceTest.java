@@ -56,4 +56,23 @@ public class BalanceAcceptanceTest {
                   @ /tmp/*.tmp:5 2021-01-01 balance 1.1 X
                 """);
     }
+
+    @Test
+    void balanceIsCheckedForJustOneAccount() {
+        dsl.setAllowNonZeroExitCodes();
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-01 deposit and buy 5 X for 50
+                ---
+                account trading2
+                currency GBP
+                                
+                2021-01-01 deposit and buy 1 X for 10
+                2021-01-01 balance 1 X
+                """);
+
+        dsl.verifyZeroExitCode();
+    }
 }

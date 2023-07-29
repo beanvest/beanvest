@@ -25,7 +25,7 @@ class FullAccountStatsCalculatorTest {
     @BeforeEach
     void setUp() {
         pricesBook = new LatestPricesBook();
-        calc = new FullAccountStatsCalculator(pricesBook);
+        calc = new FullAccountStatsCalculator(pricesBook, false);
     }
 
     @Test

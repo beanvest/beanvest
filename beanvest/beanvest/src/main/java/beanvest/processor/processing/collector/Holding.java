@@ -37,4 +37,9 @@ public record Holding(String commodity, BigDecimal amount, BigDecimal unitCost) 
     public BigDecimal totalCost() {
         return amount.multiply(unitCost);
     }
+
+    public String toShortString()
+    {
+        return amount.stripTrailingZeros().toPlainString() + " " + commodity;
+    }
 }
