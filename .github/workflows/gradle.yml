@@ -27,6 +27,6 @@ jobs:
       - name: Run ./gradlew test
         run: nix-shell --command './gradlew test'
       - name: Run ./gradlew nativeCompile
-        run: nix-shell --command './gradlew test'
+        run: nix-shell --command './gradlew nativeCompile'
       - name: Run ./gradlew nativeTest
-        run: nix-shell --command './gradlew test'
+        run: nix-shell --command './gradlew nativeTest'
