@@ -1,4 +1,4 @@
-package beanvest.lib.testing;
+package beanvest.lib.apprunner;
 
 import java.util.List;
 

@@ -6,6 +6,7 @@ group = "beanvest.acceptance"
 
 dependencies {
     testImplementation(project(":beanvest:beanvest"))
+    testImplementation(project(":beanvest:lib:apprunner"))
     testImplementation(project(":beanvest:lib:jsonassert"))
     testImplementation(project(":beanvest:lib:util"))
     testImplementation(project(":beanvest:lib:testing"))

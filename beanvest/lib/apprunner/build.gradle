@@ -2,13 +2,10 @@ plugins {
     id 'java'
 }
 
-group 'beanvest.lib.testing'
+group 'beanvest.lib.apprunner'
 
 dependencies {
     implementation libs.bundles.logging
-    implementation libs.bundles.testing
-    implementation project(":beanvest:lib:apprunner")
-    implementation project(":beanvest:lib:util")
 }
 
 test {

@@ -1,8 +1,6 @@
-package beanvest.lib.testing;
+package beanvest.lib.apprunner;
 
-import beanvest.lib.testing.apprunner.DirectRunner;
-import beanvest.lib.testing.apprunner.NativeBinRunner;
-import beanvest.lib.util.apprunner.BaseMain;
+import beanvest.lib.apprunner.wiring.BaseMain;
 
 import java.util.Optional;
 

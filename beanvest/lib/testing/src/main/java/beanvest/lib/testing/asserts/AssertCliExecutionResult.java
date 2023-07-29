@@ -1,6 +1,6 @@
 package beanvest.lib.testing.asserts;
 
-import beanvest.lib.testing.CliExecutionResult;
+import beanvest.lib.apprunner.CliExecutionResult;
 
 import java.util.List;
 import java.util.stream.Collectors;

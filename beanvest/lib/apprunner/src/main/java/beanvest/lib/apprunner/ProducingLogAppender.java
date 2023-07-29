@@ -1,4 +1,4 @@
-package beanvest.lib.testing.apprunner;
+package beanvest.lib.apprunner;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;

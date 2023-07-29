@@ -1,11 +1,8 @@
-package beanvest.lib.testing.apprunner;
+package beanvest.lib.apprunner;
 
-import beanvest.lib.testing.AppRunner;
-import beanvest.lib.testing.CliExecutionResult;
-import beanvest.lib.testing.NonZeroExitCodeException;
-import beanvest.lib.util.apprunner.BaseMain;
-import beanvest.lib.util.apprunner.CliWriters;
-import beanvest.lib.util.apprunner.FakeSystemExitException;
+import beanvest.lib.apprunner.wiring.BaseMain;
+import beanvest.lib.apprunner.wiring.CliWriters;
+import beanvest.lib.apprunner.wiring.FakeSystemExitException;
 
 import java.io.IOException;
 import java.io.PrintStream;

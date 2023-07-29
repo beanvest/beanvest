@@ -1,9 +1,9 @@
 package beanvest.acceptance;
 
 import beanvest.BeanvestMain;
-import beanvest.lib.testing.AppRunner;
-import beanvest.lib.testing.AppRunnerFactory;
-import beanvest.lib.testing.CliExecutionResult;
+import beanvest.lib.apprunner.AppRunner;
+import beanvest.lib.apprunner.AppRunnerFactory;
+import beanvest.lib.apprunner.CliExecutionResult;
 
 import java.util.Arrays;
 import java.util.List;

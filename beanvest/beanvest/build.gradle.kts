@@ -7,6 +7,7 @@ group = "beanvest.beanvest"
 
 dependencies {
     implementation(libs.bundles.logging)
+    implementation(project(":beanvest:lib:apprunner"))
     implementation(project(":beanvest:lib:clitable"))
     implementation(project(":beanvest:lib:jsonassert"))
     implementation(project(":beanvest:lib:util"))

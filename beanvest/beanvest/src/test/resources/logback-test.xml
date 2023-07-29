@@ -5,7 +5,7 @@
             <pattern>[%thread] %-5level %logger{40} - %msg%n</pattern>
         </encoder>
     </appender>
-    <appender name="list" class="beanvest.lib.testing.apprunner.ProducingLogAppender"/>
+    <appender name="list" class="beanvest.lib.apprunner.ProducingLogAppender"/>
 
     <root level="warn">
         <appender-ref ref="stderr" />

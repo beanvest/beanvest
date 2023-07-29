@@ -1,8 +1,7 @@
 package beanvest.acceptance;
 
 import beanvest.BeanvestMain;
-import beanvest.lib.testing.AppRunnerFactory;
-import org.junit.jupiter.api.Disabled;
+import beanvest.lib.apprunner.AppRunnerFactory;
 import org.junit.jupiter.api.Test;
 
 public class BeancountComparisonAcceptanceTest {

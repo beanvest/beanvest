@@ -1,10 +1,9 @@
 package beanvest.acceptance.importer;
 
 import beanvest.BeanvestMain;
-import beanvest.lib.testing.AppRunner;
-import beanvest.lib.testing.AppRunnerFactory;
+import beanvest.lib.apprunner.AppRunner;
+import beanvest.lib.apprunner.AppRunnerFactory;
 import beanvest.lib.testing.TestFiles;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

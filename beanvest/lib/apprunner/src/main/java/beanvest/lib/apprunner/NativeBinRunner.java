@@ -1,8 +1,4 @@
-package beanvest.lib.testing.apprunner;
-
-import beanvest.lib.testing.AppRunner;
-import beanvest.lib.testing.CliExecutionResult;
-import beanvest.lib.testing.NonZeroExitCodeException;
+package beanvest.lib.apprunner;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +14,6 @@ import java.util.stream.Collectors;
 
 public class NativeBinRunner implements AppRunner {
     public static final String JAVA_HOME = System.getProperty("java.home");
-    public static final String JAVA_BIN = JAVA_HOME + "/bin/java";
     public static final Function<String, Boolean> DONT_BLOCK = line -> true;
     public static final Consumer<String> NOOP_CONSUMER = line -> {
     };
@@ -39,7 +34,7 @@ public class NativeBinRunner implements AppRunner {
 
     @Override
     public CliExecutionResult run(List<String> vmParams, List<String> args) {
-        return runJar(vmParams, args, DONT_BLOCK, NOOP_CONSUMER);
+        return runJar(args, DONT_BLOCK, NOOP_CONSUMER);
     }
 
     @Override
@@ -62,8 +57,7 @@ public class NativeBinRunner implements AppRunner {
         return processBuilder;
     }
 
-    private CliExecutionResult runJar(List<String> vmParams,
-                                      List<String> appArgs,
+    private CliExecutionResult runJar(List<String> appArgs,
                                       Function<String, Boolean> blockUntilTrue,
                                       Consumer<String> stdoutLineConsumer) {
         waitingForOutputLatch = new CountDownLatch(1);
@@ -102,9 +96,7 @@ public class NativeBinRunner implements AppRunner {
                     new String(process.getErrorStream().readAllBytes()),
                     exitCode);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }

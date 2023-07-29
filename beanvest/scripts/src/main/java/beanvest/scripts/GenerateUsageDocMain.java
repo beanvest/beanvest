@@ -31,6 +31,7 @@ public class GenerateUsageDocMain {
             System.out.println("<OUTPUT_FILE> argument required");
             System.exit(1);
         }
+
         var outputFile = Path.of(projectDir + "/" + args[0]);
 
         var exampleDocWriter = new UsageDocWriter(outputFile);

@@ -6,6 +6,7 @@ group 'beanvest.scripts'
 
 dependencies {
     implementation(project(":beanvest:lib:util"))
+    implementation(project(":beanvest:lib:apprunner"))
     implementation(libs.bundles.logging)
 }
 

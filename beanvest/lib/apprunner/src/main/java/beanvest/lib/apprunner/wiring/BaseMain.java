@@ -1,4 +1,4 @@
-package beanvest.lib.util.apprunner;
+package beanvest.lib.apprunner.wiring;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

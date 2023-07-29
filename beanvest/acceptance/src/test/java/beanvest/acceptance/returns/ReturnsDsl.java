@@ -1,19 +1,19 @@
 package beanvest.acceptance.returns;
 
 import beanvest.BeanvestMain;
-import beanvest.lib.testing.AppRunner;
-import beanvest.lib.testing.AppRunnerFactory;
-import beanvest.lib.testing.CliExecutionResult;
+import beanvest.lib.apprunner.AppRunner;
+import beanvest.lib.apprunner.AppRunnerFactory;
+import beanvest.lib.apprunner.CliExecutionResult;
 import beanvest.lib.testing.TestFiles;
 import beanvest.lib.testing.asserts.AssertCliExecutionResult;
 import beanvest.lib.util.gson.GsonFactory;
 import beanvest.processor.dto.AccountDto;
 import beanvest.processor.dto.PortfolioStatsDto;
-import beanvest.result.ErrorEnum;
-import beanvest.result.Result;
 import beanvest.processor.dto.StatDto;
 import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.processor.dto.ValueStatDto;
+import beanvest.result.ErrorEnum;
+import beanvest.result.Result;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.assertj.core.data.Offset;
@@ -104,7 +104,7 @@ public class ReturnsDsl {
         if (cliOptions.exact) {
             args.add("--exact");
         }
-        if (cliOptions.columns.size() > 0) {
+        if (!cliOptions.columns.isEmpty()) {
             args.add("--columns=" + String.join(",", cliOptions.columns));
         }
         if (cliOptions.allowNonZeroExitCodes) {
@@ -487,11 +487,7 @@ public class ReturnsDsl {
                 .isEqualTo(List.of(ErrorEnum.valueOf(error)));
     }
 
-    public void dumpJson() {
-        throw new RuntimeException(cliRunResult.stdOut());
-    }
-
-    private enum Groups {
+    enum Groups {
         YES,
         NO,
         ONLY
