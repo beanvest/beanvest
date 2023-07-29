@@ -9,5 +9,4 @@
 - new custom UI
 
 ## bugs
-- empty json returned in the terminal with --json flag in native build
 - cumulative values shown in the terminal instead of deltas
