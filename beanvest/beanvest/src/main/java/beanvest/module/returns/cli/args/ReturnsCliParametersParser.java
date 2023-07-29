@@ -19,7 +19,7 @@ public class ReturnsCliParametersParser {
         var journalsPaths = parseResult.matchedPositionalValue(0, new ArrayList<Path>());
         final Optional<LocalDate> overrideToday = Optional.ofNullable(parseResult.matchedOptionValue("--override-today", null));
         var today = overrideToday.orElseGet(LocalDate::now);
-        var endDate = LocalDate.parse(parseResult.matchedOptionValue("--end", today.toString()));
+        var endDate = getEndDate(parseResult, today);
         final LocalDate startDate = parseResult.matchedOptionValue("--startDate", LocalDate.MIN);
         final String accountFilter = parseResult.matchedOptionValue("--account", ".*");
         final Optional<String> reportCurrency = Optional.ofNullable(parseResult.matchedOptionValue("--currency", ""));
@@ -35,5 +35,13 @@ public class ReturnsCliParametersParser {
         var collectionMode = onlyDeltas ? CollectionMode.DELTA : CollectionMode.CUMULATIVE;
         return new ReturnsAppParameters(journalsPaths, endDate, startDate, accountFilter, reportCurrency, selectedColumns,
                 exactValues, jsonFormat, period, grouping, collectionMode, "TOTAL");
+    }
+
+    private static LocalDate getEndDate(CommandLine.ParseResult parseResult, LocalDate today) {
+        var text = parseResult.matchedOptionValue("--end", today.toString());
+        if (text.toLowerCase(Locale.ROOT).equals("month")) {
+            return today.withDayOfMonth(1);
+        }
+        return LocalDate.parse(text);
     }
 }

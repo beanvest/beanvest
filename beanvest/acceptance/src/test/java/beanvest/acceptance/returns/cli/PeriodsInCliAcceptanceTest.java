@@ -128,11 +128,11 @@ public class PeriodsInCliAcceptanceTest {
     }
 
     @Test
-    @Disabled("processing refactor")
     void calculatesDeltasWithSomeStartingDate() {
         dsl.setStartDate("2021-01-01");
         dsl.setEnd("2022-01-01");
         dsl.setYearly();
+        dsl.setGroupingDisabled();
         dsl.setDeltas();
         dsl.setColumns("deps");
 
@@ -141,12 +141,13 @@ public class PeriodsInCliAcceptanceTest {
                 currency GBP
                                 
                 2019-01-01 deposit 100
+                2021-02-01 deposit 50
                 """);
 
         dsl.verifyOutput("""
                         ╷ 2021  ╷
                 account │ Δdeps │
-                isa     │     0 │""");
+                isa     │    50 │""");
     }
 
     @Test
@@ -203,15 +204,16 @@ public class PeriodsInCliAcceptanceTest {
     }
 
     @Test
-    @Disabled("moving deltas to postprocess")
     void shouldCalculateReturnsUntilEndOfLastMonthInDecemberAsWell() {
-        dsl.setCurrentDate("2022-12-22");
+        dsl.setCliOutput();
+        dsl.setColumns("deps");
+        dsl.setGroupingDisabled();
+        dsl.setMonthly();
+        dsl.setDeltas();
+
         dsl.setStartDate("2022-10-01");
         dsl.setEnd("month");
-        dsl.setCliOutput();
-        dsl.setDeltas();
-        dsl.setColumns("deps");
-        dsl.setMonthly();
+        dsl.setCurrentDate("2022-12-22");
 
         dsl.runCalculateReturns("""
                 account trading
