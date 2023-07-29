@@ -22,8 +22,8 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
       - name: Prepare nix shell
         run: nix-shell --command 'echo ok'
-      - name: Run ./gradlew build
-        run: nix-shell --command './gradlew build'
+      - name: Run ./gradlew build -x test
+        run: nix-shell --command './gradlew build -x test'
       - name: Run ./gradlew test
         run: nix-shell --command './gradlew test'
       - name: Run ./gradlew nativeCompile
