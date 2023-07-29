@@ -39,7 +39,6 @@ public class PeriodDeltasAcceptanceTest {
     }
 
     @Test
-    @Disabled
     void doesNotReportEarlierPeriodsThanStartDate() {
         dsl.setYearly();
         dsl.setStartDate("2021-01-01");
