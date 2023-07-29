@@ -65,5 +65,29 @@ public class CliStatsAcceptanceTest {
                 account │ Δfees │ Δfees │
                 trading │ -3.30 │ -4.20 │""");
     }
+
+    @Test
+    void calculatesInterestYearlyDelta() {
+        dsl.setEnd("2023-01-01");
+        dsl.setDeltas();
+        dsl.setColumns("aGain");
+        dsl.setYearly();
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-02 deposit 100
+                2021-06-05 interest 5
+                2021-07-05 interest 2
+                                
+                2022-06-05 interest 10
+                2022-07-13 interest -1
+                """);
+
+        dsl.verifyOutput("""         
+                        ╷ 2022   ╷ 2021   ╷
+                account │ ΔaGain │ ΔaGain │
+                trading │      9 │      7 │""");
+    }
 }
 

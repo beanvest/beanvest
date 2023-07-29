@@ -105,7 +105,6 @@ public class PeriodsInCliAcceptanceTest {
     }
 
     @Test
-    @Disabled("moving deltas to postprocess")
     void calculatesDeltasInQuarterlyIntervalsPeriodic() {
         dsl.setEnd("2021-05-01");
         dsl.setDeltas();

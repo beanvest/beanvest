@@ -19,7 +19,13 @@ record PeriodicValueColumnSpec(ColumnId columnId,
                 title,
                 ColumnPadding.RIGHT,
                 accountPeriodStats -> accountPeriodStats.getStats(period)
-                        .map(stats -> ColumnValueFormatter.formatMoney(exact, extractor.apply(stats).stat()))
+                        .map(stats -> {
+                            if (delta) {
+                                return ColumnValueFormatter.formatMoney(exact, extractor.apply(stats).delta());
+                            } else {
+                                return ColumnValueFormatter.formatMoney(exact, extractor.apply(stats).stat());
+                            }
+                        })
                         .orElseGet(() -> ColumnValueFormatter.formatError(ErrorEnum.ACCOUNT_NOT_OPEN_YET)));
     }
 }
