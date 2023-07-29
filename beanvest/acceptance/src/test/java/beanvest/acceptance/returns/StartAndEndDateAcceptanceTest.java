@@ -52,32 +52,6 @@ public class StartAndEndDateAcceptanceTest {
         dsl.verifyAccountGainDelta("trading", "TOTAL", "20");
     }
 
-
-    @Test
-    @Disabled("refactor")
-    void accountsClosedBeforeStartDateAreNotVisibleWhenRetrievingDeltas() {
-        dsl.setStartDate("2021-03-01");
-        dsl.setDeltas();
-
-        dsl.runCalculateReturns("""
-                account trading
-                currency GBP
-                                
-                2021-01-01 deposit 100
-                2021-02-01 withdraw 100
-                2021-02-03 close
-                ---
-                account investing
-                currency GBP
-                                
-                2021-05-01 deposit 100
-                ---
-                """);
-
-        dsl.verifyHasStats("investing");
-        dsl.verifyHasNoStats("trading");
-    }
-
     @Test
     void accountsClosedAfterStartDateAreVisibleWhenRetrievingDeltas() {
         dsl.setStartDate("2021-02-01");
