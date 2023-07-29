@@ -71,6 +71,7 @@ public class CliStatsAcceptanceTest {
         dsl.setEnd("2023-01-01");
         dsl.setDeltas();
         dsl.setColumns("aGain");
+        dsl.setGroupingDisabled();
         dsl.setYearly();
         dsl.runCalculateReturns("""
                 account trading

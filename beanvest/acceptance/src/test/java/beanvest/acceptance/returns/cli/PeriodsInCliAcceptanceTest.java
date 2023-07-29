@@ -109,6 +109,7 @@ public class PeriodsInCliAcceptanceTest {
         dsl.setEnd("2021-05-01");
         dsl.setDeltas();
         dsl.setQuarterly();
+        dsl.setGroupingDisabled();
         dsl.setColumns("deps");
 
         dsl.runCalculateReturns("""
