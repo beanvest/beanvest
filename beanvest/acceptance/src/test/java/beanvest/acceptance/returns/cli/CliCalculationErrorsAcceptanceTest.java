@@ -105,6 +105,7 @@ public class CliCalculationErrorsAcceptanceTest {
     void calculatesCashStatsJustFineWithoutPricesNeededForValueStats() {
         dsl.setEnd("2021-03-15");
         dsl.setColumns("deps");
+        dsl.setGroupingDisabled();
 
         dsl.runCalculateReturns("""
                 account trading

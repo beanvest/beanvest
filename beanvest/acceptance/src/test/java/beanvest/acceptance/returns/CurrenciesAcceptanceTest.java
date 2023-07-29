@@ -3,7 +3,7 @@ package beanvest.acceptance.returns;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled
+@Disabled("not implemented yet")
 public class CurrenciesAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 

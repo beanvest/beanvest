@@ -13,7 +13,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled("FIXME")
 public class BeancountComparisonDsl {
     private final AppRunner exportRunner;
     private final AppRunner returnsRunner;

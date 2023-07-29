@@ -8,7 +8,7 @@ public class ClosingAccountsAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
-    @Disabled("processing refactor")
+    @Disabled("validator needs reimplementing")
     void notEmptyAccountCannotBeClosed() {
         dsl.setAllowNonZeroExitCodes();
         dsl.runCalculateReturns("""

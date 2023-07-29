@@ -17,7 +17,7 @@ public class JournalAcceptanceTest {
     protected AppRunner runner = AppRunnerFactory.createRunner(BeanvestMain.class, "journal");
 
     @Test
-    @Disabled("errors rework")
+    @Disabled("borked due to error handling rework")
     void printsBalanceAfterEachDay() {
         var path = TestFiles.writeToTempFile("""
                 account Assets:VanguardTaxable

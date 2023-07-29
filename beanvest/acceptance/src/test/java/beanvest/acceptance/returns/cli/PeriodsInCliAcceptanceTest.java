@@ -2,7 +2,6 @@ package beanvest.acceptance.returns.cli;
 
 import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class PeriodsInCliAcceptanceTest {
@@ -58,12 +57,12 @@ public class PeriodsInCliAcceptanceTest {
     }
 
     @Test
-    @Disabled("moving deltas to postprocess")
     void calculatesDeltasInYearlyIntervals() {
         dsl.setEnd("2022-01-01");
         dsl.setYearly();
         dsl.setDeltas();
         dsl.setColumns("deps");
+        dsl.setGroupingDisabled();
 
         dsl.runCalculateReturns("""
                 account isa
@@ -81,13 +80,13 @@ public class PeriodsInCliAcceptanceTest {
     }
 
     @Test
-    @Disabled
     void showsResultsOnlyStartingFromStartDate() {
         dsl.setEnd("2023-01-01");
         dsl.setStartDate("2021-01-01");
         dsl.setYearly();
         dsl.setDeltas();
         dsl.setColumns("deps");
+        dsl.setGroupingDisabled();
 
         dsl.runCalculateReturns("""
                 account isa
