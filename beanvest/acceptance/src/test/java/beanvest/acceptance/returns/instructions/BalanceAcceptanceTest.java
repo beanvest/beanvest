@@ -1,6 +1,7 @@
 package beanvest.acceptance.returns.instructions;
 
 import beanvest.acceptance.returns.ReturnsDsl;
+import beanvest.lib.testing.DocumentsCurrentBehaviour;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -74,5 +75,27 @@ public class BalanceAcceptanceTest {
                 """);
 
         dsl.verifyZeroExitCode();
+    }
+
+    @Test
+    @DocumentsCurrentBehaviour(description = "consider doing the check at the end of the day")
+    void orderOfBalanceInstructionWithinTheDayIsImportant() {
+        dsl.setAllowNonZeroExitCodes();
+
+        dsl.runCalculateReturns("""
+                account trading2
+                currency GBP
+                                
+                2021-01-01 balance 1
+                2021-01-01 deposit 1
+                ---
+                """);
+        dsl.verifyReturnedAnError("""
+                ====> Ooops! Validation error:
+                Cash balance does not match. Expected: 1. Actual: 0
+                  @ /tmp/*.tmp:4 2021-01-01 balance 1
+                """);
+        dsl.verifyNonZeroExitCode();
+        dsl.verifyDidNotPrintStackTrace();
     }
 }

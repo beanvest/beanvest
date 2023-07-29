@@ -1,6 +1,7 @@
 package beanvest.acceptance.returns.instructions;
 
 import beanvest.acceptance.returns.ReturnsDsl;
+import beanvest.lib.testing.DocumentsCurrentBehaviour;
 import org.junit.jupiter.api.Test;
 
 public class ClosingAccountsAcceptanceTest {
@@ -62,6 +63,29 @@ public class ClosingAccountsAcceptanceTest {
                 ---
                 """);
         dsl.verifyZeroExitCode();
+    }
+
+    @Test
+    @DocumentsCurrentBehaviour(description = "consider doing the check at the end of the day")
+    void orderOfCloseInstructionWithinTheDayIsImportant() {
+        dsl.setAllowNonZeroExitCodes();
+
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                
+                2021-01-01 deposit 2
+                2021-01-02 close
+                2021-01-02 withdraw 2
+                ---
+                """);
+        dsl.verifyReturnedAnError("""
+                ====> Ooops! Validation error:
+                Account `trading` is not empty on 2021-01-02 and can't be closed. Inventory: [] and 2 GBP cash.
+                  @ /tmp/*.tmp:5 2021-01-02 close
+                """);
+        dsl.verifyNonZeroExitCode();
+        dsl.verifyDidNotPrintStackTrace();
     }
 
     @Test
