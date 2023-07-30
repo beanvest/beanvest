@@ -13,7 +13,7 @@ public class JournalWriter {
         deleteDirectoryContents(outputDir);
 
         for (AccountJournal journal : journals) {
-            var journalPath = Path.of(outputDir + "/" + sanitizeJournalName(journal));
+            var journalPath = getTargetJournalPath(outputDir, journal);
             try {
                 LOGGER.info("Writing " + journalPath);
                 Files.writeString(journalPath, journal.getContent());
@@ -21,6 +21,10 @@ public class JournalWriter {
                 throw new RuntimeException("Failed to write to file `%s`".formatted(journalPath), e);
             }
         }
+    }
+
+    private static Path getTargetJournalPath(Path outputDir, AccountJournal journal) {
+        return Path.of(outputDir + "/" + sanitizeJournalName(journal) + ".bv");
     }
 
     private static String sanitizeJournalName(AccountJournal journal) {

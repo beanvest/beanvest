@@ -41,7 +41,8 @@ public class ReturnsCalculatorApp {
                 throw new RuntimeException("Oops! No entries found.");
             }
             var intervalConfig = new PeriodSpec(startDate, endDate, interval);
-            var statsResult = statsCalculator.calculateStats(journal, accountFilter, grouping, intervalConfig, EXCLUDE_UNFINISHED);
+            var statsResult = statsCalculator.calculateStats(
+                    journal, accountFilter, grouping, intervalConfig, EXCLUDE_UNFINISHED);
 
             if (statsResult.hasError()) {
                 outputWriter.outputInputErrors(statsResult.getError());

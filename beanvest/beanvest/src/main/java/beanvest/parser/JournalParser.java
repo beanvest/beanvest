@@ -67,7 +67,8 @@ public class JournalParser {
     private LocalDate closingDate;
 
     public Journal parse(List<Path> journalsPaths) throws JournalNotFoundException {
-        var inputLedgers = journalsPaths.stream().flatMap(path -> {
+        var inputLedgers = journalsPaths.stream()
+                .flatMap(path -> {
             if (!Files.exists(path)) {
                 throw new JournalNotFoundException(path);
             }

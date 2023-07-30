@@ -1,6 +1,6 @@
 package beanvest;
 
-import beanvest.lib.apprunner.wiring.BaseMain;
+import beanvest.lib.apprunner.main.BaseMain;
 import beanvest.module.export.ExportCliCommand;
 import beanvest.module.importer.ImportCliCommand;
 import beanvest.module.journal.JournalCliCommand;

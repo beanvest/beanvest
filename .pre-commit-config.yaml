@@ -15,6 +15,19 @@ repos:
         entry: ./gradlew test
         always_run: true
         pass_filenames: false
+      - id: generate-sample-journal
+        name: generate sample journal doc
+        language: system
+        entry: ./gradlew generateSampleJournal
+        always_run: true
+        pass_filenames: false
+      - id: generate-usage-doc
+        name: generate usage doc
+        language: system
+        entry: ./gradlew generateUsageDoc
+        always_run: true
+        pass_filenames: false
+
       - id: gradle-native-compile
         name: gradle nativeCompile
         language: system
@@ -33,15 +46,9 @@ repos:
         entry: ./gradlew nativeTest
         always_run: true
         pass_filenames: false
-      - id: generate-usage-doc
+      - id: generate-usage-doc-native
         name: generate usage doc
         language: system
-        entry: ./gradlew generateUsageDoc --args="generated/usage.md"
-        always_run: true
-        pass_filenames: false
-      - id: generate-sample-journal
-        name: generate sample journal doc
-        language: system
-        entry: ./gradlew generateSampleJournal
+        entry: ./gradlew generateUsageDocNative
         always_run: true
         pass_filenames: false

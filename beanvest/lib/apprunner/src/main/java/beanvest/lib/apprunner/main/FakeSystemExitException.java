@@ -1,4 +1,4 @@
-package beanvest.lib.apprunner.wiring;
+package beanvest.lib.apprunner.main;
 
 public class FakeSystemExitException extends RuntimeException {
 }

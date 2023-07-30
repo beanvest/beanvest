@@ -26,7 +26,7 @@ tasks {
         dependsOn(":beanvest:beanvest:nativeCompile")
 
         maxParallelForks = Runtime.getRuntime().availableProcessors()
-        environment("ACCEPTANCE_BIN_PATH", "${project.rootDir}/beanvest/beanvest/build/native/nativeCompile/beanvest")
+        environment("NATIVE_BIN_PATH", "${project.rootDir}/beanvest/beanvest/build/native/nativeCompile/beanvest")
         useJUnitPlatform()
         testLogging {
             exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL

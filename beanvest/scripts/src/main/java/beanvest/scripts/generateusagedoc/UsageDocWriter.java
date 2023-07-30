@@ -11,10 +11,11 @@ import java.util.stream.Collectors;
 
 public class UsageDocWriter {
     private final Path outputFile;
+    private final Path samplesDir;
 
-    public UsageDocWriter(Path outputFile) {
-
+    public UsageDocWriter(Path outputFile, Path samplesDir) {
         this.outputFile = outputFile;
+        this.samplesDir = samplesDir.getFileName();
     }
 
     public void writeDoc(List<ExampleWithOutput> examples) throws IOException {
@@ -24,7 +25,7 @@ public class UsageDocWriter {
                 .append("""
                         - %s
                           ```bash
-                          %s
+                          beanvest %s
                           ```
                           ```
                         %s
@@ -32,7 +33,7 @@ public class UsageDocWriter {
                         """
                         .formatted(
                                 example.example().description(),
-                                example.example().command(),
+                                example.example().command().replace("$samplesDir$", samplesDir.toString()),
                                 indent(example.commandOutput(), 2))));
         Files.writeString(outputFile, stringBuffer);
     }

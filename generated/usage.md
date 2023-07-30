@@ -2,7 +2,7 @@
 
 - Print various stats for all accounts and groups on each level of the accounts for whole period
   ```bash
-  beanvest returns sample/* --end=2023-07-01
+  beanvest returns sample --end=2023-07-01
   ```
   ```
   account              opened      closed  deps    wths   div    intr   fees   rGain  cash    uGain  hVal   aGain  xirr
@@ -14,7 +14,7 @@
   ```
 - Print cumulative deposits and withdrawals for accounts and groups for each quarter
   ```bash
-  beanvest returns sample/* --columns deps,wths --interval=quarter
+  beanvest returns sample --columns deps,wths --interval=quarter
   ```
   ```
                       ╷ 23q2          ╷ 23q1          ╷ 22q4          ╷ 22q3          ╷ 22q2         ╷ 22q1         ╷
@@ -27,7 +27,7 @@
   ```
 - Print changes in deposits and withdrawals for accounts and groups for each quarter
   ```bash
-  beanvest returns sample/* --columns deps,wths --interval=quarter --delta
+  beanvest returns sample --columns deps,wths --interval=quarter --delta
   ```
   ```
                       ╷ 23q2         ╷ 23q1         ╷ 22q4         ╷ 22q3         ╷ 22q2         ╷ 22q1         ╷
@@ -37,29 +37,4 @@
   saving:regularSaver │   300      0 │   300      0 │   300      0 │   300      0 │   300      0 │   300      0 │
   saving:savings      │   540    -20 │   540    -20 │   540    -20 │   540    -20 │   540    -20 │   540    -20 │
   trading             │ 2,790      0 │ 2,790      0 │ 2,790      0 │ 2,790      0 │ 2,790      0 │ 2,790      0 │
-  ```
-- Inspect journals with daily cumulative stats
-  ```bash
-  beanvest journal sample/* | tail -n 20
-  ```
-  ```
-  2023-10-01 fee  10
-    stats: dep: 26620, wth: -160, int: 550, fee: -80, div: 0, rga: 0.00, csh: 26930
-    holdings: 0.00 GBP []
-  
-  2023-11-01 deposit 100 GBP
-  2023-11-01 interest 15 GBP
-  2023-11-01 deposit 180 GBP
-  2023-11-01 interest 10 GBP
-  2023-11-01 deposit 930 GBP
-    stats: dep: 27830, wth: -160, int: 575, fee: -80, div: 0, rga: 0.00, csh: 28165
-    holdings: 0.00 GBP []
-  
-  2023-12-01 deposit 100 GBP
-  2023-12-01 interest 15 GBP
-  2023-12-01 deposit 180 GBP
-  2023-12-01 interest 10 GBP
-  2023-12-01 deposit 930 GBP
-    stats: dep: 29040, wth: -160, int: 600, fee: -80, div: 0, rga: 0.00, csh: 29400
-    holdings: 0.00 GBP []
   ```

@@ -1,8 +1,8 @@
 package beanvest.lib.apprunner;
 
-import beanvest.lib.apprunner.wiring.BaseMain;
-import beanvest.lib.apprunner.wiring.CliWriters;
-import beanvest.lib.apprunner.wiring.FakeSystemExitException;
+import beanvest.lib.apprunner.main.BaseMain;
+import beanvest.lib.apprunner.main.CliWriters;
+import beanvest.lib.apprunner.main.FakeSystemExitException;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -12,16 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class DirectRunner implements AppRunner {
+public class ReflectionRunner implements AppRunner {
     private final Class<?> mainClass;
     private final Optional<String> maybeSubcommand;
 
-    public DirectRunner(Class<? extends BaseMain> mainClass, Optional<String> subcommand1) {
+    public ReflectionRunner(Class<? extends BaseMain> mainClass, Optional<String> subcommand1) {
         this.mainClass = mainClass;
         this.maybeSubcommand = subcommand1;
     }
 
     private CliExecutionResult runApp(List<String> args, List<String> appArgs) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException {
+        setReflectionRunnerFlag();
         var initMethod = mainClass.getMethod("init");
         var mainMethod = mainClass.getMethod("main", String[].class);
         var getExitCodeMethod = mainClass.getMethod("getExitCode");
@@ -45,6 +46,13 @@ public class DirectRunner implements AppRunner {
                 cliWriters.out().toString(StandardCharsets.UTF_8),
                 cliWriters.err().toString(StandardCharsets.UTF_8),
                 (int) getExitCodeMethod.invoke(null));
+    }
+
+    private static void setReflectionRunnerFlag() {
+        System.setProperty("beanvest.runningViaReflectionRunner", "true");
+    }
+    public static boolean isRunningWithReflectionRunner() {
+        return "true".equals(System.getProperty("beanvest.runningViaReflectionRunner"));
     }
 
     @Override

@@ -5,6 +5,7 @@ plugins {
 group 'beanvest.scripts'
 
 dependencies {
+    implementation(project(":beanvest:beanvest"))
     implementation(project(":beanvest:lib:util"))
     implementation(project(":beanvest:lib:apprunner"))
     implementation(libs.bundles.logging)
@@ -19,15 +20,24 @@ test {
 
 tasks.register('generateUsageDoc', JavaExec) {
     dependsOn("generateSampleJournal")
-    group = "Execution";
+    group = "generation"
     description = "Regenerates usage doc based on generated sample journals"
     classpath = sourceSets.main.runtimeClasspath
     mainClass = "beanvest.scripts.GenerateUsageDocMain"
     jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }
-tasks.register('generateSampleJournal', JavaExec) {
+tasks.register('generateUsageDocNative', JavaExec) {
+    dependsOn("generateSampleJournal")
     dependsOn(":beanvest:beanvest:nativeCompile")
-    group = "Execution";
+    group = "generation"
+    description = "Regenerates usage doc based on generated sample journals using native build"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "beanvest.scripts.GenerateUsageDocMain"
+    environment("NATIVE_BIN_PATH", "${project.rootDir}/beanvest/beanvest/build/native/nativeCompile/beanvest")
+    jvmArgs = ["-Dproject.dir=" + project.rootDir]
+}
+tasks.register('generateSampleJournal', JavaExec) {
+    group = "generation"
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath
     mainClass = "beanvest.scripts.GenerateSampleJournalMain"

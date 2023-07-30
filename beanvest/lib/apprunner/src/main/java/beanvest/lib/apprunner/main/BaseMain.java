@@ -1,4 +1,6 @@
-package beanvest.lib.apprunner.wiring;
+package beanvest.lib.apprunner.main;
+
+import beanvest.lib.apprunner.ReflectionRunner;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -49,17 +51,12 @@ public class BaseMain {
      * use in the Main class instead of System.exit()
      */
     protected static void exit(int code) {
-        var runInInATest = isRunInInATest();
-        if (runInInATest) {
+        var isRunViaRunner = ReflectionRunner.isRunningWithReflectionRunner();
+        if (isRunViaRunner) {
             exitCode = code;
             throw new FakeSystemExitException();
         } else {
             System.exit(code);
         }
-    }
-
-    private static boolean isRunInInATest() {
-        String property = System.getProperty("sun.java.command");
-        return property != null && (property.contains("Test Executor") || property.contains("JUnitStarter"));
     }
 }
