@@ -19,22 +19,22 @@ import java.util.Set;
 public class StatsCollectingJournalProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatsCollectingJournalProcessor.class.getName());
     private final HashMap<String, FullAccountStatsCalculator> collectorByAccount;
-    private final AccountGroupResolver accountGroupResolver;
+    private final AccountsResolver accountsResolver;
     private final LatestPricesBook latestPricesBook = new LatestPricesBook();
     private final DeltaCalculator deltaCalculator = new DeltaCalculator();
     private final LinkedHashSet<ValidatorError> validatorErrors = new LinkedHashSet<>();
 
-    public StatsCollectingJournalProcessor(Grouping grouping) {
+    public StatsCollectingJournalProcessor(AccountsResolver accountsResolver1) {
         collectorByAccount = new HashMap<>();
-        accountGroupResolver = new AccountGroupResolver(grouping);
+        accountsResolver = accountsResolver1;
     }
 
     public Set<ValidatorError> process(Entry entry) {
         if (entry instanceof Price p) {
             latestPricesBook.add(p);
         } else if (entry instanceof AccountOperation op) {
-            for (String accountPattern : accountGroupResolver
-                    .resolveAccountPatterns(op.account())) {
+            for (String accountPattern : accountsResolver
+                    .resolveRelevantAccounts(op)) {
                 var validationErrors = collectorByAccount
                         .computeIfAbsent(accountPattern, acc -> new FullAccountStatsCalculator(latestPricesBook, acc.contains("*")))
                         .process(entry);
@@ -64,7 +64,4 @@ public class StatsCollectingJournalProcessor {
         return result;
     }
 
-    public boolean hasValidationErrors() {
-        return !validatorErrors.isEmpty();
-    }
 }

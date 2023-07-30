@@ -5,6 +5,7 @@ import beanvest.parser.JournalParser;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.JournalProcessor;
+import beanvest.processor.processing.AccountsResolver;
 import beanvest.processor.processing.PeriodSpec;
 import beanvest.processor.time.PeriodInterval;
 import beanvest.processor.processing.Grouping;
@@ -33,16 +34,17 @@ public class ReturnsCalculatorApp {
                       Grouping grouping,
                       LocalDate startDate,
                       PeriodInterval interval,
-                      CollectionMode statsMode) {
+                      CollectionMode statsMode, boolean reportInvestments) {
         boolean isSuccessful = true;
         try {
             var journal = journalParser.parse(journalsPaths);
             if (journal.getEntries().isEmpty()) {
                 throw new RuntimeException("Oops! No entries found.");
             }
-            var intervalConfig = new PeriodSpec(startDate, endDate, interval);
+            var periodSpec = new PeriodSpec(startDate, endDate, interval);
+            var accountsResolver = new AccountsResolver(grouping, reportInvestments);
             var statsResult = statsCalculator.calculateStats(
-                    journal, accountFilter, grouping, intervalConfig, EXCLUDE_UNFINISHED);
+                    accountsResolver, journal, accountFilter, periodSpec, EXCLUDE_UNFINISHED);
 
             if (statsResult.hasError()) {
                 outputWriter.outputInputErrors(statsResult.getError());

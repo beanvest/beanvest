@@ -37,7 +37,7 @@ public class ReturnsCliCommand implements SubCommand {
                 params.selectedColumns(), params.endDate(),
                 params.accountFilter(),
                 params.grouping(), params.startDate(),
-                params.period(), params.collectionMode()
+                params.period(), params.collectionMode(), params.reportInvestments()
         );
     }
 }

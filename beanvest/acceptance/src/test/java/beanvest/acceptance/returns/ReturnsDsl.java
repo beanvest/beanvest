@@ -72,6 +72,9 @@ public class ReturnsDsl {
         if (cliOptions.end != null) {
             args.add("--end=" + cliOptions.end);
         }
+        if (cliOptions.reportInvestments) {
+            args.add("--report-investments");
+        }
         if (cliOptions.start != null) {
             args.add("--startDate=" + cliOptions.start);
         }
@@ -508,6 +511,10 @@ public class ReturnsDsl {
         }
     }
 
+    public void setReportInvestment() {
+        cliOptions.reportInvestments = true;
+    }
+
     enum Groups {
         YES,
         NO,
@@ -529,6 +536,7 @@ public class ReturnsDsl {
         public boolean showClosed = false;
         public String currency;
         public String overrideToday;
+        public boolean reportInvestments;
         List<String> columns = new ArrayList<>();
         String account;
         String end;

@@ -57,7 +57,7 @@ public record AssertCliExecutionResult(CliExecutionResult executionResult) {
     public AssertCliExecutionResult outputIs(String expectedOutput) {
         var stdOut = executionResult.stdOut()
                 .lines()
-                .filter(line -> line.strip().length() > 0)
+                .filter(line -> !line.isBlank())
                 .collect(Collectors.joining("\n"));
         assertEquals(expectedOutput, stdOut);
         return this;

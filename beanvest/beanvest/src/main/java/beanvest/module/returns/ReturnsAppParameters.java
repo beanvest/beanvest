@@ -22,6 +22,6 @@ public record ReturnsAppParameters(
         PeriodInterval period,
         Grouping grouping,
         CollectionMode collectionMode,
-        String total
-) {
+        String total,
+        Boolean reportInvestments) {
 }

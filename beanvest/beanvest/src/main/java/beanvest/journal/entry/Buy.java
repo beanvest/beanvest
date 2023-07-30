@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public record Buy(LocalDate date, String account, Value value, Value totalPrice,
                   BigDecimal fee, Optional<String> comment,
-                  SourceLine originalLine) implements Transaction {
+                  SourceLine originalLine) implements Transaction, HoldingOperation {
     @Override
     public String commodity() {
         return value.commodity();

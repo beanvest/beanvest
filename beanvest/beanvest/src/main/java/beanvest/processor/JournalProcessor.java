@@ -3,10 +3,10 @@ package beanvest.processor;
 import beanvest.journal.Journal;
 import beanvest.journal.entry.Entry;
 import beanvest.processor.dto.PortfolioStatsDto;
+import beanvest.processor.processing.AccountsResolver;
+import beanvest.processor.processing.EndOfPeriodTracker;
 import beanvest.processor.processing.PeriodInclusion;
 import beanvest.processor.processing.PeriodSpec;
-import beanvest.processor.processing.EndOfPeriodTracker;
-import beanvest.processor.processing.Grouping;
 import beanvest.processor.processing.StatsCollectingJournalProcessor;
 import beanvest.processor.processing.collector.AccountStatsGatherer;
 import beanvest.processor.time.Period;
@@ -21,13 +21,13 @@ public class JournalProcessor {
     private PeriodSpec periodSpec;
 
     public Result<PortfolioStatsDto, List<ValidatorError>> calculateStats(
+            AccountsResolver accountsResolver1,
             Journal journal,
             String accountFilter,
-            Grouping grouping,
             PeriodSpec periodSpec,
             PeriodInclusion periodInclusion) {
 
-        var journalProcessor = new StatsCollectingJournalProcessor(grouping);
+        var journalProcessor = new StatsCollectingJournalProcessor(accountsResolver1);
         this.periodSpec = periodSpec;
         var endOfPeriodTracker = new EndOfPeriodTracker(this.periodSpec, periodInclusion, period -> finishPeriod(period, journalProcessor));
 

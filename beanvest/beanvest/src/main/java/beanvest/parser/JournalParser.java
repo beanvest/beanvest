@@ -54,7 +54,7 @@ public class JournalParser {
     public static final Pattern PATTERN_FEE = Pattern.compile("^fee\\s+(?<amount>(-|)" + AMOUNT + ")" + COMMENT + "$");
     public static final Pattern PATTERN_DEPOSIT = Pattern.compile("^deposit(|\\s+(?<forfees>for\\s+fees))\\s+(?<amount>" + AMOUNT + ")" + COMMENT + "$");
     public static final Pattern PATTERN_WITHDRAW = Pattern.compile("^withdraw\\s+(?<amount>" + AMOUNT + ")" + COMMENT + "$");
-    public static final Pattern PATTERN_DIVIDEND = Pattern.compile("^dividend\\s+(?<amount>" + AMOUNT + ")\\s+(?<currency>" + COMMODITY_ID + "\\s+|)from\\s+" + COMMODITY_ID + COMMENT + "$");
+    public static final Pattern PATTERN_DIVIDEND = Pattern.compile("^dividend\\s+(?<amount>" + AMOUNT + ")\\s+(?<currency>" + COMMODITY_ID + "\\s+|)from\\s+(?<commodity>" + COMMODITY_ID + ")" + COMMENT + "$");
     public static final Pattern PATTERN_META = Pattern.compile("(?<key>(account|commodity|currency))\\s+(?<value>.*)");
     public static final String BALANCE = "\\s+(?<units>" + AMOUNT + ")(\\s+|)(?<commodity>" + COMMODITY_ID + "|)";
     public static final Pattern PATTERN_BALANCE = Pattern.compile("^balance" + BALANCE + "$");
@@ -361,6 +361,7 @@ public class JournalParser {
             return List.of(new Dividend(date,
                     getAccount(),
                     Value.of(matcher.group("amount"), currency.isEmpty() ? metadata.currency() : currency),
+                    matcher.group("commodity"),
                     Optional.ofNullable(matcher.group("comment")), line));
         }
         return new ArrayList<>();

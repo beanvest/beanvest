@@ -1,19 +1,26 @@
 package beanvest.processor.processing;
 
-import java.util.*;
+import beanvest.journal.entry.AccountOperation;
+import beanvest.journal.entry.HoldingOperation;
 
-public class AccountGroupResolver {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class AccountsResolver {
     private final Grouping grouping;
+    private final boolean includeInvestments;
     private final Map<String, List<String>> resolved = new HashMap<>();
 
-    public AccountGroupResolver(Grouping grouping) {
+    public AccountsResolver(Grouping grouping, boolean includeInvestments) {
         this.grouping = grouping;
+        this.includeInvestments = includeInvestments;
     }
 
-    public List<String> resolveAccountPatterns(String account) {
-        if (resolved.containsKey(account)) {
-            return resolved.get(account);
-        }
+    public List<String> resolveRelevantAccounts(AccountOperation op) {
+        var account = op.account();
         var result = new ArrayList<String>();
 
         if (grouping.includesGroups()) {
@@ -21,6 +28,9 @@ public class AccountGroupResolver {
         }
         if (grouping.includesAccounts()) {
             result.add(account);
+        }
+        if (includeInvestments && op instanceof HoldingOperation opc) {
+            result.add(account + ":" + opc.commodity());
         }
 
         resolved.put(account, Collections.unmodifiableList(result));
