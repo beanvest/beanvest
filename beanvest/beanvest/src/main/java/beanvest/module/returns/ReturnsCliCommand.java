@@ -6,11 +6,8 @@ import beanvest.module.returns.cli.args.ReturnsCliCommandSpec;
 import beanvest.module.returns.cli.args.ReturnsCliParametersParser;
 import beanvest.parser.JournalParser;
 import picocli.CommandLine;
-import sun.reflect.ReflectionFactory;
 
 import java.io.PrintStream;
-import java.lang.reflect.Method;
-import java.util.List;
 
 public class ReturnsCliCommand implements SubCommand {
     private final ReturnsCliParametersParser returnsCliParametersParser = new ReturnsCliParametersParser();

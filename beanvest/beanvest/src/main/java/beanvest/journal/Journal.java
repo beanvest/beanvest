@@ -6,10 +6,14 @@ import beanvest.journal.entry.Price;
 import beanvest.processor.deprecated.PriceBook;
 
 import java.time.LocalDate;
-import java.util.*;
-import java.util.function.Predicate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Journal {
     private final TreeMap<LocalDate, List<Entry>> entries;
@@ -87,18 +91,6 @@ public class Journal {
         return new TreeMap<>(entries);
     }
 
-    public List<AccountDetails> getAccounts(String accountPattern) {
-        return accounts.values().stream()
-                .filter(account -> account.pattern().matches(accountPattern))
-                .distinct()
-                .sorted(Comparator.comparing(acc -> acc.pattern().toLowerCase(Locale.ROOT)))
-                .collect(Collectors.toList());
-    }
-
-    public List<AccountDetails> getAccountsAndGroups(boolean group, Predicate<AccountDetails> filter) {
-        return getAccountsAndGroups(group).stream().filter(filter).toList();
-    }
-
     private Collection<AccountDetails> getAllAccountsDetails() {
         return this.accounts.values();
     }
@@ -106,41 +98,6 @@ public class Journal {
 
     public List<Entry> sortedEntries() {
         return sortedEntries;
-    }
-
-    public List<AccountDetails> getAccountsAndGroups(boolean groups) {
-        var accounts = this.getAccounts(".*");
-        if (!groups) {
-            return accounts;
-        }
-        var accountPatternsWithGroups = accounts.stream()
-                .flatMap(account -> {
-                    var partsQueue = new ArrayDeque<>(Arrays.stream(account.pattern().split(":")).toList());
-                    String group = null;
-                    var result = new ArrayList<String>();
-                    while (partsQueue.size() > 1) {
-                        var newPart = partsQueue.pop();
-                        group = group == null ? newPart : group + ":" + newPart;
-                        result.add(group);
-                    }
-                    return Stream.concat(
-                            result.stream().map(g -> g + ":.*"),
-                            Stream.of(account.pattern())
-                    );
-                })
-                .distinct()
-                .sorted();
-
-        var accountsAndGroups = Stream.concat(Stream.of(".*"), accountPatternsWithGroups);
-        return accountsAndGroups
-                .map(pattern -> accounts.stream()
-                        .filter(a -> a.pattern().matches(pattern)).reduce((x1, x2) -> new AccountDetails(
-                                pattern,
-                                Optional.empty(),
-                                x1.openingDate().isBefore(x2.openingDate()) ? x1.openingDate() : x2.openingDate(),
-                                Optional.empty())).get()
-                )
-                .toList();
     }
 
 }
