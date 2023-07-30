@@ -37,6 +37,9 @@ public class ReturnsCalculatorApp {
         boolean isSuccessful = true;
         try {
             var journal = journalParser.parse(journalsPaths);
+            if (journal.getEntries().isEmpty()) {
+                throw new RuntimeException("Oops! No entries found.");
+            }
             var intervalConfig = new PeriodSpec(startDate, endDate, interval);
             var statsResult = statsCalculator.calculateStats(journal, accountFilter, grouping, intervalConfig, EXCLUDE_UNFINISHED);
 

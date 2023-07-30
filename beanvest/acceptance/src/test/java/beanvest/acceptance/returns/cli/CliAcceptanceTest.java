@@ -1,6 +1,7 @@
 package beanvest.acceptance.returns.cli;
 
 import beanvest.acceptance.returns.ReturnsDsl;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +11,11 @@ public class CliAcceptanceTest {
     @BeforeEach
     void setUp() {
         dsl.setCliOutput();
+    }
+
+    @AfterEach
+    void tearDown() {
+        dsl.cleanUp();
     }
 
     @Test
@@ -88,6 +94,38 @@ public class CliAcceptanceTest {
         dsl.verifyOutput("""
                 account  deps   wths
                 isa         20    -10""");
+    }
+
+    @Test
+    void shouldReadWholeDirectoryOfJournals() {
+        dsl.setEnd("2022-01-01");
+        dsl.setStartDate("2021-01-01");
+        dsl.setGroupingDisabled();
+        dsl.setColumns("deps");
+
+        dsl.storeJournal("myJournals/account1.bv",
+                """
+                account acc1
+                currency GBP
+                                
+                2021-01-01 deposit 20
+                """
+        );
+        dsl.storeJournal("myJournals/new/account2.bv",
+                """
+                account acc2
+                currency GBP
+                                
+                2021-01-01 deposit 21
+                """
+        );
+
+        dsl.runCalculateReturnsOnDirectory("myJournals");
+
+        dsl.verifyOutput("""
+                account  deps
+                acc1        20
+                acc2        21""");
     }
 }
 

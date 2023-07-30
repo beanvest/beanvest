@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class JournalParser {
     // partial
@@ -58,24 +60,42 @@ public class JournalParser {
     public static final Pattern PATTERN_BALANCE = Pattern.compile("^balance" + BALANCE + "$");
     public static final Pattern PATTERN_INTEREST = Pattern.compile("^interest\\s+(?<amount>(-|)" + AMOUNT + ")" + COMMENT + "$");
     public static final Pattern PATTERN_CLOSE = Pattern.compile("^close(\\s+|)$");
+    public static final String JOURNAL_FILE_EXTENSION = ".bv";
 
     private LocalDate date;
     private Metadata metadata;
     private LocalDate closingDate;
 
     public Journal parse(List<Path> journalsPaths) throws JournalNotFoundException {
-        var inputLedgers = journalsPaths.stream().map(path -> {
+        var inputLedgers = journalsPaths.stream().flatMap(path -> {
             if (!Files.exists(path)) {
                 throw new JournalNotFoundException(path);
             }
             try {
-                return new InputFile(path.toString(), Files.readString(path));
+                if (Files.isDirectory(path)) {
+                    try (Stream<Path> stream = Files.walk(path)) {
+                        var files = stream.filter(Files::isRegularFile)
+                                .filter(f -> f.getFileName().toString().endsWith(JOURNAL_FILE_EXTENSION))
+                                .map(this::readFile).toList();
+                        return files.stream();
+                    }
+                } else {
+                    return Stream.of(readFile(path));
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }).toList();
 
         return actuallyParse(inputLedgers);
+    }
+
+    private InputFile readFile(Path path) {
+        try {
+            return new InputFile(path.toString(), Files.readString(path));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Journal parse(String input) {

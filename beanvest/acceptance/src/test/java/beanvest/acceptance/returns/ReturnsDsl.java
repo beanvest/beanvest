@@ -18,7 +18,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.assertj.core.data.Offset;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +43,8 @@ public class ReturnsDsl {
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
+    private Path tempDirectory;
+    private TestFiles testFiles = new TestFiles();
 
 
     public void verifyOutputIsValidJson() {
@@ -54,7 +59,10 @@ public class ReturnsDsl {
         cliOptions.start = startDate;
     }
 
-    public void runCalculateReturns(String... ledgers) {
+    public void runCalculateReturnsOnDirectory(String ledgersDir) {
+        runCalculateReturnsWithFilesArgs(tempDirectory.toString() + "/" + ledgersDir);
+    }
+    public void runCalculateReturns(String ledgers) {
         final List<String> allLedgers = writeToTempFiles(ledgers);
         runCalculateReturnsWithFilesArgs(allLedgers.toArray(new String[0]));
     }
@@ -289,7 +297,7 @@ public class ReturnsDsl {
     }
 
 
-    private List<String> writeToTempFiles(String[] ledgers) {
+    private List<String> writeToTempFiles(String ledgers) {
         return Stream.of(ledgers)
                 .map(ledger -> ledger.replace("$$TODAY$$", LocalDate.now().toString()))
                 .flatMap(ledger -> Stream.of(ledger.split("---")))
@@ -487,10 +495,28 @@ public class ReturnsDsl {
                 .isEqualTo(List.of(ErrorEnum.valueOf(error)));
     }
 
+    public void storeJournal(String file, String content) {
+        if (tempDirectory == null) {
+            tempDirectory = testFiles.createTempDirectory();
+        }
+        try {
+            var filePath = Path.of(tempDirectory.toString() + "/" + file);
+            Files.createDirectories(filePath.getParent());
+            Files.writeString(filePath, content);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     enum Groups {
         YES,
         NO,
         ONLY
+    }
+
+    public void cleanUp()
+    {
+        testFiles.cleanUp();
     }
 
     static class CliOptions {
