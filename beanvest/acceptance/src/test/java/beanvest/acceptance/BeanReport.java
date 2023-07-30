@@ -74,8 +74,8 @@ public class BeanReport {
             holdings.add(holding);
         }
 
-        public Holding get(String account, String commodity) {
-            return holdings.stream().filter(h -> h.account.equals(account) && h.currency.equals(commodity)).findFirst().get();
+        public Holding get(String account, String symbol) {
+            return holdings.stream().filter(h -> h.account.equals(account) && h.currency.equals(symbol)).findFirst().get();
         }
     }
 

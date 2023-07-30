@@ -11,7 +11,7 @@ public record Deposit(LocalDate date, String account, Value value,
                       Optional<String> comment, SourceLine originalLine) implements DepositOrWithdrawal, Transfer {
     @Override
     public String toJournalLine() {
-        return date + " deposit " + value.amount().toPlainString() + " " + value().commodity()
+        return date + " deposit " + value.amount().toPlainString() + " " + value().symbol()
                 + stringifyComment(comment);
     }
 
@@ -27,6 +27,6 @@ public record Deposit(LocalDate date, String account, Value value,
 
     @Override
     public String getCashCurrency() {
-        return value.commodity();
+        return value.symbol();
     }
 }

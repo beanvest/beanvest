@@ -11,7 +11,7 @@ public record Interest(LocalDate date, String account, Value value, Optional<Str
                        SourceLine originalLine) implements Transfer {
     @Override
     public String toJournalLine() {
-        return date + " interest " + value.amount().toPlainString() + " " + value.commodity()
+        return date + " interest " + value.amount().toPlainString() + " " + value.symbol()
                 + stringifyComment(comment);
     }
 
@@ -22,6 +22,6 @@ public record Interest(LocalDate date, String account, Value value, Optional<Str
 
     @Override
     public String getCashCurrency() {
-        return value.commodity();
+        return value.symbol();
     }
 }

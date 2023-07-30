@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -40,23 +39,23 @@ public class JournalParser {
     // partial
     public static final String DATE = "\\d{4}-\\d{2}-\\d{2}";
     public static final String AMOUNT = "\\d+(\\.\\d+|)";
-    public static final String COMMODITY_ID = "[a-zA-Z0-9]+";
+    public static final String SYMBOL = "[a-zA-Z0-9]+";
     public static final String COMMENT = "(| +\"(?<comment>.+)\")";
 
     // combined partial
-    public static final String COMMODITY = "\\s+(?<commodity>" + COMMODITY_ID + ")\\s+(|for\\s+)(?<price>" + AMOUNT + ")";
+    public static final String HOLDING = "\\s+(?<symbol>" + SYMBOL + ")\\s+(|for\\s+)(?<price>" + AMOUNT + ")";
 
     // operations
-    public static final String TRANSACTION_INC_FEE = "\\s+(?<units>" + AMOUNT + ")" + COMMODITY + "(|\\s+with\\s+fee\\s+" + "(?<fee>" + AMOUNT + "))" + COMMENT;
+    public static final String TRANSACTION_INC_FEE = "\\s+(?<units>" + AMOUNT + ")" + HOLDING + "(|\\s+with\\s+fee\\s+" + "(?<fee>" + AMOUNT + "))" + COMMENT;
     public static final Pattern PATTERN_BUY_INC_FEE = Pattern.compile("^(?<deposit>deposit\\s+and\\s+|)buy" + TRANSACTION_INC_FEE + "$");
     public static final Pattern PATTERN_SELL_INC_FEE = Pattern.compile("^sell(?<withdrawal>\\s+and\\s+withdraw|)" + TRANSACTION_INC_FEE + "$");
-    public static final Pattern PATTERN_PRICE = Pattern.compile("^price" + COMMODITY + "(|\\s+)(|(?<currency>" + COMMODITY_ID + "))" + COMMENT + "$"); // TODO use COMMODITY_ID instead ?
+    public static final Pattern PATTERN_PRICE = Pattern.compile("^price" + HOLDING + "(|\\s+)(|(?<currency>" + SYMBOL + "))" + COMMENT + "$"); // TODO use SYMBOL instead ?
     public static final Pattern PATTERN_FEE = Pattern.compile("^fee\\s+(?<amount>(-|)" + AMOUNT + ")" + COMMENT + "$");
     public static final Pattern PATTERN_DEPOSIT = Pattern.compile("^deposit(|\\s+(?<forfees>for\\s+fees))\\s+(?<amount>" + AMOUNT + ")" + COMMENT + "$");
     public static final Pattern PATTERN_WITHDRAW = Pattern.compile("^withdraw\\s+(?<amount>" + AMOUNT + ")" + COMMENT + "$");
-    public static final Pattern PATTERN_DIVIDEND = Pattern.compile("^dividend\\s+(?<amount>" + AMOUNT + ")\\s+(?<currency>" + COMMODITY_ID + "\\s+|)from\\s+(?<commodity>" + COMMODITY_ID + ")" + COMMENT + "$");
-    public static final Pattern PATTERN_META = Pattern.compile("(?<key>(account|commodity|currency))\\s+(?<value>.*)");
-    public static final String BALANCE = "\\s+(?<units>" + AMOUNT + ")(\\s+|)(?<commodity>" + COMMODITY_ID + "|)";
+    public static final Pattern PATTERN_DIVIDEND = Pattern.compile("^dividend\\s+(?<amount>" + AMOUNT + ")\\s+(?<currency>" + SYMBOL + "\\s+|)from\\s+(?<symbol>" + SYMBOL + ")" + COMMENT + "$");
+    public static final Pattern PATTERN_META = Pattern.compile("(?<key>(account|symbol|currency))\\s+(?<value>.*)");
+    public static final String BALANCE = "\\s+(?<units>" + AMOUNT + ")(\\s+|)(?<symbol>" + SYMBOL + "|)";
     public static final Pattern PATTERN_BALANCE = Pattern.compile("^balance" + BALANCE + "$");
     public static final Pattern PATTERN_INTEREST = Pattern.compile("^interest\\s+(?<amount>(-|)" + AMOUNT + ")" + COMMENT + "$");
     public static final Pattern PATTERN_CLOSE = Pattern.compile("^close(\\s+|)$");
@@ -122,7 +121,7 @@ public class JournalParser {
         var inventory = new HashMap<Entity, Pair<LocalDate, BigDecimal>>();
         for (var entry : journal.getEntries()) {
             if (entry instanceof Transaction transaction) {
-                var id = new SecurityImpl(transaction.account(), transaction.commodity());
+                var id = new SecurityImpl(transaction.account(), transaction.holdingSymbol());
                 var balance = inventory.getOrDefault(id, new Pair<>(entry.date(), BigDecimal.ZERO));
                 var change = transaction instanceof Buy ? transaction.units() : transaction.units().negate();
                 var newBalance = new Pair<>(entry.date(), balance.right().add(change));
@@ -223,7 +222,7 @@ public class JournalParser {
             var parsedCurrency = matcher.group("currency");
             return List.of(
                     new Price(date,
-                            matcher.group("commodity"),
+                            matcher.group("symbol"),
                             new Value(
                                     new BigDecimal(matcher.group("price")),
                                     parsedCurrency != null ? parsedCurrency : metadata.currency()
@@ -270,9 +269,9 @@ public class JournalParser {
     private List<AccountOperation> parseBalance(LocalDate date, String remainder, SourceLine line) {
         var matcher = PATTERN_BALANCE.matcher(remainder);
         if (matcher.matches()) {
-            var commodityValue = matcher.group("commodity");
-            final Optional<String> commodity = commodityValue == null || commodityValue.isBlank() || commodityValue.equals(metadata.currency()) ? Optional.empty() : Optional.of(commodityValue);
-            return List.of(new Balance(date, getAccount(), new BigDecimal(matcher.group("units")), commodity, Optional.empty(), line));
+            var symbolValue = matcher.group("symbol");
+            final Optional<String> symbol = symbolValue == null || symbolValue.isBlank() || symbolValue.equals(metadata.currency()) ? Optional.empty() : Optional.of(symbolValue);
+            return List.of(new Balance(date, getAccount(), new BigDecimal(matcher.group("units")), symbol, Optional.empty(), line));
         }
         return new ArrayList<>();
     }
@@ -293,11 +292,11 @@ public class JournalParser {
                         Optional.ofNullable(comment), line));
             }
             var fee = getFee(matcher.group("fee"));
-            var commodity = matcher.group("commodity");
+            var symbol = matcher.group("symbol");
             var units = matcher.group("units");
             operations.add(new Buy(date,
                     getAccount(),
-                    Value.of(units, commodity),
+                    Value.of(units, symbol),
                     value,
                     fee,
                     Optional.ofNullable(comment), line));
@@ -320,12 +319,12 @@ public class JournalParser {
         if (matcher.matches()) {
             var value = getPriceFromLineOrMeta(matcher.group("price"));
             var fee = getFee(matcher.group("fee"));
-            var commodity = matcher.group("commodity");
+            var symbol = matcher.group("symbol");
             var units = matcher.group("units");
             var comment = matcher.group("comment");
             operations.add(new Sell(date,
                     getAccount(),
-                    Value.of(units, commodity),
+                    Value.of(units, symbol),
                     value,
                     fee,
                     Optional.ofNullable(comment), line));
@@ -361,7 +360,7 @@ public class JournalParser {
             return List.of(new Dividend(date,
                     getAccount(),
                     Value.of(matcher.group("amount"), currency.isEmpty() ? metadata.currency() : currency),
-                    matcher.group("commodity"),
+                    matcher.group("symbol"),
                     Optional.ofNullable(matcher.group("comment")), line));
         }
         return new ArrayList<>();

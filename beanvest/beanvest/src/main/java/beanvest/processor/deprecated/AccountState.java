@@ -106,7 +106,7 @@ public class AccountState {
 
     public void buy(Value value, BigDecimal totalPrice, BigDecimal fee) {
         spent = spent.subtract(totalPrice).add(fee);
-        holdings.buy(value.commodity(), value.amount(), totalPrice, fee);
+        holdings.buy(value.symbol(), value.amount(), totalPrice, fee);
         fees = fees.subtract(fee);
     }
 
@@ -131,7 +131,7 @@ public class AccountState {
     }
 
     public void sell(Value value, BigDecimal totalPrice, BigDecimal fee) {
-        var gain = holdings.sell(value.getCommodity(), value.amount(), totalPrice);
+        var gain = holdings.sell(value.getSymbol(), value.amount(), totalPrice);
         realizedGains = realizedGains.add(gain);
         earned = earned.add(totalPrice).add(fee);
         fees = fees.subtract(fee);

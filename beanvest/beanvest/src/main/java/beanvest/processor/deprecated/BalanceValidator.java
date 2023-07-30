@@ -28,19 +28,19 @@ public class BalanceValidator implements JournalValidator {
         return balanceEntries.stream()
                 .map(balance -> {
                     var account = accounts.get(balance.account());
-                    var heldAmount = balance.commodity()
-                            .map(commodity -> account.getHoldings().get(commodity).units())
+                    var heldAmount = balance.symbol()
+                            .map(symbol -> account.getHoldings().get(symbol).units())
                             .orElse(account.getCash());
 
                     if (heldAmount.compareTo(balance.units()) != 0) {
-                        var commodityString = balance.commodity().map(c -> " " + c).orElse("");
+                        var symbolString = balance.symbol().map(s -> " " + s).orElse("");
                         return new ValidatorError(
                                 String.format("%s does not match. Expected: %s%s. Actual: %s%s",
-                                        balance.commodity().map(c -> "Holding balance").orElse("Cash balance"),
+                                        balance.symbol().map(c -> "Holding balance").orElse("Cash balance"),
                                         balance.units().toPlainString(),
-                                        commodityString,
+                                        symbolString,
                                         heldAmount,
-                                        commodityString
+                                        symbolString
                                 ),
                                 balance.originalLine().toString());
                     } else {

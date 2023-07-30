@@ -28,7 +28,6 @@ public class AccountGainAcceptanceTest {
 
         dsl.runCalculateReturns("""
                 account isa
-                commodity X
                 currency GBP
                                 
                 2021-01-01 deposit 10
@@ -45,7 +44,6 @@ public class AccountGainAcceptanceTest {
 
         dsl.runCalculateReturns("""
                 account isa
-                commodity VLS
                 currency GBP
                                
                 2021-01-01 deposit and buy 1 VLS for 100

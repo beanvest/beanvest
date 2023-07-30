@@ -52,40 +52,40 @@ public class Holdings {
     /**
      * @return BigDecimal realized gain
      */
-    public BigDecimal sell(String commodity, BigDecimal soldAmount, BigDecimal totalPrice) {
-        var totalPurchasePriceBasedOnAverage = holdings.get(commodity).averagePrice().multiply(soldAmount);
-        var orDefault = holdings.getOrDefault(commodity, Holding.ZERO);
+    public BigDecimal sell(String symbol, BigDecimal soldAmount, BigDecimal totalPrice) {
+        var totalPurchasePriceBasedOnAverage = holdings.get(symbol).averagePrice().multiply(soldAmount);
+        var orDefault = holdings.getOrDefault(symbol, Holding.ZERO);
         var newHolding = orDefault
                 .reduceSold(soldAmount);
         if (newHolding.value().amount().compareTo(BigDecimal.ZERO) == 0) {
-            holdings.remove(commodity);
+            holdings.remove(symbol);
         } else {
-            holdings.put(commodity, newHolding);
+            holdings.put(symbol, newHolding);
         }
 
         var subtract = totalPrice.subtract(totalPurchasePriceBasedOnAverage);
         return subtract;
     }
 
-    public void buy(String commodity, BigDecimal amount, BigDecimal totalPrice, BigDecimal fee) {
-        var orDefault = holdings.getOrDefault(commodity, Holding.ZERO);
+    public void buy(String symbol, BigDecimal amount, BigDecimal totalPrice, BigDecimal fee) {
+        var orDefault = holdings.getOrDefault(symbol, Holding.ZERO);
         var newHolding = orDefault
-                .addBought(Value.of(amount, commodity), totalPrice);
+                .addBought(Value.of(amount, symbol), totalPrice);
         if (newHolding.value().amount().equals(BigDecimal.ZERO)) {
-            holdings.remove(commodity);
+            holdings.remove(symbol);
         } else {
-            holdings.put(commodity, newHolding);
+            holdings.put(symbol, newHolding);
         }
     }
 
-    public Holding get(String commodity) {
-        return holdings.getOrDefault(commodity, Holding.ZERO);
+    public Holding get(String symbol) {
+        return holdings.getOrDefault(symbol, Holding.ZERO);
     }
 
     public List<Value> asList() {
         return holdings.values().stream()
                 .map(Holding::value)
-                .sorted(Comparator.comparing(Value::commodity))
+                .sorted(Comparator.comparing(Value::symbol))
                 .toList();
     }
 

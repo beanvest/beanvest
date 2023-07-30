@@ -84,15 +84,15 @@ class FullAccountStatsCalculatorTest {
         assertThat(stats.unrealizedGain().getValue()).isEqualByComparingTo(BigDecimal.ZERO);
     }
 
-    private Price price(String commodity, String price) {
-        return new Price(LocalDate.now(), commodity, Value.of(price), Optional.empty(), SourceLine.GENERATED_LINE);
+    private Price price(String symbol, String price) {
+        return new Price(LocalDate.now(), symbol, Value.of(price), Optional.empty(), SourceLine.GENERATED_LINE);
     }
 
-    private static Buy buy(String boughtCommodity, String cost) {
-        return new Buy(LocalDate.now(), "a", Value.of(boughtCommodity), Value.of(cost), BigDecimal.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
+    private static Buy buy(String boughtHolding, String cost) {
+        return new Buy(LocalDate.now(), "a", Value.of(boughtHolding), Value.of(cost), BigDecimal.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
     }
 
-    private static Sell sell(String soldCommodity, String fetchedPrice) {
-        return new Sell(LocalDate.now(), "a", Value.of(soldCommodity), Value.of(fetchedPrice), BigDecimal.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
+    private static Sell sell(String soldHolding, String fetchedPrice) {
+        return new Sell(LocalDate.now(), "a", Value.of(soldHolding), Value.of(fetchedPrice), BigDecimal.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
     }
 }

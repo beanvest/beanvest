@@ -16,7 +16,7 @@ public class RealizedGainsCollector implements Processor {
     public void process(Entry entry) {
         holdingsCollector.process(entry);
         if (entry instanceof Sell sell) {
-            var unitCost = holdingsCollector.getHolding(sell.commodity()).averageCost();
+            var unitCost = holdingsCollector.getHolding(sell.holdingSymbol()).averageCost();
             var totalCost = unitCost.multiply(sell.units());
             var realizedGain = sell.totalPrice().amount().subtract(totalCost);
             balance = balance.add(realizedGain);

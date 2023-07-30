@@ -38,20 +38,20 @@ public class PriceBook {
         this.prices.forEach((key, value) -> value.sort(Comparator.comparing(Price::date)));
     }
 
-    public Result<Value, UserErrors> getPrice(LocalDate date, String commodity, String currency) {
-        var currencyPair = getCurrencyPair(commodity, currency);
+    public Result<Value, UserErrors> getPrice(LocalDate date, String symbol, String currency) {
+        var currencyPair = getCurrencyPair(symbol, currency);
         var prices = this.prices.getOrDefault(currencyPair, new ArrayList<>());
         AtomicReference<Price> last = new AtomicReference<>();
         prices.stream().filter(p -> p.date().isBefore(date) || p.date().equals(date)).forEach(last::set);
         var lastPrice = last.get();
 
         if (lastPrice == null) {
-            return Result.failure(ErrorFactory.priceNotFound(commodity, currency, date, Optional.empty()));
+            return Result.failure(ErrorFactory.priceNotFound(symbol, currency, date, Optional.empty()));
         }
 
         var daysSinceLastPrice = DAYS.between(lastPrice.date(), date);
         if (daysSinceLastPrice > 7) {
-            return Result.failure(ErrorFactory.priceNotFound(commodity, currency, date, Optional.of(lastPrice)));
+            return Result.failure(ErrorFactory.priceNotFound(symbol, currency, date, Optional.of(lastPrice)));
         }
 
         return Result.success(lastPrice.price());
@@ -78,26 +78,26 @@ public class PriceBook {
     }
 
     private CurrencyPair getCurrencyPair(Price p) {
-        return getCurrencyPair(p.commodity(), p.price().commodity());
+        return getCurrencyPair(p.pricedSymbol(), p.price().symbol());
     }
 
-    private CurrencyPair getCurrencyPair(String commodity, String priceCurrency) {
-        return new CurrencyPair(commodity, priceCurrency);
+    private CurrencyPair getCurrencyPair(String pricedSymbol, String priceCurrency) {
+        return new CurrencyPair(pricedSymbol, priceCurrency);
     }
 
     private Result<Value, UserErrors> convertInternal(LocalDate date, String targetCurrency, Value value, int depth) {
         if (depth > DEPTH_LIMIT) {
             return Result.failure(ErrorFactory.priceSearchDepthExhaused());
         }
-        if (targetCurrency.equals(value.commodity())) {
+        if (targetCurrency.equals(value.symbol())) {
             return Result.success(value);
         }
-        var priceResult = this.getPrice(date, value.commodity(), targetCurrency);
+        var priceResult = this.getPrice(date, value.symbol(), targetCurrency);
         if (priceResult.isSuccessful()) {
             return Result.success(new Value(priceResult.getValue().amount().multiply(value.amount()), targetCurrency));
         } else {
             var maybeConverted = prices.keySet().stream()
-                    .filter(pair -> pair.a.equals(value.commodity()))
+                    .filter(pair -> pair.a.equals(value.symbol()))
                     .map(pair -> {
                         var convert1 = convertInternal(date, pair.b, value, depth + 1);
                         if (!convert1.isSuccessful()) {

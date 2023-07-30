@@ -7,13 +7,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record Fee(LocalDate date, String account, Value value, Optional<String> commodity, Optional<String> comment,
+public record Fee(LocalDate date, String account, Value value, Optional<String> holdingSymbol, Optional<String> comment,
                   SourceLine originalLine) implements Transfer {
     @Override
     public String toJournalLine() {
         return date + " fee " + " " + value.amount().toPlainString()
-                + commodity.map(c -> " from " + c).orElse("")
-                + stringifyComment(comment);
+               + holdingSymbol.map(c -> " from " + c).orElse("")
+               + stringifyComment(comment);
     }
 
     @Override
@@ -23,6 +23,6 @@ public record Fee(LocalDate date, String account, Value value, Optional<String> 
 
     @Override
     public String getCashCurrency() {
-        return value.commodity();
+        return value.symbol();
     }
 }

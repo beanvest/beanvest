@@ -23,9 +23,9 @@ public class BalanceValidator implements Validator {
     public void process(Entry entry) {
         holdingsCollector.process(entry);
         if (entry instanceof Balance balance) {
-            var maybeCommodity = balance.commodity();
-            if (maybeCommodity.isPresent()) {
-                verifyCommodityBalance(balance, maybeCommodity.get());
+            var maybeSymbol = balance.symbol();
+            if (maybeSymbol.isPresent()) {
+                verifyHoldingBalance(balance, maybeSymbol.get());
             } else {
                 verifyCashBalance(balance);
             }
@@ -35,27 +35,27 @@ public class BalanceValidator implements Validator {
     private void verifyCashBalance(Balance balance) {
         var cash = cashCalculator.calculate().getValue();
         if (cash.compareTo(balance.units()) != 0) {
-            var commodityString = balance.commodity().map(c -> " " + c).orElse("");
-            errorConsumer.accept(createValidationError(balance, commodityString, cash));
+            var symbolString = balance.symbol().map(c -> " " + c).orElse("");
+            errorConsumer.accept(createValidationError(balance, symbolString, cash));
         }
     }
 
-    private void verifyCommodityBalance(Balance balance, String commodity) {
-        var holding = holdingsCollector.getHolding(commodity);
+    private void verifyHoldingBalance(Balance balance, String holdingSymbol) {
+        var holding = holdingsCollector.getHolding(holdingSymbol);
         if (holding.amount().compareTo(balance.units()) != 0) {
-            var commodityString = balance.commodity().map(c -> " " + c).orElse("");
-            errorConsumer.accept(createValidationError(balance, commodityString, holding.amount()));
+            var symbol = balance.symbol().map(c -> " " + c).orElse("");
+            errorConsumer.accept(createValidationError(balance, symbol, holding.amount()));
         }
     }
 
-    private static ValidatorError createValidationError(Balance balance, String commodityString, BigDecimal amount) {
+    private static ValidatorError createValidationError(Balance balance, String symbol, BigDecimal amount) {
         return new ValidatorError(
                 String.format("%s does not match. Expected: %s%s. Actual: %s%s",
-                        balance.commodity().map(c -> "Holding balance").orElse("Cash balance"),
+                        balance.symbol().map(c -> "Holding balance").orElse("Cash balance"),
                         balance.units().stripTrailingZeros().toPlainString(),
-                        commodityString,
+                        symbol,
                         amount.stripTrailingZeros().toPlainString(),
-                        commodityString
+                        symbol
                 ),
                 balance.originalLine().toString());
     }

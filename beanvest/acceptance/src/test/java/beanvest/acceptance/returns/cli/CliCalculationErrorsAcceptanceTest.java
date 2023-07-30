@@ -48,7 +48,7 @@ public class CliCalculationErrorsAcceptanceTest {
     }
 
     @Test
-    void showsWarningIfCommodityHasNoPricesAtAll() {
+    void showsWarningIfHoldingHasNoPricesAtAll() {
         dsl.setEnd("2022-02-01");
         dsl.setColumns("ugain");
 

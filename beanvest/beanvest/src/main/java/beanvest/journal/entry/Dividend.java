@@ -7,11 +7,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record Dividend(LocalDate date, String account, Value value, String commodity, Optional<String> comment,
+public record Dividend(LocalDate date, String account, Value value, String holdingSymbol, Optional<String> comment,
                        SourceLine originalLine) implements Transfer, HoldingOperation {
     @Override
     public String toJournalLine() {
-        return date + " dividend " + " " + value.amount().toPlainString() + " " + value.commodity()
+        return date + " dividend " + " " + value.amount().toPlainString() + " " + value.symbol()
                + stringifyComment(comment);
     }
 
@@ -22,6 +22,6 @@ public record Dividend(LocalDate date, String account, Value value, String commo
 
     @Override
     public String getCashCurrency() {
-        return value.commodity();
+        return value.symbol();
     }
 }

@@ -56,7 +56,7 @@ class AccountsResolverTest {
     }
 
     @Test
-    void resolvesCommodityAsSubAccountIfEntryHasIt() {
+    void resolvesHoldingAsSubAccountIfEntryHasIt() {
         var sut = new AccountsResolver(Grouping.NO_GROUPS, true);
 
         var op = getDividend("a:b:c", "VRX");
@@ -77,9 +77,9 @@ class AccountsResolverTest {
         assertEquals(List.of(account("a:b:c")), actual);
     }
 
-    private static Dividend getDividend(String account, String vrx) {
+    private static Dividend getDividend(String account, String symbol) {
         return new Dividend(LocalDate.now(), account, Value.ZERO,
-                vrx, Optional.empty(), SourceLine.GENERATED_LINE);
+                symbol, Optional.empty(), SourceLine.GENERATED_LINE);
     }
 
     private static AccountOperation getAccountOperation(String account) {

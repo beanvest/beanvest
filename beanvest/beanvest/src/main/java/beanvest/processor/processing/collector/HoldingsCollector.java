@@ -8,7 +8,6 @@ import beanvest.processor.processing.Processor;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,11 +17,11 @@ public class HoldingsCollector implements Processor {
     @Override
     public void process(Entry entry) {
         if (entry instanceof Buy buy) {
-            var holding = holdings.computeIfAbsent(buy.commodity(), commodity -> new Holding(buy.commodity(), BigDecimal.ZERO, BigDecimal.ZERO));
-            holdings.put(buy.commodity(), holding.addBought(buy.units(), buy.totalPrice().amount()));
+            var holding = holdings.computeIfAbsent(buy.holdingSymbol(), symbol -> new Holding(buy.holdingSymbol(), BigDecimal.ZERO, BigDecimal.ZERO));
+            holdings.put(buy.holdingSymbol(), holding.addBought(buy.units(), buy.totalPrice().amount()));
         } else if (entry instanceof Sell buy) {
-            var holding = holdings.get(buy.commodity());
-            holdings.put(buy.commodity(), holding.reduceSold(buy.units()));
+            var holding = holdings.get(buy.holdingSymbol());
+            holdings.put(buy.holdingSymbol(), holding.reduceSold(buy.units()));
         }
     }
 
@@ -34,7 +33,7 @@ public class HoldingsCollector implements Processor {
         return new HashSet<>(nonZeroHoldings);
     }
 
-    public Holding getHolding(String commodity) {
-        return holdings.get(commodity);
+    public Holding getHolding(String symbol) {
+        return holdings.get(symbol);
     }
 }

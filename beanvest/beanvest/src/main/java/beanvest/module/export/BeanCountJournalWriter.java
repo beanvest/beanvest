@@ -25,9 +25,9 @@ public class BeanCountJournalWriter {
     private final String accountPrefix;
     private final boolean useCashSubAccounts;
     private final String interestIncomeAccount;
-    private Map<String, TreeMap<BigDecimal, BigDecimal>> lotsByCommodity;
-    private Map<String, Transaction> lastTransactionOfCommodity;
-    private final HashSet<String> openCommodityAccounts = new HashSet<>();
+    private Map<String, TreeMap<BigDecimal, BigDecimal>> lotsBySymbol;
+    private Map<String, Transaction> lastTransactionOfHolding;
+    private final HashSet<String> openHoldingsAccounts = new HashSet<>();
     private final String gainsAccount;
 
     private Journal journal;
@@ -42,7 +42,7 @@ public class BeanCountJournalWriter {
     public void write(Writer writer, Journal journal) {
         var openedAccounts = new HashSet<String>();
 
-        lotsByCommodity = new TreeMap<>();
+        lotsBySymbol = new TreeMap<>();
         this.journal = journal;
         findLastTransactionOfCommodities(this.journal);
 
@@ -82,10 +82,10 @@ public class BeanCountJournalWriter {
     }
 
     private void findLastTransactionOfCommodities(Journal journal) {
-        lastTransactionOfCommodity = new HashMap<>();
+        lastTransactionOfHolding = new HashMap<>();
         for (var op : journal.getEntries()) {
             if (op instanceof final Transaction transaction) {
-                lastTransactionOfCommodity.put(transaction.commodity(), transaction);
+                lastTransactionOfHolding.put(transaction.holdingSymbol(), transaction);
             }
         }
     }
@@ -100,23 +100,23 @@ public class BeanCountJournalWriter {
         var cashAccount = getCashAccount(op);
         if (op instanceof Withdrawal w) {
             result = String.format(stringFormat, op.date(), "withdraw", getComment(op),
-                    "Equity:Bank", cashAccount, formatString(op.value().amount().negate()), op.value().commodity()
+                    "Equity:Bank", cashAccount, formatString(op.value().amount().negate()), op.value().symbol()
             );
         } else if (op instanceof Deposit) {
             result = String.format(stringFormat, op.date(), "deposit", getComment(op),
-                    "Equity:Bank", cashAccount, formatString(op.value().amount()), op.value().commodity()
+                    "Equity:Bank", cashAccount, formatString(op.value().amount()), op.value().symbol()
             );
         } else if (op instanceof Interest) {
             result = String.format(stringFormat, op.date(), "interest", getComment(op),
-                    getInterestAccount(), cashAccount, formatString(op.value().amount()), op.value().commodity()
+                    getInterestAccount(), cashAccount, formatString(op.value().amount()), op.value().symbol()
             );
         } else if (op instanceof Fee) {
             result = String.format(stringFormat, op.date(), "fee", getComment(op),
-                    "Expenses:PlatformFee", cashAccount, formatString(op.value().amount().negate()), op.value().commodity()
+                    "Expenses:PlatformFee", cashAccount, formatString(op.value().amount().negate()), op.value().symbol()
             );
         } else if (op instanceof Dividend) {
             result = String.format(stringFormat, op.date(), "dividend", getComment(op),
-                    "Income:Dividends", cashAccount, formatString(op.value().amount()), op.value().commodity()
+                    "Income:Dividends", cashAccount, formatString(op.value().amount()), op.value().symbol()
             );
         } else {
             throw new UnsupportedOperationException("writer does not support given operation: " + op);
@@ -148,7 +148,7 @@ public class BeanCountJournalWriter {
         List<Lot> lotsToSell = new ArrayList<>();
         BigDecimal remaining = op.units();
 
-        var lots = lotsByCommodity.get(op.commodity());
+        var lots = lotsBySymbol.get(op.holdingSymbol());
         if (lots == null) {
             throw new RuntimeException("Trying to sell some but dont have any lots yet: " + op);
         }
@@ -183,11 +183,11 @@ public class BeanCountJournalWriter {
         var totalPriceWithFee = op.totalPrice().add(op.fee());
 
         for (Lot lot : lotsToSell) {
-            var priceCurrency = op.totalPrice().commodity();
+            var priceCurrency = op.totalPrice().symbol();
             stringBuffer.append(String.format("  %s  %s %s {%s %s} @ %s %s%n",
-                    accountPrefix + op.account() + ":" + op.commodity(),
+                    accountPrefix + op.account() + ":" + op.holdingSymbol(),
                     lot.units().negate(),
-                    op.value().commodity(),
+                    op.value().symbol(),
                     lot.price(),
                     priceCurrency,
                     totalPriceWithFee.amount().divide(op.units(), 10, RoundingMode.HALF_UP),
@@ -199,12 +199,12 @@ public class BeanCountJournalWriter {
                               Expenses:Commissions  %s %s
                             """,
                     op.fee(),
-                    op.totalPrice().commodity()));
+                    op.totalPrice().symbol()));
         }
         stringBuffer.append("  " + gainsAccount + "\n");
 
-        if (lotsByCommodity.get(op.commodity()).size() == 0 && lastTransactionOfCommodity.get(op.commodity()) == op) {
-            stringBuffer.append(String.format("%n%s close %s:%s%n", op.date(), accountPrefix + op.account(), op.commodity()));
+        if (lotsBySymbol.get(op.holdingSymbol()).size() == 0 && lastTransactionOfHolding.get(op.holdingSymbol()) == op) {
+            stringBuffer.append(String.format("%n%s close %s:%s%n", op.date(), accountPrefix + op.account(), op.holdingSymbol()));
         }
         return stringBuffer.toString();
     }
@@ -213,20 +213,20 @@ public class BeanCountJournalWriter {
         var lot = op.totalPrice()
                 .add(op.fee().negate()).amount()
                 .divide(op.units(), 10, RoundingMode.HALF_UP);
-        if (!lotsByCommodity.containsKey(op.commodity())) {
-            lotsByCommodity.put(op.commodity(), new TreeMap<>());
+        if (!lotsBySymbol.containsKey(op.holdingSymbol())) {
+            lotsBySymbol.put(op.holdingSymbol(), new TreeMap<>());
         }
-        var lots = lotsByCommodity.get(op.commodity());
+        var lots = lotsBySymbol.get(op.holdingSymbol());
 
         var stringBuilder = new StringBuilder();
-        openCommodityAccountIfNeeded(op, stringBuilder, op.account());
+        openHoldingsAccountIfNeeded(op, stringBuilder, op.account());
 
         if (lots.containsKey(lot)) {
             lots.put(lot, lots.get(lot).add(op.units()));
         } else {
             lots.put(lot, op.units());
         }
-        var commodity = op.totalPrice().commodity();
+        var symbol = op.totalPrice().symbol();
         stringBuilder.append(String.format("""
                         %s txn "buy%s"
                           %s  %s
@@ -236,10 +236,10 @@ public class BeanCountJournalWriter {
                 getTitleSuffix(op),
                 getCashAccount(op),
                 op.totalPrice().negate(),
-                accountPrefix + op.account() + ":" + op.commodity(),
+                accountPrefix + op.account() + ":" + op.holdingSymbol(),
                 op.value(),
                 lot,
-                op.totalPrice().commodity(),
+                op.totalPrice().symbol(),
                 op.totalPrice().add(op.fee().negate())
         ));
         if (!op.fee().equals(BigDecimal.ZERO)) {
@@ -247,15 +247,15 @@ public class BeanCountJournalWriter {
                               Expenses:Commissions  %s %s
                             """,
                     op.fee(),
-                    commodity));
+                    symbol));
         }
         return stringBuilder.toString();
     }
 
-    private void openCommodityAccountIfNeeded(Buy op, StringBuilder stringBuilder, String account) {
-        if (!openCommodityAccounts.contains(op.commodity())) {
-            stringBuilder.append(String.format("%s open %s:%s%n%n", op.date(), accountPrefix + account, op.commodity()));
-            openCommodityAccounts.add(op.commodity());
+    private void openHoldingsAccountIfNeeded(Buy op, StringBuilder stringBuilder, String account) {
+        if (!openHoldingsAccounts.contains(op.holdingSymbol())) {
+            stringBuilder.append(String.format("%s open %s:%s%n%n", op.date(), accountPrefix + account, op.holdingSymbol()));
+            openHoldingsAccounts.add(op.holdingSymbol());
         }
     }
 

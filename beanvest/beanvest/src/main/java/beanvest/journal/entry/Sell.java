@@ -11,8 +11,8 @@ public record Sell(LocalDate date, String account, Value value, Value totalPrice
                    BigDecimal fee, Optional<String> comment,
                    SourceLine originalLine) implements Transaction, HoldingOperation {
     @Override
-    public String commodity() {
-        return value.commodity();
+    public String holdingSymbol() {
+        return value.symbol();
     }
 
     @Override
@@ -22,9 +22,9 @@ public record Sell(LocalDate date, String account, Value value, Value totalPrice
 
     @Override
     public String toJournalLine() {
-        return date + " sell " + value.amount().toPlainString() + " " + value.commodity() + " for " + totalPrice
-                + (fee.compareTo(BigDecimal.ZERO) != 0 ? " with fee " + fee.toPlainString() : "")
-                + stringifyComment(comment);
+        return date + " sell " + value.amount().toPlainString() + " " + value.symbol() + " for " + totalPrice
+               + (fee.compareTo(BigDecimal.ZERO) != 0 ? " with fee " + fee.toPlainString() : "")
+               + stringifyComment(comment);
     }
 
     @Override
@@ -34,6 +34,6 @@ public record Sell(LocalDate date, String account, Value value, Value totalPrice
 
     @Override
     public String getCashCurrency() {
-        return this.totalPrice.commodity();
+        return this.totalPrice.symbol();
     }
 }

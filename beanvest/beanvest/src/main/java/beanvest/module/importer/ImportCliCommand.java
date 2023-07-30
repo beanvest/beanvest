@@ -50,7 +50,7 @@ public class ImportCliCommand implements SubCommand {
         var writer = new PrintWriter(stdOut);
 
         var filteredTransfers = transfers.stream().filter(t -> !accountsToIgnore.contains(t.account())).toList();
-        var beanvestJournalWriter = new BeanvestJournalWriter(writer, targetName, transfers.get(0).value().getCommodity(), debug);
+        var beanvestJournalWriter = new BeanvestJournalWriter(writer, targetName, transfers.get(0).value().getSymbol(), debug);
         beanvestJournalWriter.write(filteredTransfers);
         writer.flush();
         return 0;

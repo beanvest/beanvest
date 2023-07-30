@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 public sealed interface Transaction extends CashOperation permits Buy, Sell {
-    String commodity();
+    String holdingSymbol();
 
     BigDecimal units();
 

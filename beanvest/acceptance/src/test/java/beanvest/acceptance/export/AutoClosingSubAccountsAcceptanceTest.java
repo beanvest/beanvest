@@ -55,7 +55,7 @@ public class AutoClosingSubAccountsAcceptanceTest {
     }
 
     @Test
-    void dontCloseAccountOfSoldCommodityIfItsTradedLater() {
+    void dontCloseAccountOfSoldHoldingIfItsTradedLater() {
         var path = TestFiles.writeToTempFile("""
                 account Trading
                 currency GBP

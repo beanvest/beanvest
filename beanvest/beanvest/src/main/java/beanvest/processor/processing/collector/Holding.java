@@ -5,7 +5,7 @@ import beanvest.journal.Value;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public record Holding(String commodity, BigDecimal amount, BigDecimal unitCost) {
+public record Holding(String symbol, BigDecimal amount, BigDecimal unitCost) {
     private static final int DEFAULT_SCALE = 6;
 
     public Holding {
@@ -18,7 +18,7 @@ public record Holding(String commodity, BigDecimal amount, BigDecimal unitCost) 
         var newUnitCost = amount.multiply(unitCost)
                 .add(boughtTotalCost)
                 .divide(newTotalAmount, RoundingMode.HALF_UP);
-        return new Holding(commodity, newTotalAmount, newUnitCost);
+        return new Holding(symbol, newTotalAmount, newUnitCost);
     }
 
     public BigDecimal averageCost() {
@@ -27,11 +27,11 @@ public record Holding(String commodity, BigDecimal amount, BigDecimal unitCost) 
 
     public Holding reduceSold(BigDecimal soldAmount) {
         var newAmount = amount.subtract(soldAmount);
-        return new Holding(commodity, newAmount, unitCost);
+        return new Holding(symbol, newAmount, unitCost);
     }
 
     public Value asValue() {
-        return Value.of(amount, commodity);
+        return Value.of(amount, symbol);
     }
 
     public BigDecimal totalCost() {
@@ -40,6 +40,6 @@ public record Holding(String commodity, BigDecimal amount, BigDecimal unitCost) 
 
     public String toShortString()
     {
-        return amount.stripTrailingZeros().toPlainString() + " " + commodity;
+        return amount.stripTrailingZeros().toPlainString() + " " + symbol;
     }
 }

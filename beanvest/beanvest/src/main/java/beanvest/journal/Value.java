@@ -4,15 +4,15 @@ import beanvest.parser.ValueFormatException;
 
 import java.math.BigDecimal;
 
-public record Value(BigDecimal amount, String commodity) {
+public record Value(BigDecimal amount, String symbol) {
     public static final Value ZERO = new Value(BigDecimal.ZERO, "");
 
-    public static Value of(String value, String commodity) throws ValueFormatException {
-        return new Value(new BigDecimal(value), commodity);
+    public static Value of(String value, String symbol) throws ValueFormatException {
+        return new Value(new BigDecimal(value), symbol);
     }
 
-    public static Value of(BigDecimal value, String commodity) throws ValueFormatException {
-        return new Value(value, commodity);
+    public static Value of(BigDecimal value, String symbol) throws ValueFormatException {
+        return new Value(value, symbol);
     }
 
     public static Value of(String valueString) throws ValueFormatException {
@@ -30,30 +30,30 @@ public record Value(BigDecimal amount, String commodity) {
         return amount;
     }
 
-    public String getCommodity() {
-        return commodity;
+    public String getSymbol() {
+        return symbol;
     }
 
     public Value add(Value value) {
-        verifySameCommodity(value);
-        return new Value(value.getAmount().add(this.amount), this.amount.equals(BigDecimal.ZERO) ? value.getCommodity() : this.commodity);
+        verifySameSymbol(value);
+        return new Value(value.getAmount().add(this.amount), this.amount.equals(BigDecimal.ZERO) ? value.getSymbol() : this.symbol);
     }
 
     public Value add(BigDecimal value) {
-        return new Value(this.amount.add(value), this.commodity);
+        return new Value(this.amount.add(value), this.symbol);
     }
 
     public Value subtract(Value value) {
-        verifySameCommodity(value);
+        verifySameSymbol(value);
         return this.add(value.negate());
     }
 
     public Value negate() {
-        return new Value(this.getAmount().negate(), this.commodity);
+        return new Value(this.getAmount().negate(), this.symbol);
     }
 
     public String toString() {
-        return this.amount.toString() + " " + this.commodity;
+        return this.amount.toString() + " " + this.symbol;
     }
 
     public boolean isPositive() {
@@ -64,12 +64,12 @@ public record Value(BigDecimal amount, String commodity) {
         return isPositive() ? this : this.negate();
     }
 
-    private void verifySameCommodity(Value value) {
+    private void verifySameSymbol(Value value) {
         if (this.amount.equals(BigDecimal.ZERO) || value.amount.equals(BigDecimal.ZERO)) {
             return;
         }
-        if (!this.commodity.equals(value.getCommodity())) {
-            throw new ArithmeticException(String.format("cant operate on different commodities: %s and %s", this.commodity, value.getCommodity()));
+        if (!this.symbol.equals(value.getSymbol())) {
+            throw new ArithmeticException(String.format("cant operate on different commodities: %s and %s", this.symbol, value.getSymbol()));
         }
     }
 }

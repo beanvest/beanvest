@@ -34,11 +34,11 @@ public class ErrorFactory {
         return new UserErrors(ErrorEnum.PRICE_NEEDED);
     }
 
-    public static UserErrors priceNotFound(String commodity, String currency, LocalDate queriedDate, Optional<Price> latestKnown) {
+    public static UserErrors priceNotFound(String symbol, String currency, LocalDate queriedDate, Optional<Price> latestKnown) {
         var message = latestKnown.map(latest ->
                         String.format("Price gap is too big for %s/%s on %s. Last price is %s from %s.",
-                                commodity, currency, queriedDate, latest.price(), latest.date()))
-                .orElseGet(() -> String.format("No price set for %s/%s before or on %s", commodity, currency, queriedDate));
+                                symbol, currency, queriedDate, latest.price(), latest.date()))
+                .orElseGet(() -> String.format("No price set for %s/%s before or on %s", symbol, currency, queriedDate));
         return new UserErrors(new UserError(ErrorEnum.PRICE_NEEDED, message));
     }
 

@@ -30,7 +30,7 @@ public class AccountsResolver {
             result.add(new Account(account, AccountType.ACCOUNT));
         }
         if (includeInvestments && op instanceof HoldingOperation opc) {
-            result.add(new Account(account + ":" + opc.commodity(), AccountType.HOLDING));
+            result.add(new Account(account + ":" + opc.holdingSymbol(), AccountType.HOLDING));
         }
 
         resolved.put(account, Collections.unmodifiableList(result));
