@@ -1,6 +1,7 @@
-package beanvest.acceptance.returns.stats.cumulative;
+package beanvest.acceptance.returns.stats;
 
 import beanvest.acceptance.returns.ReturnsDsl;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class CashAcceptanceTest {
@@ -103,4 +104,20 @@ public class CashAcceptanceTest {
         dsl.verifyCash("trading", "TOTAL", "25");
     }
 
+    @Test
+    @Disabled("requires Result on CashStat")
+    void cashStatIsNotAvailableForHoldings() {
+        dsl.setReportHoldings();
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-02 deposit 50
+                2021-01-03 buy 1 X for 30
+                2021-02-02 dividend 5 from X
+                $$TODAY$$ price X 30
+                """);
+
+        dsl.verifyCashError("trading:X", "TOTAL", "n/a");
+    }
 }

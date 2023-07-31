@@ -483,6 +483,7 @@ public class ReturnsDsl {
     private void verifyStat(String account, String period, String expectedAmount, Function<StatsWithDeltasDto, StatDto> valueStatExtractor) {
         var result = getAccountResults(account, period).get();
         var value = valueStatExtractor.apply(result).stat();
+
         assertThat(value)
                 .usingComparator(BigDecimal::compareTo)
                 .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
@@ -490,6 +491,9 @@ public class ReturnsDsl {
 
     public void verifyXirrPeriodic(String account, String period, String expectedAmount) {
         throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    public void verifyDepositsError(String account, String period, String error) {
     }
 
     public void verifyXirrError(String account, String period, String error) {
@@ -511,8 +515,20 @@ public class ReturnsDsl {
         }
     }
 
-    public void setReportInvestment() {
+    public void setReportHoldings() {
         cliOptions.reportInvestments = true;
+    }
+
+    public void verifyWithdrawalsError(String s, String total, String s1) {
+
+    }
+
+    public void verifyCashError(String s, String total, String s1) {
+
+    }
+
+    public void verifyInterestError(String s, String total, String s1) {
+
     }
 
     enum Groups {

@@ -1,4 +1,4 @@
-package beanvest.acceptance.returns.stats.cumulative;
+package beanvest.acceptance.returns.stats;
 
 import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Test;
@@ -83,5 +83,25 @@ public class RealizedGainAcceptanceTest {
 
         dsl.verifyRealizedGains("trading", "2021", "1");
         dsl.verifyRealizedGains("trading", "2022", "3");
+    }
+
+    @Test
+    void shouldCalculateRealizedGainOfHoldings() {
+        dsl.setReportHoldings();
+        dsl.setEnd("2023-01-01");
+        dsl.setYearly();
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-02 deposit 10
+                2021-01-03 buy 1 X for 10
+                2021-01-04 sell 1 X for 11
+                2022-01-03 buy 1 X for 10
+                2022-01-04 sell 1 X for 12
+                """);
+
+        dsl.verifyRealizedGains("trading:X", "2021", "1");
+        dsl.verifyRealizedGains("trading:X", "2022", "3");
     }
 }

@@ -1,4 +1,4 @@
-package beanvest.acceptance.returns.stats.cumulative;
+package beanvest.acceptance.returns.stats;
 
 import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Test;
@@ -40,5 +40,24 @@ public class AccountGainAcceptanceTest {
 
         dsl.verifyAccountGain("trading", "TOTAL", "100")
                 .verifyClosingDate("trading", "2021-03-02");
+    }
+
+    @Test
+    void shouldCalculateGainHoldings() {
+        dsl.setEnd("2021-01-21");
+        dsl.setReportHoldings();
+
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-01 deposit and buy 2 VLS for 100
+                2021-01-05 sell 1 VLS for 55
+                                        
+                2021-01-21 price VLS 60 GBP
+                """
+        );
+
+        dsl.verifyAccountGain("trading:VLS", "TOTAL", "15");
     }
 }

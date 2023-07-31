@@ -1,6 +1,7 @@
-package beanvest.acceptance.returns.stats.cumulative;
+package beanvest.acceptance.returns.stats;
 
 import beanvest.acceptance.returns.ReturnsDsl;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class ValueAcceptanceTest {
@@ -22,5 +23,25 @@ public class ValueAcceptanceTest {
 
         dsl.verifyValue("trading", "2021", "3");
         dsl.verifyValue("trading", "2022", "4");
+    }
+
+    @Test
+    @Disabled("doesnt seem to be working")
+    void calculatesHoldingValue() {
+        dsl.setReportHoldings();
+        dsl.setEnd("2023-01-01");
+        dsl.setYearly();
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-02 deposit 1
+                2021-01-03 buy 2 X for 2
+                2021-12-31 price X 2
+                2022-12-31 price X 3
+                """);
+
+        dsl.verifyValue("trading:X", "2021", "4");
+        dsl.verifyValue("trading:X", "2022", "6");
     }
 }

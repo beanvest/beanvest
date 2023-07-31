@@ -1,6 +1,7 @@
-package beanvest.acceptance.returns.stats.cumulative;
+package beanvest.acceptance.returns.stats;
 
 import beanvest.acceptance.returns.ReturnsDsl;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class OpenAndCloseDatesAcceptanceTest {
@@ -54,4 +55,19 @@ public class OpenAndCloseDatesAcceptanceTest {
         dsl.verifyAccountClosingDate("fun", null);
     }
 
+    @Test
+    @Disabled("opening and closing of positions not implemented yet")
+    void shouldReturnOpeningAndClosingDatesOfHoldings() {
+        dsl.runCalculateReturns("""
+                account saving
+                currency GBP
+                                
+                2020-01-01 deposit 100
+                2020-01-02 buy 1 APPL for 100
+                2020-01-03 sell 1 APPL for 100
+                """);
+
+        dsl.verifyAccountOpeningDate("saving:APPL", "2020-01-02");
+        dsl.verifyAccountClosingDate("saving:APPL", "2020-01-03");
+    }
 }

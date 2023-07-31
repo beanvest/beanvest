@@ -1,6 +1,7 @@
-package beanvest.acceptance.returns.stats.cumulative;
+package beanvest.acceptance.returns.stats;
 
 import beanvest.acceptance.returns.ReturnsDsl;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class XirrCumulativeAcceptanceTest {
@@ -204,5 +205,26 @@ public class XirrCumulativeAcceptanceTest {
 
         dsl.verifyXirrCumulative("savings", "2022", "-50.1");
         dsl.verifyXirrCumulative(".*", "2022", "50.2"); // -50 is not used here. -25 is half of -50.
+    }
+
+    @Test
+    @Disabled("TODO")
+    void shouldCalculateXirrForEachHolding() {
+        dsl.setReportHoldings();
+        dsl.setEnd("2023-01-01");
+
+        dsl.runCalculateReturns("""
+                account pension
+                currency GBP
+                                
+                2022-01-01 deposit and buy 1 MSFT for 500
+                2022-01-01 deposit and buy 1 APPL for 500
+                2022-12-31 price MSFT 550 GBP
+                2022-12-31 price APPL 600 GBP
+                """);
+
+        dsl.verifyXirrCumulative("pension", "TOTAL", "15");
+        dsl.verifyXirrCumulative("pension:MSFT", "TOTAL", "10");
+        dsl.verifyXirrCumulative("pension:APPL", "TOTAL", "20");
     }
 }
