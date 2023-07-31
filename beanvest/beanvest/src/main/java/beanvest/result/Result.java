@@ -2,16 +2,17 @@ package beanvest.result;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class Result<RESULT, ERROR> {
-    private final RESULT result;
+public class Result<VALUE, ERROR> {
+    private final VALUE value;
     private final ERROR error;
 
-    public Result(RESULT result, ERROR error) {
-        this.result = result;
+    public Result(VALUE value, ERROR error) {
+        this.value = value;
         this.error = error;
     }
 
@@ -22,25 +23,59 @@ public class Result<RESULT, ERROR> {
             return success(result);
         }
     }
+    public Result<VALUE, ERROR> combine(
+            Result<VALUE, ERROR> result,
+            BinaryOperator<VALUE> valReduce,
+            BinaryOperator<ERROR> errReduce
+    ) {
+        return Result.combine(List.of(this, result), valReduce, errReduce);
+    }
+
+    public static <VALUE, ERROR> Result<VALUE, ERROR> combine(
+            List<Result<VALUE, ERROR>> results,
+            BinaryOperator<VALUE> valReduce,
+            BinaryOperator<ERROR> errReduce
+    ) {
+        boolean hasError = false;
+        ERROR err = null;
+        VALUE val = null;
+        for (Result<VALUE, ERROR> result : results) {
+            if (result.hasError()) {
+                hasError = true;
+                if (err == null) {
+                    err = result.getError();
+                } else {
+                    err = errReduce.apply(err, result.getError());
+                }
+            } else {
+                if (val == null) {
+                    val = result.getValue();
+                } else {
+                    val = valReduce.apply(val, result.getValue());
+                }
+            }
+        }
+        return hasError ? Result.failure(err) : Result.success(val);
+    }
 
     @Override
     public String toString() {
         return "Result{" +
-                "result=" + result +
-                ", error=" + error +
-                '}';
+               "result=" + value +
+               ", error=" + error +
+               '}';
     }
 
-    public RESULT getValue() {
-        if (result == null) {
+    public VALUE getValue() {
+        if (value == null) {
             throw new NullPointerException("No result available. Error is present: " + error.toString());
         }
-        return result;
+        return value;
     }
 
     public ERROR getError() {
         if (error == null) {
-            throw new NullPointerException("No error available. Result is present: " + result);
+            throw new NullPointerException("No error available. Result is present: " + value);
         }
         return error;
     }
@@ -49,8 +84,8 @@ public class Result<RESULT, ERROR> {
         return error == null ? List.of() : List.of(error);
     }
 
-    public RESULT orElseGet(Supplier<? extends RESULT> supplier) {
-        return result != null ? result : supplier.get();
+    public VALUE orElseGet(Supplier<? extends VALUE> supplier) {
+        return value != null ? value : supplier.get();
     }
 
     public static <RESULT, ERROR> Result<RESULT, ERROR> success(RESULT result) {
@@ -70,21 +105,21 @@ public class Result<RESULT, ERROR> {
         return error != null;
     }
 
-    public <TYPE> TYPE fold(Function<RESULT, TYPE> accountPeriodReturnStringFunction, Function<ERROR, TYPE> accountReturnsErrorStringFunction) {
-        return hasError() ? accountReturnsErrorStringFunction.apply(error) : accountPeriodReturnStringFunction.apply(result);
+    public <TYPE> TYPE fold(Function<VALUE, TYPE> accountPeriodReturnStringFunction, Function<ERROR, TYPE> accountReturnsErrorStringFunction) {
+        return hasError() ? accountReturnsErrorStringFunction.apply(error) : accountPeriodReturnStringFunction.apply(value);
     }
 
     public boolean hasResult() {
-        return result != null;
+        return value != null;
     }
 
-    public void ifSuccessful(Consumer<RESULT> c) {
+    public void ifSuccessful(Consumer<VALUE> c) {
         if (isSuccessful()) {
             c.accept(getValue());
         }
     }
 
-    public void ifSuccessfulOrElse(Consumer<RESULT> c, Consumer<ERROR> ec) {
+    public void ifSuccessfulOrElse(Consumer<VALUE> c, Consumer<ERROR> ec) {
         if (isSuccessful()) {
             c.accept(getValue());
         } else {
@@ -92,9 +127,9 @@ public class Result<RESULT, ERROR> {
         }
     }
 
-    public <X> Result<X, ERROR> map(Function<RESULT, X> mapper) {
+    public <X> Result<X, ERROR> map(Function<VALUE, X> mapper) {
         if (isSuccessful()) {
-            return Result.success(mapper.apply(result));
+            return Result.success(mapper.apply(value));
         } else {
             return Result.failure(error);
         }
@@ -104,7 +139,7 @@ public class Result<RESULT, ERROR> {
         return error;
     }
 
-    public Optional<RESULT> asOptional() {
+    public Optional<VALUE> asOptional() {
         return this.fold(Optional::of, e -> Optional.empty());
     }
 }

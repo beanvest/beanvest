@@ -3,15 +3,8 @@ package beanvest.processor.processing.validator;
 import beanvest.journal.entry.Close;
 import beanvest.journal.entry.Entry;
 import beanvest.processor.processing.calculator.CashCalculator;
-import beanvest.processor.processing.collector.DepositCollector;
-import beanvest.processor.processing.collector.DividendCollector;
-import beanvest.processor.processing.collector.EarnedCollector;
 import beanvest.processor.processing.collector.Holding;
 import beanvest.processor.processing.collector.HoldingsCollector;
-import beanvest.processor.processing.collector.InterestCollector;
-import beanvest.processor.processing.collector.SimpleFeeCollector;
-import beanvest.processor.processing.collector.SpentCollector;
-import beanvest.processor.processing.collector.WithdrawalCollector;
 import beanvest.processor.validation.ValidatorError;
 
 import java.math.BigDecimal;
@@ -33,7 +26,7 @@ public class CloseValidator implements Validator {
     public void process(Entry entry) {
         holdingsCollector.process(entry);
         if (entry instanceof Close close) {
-            var cash = cashCalculator.balance();
+            var cash = cashCalculator.calculate().getValue();
             var hasCash = cash.compareTo(BigDecimal.ZERO) != 0;
             var holdings1 = holdingsCollector.getHoldings();
             if (!holdings1.isEmpty() || hasCash) {

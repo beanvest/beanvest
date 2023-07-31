@@ -7,6 +7,7 @@ import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public class AccountGainCalculator {
     private final DepositCollector depositCollector;
@@ -21,13 +22,9 @@ public class AccountGainCalculator {
     }
 
     public Result<BigDecimal, UserErrors> calculate(LocalDate date, String currency) {
-        return accountValueCalculator.calculate(date, currency)
-                .map(accountValue -> {
-                    var deposits = depositCollector.balance();
-                    var withdrawals = withdrawalCollector.balance();
-                    var dw = deposits.add(withdrawals);
-                    return accountValue
-                            .subtract(dw);
-                });
+        var calculate = accountValueCalculator.calculate(date, currency);
+        var balance = depositCollector.balance();
+        var withdrawalCollector1 = withdrawalCollector.balance();
+        return Result.combine(List.of(calculate, balance, withdrawalCollector1), BigDecimal::subtract, UserErrors::join);
     }
 }

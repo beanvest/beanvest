@@ -1,6 +1,7 @@
 package beanvest.result;
 
 public enum ErrorEnum {
+    DISABLED_FOR_ACCOUNT_TYPE,
     PRICE_NEEDED,
     ACCOUNT_NOT_OPEN_YET,
     XIRR_CALCULATION_FAILURE,

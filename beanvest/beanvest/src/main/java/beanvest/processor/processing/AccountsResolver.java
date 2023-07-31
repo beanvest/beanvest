@@ -12,25 +12,25 @@ import java.util.Map;
 public class AccountsResolver {
     private final Grouping grouping;
     private final boolean includeInvestments;
-    private final Map<String, List<String>> resolved = new HashMap<>();
+    private final Map<String, List<Account>> resolved = new HashMap<>();
 
     public AccountsResolver(Grouping grouping, boolean includeInvestments) {
         this.grouping = grouping;
         this.includeInvestments = includeInvestments;
     }
 
-    public List<String> resolveRelevantAccounts(AccountOperation op) {
+    public List<Account> resolveRelevantAccounts(AccountOperation op) {
         var account = op.account();
-        var result = new ArrayList<String>();
+        var result = new ArrayList<Account>();
 
         if (grouping.includesGroups()) {
             result.addAll(figureOutGroups(account));
         }
         if (grouping.includesAccounts()) {
-            result.add(account);
+            result.add(new Account(account, AccountType.ACCOUNT));
         }
         if (includeInvestments && op instanceof HoldingOperation opc) {
-            result.add(account + ":" + opc.commodity());
+            result.add(new Account(account + ":" + opc.commodity(), AccountType.HOLDING));
         }
 
         resolved.put(account, Collections.unmodifiableList(result));
@@ -38,14 +38,14 @@ public class AccountsResolver {
         return result;
     }
 
-    private List<String> figureOutGroups(String account) {
-        var result = new ArrayList<String>();
-        result.add(".*");
+    private List<Account> figureOutGroups(String account) {
+        var result = new ArrayList<Account>();
+        result.add(new Account(".*", AccountType.GROUP));
         var fromIndex = 0;
         while (true) {
             var index = account.indexOf(":", fromIndex);
             if (index == -1) break;
-            result.add(account.substring(0, index) + ":.*");
+            result.add(new Account(account.substring(0, index) + ":.*", AccountType.GROUP));
             fromIndex = index + 1;
         }
         return result;

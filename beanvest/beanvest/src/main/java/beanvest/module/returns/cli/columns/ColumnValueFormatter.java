@@ -27,6 +27,7 @@ public class ColumnValueFormatter {
                     XIRR_NO_TRANSACTIONS,
                     DELTA_NOT_AVAILABLE_NO_VALUE_STATS,
                     DELTA_NOT_AVAILABLE -> "…";
+            case DISABLED_FOR_ACCOUNT_TYPE -> "-";
             case XIRR_CALCULATION_FAILURE -> "cf";
             case XIRR_PERIOD_TOO_SHORT -> "pts";
             case PRICE_NEEDED -> "PN";

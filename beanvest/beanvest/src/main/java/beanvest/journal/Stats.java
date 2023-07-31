@@ -45,31 +45,31 @@ public class Stats {
         return valueBasedStats.xirr();
     }
 
-    public BigDecimal deposits() {
+    public Result<BigDecimal, UserErrors> deposits() {
         return cashStats.deposits();
     }
 
-    public BigDecimal withdrawals() {
+    public Result<BigDecimal, UserErrors> withdrawals() {
         return cashStats.withdrawals();
     }
 
-    public BigDecimal dividends() {
+    public Result<BigDecimal, UserErrors> dividends() {
         return cashStats.dividends();
     }
 
-    public BigDecimal interest() {
+    public Result<BigDecimal, UserErrors> interest() {
         return cashStats.interest();
     }
 
-    public BigDecimal fees() {
+    public Result<BigDecimal, UserErrors> fees() {
         return cashStats.fees();
     }
 
-    public BigDecimal realizedGains() {
+    public Result<BigDecimal, UserErrors> realizedGains() {
         return cashStats.realizedGain();
     }
 
-    public BigDecimal cash() {
+    public Result<BigDecimal, UserErrors> cash() {
         return cashStats.cash();
     }
 

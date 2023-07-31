@@ -17,8 +17,7 @@ public class TotalValueCalculator {
     
     public Result<BigDecimal, UserErrors> calculateValue(LocalDate endingDate, String targetCurrency)
     {
-        return
-                holdingsValueCalculator.calculate(endingDate, targetCurrency)
-                        .map(v -> v.add(cashCalculator.balance()));
+        return holdingsValueCalculator.calculate(endingDate, targetCurrency)
+                        .combine(cashCalculator.calculate(), BigDecimal::add, UserErrors::join);
     }
 }

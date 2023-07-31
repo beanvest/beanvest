@@ -2,6 +2,9 @@ package beanvest.processor.processing.collector;
 
 import beanvest.journal.entry.Entry;
 import beanvest.processor.processing.Processor;
+import beanvest.result.Result;
+import beanvest.result.UserError;
+import beanvest.result.UserErrors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +24,8 @@ public abstract class AbstractCollector implements Processor {
     }
     protected abstract void actuallyProcess(Entry entry);
 
-    public BigDecimal balance() {
+    public Result<BigDecimal, UserErrors> balance() {
 //        LOGGER.warn("collecting stats [%s] %s".formatted(this.getClass(), balance.toPlainString()));
-        return balance;
+        return Result.success(balance);
     }
 }

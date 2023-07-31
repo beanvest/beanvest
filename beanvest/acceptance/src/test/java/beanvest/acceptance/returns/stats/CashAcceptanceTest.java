@@ -105,7 +105,6 @@ public class CashAcceptanceTest {
     }
 
     @Test
-    @Disabled("requires Result on CashStat")
     void cashStatIsNotAvailableForHoldings() {
         dsl.setReportHoldings();
         dsl.runCalculateReturns("""
@@ -118,6 +117,6 @@ public class CashAcceptanceTest {
                 $$TODAY$$ price X 30
                 """);
 
-        dsl.verifyCashError("trading:X", "TOTAL", "n/a");
+        dsl.verifyCashError("trading:X", "TOTAL", "DISABLED_FOR_ACCOUNT_TYPE");
     }
 }

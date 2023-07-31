@@ -9,7 +9,6 @@ import beanvest.lib.testing.asserts.AssertCliExecutionResult;
 import beanvest.lib.util.gson.GsonFactory;
 import beanvest.processor.dto.AccountDto;
 import beanvest.processor.dto.PortfolioStatsDto;
-import beanvest.processor.dto.StatDto;
 import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.processor.dto.ValueStatDto;
 import beanvest.result.ErrorEnum;
@@ -480,9 +479,9 @@ public class ReturnsDsl {
                 .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
     }
 
-    private void verifyStat(String account, String period, String expectedAmount, Function<StatsWithDeltasDto, StatDto> valueStatExtractor) {
+    private void verifyStat(String account, String period, String expectedAmount, Function<StatsWithDeltasDto, ValueStatDto> valueStatExtractor) {
         var result = getAccountResults(account, period).get();
-        var value = valueStatExtractor.apply(result).stat();
+        var value = valueStatExtractor.apply(result).stat().getValue();
 
         assertThat(value)
                 .usingComparator(BigDecimal::compareTo)
@@ -523,8 +522,10 @@ public class ReturnsDsl {
 
     }
 
-    public void verifyCashError(String s, String total, String s1) {
-
+    public void verifyCashError(String account, String period, String error) {
+        var result = getAccountPeriodReturns(account, period).get();
+        assertThat(result.cash().stat().getError().getEnums())
+                .isEqualTo(List.of(ErrorEnum.valueOf(error)));
     }
 
     public void verifyInterestError(String s, String total, String s1) {

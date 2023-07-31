@@ -7,6 +7,7 @@ import beanvest.journal.entry.Buy;
 import beanvest.journal.entry.Price;
 import beanvest.journal.entry.Sell;
 import beanvest.processor.pricebook.LatestPricesBook;
+import beanvest.processor.processing.AccountType;
 import beanvest.processor.processing.FullAccountStatsCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ class FullAccountStatsCalculatorTest {
     @BeforeEach
     void setUp() {
         pricesBook = new LatestPricesBook();
-        calc = new FullAccountStatsCalculator(pricesBook, false);
+        calc = new FullAccountStatsCalculator(pricesBook, AccountType.ACCOUNT);
     }
 
     @Test
@@ -46,7 +47,7 @@ class FullAccountStatsCalculatorTest {
 
         assertThat(stats().holdingsValue().getValue())
                 .isEqualByComparingTo(new BigDecimal(5));
-        assertThat(stats().cash())
+        assertThat(stats().cash().getValue())
                 .isEqualByComparingTo(new BigDecimal(2));
 
         pricesBook.add(price("X", "7 GBP")); //unrealized 2, value 7

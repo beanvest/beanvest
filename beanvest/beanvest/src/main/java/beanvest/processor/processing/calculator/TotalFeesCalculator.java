@@ -2,8 +2,11 @@ package beanvest.processor.processing.calculator;
 
 import beanvest.processor.processing.collector.SimpleFeeCollector;
 import beanvest.processor.processing.collector.TransactionFeeCollector;
+import beanvest.result.Result;
+import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class TotalFeesCalculator {
 
@@ -15,7 +18,12 @@ public class TotalFeesCalculator {
         this.transactionFeeCollector = transactionFeeCollector;
     }
 
-    public BigDecimal balance() {
-        return transactionFeeCollector.balance().add(simpleFeeCollector.balance());
+    public Result<BigDecimal, UserErrors> balance() {
+        var simpleFees = simpleFeeCollector.balance();
+        var transactionFees = transactionFeeCollector.balance();
+        return Result.combine(List.of(simpleFees, transactionFees),
+                BigDecimal::add,
+                UserErrors::join
+        );
     }
 }

@@ -2,13 +2,13 @@ package beanvest.processor.dto;
 
 import java.util.Collection;
 
-public record StatsWithDeltasDto(StatDto deposits,
-                                 StatDto withdrawals,
-                                 StatDto interest,
-                                 StatDto fees,
-                                 StatDto dividends,
-                                 StatDto realizedGain,
-                                 StatDto cash,
+public record StatsWithDeltasDto(ValueStatDto deposits,
+                                 ValueStatDto withdrawals,
+                                 ValueStatDto interest,
+                                 ValueStatDto fees,
+                                 ValueStatDto dividends,
+                                 ValueStatDto realizedGain,
+                                 ValueStatDto cash,
                                  ValueStatDto unrealizedGains,
                                  ValueStatDto accountGain,
                                  ValueStatDto holdingsValue,

@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DeltaCalculatorTest {
 
     public static final String ACCOUNT = "a";
+    public static final Result<BigDecimal, UserErrors> ZERO = Result.<BigDecimal, UserErrors>success(BigDecimal.ZERO);
     private DeltaCalculator deltaCalculator;
 
     @BeforeEach
@@ -73,7 +74,7 @@ class DeltaCalculatorTest {
     }
 
     Stats buildStats(String deposit) {
-        return new Stats(new CashStats(new BigDecimal(deposit), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO),
+        return new Stats(new CashStats(Result.success(new BigDecimal(deposit)), ZERO, ZERO, ZERO, ZERO, ZERO, ZERO),
                 new ValueStatsDto(
                         Result.failure(ErrorFactory.accountNotOpenYet()),
                         Result.failure(ErrorFactory.accountNotOpenYet()),
@@ -87,7 +88,7 @@ class DeltaCalculatorTest {
         var xirrResult = xirr
                 .<Result<BigDecimal, UserErrors>>map(result -> Result.success(new BigDecimal(result)))
                 .orElseGet(() -> Result.failure(ErrorFactory.disabled()));
-        return new Stats(new CashStats(new BigDecimal(deposit), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO),
+        return new Stats(new CashStats(Result.success(new BigDecimal(deposit)), ZERO, ZERO, ZERO, ZERO, ZERO, ZERO),
                 new ValueStatsDto(
                         Result.failure(ErrorFactory.accountNotOpenYet()),
                         Result.failure(ErrorFactory.accountNotOpenYet()),

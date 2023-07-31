@@ -15,6 +15,7 @@ import beanvest.journal.entry.Close;
 import beanvest.journal.entry.Deposit;
 import beanvest.journal.entry.Fee;
 import beanvest.processor.processing.StatsCollectingJournalProcessor;
+import beanvest.result.Result;
 
 import java.math.BigDecimal;
 
@@ -62,7 +63,13 @@ public class AccountState {
     }
 
     public CashStats getCashStats() {
-        return new CashStats(deposits, withdrawals, interest, fees, dividends, realizedGains, getCash());
+        return new CashStats(Result.success(deposits),
+                Result.success(withdrawals),
+                Result.success(interest),
+                Result.success(fees),
+                Result.success(dividends),
+                Result.success(realizedGains),
+                Result.success(getCash()));
     }
 
     public BigDecimal getDividends() {

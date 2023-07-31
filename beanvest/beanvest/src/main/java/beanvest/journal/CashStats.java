@@ -1,26 +1,27 @@
 package beanvest.journal;
 
+import beanvest.result.Result;
+import beanvest.result.UserErrors;
+
 import java.math.BigDecimal;
 
 public class CashStats {
-    public static final CashStats EMPTY = new CashStats(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
-            BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
-    private final BigDecimal deposits;
-    private final BigDecimal withdrawals;
-    private final BigDecimal interest;
-    private final BigDecimal fees;
-    private final BigDecimal dividends;
-    private final BigDecimal realizedGain;
-    private final BigDecimal cash;
+    private final Result<BigDecimal, UserErrors> deposits;
+    private final Result<BigDecimal, UserErrors> withdrawals;
+    private final Result<BigDecimal, UserErrors> interest;
+    private final Result<BigDecimal, UserErrors> fees;
+    private final Result<BigDecimal, UserErrors> dividends;
+    private final Result<BigDecimal, UserErrors> realizedGain;
+    private final Result<BigDecimal, UserErrors> cash;
 
     public CashStats(
-            BigDecimal deposits,
-            BigDecimal withdrawals,
-            BigDecimal interest,
-            BigDecimal fees,
-            BigDecimal dividends,
-            BigDecimal realizedGain,
-            BigDecimal cash) {
+            Result<BigDecimal, UserErrors> deposits,
+            Result<BigDecimal, UserErrors> withdrawals,
+            Result<BigDecimal, UserErrors> interest,
+            Result<BigDecimal, UserErrors> fees,
+            Result<BigDecimal, UserErrors> dividends,
+            Result<BigDecimal, UserErrors> realizedGain,
+            Result<BigDecimal, UserErrors> cash) {
         this.deposits = deposits;
         this.withdrawals = withdrawals;
         this.interest = interest;
@@ -31,31 +32,31 @@ public class CashStats {
     }
 
 
-    public BigDecimal deposits() {
+    public Result<BigDecimal, UserErrors> deposits() {
         return deposits;
     }
 
-    public BigDecimal withdrawals() {
+    public Result<BigDecimal, UserErrors> withdrawals() {
         return withdrawals;
     }
 
-    public BigDecimal interest() {
+    public Result<BigDecimal, UserErrors> interest() {
         return interest;
     }
 
-    public BigDecimal fees() {
+    public Result<BigDecimal, UserErrors> fees() {
         return fees;
     }
 
-    public BigDecimal dividends() {
+    public Result<BigDecimal, UserErrors> dividends() {
         return dividends;
     }
 
-    public BigDecimal realizedGain() {
+    public Result<BigDecimal, UserErrors> realizedGain() {
         return realizedGain;
     }
 
-    public BigDecimal cash() {
+    public Result<BigDecimal, UserErrors> cash() {
         return cash;
     }
 }

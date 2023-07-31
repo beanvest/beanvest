@@ -116,30 +116,31 @@ public class JournalCliCommand implements SubCommand {
                 getStatsString(difference, currentStats.getCash()));
         valuationResult.ifSuccessfulOrElse(
                 (value) -> stdOut.format("  holdings: %.2f GBP %s%n", value, holdings.asList()),
-                (calculationError) -> {});
+                (calculationError) -> {
+                });
         stdOut.println();
     }
 
     public CashStats subtract(CashStats first, CashStats other) {
         return new CashStats(
-                first.deposits().subtract(other.deposits()),
-                first.withdrawals().subtract(other.withdrawals()),
-                first.interest().subtract(other.interest()),
-                first.fees().subtract(other.fees()),
-                first.dividends().subtract(other.dividends()),
-                first.realizedGain().subtract(other.realizedGain()),
-                first.cash().subtract(other.cash())
+                Result.success(first.deposits().getValue().subtract(other.deposits().getValue())),
+                Result.success(first.withdrawals().getValue().subtract(other.withdrawals().getValue())),
+                Result.success(first.interest().getValue().subtract(other.interest().getValue())),
+                Result.success(first.fees().getValue().subtract(other.fees().getValue())),
+                Result.success(first.dividends().getValue().subtract(other.dividends().getValue())),
+                Result.success(first.realizedGain().getValue().subtract(other.realizedGain().getValue())),
+                Result.success(first.cash().getValue().subtract(other.cash().getValue()))
         );
     }
 
     private String getStatsString(CashStats stats, BigDecimal cash) {
         return
-                "dep: " + stats.deposits().toPlainString() +
-                ", wth: " + stats.withdrawals().toPlainString() +
-                ", int: " + stats.interest().toPlainString() +
-                ", fee: " + stats.fees().toPlainString() +
-                ", div: " + stats.dividends().toPlainString() +
-                ", rga: " + stats.realizedGain().setScale(2, RoundingMode.HALF_UP).toPlainString() +
+                "dep: " + stats.deposits().getValue().toPlainString() +
+                ", wth: " + stats.withdrawals().getValue().toPlainString() +
+                ", int: " + stats.interest().getValue().toPlainString() +
+                ", fee: " + stats.fees().getValue().toPlainString() +
+                ", div: " + stats.dividends().getValue().toPlainString() +
+                ", rga: " + stats.realizedGain().getValue().setScale(2, RoundingMode.HALF_UP).toPlainString() +
                 ", csh: " + cash.toPlainString();
     }
 

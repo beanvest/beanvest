@@ -33,10 +33,10 @@ public class StatsCollectingJournalProcessor {
         if (entry instanceof Price p) {
             latestPricesBook.add(p);
         } else if (entry instanceof AccountOperation op) {
-            for (String accountPattern : accountsResolver
+            for (Account account : accountsResolver
                     .resolveRelevantAccounts(op)) {
                 var validationErrors = collectorByAccount
-                        .computeIfAbsent(accountPattern, acc -> new FullAccountStatsCalculator(latestPricesBook, acc.contains("*")))
+                        .computeIfAbsent(account.name(), acc -> new FullAccountStatsCalculator(latestPricesBook, account.type()))
                         .process(entry);
                 validatorErrors.addAll(validationErrors);
             }

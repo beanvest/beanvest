@@ -3,7 +3,6 @@ package beanvest.test.module.returns.cli.dto;
 import beanvest.module.returns.CliJsonOutputWriter;
 import beanvest.processor.dto.AccountDto;
 import beanvest.processor.dto.PortfolioStatsDto;
-import beanvest.processor.dto.StatDto;
 import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.processor.dto.ValueStatDto;
 import beanvest.processor.processing.PeriodSpec;
@@ -22,8 +21,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SerializationTest {
-
-    public static final StatDto STAT_DTO = new StatDto(BigDecimal.ONE, Optional.of(BigDecimal.ONE));
     public static final ValueStatDto VALUE_STAT_DTO = new ValueStatDto(Result.success(BigDecimal.ONE), Optional.of(BigDecimal.ZERO));
 
     @Test
@@ -31,12 +28,19 @@ public class SerializationTest {
         var portfolioStatsDto = new PortfolioStatsDto(List.of("trading"),
                 List.of(Period.createPeriodCoveringDate(LocalDate.parse("2021-01-01"), new PeriodSpec(LocalDate.MIN, LocalDate.parse("2022-01-01"), PeriodInterval.YEAR)))
                 , List.of(new AccountDto("trading", LocalDate.parse("2021-02-03"), Optional.empty(), Map.of(
-                "2021", new StatsWithDeltasDto(STAT_DTO, STAT_DTO, STAT_DTO, STAT_DTO, STAT_DTO, STAT_DTO, STAT_DTO,
+                "2021", new StatsWithDeltasDto(VALUE_STAT_DTO,
+                        VALUE_STAT_DTO,
+                        VALUE_STAT_DTO,
+                        VALUE_STAT_DTO,
+                        VALUE_STAT_DTO,
+                        VALUE_STAT_DTO,
+                        VALUE_STAT_DTO,
                         VALUE_STAT_DTO,
                         new ValueStatDto(Result.failure(ErrorFactory.accountNotOpenYet()), Optional.of(BigDecimal.ZERO)),
                         VALUE_STAT_DTO,
                         VALUE_STAT_DTO,
-                        VALUE_STAT_DTO, List.of("Validation error"))
+                        VALUE_STAT_DTO,
+                        List.of("Validation error"))
         ))));
 
         var gson = CliJsonOutputWriter.GSON;

@@ -3,6 +3,8 @@ package beanvest.processor.processing.collector;
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Sell;
 import beanvest.processor.processing.Processor;
+import beanvest.result.Result;
+import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
 
@@ -21,8 +23,8 @@ public class RealizedGainsCollector implements Processor {
         }
     }
 
-    public BigDecimal balance()
+    public Result<BigDecimal, UserErrors> balance()
     {
-        return balance;
+        return Result.success(balance);
     }
 }

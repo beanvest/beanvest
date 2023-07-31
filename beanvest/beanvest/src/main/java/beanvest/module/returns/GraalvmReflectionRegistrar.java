@@ -3,7 +3,6 @@ package beanvest.module.returns;
 import beanvest.processor.dto.AccountDto;
 import beanvest.processor.dto.AccountPeriodDto;
 import beanvest.processor.dto.PortfolioStatsDto;
-import beanvest.processor.dto.StatDto;
 import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.processor.dto.ValueStatDto;
 import beanvest.processor.time.Period;
@@ -30,7 +29,6 @@ public class GraalvmReflectionRegistrar implements Feature {
                 AccountDto.class,
                 AccountPeriodDto.class,
                 StatsWithDeltasDto.class,
-                StatDto.class,
                 ValueStatDto.class,
                 Result.class,
                 UserError.class,

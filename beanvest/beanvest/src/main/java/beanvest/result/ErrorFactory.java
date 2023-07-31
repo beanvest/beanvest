@@ -41,4 +41,8 @@ public class ErrorFactory {
                 .orElseGet(() -> String.format("No price set for %s/%s before or on %s", commodity, currency, queriedDate));
         return new UserErrors(new UserError(ErrorEnum.PRICE_NEEDED, message));
     }
+
+    public static UserErrors disabledForAccountType() {
+        return new UserErrors(new UserError(ErrorEnum.DISABLED_FOR_ACCOUNT_TYPE));
+    }
 }

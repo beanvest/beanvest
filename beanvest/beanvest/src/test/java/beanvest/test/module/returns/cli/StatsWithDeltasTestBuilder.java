@@ -1,6 +1,5 @@
 package beanvest.test.module.returns.cli;
 
-import beanvest.processor.dto.StatDto;
 import beanvest.result.Result;
 import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.processor.dto.ValueStatDto;
@@ -77,13 +76,13 @@ public class StatsWithDeltasTestBuilder {
 
     public StatsWithDeltasDto build() {
         return new StatsWithDeltasDto(
-                new StatDto(deposits, Optional.empty()),
-                new StatDto(withdrawals, Optional.empty()),
-                new StatDto(interest, Optional.empty()),
-                new StatDto(fees, Optional.empty()),
-                new StatDto(dividends, Optional.empty()),
-                new StatDto(realizedGains, Optional.empty()),
-                new StatDto(cash, Optional.empty()),
+                new ValueStatDto(Result.success(deposits), Optional.empty()),
+                new ValueStatDto(Result.success(withdrawals), Optional.empty()),
+                new ValueStatDto(Result.success(interest), Optional.empty()),
+                new ValueStatDto(Result.success(fees), Optional.empty()),
+                new ValueStatDto(Result.success(dividends), Optional.empty()),
+                new ValueStatDto(Result.success(realizedGains), Optional.empty()),
+                new ValueStatDto(Result.success(cash), Optional.empty()),
                 new ValueStatDto(Result.success(unrealizedGain), Optional.empty()),
                 new ValueStatDto(Result.success(accountGain), Optional.empty()),
                 new ValueStatDto(Result.success(holdingsValue), Optional.empty()),

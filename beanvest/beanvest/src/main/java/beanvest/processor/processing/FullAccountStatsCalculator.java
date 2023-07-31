@@ -7,6 +7,7 @@ import beanvest.processor.dto.ValueStatsDto;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.calculator.AccountGainCalculator;
 import beanvest.processor.processing.calculator.AccountValueCalculator;
+import beanvest.processor.processing.calculator.Calculator;
 import beanvest.processor.processing.calculator.CashCalculator;
 import beanvest.processor.processing.calculator.HoldingsCostCalculator;
 import beanvest.processor.processing.calculator.HoldingsValueCalculator;
@@ -30,6 +31,8 @@ import beanvest.processor.processing.validator.BalanceValidator;
 import beanvest.processor.processing.validator.CloseValidator;
 import beanvest.processor.processing.validator.Validator;
 import beanvest.processor.validation.ValidatorError;
+import beanvest.result.ErrorFactory;
+import beanvest.result.Result;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -38,6 +41,7 @@ import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class FullAccountStatsCalculator {
+    public static final Calculator DISABLED_CALCULATOR = () -> Result.failure(ErrorFactory.disabled());
     private final AccountOpenDatesCollector accountOpenDatesCollector = new AccountOpenDatesCollector();
     private final DepositCollector depositCollector = new DepositCollector();
     private final DividendCollector dividendCollector = new DividendCollector();
@@ -84,11 +88,11 @@ public class FullAccountStatsCalculator {
             balanceValidator,
             closeValidator);
     private final List<Processor> processors = new ArrayList<>();
-    private final boolean isGroup;
+    private final AccountType accountType;
 
-    public FullAccountStatsCalculator(LatestPricesBook pricesBook, boolean isGroup) {
-        this.isGroup = isGroup;
+    public FullAccountStatsCalculator(LatestPricesBook pricesBook, AccountType accountType) {
 
+        this.accountType = accountType;
         holdingsValueCalculator = new HoldingsValueCalculator(holdingsCollector, pricesBook);
         holdingsCostCalculator = new HoldingsCostCalculator(holdingsCollector);
         unrealizedGainsCalculator = new UnrealizedGainsCalculator(holdingsValueCalculator, holdingsCostCalculator);
@@ -102,7 +106,7 @@ public class FullAccountStatsCalculator {
         totalFeesCalculator = new TotalFeesCalculator(simpleFeeCollector, transactionFeeCollector);
 
         this.processors.addAll(collectors);
-        if (!isGroup) {
+        if (accountType == AccountType.ACCOUNT) {
             this.processors.addAll(validators);
         }
     }
@@ -122,7 +126,7 @@ public class FullAccountStatsCalculator {
                 totalFeesCalculator.balance(),
                 dividendCollector.balance(),
                 realizedGainsCollector.balance(),
-                cashCalculator.balance()
+                accountType == AccountType.HOLDING ? Result.failure(ErrorFactory.disabledForAccountType()) : cashCalculator.calculate()
         );
         var valueStats = new ValueStatsDto(
                 unrealizedGainsCalculator.calculate(endingDate, targetCurrency),

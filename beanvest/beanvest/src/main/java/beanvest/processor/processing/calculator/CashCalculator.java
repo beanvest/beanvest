@@ -7,10 +7,13 @@ import beanvest.processor.processing.collector.InterestCollector;
 import beanvest.processor.processing.collector.SimpleFeeCollector;
 import beanvest.processor.processing.collector.SpentCollector;
 import beanvest.processor.processing.collector.WithdrawalCollector;
+import beanvest.result.Result;
+import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-public class CashCalculator {
+public class CashCalculator implements Calculator {
     private final DepositCollector depositCollector;
     private final WithdrawalCollector withdrawalCollector;
     private final InterestCollector interestCollector;
@@ -36,13 +39,16 @@ public class CashCalculator {
         this.earnedCollector = earnedCollector;
     }
 
-    public BigDecimal balance() {
-        return depositCollector.balance()
-                .add(withdrawalCollector.balance())
-                .add(interestCollector.balance())
-                .add(simpleFeeCollector.balance())
-                .add(dividendCollector.balance())
-                .add(spentCollector.balance())
-                .add(earnedCollector.balance());
+    @Override
+    public Result<BigDecimal, UserErrors> calculate() {
+        return Result.combine(
+                List.of(depositCollector.balance(),
+                        withdrawalCollector.balance(),
+                        interestCollector.balance(),
+                        simpleFeeCollector.balance(),
+                        dividendCollector.balance(),
+                        spentCollector.balance(),
+                        earnedCollector.balance()
+                ), BigDecimal::add, UserErrors::join);
     }
 }

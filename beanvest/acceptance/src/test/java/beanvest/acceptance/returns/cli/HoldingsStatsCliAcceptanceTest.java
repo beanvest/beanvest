@@ -34,8 +34,8 @@ public class HoldingsStatsCliAcceptanceTest {
         dsl.verifyOutput("""
                 account           opened      closed  deps   wths   div    intr   fees   rGain  cash   uGain  hVal   aGain  xirr
                 fidelityIsa       2021-01-01  -          90      0      1      0     -6      9     50     -2     48      8    8.9
-                fidelityIsa:APPL  2021-01-01  -           0      0      0      0     -4      9      9      0      0      9      …
-                fidelityIsa:MSFT  2021-01-01  -           0      0      1      0     -2      0    -49     -2     48     -1      …""");
+                fidelityIsa:APPL  2021-01-01  -           0      0      0      0     -4      9      -      0      0      9      …
+                fidelityIsa:MSFT  2021-01-01  -           0      0      1      0     -2      0      -     -2     48     -1      …""");
     }
 }
 

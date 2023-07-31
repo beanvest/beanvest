@@ -31,6 +31,13 @@ public class UserErrors {
         this.errors.addAll(errors.errors);
     }
 
+    public UserErrors join(UserErrors errors) {
+        var merged = new ArrayList<UserError>();
+        merged.addAll(this.errors);
+        merged.addAll(errors.errors);
+        return new UserErrors(merged);
+    }
+
     public boolean isEmpty() {
         return errors.isEmpty();
     }

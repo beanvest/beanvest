@@ -11,13 +11,12 @@ public class AccountValueCalculator {
     private final CashCalculator cashCalculator;
 
     public AccountValueCalculator(HoldingsValueCalculator holdingsCostCalculator, CashCalculator cashCalculator) {
-
-
         holdingsValueCalculator = holdingsCostCalculator;
         this.cashCalculator = cashCalculator;
     }
     public Result<BigDecimal, UserErrors> calculate(LocalDate endingDate, String targetCurrency)
     {
-        return holdingsValueCalculator.calculate(endingDate, targetCurrency).map(v -> v.add(cashCalculator.balance()));
+        return holdingsValueCalculator.calculate(endingDate, targetCurrency)
+                .combine(cashCalculator.calculate(), BigDecimal::add, UserErrors::join);
     }
 }
