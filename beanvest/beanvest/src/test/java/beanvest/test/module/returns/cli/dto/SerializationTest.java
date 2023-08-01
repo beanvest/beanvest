@@ -40,6 +40,7 @@ public class SerializationTest {
                         VALUE_STAT_DTO,
                         VALUE_STAT_DTO,
                         VALUE_STAT_DTO,
+                        VALUE_STAT_DTO,
                         List.of("Validation error"))
         ))));
 

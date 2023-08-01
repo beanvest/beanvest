@@ -80,8 +80,8 @@ class DeltaCalculatorTest {
                         Result.failure(ErrorFactory.accountNotOpenYet()),
                         Result.failure(ErrorFactory.accountNotOpenYet()),
                         Result.failure(ErrorFactory.accountNotOpenYet()),
-                        Result.failure(ErrorFactory.accountNotOpenYet())
-                ), List.of());
+                        Result.failure(ErrorFactory.accountNotOpenYet()),
+                        Result.failure(ErrorFactory.accountNotOpenYet())), List.of());
     }
 
     Stats buildStats(String deposit, Optional<String> xirr) {
@@ -94,6 +94,7 @@ class DeltaCalculatorTest {
                         Result.failure(ErrorFactory.accountNotOpenYet()),
                         Result.failure(ErrorFactory.accountNotOpenYet()),
                         Result.failure(ErrorFactory.accountNotOpenYet()),
-                        xirrResult), List.of());
+                        xirrResult,
+                        Result.failure(ErrorFactory.accountNotOpenYet())), List.of());
     }
 }

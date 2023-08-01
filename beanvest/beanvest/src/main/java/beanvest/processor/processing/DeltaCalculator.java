@@ -29,7 +29,8 @@ public class DeltaCalculator {
                 new ValueStatDto(stats.getAccountGain(), calculateStatsDelta(stats, previous, s -> s.getAccountGain().asOptional())),
                 new ValueStatDto(stats.holdingsValue(), calculateStatsDelta(stats, previous, s -> s.holdingsValue().asOptional())),
                 new ValueStatDto(stats.accountValue(), calculateStatsDelta(stats, previous, s -> s.accountValue().asOptional())),
-                new ValueStatDto(stats.xirrValue(), calculateStatsDelta(stats, previous, s -> s.xirrValue().asOptional())),
+                new ValueStatDto(stats.xirr(), calculateStatsDelta(stats, previous, s -> s.xirr().asOptional())),
+                new ValueStatDto(stats.xirrp(), calculateStatsDelta(stats, previous, s -> s.xirrp().asOptional())),
         stats.errors());
         previousStats.put(account, stats);
         return statsWithDeltas;

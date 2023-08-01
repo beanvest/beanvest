@@ -8,8 +8,8 @@ import beanvest.journal.entry.Entry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FullCashFlowCollector extends AbstractCollector {
-    final List<CashFlow> operations = new ArrayList<>();
+public class PeriodCashFlowCollector extends AbstractCollector {
+    List<CashFlow> operations = new ArrayList<>();
     public void actuallyProcess(Entry entry) {
         if (entry instanceof DepositOrWithdrawal dw) {
             operations.add(new CashFlow(dw.date(), Value.of(dw.getRawAmountMoved(), "XX")));
@@ -17,6 +17,8 @@ public class FullCashFlowCollector extends AbstractCollector {
     }
     public List<CashFlow> get()
     {
-        return operations;
+        var result = operations;
+        operations = new ArrayList<>();
+        return result;
     }
 }

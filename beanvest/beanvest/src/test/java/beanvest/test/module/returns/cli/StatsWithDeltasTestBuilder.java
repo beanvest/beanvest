@@ -22,6 +22,7 @@ public class StatsWithDeltasTestBuilder {
     private final BigDecimal accountValue = new BigDecimal(11193);
     private BigDecimal unrealizedGain = new BigDecimal("131.94");
     private BigDecimal xirr = new BigDecimal("8.3");
+    private BigDecimal xirrp = new BigDecimal("8.3");
     private BigDecimal accountGain = new BigDecimal("3.2");
 
     public static StatsWithDeltasTestBuilder builder() {
@@ -88,6 +89,7 @@ public class StatsWithDeltasTestBuilder {
                 new ValueStatDto(Result.success(holdingsValue), Optional.empty()),
                 new ValueStatDto(Result.success(accountValue), Optional.empty()),
                 new ValueStatDto(Result.success(xirr), Optional.empty()),
+                new ValueStatDto(Result.success(xirrp), Optional.empty()),
                 List.of());
     }
 }

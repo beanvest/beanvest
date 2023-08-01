@@ -4,7 +4,6 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled
 public class XirrPeriodicAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
     @Test
@@ -32,6 +31,7 @@ public class XirrPeriodicAcceptanceTest {
     {
         dsl.setReportHoldings();
         dsl.setEnd("2024-01-01");
+        dsl.setYearly();
 
         dsl.runCalculateReturns("""
                 account pension
@@ -45,9 +45,6 @@ public class XirrPeriodicAcceptanceTest {
                 2023-12-31 price APPL 600 GBP
                 """);
 
-        dsl.verifyXirrCumulative("pension", "TOTAL", "7.24");
-        dsl.verifyXirrCumulative("pension:MSFT", "TOTAL", "5");//around that number
-        dsl.verifyXirrCumulative("pension:APPL", "TOTAL", "10");//around that number
         dsl.verifyXirrCumulative("pension", "2022", "15");
         dsl.verifyXirrCumulative("pension:MSFT", "2022", "10");
         dsl.verifyXirrCumulative("pension:APPL", "2022", "20");

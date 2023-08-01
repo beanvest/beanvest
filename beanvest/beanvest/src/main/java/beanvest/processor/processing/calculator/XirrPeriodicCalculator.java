@@ -1,9 +1,10 @@
 package beanvest.processor.processing.calculator;
 
-import beanvest.processor.processing.collector.FullCashFlowCollector;
-import beanvest.result.Result;
 import beanvest.journal.CashFlow;
+import beanvest.journal.Value;
+import beanvest.processor.processing.collector.PeriodCashFlowCollector;
 import beanvest.result.ErrorFactory;
+import beanvest.result.Result;
 import beanvest.result.UserErrors;
 import org.decampo.xirr.NonconvergenceException;
 import org.decampo.xirr.OverflowException;
@@ -19,11 +20,13 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
-public class XirrCalculator {
-    private final FullCashFlowCollector fullCashFlowCollector;
+public class XirrPeriodicCalculator {
+    private final PeriodCashFlowCollector fullCashFlowCollector;
     private final TotalValueCalculator totalValueCalculator;
+    private Result<BigDecimal, UserErrors> previousValue = Result.success(BigDecimal.ZERO);
+    private LocalDate previousDate = LocalDate.MIN;
 
-    public XirrCalculator(FullCashFlowCollector fullCashFlowCollector, TotalValueCalculator totalValueCalculator) {
+    public XirrPeriodicCalculator(PeriodCashFlowCollector fullCashFlowCollector, TotalValueCalculator totalValueCalculator) {
         this.fullCashFlowCollector = fullCashFlowCollector;
         this.totalValueCalculator = totalValueCalculator;
     }
@@ -33,13 +36,20 @@ public class XirrCalculator {
         if (totalValueResult.hasError()) {
             return totalValueResult;
         }
+
+        var relevantCashFlows = fullCashFlowCollector.get();
+        relevantCashFlows.add(0, new CashFlow(previousDate, Value.of(previousValue.getValue(), "GBP")));
         var xirrTransactions = convertToXirrTransactions(
-                fullCashFlowCollector.get(), totalValueResult.getValue(),
+                relevantCashFlows, totalValueResult.getValue(),
                 endDate);
 
-        return xirrTransactions.size() >= 2
+        var result = xirrTransactions.size() >= 2
                 ? calculateStats(xirrTransactions)
-                : Result.failure(ErrorFactory.xirrNoTransactions());
+                : Result.<BigDecimal, UserErrors>failure(ErrorFactory.xirrNoTransactions());
+
+        previousValue = totalValueResult;
+        previousDate = endDate;
+        return result;
     }
 
     private Result<BigDecimal, UserErrors> calculateStats(List<Transaction> transactions) {

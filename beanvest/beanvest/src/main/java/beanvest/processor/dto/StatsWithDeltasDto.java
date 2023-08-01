@@ -14,5 +14,6 @@ public record StatsWithDeltasDto(ValueStatDto deposits,
                                  ValueStatDto holdingsValue,
                                  ValueStatDto accountValue,
                                  ValueStatDto xirr,
+                                 ValueStatDto xirrp,
                                  Collection<String> errors) {
 }

@@ -7,7 +7,6 @@ import beanvest.processor.dto.ValueStatsDto;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.calculator.AccountGainCalculator;
 import beanvest.processor.processing.calculator.AccountValueCalculator;
-import beanvest.processor.processing.calculator.Calculator;
 import beanvest.processor.processing.calculator.CashCalculator;
 import beanvest.processor.processing.calculator.HoldingsCostCalculator;
 import beanvest.processor.processing.calculator.HoldingsValueCalculator;
@@ -15,6 +14,7 @@ import beanvest.processor.processing.calculator.TotalFeesCalculator;
 import beanvest.processor.processing.calculator.TotalValueCalculator;
 import beanvest.processor.processing.calculator.UnrealizedGainsCalculator;
 import beanvest.processor.processing.calculator.XirrCalculator;
+import beanvest.processor.processing.calculator.XirrPeriodicCalculator;
 import beanvest.processor.processing.collector.AccountOpenDatesCollector;
 import beanvest.processor.processing.collector.DepositCollector;
 import beanvest.processor.processing.collector.DividendCollector;
@@ -22,6 +22,7 @@ import beanvest.processor.processing.collector.EarnedCollector;
 import beanvest.processor.processing.collector.FullCashFlowCollector;
 import beanvest.processor.processing.collector.HoldingsCollector;
 import beanvest.processor.processing.collector.InterestCollector;
+import beanvest.processor.processing.collector.PeriodCashFlowCollector;
 import beanvest.processor.processing.collector.RealizedGainsCollector;
 import beanvest.processor.processing.collector.SimpleFeeCollector;
 import beanvest.processor.processing.collector.SpentCollector;
@@ -41,7 +42,6 @@ import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class FullAccountStatsCalculator {
-    public static final Calculator DISABLED_CALCULATOR = () -> Result.failure(ErrorFactory.disabled());
     private final AccountOpenDatesCollector accountOpenDatesCollector = new AccountOpenDatesCollector();
     private final DepositCollector depositCollector = new DepositCollector();
     private final DividendCollector dividendCollector = new DividendCollector();
@@ -54,6 +54,7 @@ public class FullAccountStatsCalculator {
     private final SpentCollector spentCollector = new SpentCollector();
     private final TransactionFeeCollector transactionFeeCollector = new TransactionFeeCollector();
     private final WithdrawalCollector withdrawalsCollector = new WithdrawalCollector();
+    private final PeriodCashFlowCollector periodCashFlowCollector = new PeriodCashFlowCollector();
 
     private final AccountGainCalculator accountGainCalculator;
     private final AccountValueCalculator accountValueCalculator;
@@ -77,6 +78,7 @@ public class FullAccountStatsCalculator {
             dividendCollector,
             earnedCollector,
             fullCashFlowCollector,
+            periodCashFlowCollector,
             holdingsCollector,
             interestCollector,
             realizedGainsCollector,
@@ -89,6 +91,7 @@ public class FullAccountStatsCalculator {
             closeValidator);
     private final List<Processor> processors = new ArrayList<>();
     private final AccountType accountType;
+    private final XirrPeriodicCalculator xirrPeriodicCalculator;
 
     public FullAccountStatsCalculator(LatestPricesBook pricesBook, AccountType accountType) {
 
@@ -104,6 +107,7 @@ public class FullAccountStatsCalculator {
         accountValueCalculator = new AccountValueCalculator(holdingsValueCalculator, cashCalculator);
         accountGainCalculator = new AccountGainCalculator(depositCollector, withdrawalsCollector, accountValueCalculator);
         totalFeesCalculator = new TotalFeesCalculator(simpleFeeCollector, transactionFeeCollector);
+        xirrPeriodicCalculator = new XirrPeriodicCalculator(periodCashFlowCollector, totalValueCalculator);
 
         this.processors.addAll(collectors);
         if (accountType == AccountType.ACCOUNT) {
@@ -133,7 +137,9 @@ public class FullAccountStatsCalculator {
                 accountGainCalculator.calculate(endingDate, targetCurrency),
                 holdingsValueCalculator.calculate(endingDate, targetCurrency),
                 accountValueCalculator.calculate(endingDate, targetCurrency),
-                xirrCalculator.calculate(endingDate, targetCurrency));
+                xirrCalculator.calculate(endingDate, targetCurrency),
+                xirrPeriodicCalculator.calculate(endingDate, targetCurrency)
+        );
 
         var errorMessages = valueStats.getErrorMessages();
         return new Stats(cashStats, valueStats, errorMessages);

@@ -76,4 +76,8 @@ public class Stats {
     public Collection<String> errors() {
         return errors;
     }
+
+    public Result<BigDecimal, UserErrors> xirrp() {
+        return valueBasedStats.xirrp();
+    }
 }

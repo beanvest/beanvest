@@ -61,6 +61,7 @@ public class ReturnsDsl {
     public void runCalculateReturnsOnDirectory(String ledgersDir) {
         runCalculateReturnsWithFilesArgs(tempDirectory.toString() + "/" + ledgersDir);
     }
+
     public void runCalculateReturns(String ledgers) {
         final List<String> allLedgers = writeToTempFiles(ledgers);
         runCalculateReturnsWithFilesArgs(allLedgers.toArray(new String[0]));
@@ -489,7 +490,10 @@ public class ReturnsDsl {
     }
 
     public void verifyXirrPeriodic(String account, String period, String expectedAmount) {
-        throw new UnsupportedOperationException("not implemented yet");
+        verifyStat(account, period, expectedAmount, statsWithDeltasDto ->
+                new ValueStatDto(
+                        statsWithDeltasDto.xirrp().stat().map(x -> x.multiply(new BigDecimal(100))),
+                        statsWithDeltasDto.xirrp().delta()));
     }
 
     public void verifyDepositsError(String account, String period, String error) {
@@ -538,8 +542,7 @@ public class ReturnsDsl {
         ONLY
     }
 
-    public void cleanUp()
-    {
+    public void cleanUp() {
         testFiles.cleanUp();
     }
 
