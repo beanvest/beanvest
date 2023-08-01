@@ -15,6 +15,7 @@ public enum ColumnCliArg {
     ifee(INTEREST_FEES, "interest plus fees"),
     hval(HOLDINGS_VALUE, "date value"),
     xirr(XIRR, "xirr"),
+    xirrp(XIRRP, "xirrp"),
     rgain(REALIZED_GAIN, "realized gain"),
     ugain(UNREALIZED_GAIN, "unrealized gain"),
     div(DIVIDENDS, "dividends"),
