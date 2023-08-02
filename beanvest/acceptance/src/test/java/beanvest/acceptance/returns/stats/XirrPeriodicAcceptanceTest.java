@@ -47,6 +47,29 @@ public class XirrPeriodicAcceptanceTest {
     }
 
     @Test
+    void shouldCalculatesXirrIncludingAllDividendsPaidOut() {
+        dsl.setStartDate("2020-01-01");
+        dsl.setEnd("2022-01-01");
+        dsl.setYearly();
+        dsl.setGroupingDisabled();
+        dsl.setReportHoldings();
+
+        dsl.runCalculateReturns("""
+                account savings
+                currency GBP
+                            
+                2020-01-01 deposit and buy 1 MSFT for 100
+                2020-12-31 dividend 5 from MSFT
+                2020-12-31 price MSFT 100
+                2021-12-31 dividend 10 from MSFT
+                2021-12-31 price MSFT 100
+                """);
+
+        dsl.verifyXirrPeriodic("savings:MSFT", "2020", "5");
+        dsl.verifyXirrPeriodic("savings:MSFT", "2021", "10");
+    }
+
+    @Test
     @Disabled
     void shouldCalculatePeriodicXirrForEachHolding()
     {
