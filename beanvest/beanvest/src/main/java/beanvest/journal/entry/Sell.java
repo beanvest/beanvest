@@ -36,4 +36,9 @@ public record Sell(LocalDate date, String account, Value value, Value totalPrice
     public String getCashCurrency() {
         return this.totalPrice.symbol();
     }
+
+    @Override
+    public BigDecimal getRawAmountMoved() {
+        return totalPrice.amount().negate();
+    }
 }

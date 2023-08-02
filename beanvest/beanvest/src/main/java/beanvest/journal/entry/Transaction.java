@@ -5,7 +5,7 @@ import beanvest.journal.Value;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-public sealed interface Transaction extends CashOperation permits Buy, Sell {
+public sealed interface Transaction extends CashOperation, HasRawAmountMoved permits Buy, Sell {
     String holdingSymbol();
 
     BigDecimal units();

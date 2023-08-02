@@ -13,7 +13,7 @@ import beanvest.processor.processing.calculator.HoldingsValueCalculator;
 import beanvest.processor.processing.calculator.TotalFeesCalculator;
 import beanvest.processor.processing.calculator.TotalValueCalculator;
 import beanvest.processor.processing.calculator.UnrealizedGainsCalculator;
-import beanvest.processor.processing.calculator.XirrCalculator;
+import beanvest.processor.processing.calculator.AccountXirrCalculator;
 import beanvest.processor.processing.calculator.XirrPeriodicCalculator;
 import beanvest.processor.processing.collector.AccountOpenDatesCollector;
 import beanvest.processor.processing.collector.DepositCollector;
@@ -54,7 +54,7 @@ public class FullAccountStatsCalculator {
     private final SpentCollector spentCollector = new SpentCollector();
     private final TransactionFeeCollector transactionFeeCollector = new TransactionFeeCollector();
     private final WithdrawalCollector withdrawalsCollector = new WithdrawalCollector();
-    private final PeriodCashFlowCollector periodCashFlowCollector = new PeriodCashFlowCollector();
+    private final PeriodCashFlowCollector periodCashFlowCollector;
 
     private final AccountGainCalculator accountGainCalculator;
     private final AccountValueCalculator accountValueCalculator;
@@ -64,7 +64,7 @@ public class FullAccountStatsCalculator {
     private final TotalFeesCalculator totalFeesCalculator;
     private final TotalValueCalculator totalValueCalculator;
     private final UnrealizedGainsCalculator unrealizedGainsCalculator;
-    private final XirrCalculator xirrCalculator;
+    private final AccountXirrCalculator xirrCalculator;
 
     private final LinkedHashSet<ValidatorError> validationErrors = new LinkedHashSet<>();
     private final BalanceValidator balanceValidator = new BalanceValidator(validationErrors::add,
@@ -72,20 +72,7 @@ public class FullAccountStatsCalculator {
                     dividendCollector, spentCollector, earnedCollector));
     private final CloseValidator closeValidator = new CloseValidator(validationErrors::add, new CashCalculator(depositCollector, withdrawalsCollector, interestCollector, simpleFeeCollector,
             dividendCollector, spentCollector, earnedCollector));
-    private final List<Processor> collectors = List.of(
-            accountOpenDatesCollector,
-            depositCollector,
-            dividendCollector,
-            earnedCollector,
-            fullCashFlowCollector,
-            periodCashFlowCollector,
-            holdingsCollector,
-            interestCollector,
-            realizedGainsCollector,
-            simpleFeeCollector,
-            spentCollector,
-            transactionFeeCollector,
-            withdrawalsCollector);
+    private final List<Processor> collectors;
     private final List<Validator> validators = List.of(
             balanceValidator,
             closeValidator);
@@ -103,11 +90,26 @@ public class FullAccountStatsCalculator {
                 depositCollector, withdrawalsCollector, interestCollector,
                 simpleFeeCollector, dividendCollector, spentCollector, earnedCollector);
         totalValueCalculator = new TotalValueCalculator(holdingsValueCalculator, cashCalculator);
-        xirrCalculator = new XirrCalculator(fullCashFlowCollector, totalValueCalculator);
+        xirrCalculator = new AccountXirrCalculator(fullCashFlowCollector, totalValueCalculator);
         accountValueCalculator = new AccountValueCalculator(holdingsValueCalculator, cashCalculator);
         accountGainCalculator = new AccountGainCalculator(depositCollector, withdrawalsCollector, accountValueCalculator);
         totalFeesCalculator = new TotalFeesCalculator(simpleFeeCollector, transactionFeeCollector);
-        xirrPeriodicCalculator = new XirrPeriodicCalculator(periodCashFlowCollector, totalValueCalculator);
+        periodCashFlowCollector = new PeriodCashFlowCollector(accountType);
+        xirrPeriodicCalculator = new XirrPeriodicCalculator(periodCashFlowCollector, totalValueCalculator, holdingsValueCalculator, accountType);
+        collectors = List.of(
+                accountOpenDatesCollector,
+                depositCollector,
+                dividendCollector,
+                earnedCollector,
+                fullCashFlowCollector,
+                periodCashFlowCollector,
+                holdingsCollector,
+                interestCollector,
+                realizedGainsCollector,
+                simpleFeeCollector,
+                spentCollector,
+                transactionFeeCollector,
+                withdrawalsCollector);
 
         this.processors.addAll(collectors);
         if (accountType == AccountType.ACCOUNT) {

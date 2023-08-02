@@ -2,6 +2,7 @@ package beanvest.processor.processing.calculator;
 
 import beanvest.journal.CashFlow;
 import beanvest.journal.Value;
+import beanvest.processor.processing.AccountType;
 import beanvest.processor.processing.collector.PeriodCashFlowCollector;
 import beanvest.result.ErrorFactory;
 import beanvest.result.Result;
@@ -23,16 +24,20 @@ import static java.util.stream.Collectors.toList;
 public class XirrPeriodicCalculator {
     private final PeriodCashFlowCollector fullCashFlowCollector;
     private final TotalValueCalculator totalValueCalculator;
+    private final HoldingsValueCalculator holdingsValueCalculator;
+    private final AccountType accountType;
     private Result<BigDecimal, UserErrors> previousValue = Result.success(BigDecimal.ZERO);
     private LocalDate previousDate = LocalDate.MIN;
 
-    public XirrPeriodicCalculator(PeriodCashFlowCollector fullCashFlowCollector, TotalValueCalculator totalValueCalculator) {
+    public XirrPeriodicCalculator(PeriodCashFlowCollector fullCashFlowCollector, TotalValueCalculator totalValueCalculator, HoldingsValueCalculator holdingsValueCalculator, AccountType accountType) {
         this.fullCashFlowCollector = fullCashFlowCollector;
         this.totalValueCalculator = totalValueCalculator;
+        this.holdingsValueCalculator = holdingsValueCalculator;
+        this.accountType = accountType;
     }
 
     public Result<BigDecimal, UserErrors> calculate(final LocalDate endDate, String targetCurrency) {
-        var totalValueResult = totalValueCalculator.calculateValue(endDate, targetCurrency);
+        var totalValueResult = calculateEndingValue(endDate, targetCurrency);
         if (totalValueResult.hasError()) {
             return totalValueResult;
         }
@@ -50,6 +55,14 @@ public class XirrPeriodicCalculator {
         previousValue = totalValueResult;
         previousDate = endDate;
         return result;
+    }
+
+    private Result<BigDecimal, UserErrors> calculateEndingValue(LocalDate endDate, String targetCurrency) {
+        if (accountType == AccountType.HOLDING) {
+            return holdingsValueCalculator.calculate(endDate, targetCurrency);
+        } else {
+            return totalValueCalculator.calculateValue(endDate, targetCurrency);
+        }
     }
 
     private Result<BigDecimal, UserErrors> calculateStats(List<Transaction> transactions) {

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class XirrPeriodicAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
     @Test
-    void calculatesXirrForEachPeriodSeparately() {
+    void calculatesXirrForAccountForEachPeriodSeparately() {
         dsl.setStartDate("2020-01-01");
         dsl.setEnd("2022-01-01");
         dsl.setYearly();
@@ -26,7 +26,28 @@ public class XirrPeriodicAcceptanceTest {
     }
 
     @Test
-    @Disabled("todo")
+    void calculatesXirrForHoldingForEachPeriodSeparately() {
+        dsl.setStartDate("2020-01-01");
+        dsl.setEnd("2022-01-01");
+        dsl.setYearly();
+        dsl.setGroupingDisabled();
+        dsl.setReportHoldings();
+
+        dsl.runCalculateReturns("""
+                account savings
+                currency GBP
+                            
+                2020-01-01 deposit and buy 1 MSFT for 100
+                2020-12-31 price MSFT 200
+                2021-12-31 price MSFT 300
+                """);
+
+        dsl.verifyXirrPeriodic("savings:MSFT", "2020", "100");
+        dsl.verifyXirrPeriodic("savings:MSFT", "2021", "50");
+    }
+
+    @Test
+    @Disabled
     void shouldCalculatePeriodicXirrForEachHolding()
     {
         dsl.setReportHoldings();

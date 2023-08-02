@@ -36,4 +36,9 @@ public record Buy(LocalDate date, String account, Value value, Value totalPrice,
     public String getCashCurrency() {
         return totalPrice.symbol();
     }
+
+    @Override
+    public BigDecimal getRawAmountMoved() {
+        return totalPrice.amount();
+    }
 }

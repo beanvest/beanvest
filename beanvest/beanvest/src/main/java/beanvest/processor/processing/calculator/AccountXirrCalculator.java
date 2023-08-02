@@ -19,11 +19,11 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
-public class XirrCalculator {
+public class AccountXirrCalculator {
     private final FullCashFlowCollector fullCashFlowCollector;
     private final TotalValueCalculator totalValueCalculator;
 
-    public XirrCalculator(FullCashFlowCollector fullCashFlowCollector, TotalValueCalculator totalValueCalculator) {
+    public AccountXirrCalculator(FullCashFlowCollector fullCashFlowCollector, TotalValueCalculator totalValueCalculator) {
         this.fullCashFlowCollector = fullCashFlowCollector;
         this.totalValueCalculator = totalValueCalculator;
     }
