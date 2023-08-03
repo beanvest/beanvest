@@ -33,7 +33,7 @@ public class BalanceValidator implements Validator {
     }
 
     private void verifyCashBalance(Balance balance) {
-        var cash = cashCalculator.calculate().getValue();
+        var cash = cashCalculator.calculate().value();
         if (cash.compareTo(balance.units()) != 0) {
             var symbolString = balance.symbol().map(c -> " " + c).orElse("");
             errorConsumer.accept(createValidationError(balance, symbolString, cash));

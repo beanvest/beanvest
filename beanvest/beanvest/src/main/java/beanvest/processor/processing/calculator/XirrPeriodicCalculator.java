@@ -42,8 +42,8 @@ public class XirrPeriodicCalculator implements StatCalculator {
         }
 
         var relevantCashFlows = fullCashFlowCollector.get();
-        relevantCashFlows.add(0, new CashFlow(previousDate, Value.of(previousValue.getValue(), "GBP")));
-        var result = xirrCalculator.calculateXirr(endDate, relevantCashFlows, totalValueResult.getValue());
+        relevantCashFlows.add(0, new CashFlow(previousDate, Value.of(previousValue.value(), "GBP")));
+        var result = xirrCalculator.calculateXirr(endDate, relevantCashFlows, totalValueResult.value());
 
         previousValue = totalValueResult;
         previousDate = endDate;

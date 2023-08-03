@@ -32,7 +32,7 @@ class LatestPricesBookTest {
         var date = "2022-01-02";
         priceBook.add(price(date, "GBP", "5.2 PLN"));
         priceBook.add(price(date, "GBP", "5.3 PLN"));
-        assertThat(priceBook.getPrice(LocalDate.parse(date), "GBP", "PLN").getValue())
+        assertThat(priceBook.getPrice(LocalDate.parse(date), "GBP", "PLN").value())
                 .usingRecursiveComparison().isEqualTo(Value.of("5.3 PLN"));
     }
 
@@ -42,7 +42,7 @@ class LatestPricesBookTest {
         priceBook.add(price("2021-01-01", "MSFT", "1 USD"));
         priceBook.add(price("2021-01-01", "USD", "4 PLN"));
         var converted = priceBook.convert(LocalDate.parse("2021-01-01"), "PLN", Value.of("1 MSFT"));
-        assertThat(converted.getValue())
+        assertThat(converted.value())
                 .usingRecursiveComparison().isEqualTo(Value.of("4 PLN"));
     }
 
@@ -54,12 +54,12 @@ class LatestPricesBookTest {
 
     @Test
     void throwsIfPriceMoreThanWeeksOld() {
-        assertThat(priceBook.getPrice(LocalDate.parse("2021-01-09"), "GBP", "PLN").getValue())
+        assertThat(priceBook.getPrice(LocalDate.parse("2021-01-09"), "GBP", "PLN").value())
                 .usingRecursiveComparison().isEqualTo(Value.of("5.1 PLN"));
 
         var result = priceBook.getPrice(LocalDate.parse("2021-01-10"), "GBP", "PLN");
-        assertThat(result.getError()).isInstanceOf(UserErrors.class);
-        assertThat(result.getError().getEnums()).isEqualTo(List.of(ErrorEnum.PRICE_NEEDED));
+        assertThat(result.error()).isInstanceOf(UserErrors.class);
+        assertThat(result.error().getEnums()).isEqualTo(List.of(ErrorEnum.PRICE_NEEDED));
     }
 
     private static Price price(String dateString, String currency, String valueString) {

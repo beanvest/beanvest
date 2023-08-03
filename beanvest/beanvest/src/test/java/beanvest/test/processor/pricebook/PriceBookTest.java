@@ -22,12 +22,12 @@ class PriceBookTest {
 
     @Test
     void getsLatestPriceForTheDate() {
-        assertThat(priceBook.getPrice(LocalDate.parse("2021-01-05"), "GBP", "PLN").getValue())
+        assertThat(priceBook.getPrice(LocalDate.parse("2021-01-05"), "GBP", "PLN").value())
                 .usingRecursiveComparison().isEqualTo(Value.of("5.1 PLN"));
 
-        assertThat(priceBook.getPrice(LocalDate.parse("2021-01-02"), "GBP", "PLN").getValue())
+        assertThat(priceBook.getPrice(LocalDate.parse("2021-01-02"), "GBP", "PLN").value())
                 .usingRecursiveComparison().isEqualTo(Value.of("5.1 PLN"));
-        assertThat(priceBook.getPrice(LocalDate.parse("2021-01-01"), "GBP", "PLN").getValue())
+        assertThat(priceBook.getPrice(LocalDate.parse("2021-01-01"), "GBP", "PLN").value())
                 .usingRecursiveComparison().isEqualTo(Value.of("5 PLN"));
     }
     @Test
@@ -37,25 +37,25 @@ class PriceBookTest {
                 price("2021-01-01", "USD", "4 PLN")
         ));
         var converted = priceBook.convert(LocalDate.parse("2021-01-01"), "PLN", Value.of("1 MSFT"));
-        assertThat(converted.getValue())
+        assertThat(converted.value())
                 .usingRecursiveComparison().isEqualTo(Value.of("4 PLN"));
     }
 
     @Test
     void returnsErrorIfPriceNotFound() {
         var result = priceBook.getPrice(LocalDate.parse("2020-01-01"), "GBP", "PLN");
-        assertThat(result.getError()).isInstanceOf(UserErrors.class);
-        assertThat(result.getError().getEnums()).isEqualTo(List.of(ErrorEnum.PRICE_NEEDED));
+        assertThat(result.error()).isInstanceOf(UserErrors.class);
+        assertThat(result.error().getEnums()).isEqualTo(List.of(ErrorEnum.PRICE_NEEDED));
     }
 
     @Test
     void throwsIfPriceMoreThanWeeksOld() {
-        assertThat(priceBook.getPrice(LocalDate.parse("2021-01-09"), "GBP", "PLN").getValue())
+        assertThat(priceBook.getPrice(LocalDate.parse("2021-01-09"), "GBP", "PLN").value())
                 .usingRecursiveComparison().isEqualTo(Value.of("5.1 PLN"));
 
         var result = priceBook.getPrice(LocalDate.parse("2021-01-10"), "GBP", "PLN");
-        assertThat(result.getError()).isInstanceOf(UserErrors.class);
-        assertThat(result.getError().getEnums()).isEqualTo(List.of(ErrorEnum.PRICE_NEEDED));
+        assertThat(result.error()).isInstanceOf(UserErrors.class);
+        assertThat(result.error().getEnums()).isEqualTo(List.of(ErrorEnum.PRICE_NEEDED));
     }
 
     private static Price price(String dateString, String currency, String valueString) {

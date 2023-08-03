@@ -22,6 +22,6 @@ public class AccountXirrCalculator {
         if (totalValueResult.hasError()) {
             return totalValueResult;
         }
-        return xirrCalculator.calculateXirr(endDate, fullCashFlowCollector.get(), totalValueResult.getValue());
+        return xirrCalculator.calculateXirr(endDate, fullCashFlowCollector.get(), totalValueResult.value());
     }
 }

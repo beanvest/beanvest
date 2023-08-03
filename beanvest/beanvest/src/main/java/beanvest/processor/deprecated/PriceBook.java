@@ -64,9 +64,9 @@ public class PriceBook {
         for (var holding : holdings.asList()) {
             var conversionResult = convert(date, targetCurrency, holding);
             if (conversionResult.hasError()) {
-                errors.addAll(conversionResult.getError());
+                errors.addAll(conversionResult.error());
             } else {
-                value = value.add(conversionResult.getValue().amount());
+                value = value.add(conversionResult.value().amount());
             }
         }
 
@@ -94,7 +94,7 @@ public class PriceBook {
         }
         var priceResult = this.getPrice(date, value.symbol(), targetCurrency);
         if (priceResult.isSuccessful()) {
-            return Result.success(new Value(priceResult.getValue().amount().multiply(value.amount()), targetCurrency));
+            return Result.success(new Value(priceResult.value().amount().multiply(value.amount()), targetCurrency));
         } else {
             var maybeConverted = prices.keySet().stream()
                     .filter(pair -> pair.a.equals(value.symbol()))
@@ -103,10 +103,10 @@ public class PriceBook {
                         if (!convert1.isSuccessful()) {
                             return convert1;
                         }
-                        return convert(date, targetCurrency, convert1.getValue());
+                        return convert(date, targetCurrency, convert1.value());
                     })
                     .filter(Result::isSuccessful)
-                    .map(Result::getValue)
+                    .map(Result::value)
                     .findFirst();
             return Result.of(maybeConverted.orElse(null), maybeConverted.isPresent() ? null : priceResult.getErrorOrNull());
         }

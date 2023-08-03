@@ -322,7 +322,7 @@ public class ReturnsDsl {
 
     public void verifyXirrCumulative(String account, String period, String amount) {
         verifyValueStat(account, period, amount, r -> {
-            var multiplied = r.xirr().stat().getValue().multiply(new BigDecimal(100));
+            var multiplied = r.xirr().stat().value().multiply(new BigDecimal(100));
             return new ValueStatDto(Result.success(multiplied), Optional.empty());
         });
     }
@@ -339,7 +339,7 @@ public class ReturnsDsl {
     public void verifyXirrNotPresent(String account, String period) {
         var xirr = getAccountResults(account, period).get().xirr();
         assertThat(xirr.stat().hasResult())
-                .as(() -> "Expected no result but got one: " + xirr.stat().getValue())
+                .as(() -> "Expected no result but got one: " + xirr.stat().value())
                 .isFalse();
     }
 
@@ -367,7 +367,7 @@ public class ReturnsDsl {
 
     public ReturnsDsl verifyGainIsPositive(String account) {
         var result = getAccountPeriodReturns(account).get();
-        assertThat(result.accountGain().stat().getValue())
+        assertThat(result.accountGain().stat().value())
                 .usingComparator(BigDecimal::compareTo)
                 .isGreaterThan(BigDecimal.ZERO);
         return this;
@@ -474,7 +474,7 @@ public class ReturnsDsl {
 
     private void verifyValueStat(String account, String period, String expectedAmount, Function<StatsWithDeltasDto, ValueStatDto> valueStatExtractor) {
         var result = getAccountResults(account, period).get();
-        var value = valueStatExtractor.apply(result).stat().getValue();
+        var value = valueStatExtractor.apply(result).stat().value();
         assertThat(value)
                 .usingComparator(BigDecimal::compareTo)
                 .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
@@ -482,7 +482,7 @@ public class ReturnsDsl {
 
     private void verifyStat(String account, String period, String expectedAmount, Function<StatsWithDeltasDto, ValueStatDto> valueStatExtractor) {
         var result = getAccountResults(account, period).get();
-        var value = valueStatExtractor.apply(result).stat().getValue();
+        var value = valueStatExtractor.apply(result).stat().value();
 
         assertThat(value)
                 .usingComparator(BigDecimal::compareTo)
@@ -501,7 +501,7 @@ public class ReturnsDsl {
 
     public void verifyXirrError(String account, String period, String error) {
         var result = getAccountPeriodReturns(account, period).get();
-        assertThat(result.xirr().stat().getError().getEnums())
+        assertThat(result.xirr().stat().error().getEnums())
                 .isEqualTo(List.of(ErrorEnum.valueOf(error)));
     }
 
@@ -528,7 +528,7 @@ public class ReturnsDsl {
 
     public void verifyCashError(String account, String period, String error) {
         var result = getAccountPeriodReturns(account, period).get();
-        assertThat(result.cash().stat().getError().getEnums())
+        assertThat(result.cash().stat().error().getEnums())
                 .isEqualTo(List.of(ErrorEnum.valueOf(error)));
     }
 

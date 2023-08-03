@@ -27,7 +27,7 @@ public class HoldingsValueCalculator {
             if (converted.hasError()) {
                 return converted.map(Value::amount);
             }
-            total = total.add(converted.getValue().amount());
+            total = total.add(converted.value().amount());
         }
         return Result.success(total);
     }

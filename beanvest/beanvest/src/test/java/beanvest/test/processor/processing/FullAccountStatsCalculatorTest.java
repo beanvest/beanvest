@@ -35,7 +35,7 @@ class FullAccountStatsCalculatorTest {
         calc.process(sell("1 X", "6 GBP"));
         pricesBook.add(price("X", "7 GBP"));
 
-        assertThat(stats().unrealizedGain().getValue())
+        assertThat(stats().unrealizedGain().value())
                 .isEqualByComparingTo(new BigDecimal(2));
     }
 
@@ -45,14 +45,14 @@ class FullAccountStatsCalculatorTest {
         calc.process(buy("2 X", "10 GBP")); // avg cost 5
         calc.process(sell("1 X", "12 GBP")); //rgain 7, ugain 0, avg cost 5, value 5
 
-        assertThat(stats().holdingsValue().getValue())
+        assertThat(stats().holdingsValue().value())
                 .isEqualByComparingTo(new BigDecimal(5));
-        assertThat(stats().cash().getValue())
+        assertThat(stats().cash().value())
                 .isEqualByComparingTo(new BigDecimal(2));
 
         pricesBook.add(price("X", "7 GBP")); //unrealized 2, value 7
 
-        assertThat(stats().unrealizedGain().getValue())
+        assertThat(stats().unrealizedGain().value())
                 .isEqualByComparingTo(new BigDecimal(2));
     }
 
@@ -69,7 +69,7 @@ class FullAccountStatsCalculatorTest {
 
         var stats = calc.calculateStats(LocalDate.now(), "GBP");
 
-        assertThat(stats.unrealizedGain().getValue())
+        assertThat(stats.unrealizedGain().value())
                 .isEqualByComparingTo(new BigDecimal(3));
     }
 
@@ -81,7 +81,7 @@ class FullAccountStatsCalculatorTest {
 
         var stats = calc.calculateStats(LocalDate.now(), "GBP");
 
-        assertThat(stats.unrealizedGain().getValue()).isEqualByComparingTo(BigDecimal.ZERO);
+        assertThat(stats.unrealizedGain().value()).isEqualByComparingTo(BigDecimal.ZERO);
     }
 
     private Price price(String symbol, String price) {

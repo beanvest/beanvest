@@ -47,10 +47,10 @@ public class ReturnsCalculatorApp {
                     accountsResolver, journal, accountFilter, periodSpec, EXCLUDE_UNFINISHED);
 
             if (statsResult.hasError()) {
-                outputWriter.outputInputErrors(statsResult.getError());
+                outputWriter.outputInputErrors(statsResult.error());
                 isSuccessful = false;
             } else {
-                outputWriter.outputResult(selectedColumns, statsResult.getValue(), statsMode);
+                outputWriter.outputResult(selectedColumns, statsResult.value(), statsMode);
             }
         } catch (JournalNotFoundException e) {
             outputWriter.outputException(e);

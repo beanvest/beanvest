@@ -26,7 +26,7 @@ public class CloseValidator implements Validator {
     public void process(Entry entry) {
         holdingsCollector.process(entry);
         if (entry instanceof Close close) {
-            var cash = cashCalculator.calculate().getValue();
+            var cash = cashCalculator.calculate().value();
             var hasCash = cash.compareTo(BigDecimal.ZERO) != 0;
             var holdings1 = holdingsCollector.getHoldings();
             if (!holdings1.isEmpty() || hasCash) {
