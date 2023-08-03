@@ -18,7 +18,7 @@ public class AccountXirrCalculator {
     }
 
     public Result<BigDecimal, UserErrors> calculate(final LocalDate endDate, String targetCurrency) {
-        var totalValueResult = totalValueCalculator.calculateValue(endDate, targetCurrency);
+        var totalValueResult = totalValueCalculator.calculate(endDate, targetCurrency);
         if (totalValueResult.hasError()) {
             return totalValueResult;
         }

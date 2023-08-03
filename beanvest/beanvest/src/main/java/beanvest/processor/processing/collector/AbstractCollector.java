@@ -2,6 +2,7 @@ package beanvest.processor.processing.collector;
 
 import beanvest.journal.entry.Entry;
 import beanvest.processor.processing.Processor;
+import beanvest.processor.processing.calculator.StatCalculator;
 import beanvest.result.Result;
 import beanvest.result.UserError;
 import beanvest.result.UserErrors;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public abstract class AbstractCollector implements Processor {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractCollector.class.getName());
