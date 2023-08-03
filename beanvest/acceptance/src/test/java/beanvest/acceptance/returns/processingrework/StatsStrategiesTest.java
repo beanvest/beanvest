@@ -32,8 +32,9 @@ class StatsStrategiesTest {
     ✓ simple sum (eg fees (transaction, account service fee))
     ✓ simple operations on other columns (value (cash + holdings value))
     ✓ lack of value for type (last price, units)
-    - custom calculation for account, group, holding (xirr)
-    - custom period calculation (xirr)
+        ✓ custom calculation for account, group, holding (xirr)
+    ✓ custom period calculation (xirr) (might need simple subtracting wrapper for regular stats' deltas)
+        ✓ regular delta should be easy to do
      */
 
     @BeforeEach
@@ -42,9 +43,37 @@ class StatsStrategiesTest {
     }
 
     @Test
+    void shouldAllowCustomCalculationForPeriod() {
+        factoryRegistry.register(FeeCollector.class, reg -> new FeeCollector());
+        factoryRegistry.register(PeriodFeeCollector.class, reg -> new PeriodFeeCollector(reg.get(FeeCollector.class)));
+        factoryRegistry.instantiateServices();
+
+        var entry1 = fee("2020-01-01", "fidelity", "9");
+        var entry2 = fee("2021-01-01", "fidelity", "10");
+        var entry3 = fee("2022-01-01", "fidelity", "11");
+        var calc = factoryRegistry.get(PeriodFeeCollector.class);
+
+        factoryRegistry.getProcessors().forEach(p -> p.process(entry1));
+        calc.calculate("fidelity", LocalDate.parse("2020-12-31"), "GBP");
+
+        factoryRegistry.getProcessors().forEach(p -> p.process(entry2));
+        assertThat(calc.calculate("fidelity", LocalDate.parse("2021-12-31"), "GBP").value())
+                .isEqualByComparingTo(new BigDecimal(-10));
+
+        factoryRegistry.getProcessors().forEach(p -> p.process(entry3));
+        assertThat(calc.calculate("fidelity", LocalDate.parse("2022-12-31"), "GBP").value())
+                .isEqualByComparingTo(new BigDecimal(-11));
+
+        var calc2 = factoryRegistry.get(FeeCollector.class);
+
+        assertThat(calc2.calculate("fidelity", LocalDate.parse("2022-12-31"), "GBP").value())
+                .isEqualByComparingTo(new BigDecimal(-30));
+    }
+
+    @Test
     void shouldAllowNotReturningValuesForSomeAccountTypes() {
         factoryRegistry.register(AccountsResolver2.class, reg -> new AccountsResolver2(Grouping.WITH_GROUPS, true));
-        factoryRegistry.register(LatestPriceChecker.class, reg -> new LatestPriceChecker(reg.getOrCreate(AccountsResolver2.class)));
+        factoryRegistry.register(LatestPriceChecker.class, reg -> new LatestPriceChecker(reg.get(AccountsResolver2.class)));
         factoryRegistry.instantiateServices();
 
         List<Entry> entries = List.of(
@@ -56,7 +85,7 @@ class StatsStrategiesTest {
             factoryRegistry.getProcessors().forEach(p -> p.process(entry));
         }
 
-        var feeCollector = factoryRegistry.getOrCreate(LatestPriceChecker.class);
+        var feeCollector = factoryRegistry.get(LatestPriceChecker.class);
         assertThat(feeCollector.calculate("shares:fidelity:APPL", LocalDate.now(), "GBP").value())
                 .isEqualByComparingTo(new BigDecimal(10));
 
@@ -68,8 +97,12 @@ class StatsStrategiesTest {
                 .isEqualTo(Result.failure(ErrorFactory.disabledForAccountType()));
     }
 
-    private Entry buy(String s, String symbol, String number) {
-        return new Buy(LocalDate.now(), s, Value.of(number, symbol), Value.of(number, "GBP"),
+    private Entry buy(String account, String symbol, String number) {
+        return buy(LocalDate.now().toString(), account, symbol, number);
+    }
+
+    public Buy buy(String date, String account, String symbol, String number) {
+        return new Buy(LocalDate.parse(date), account, Value.of(number, symbol), Value.of(number, "GBP"),
                 BigDecimal.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
     }
 
@@ -113,7 +146,7 @@ class StatsStrategiesTest {
             factoryRegistry.getProcessors().forEach(p -> p.process(entry));
         }
 
-        var feeCollector = factoryRegistry.getOrCreate(FeeCollector.class);
+        var feeCollector = factoryRegistry.get(FeeCollector.class);
         assertThat(feeCollector.calculate("shares:fidelity", LocalDate.now(), "GBP").value()).isEqualByComparingTo(new BigDecimal(-3));
         assertThat(feeCollector.calculate("shares:vanguard", LocalDate.now(), "GBP").value()).isEqualByComparingTo(new BigDecimal(-4));
         assertThat(feeCollector.calculate("shares", LocalDate.now(), "GBP").value()).isEqualByComparingTo(new BigDecimal(-7));
@@ -124,8 +157,8 @@ class StatsStrategiesTest {
         factoryRegistry.register(FeeCollector.class, reg -> new FeeCollector());
         factoryRegistry.register(InterestCollector.class, reg -> new InterestCollector());
         factoryRegistry.register(FeePlusInterestCalculator.class, reg -> new FeePlusInterestCalculator(
-                reg.getOrCreate(FeeCollector.class),
-                reg.getOrCreate(InterestCollector.class)));
+                reg.get(FeeCollector.class),
+                reg.get(InterestCollector.class)));
 
         factoryRegistry.instantiateServices();
 
@@ -142,7 +175,7 @@ class StatsStrategiesTest {
             factoryRegistry.getProcessors().forEach(p -> p.process(entry));
         }
 
-        var calc = factoryRegistry.getOrCreate(FeePlusInterestCalculator.class);
+        var calc = factoryRegistry.get(FeePlusInterestCalculator.class);
         SoftAssertions.assertSoftly(a -> {
             a.assertThat(calc.calculate("shares:fidelity", LocalDate.now(), "GBP").value())
                     .isEqualByComparingTo(new BigDecimal(21));
@@ -154,7 +187,11 @@ class StatsStrategiesTest {
     }
 
     private static Fee fee(String trading, String fee) {
-        return new Fee(LocalDate.now(), trading, Value.of(new BigDecimal(fee), "GBP"), Optional.empty(), Optional.empty(), SourceLine.GENERATED_LINE);
+        return fee(LocalDate.now().toString(), trading, fee);
+    }
+
+    private static Fee fee(String date, String trading, String fee) {
+        return new Fee(LocalDate.parse(date), trading, Value.of(new BigDecimal(fee), "GBP"), Optional.empty(), Optional.empty(), SourceLine.GENERATED_LINE);
     }
 
     private static Interest interest(String trading, String interest) {
@@ -165,7 +202,7 @@ class StatsStrategiesTest {
         void process(Entry entry);
     }
 
-    interface Calculator {
+    public interface Calculator {
         Result<BigDecimal, UserErrors> calculate(final String account, final LocalDate endDate, String targetCurrency);
     }
 
@@ -186,7 +223,7 @@ class StatsStrategiesTest {
         }
     }
 
-    static class FeeCollector implements Processor, Calculator {
+    public static class FeeCollector implements Processor, Calculator {
         private final Map<String, BigDecimal> balances = new HashMap<>();
 
         public FeeCollector() {

@@ -15,7 +15,7 @@ public class ServiceFactoryRegistry {
         factories.put(builtClass.getName(), (Function<ServiceFactoryRegistry, Object>) xirrFactory);
     }
 
-    public <T> T getOrCreate(Class<T> requestedClass) {
+    public <T> T get(Class<T> requestedClass) {
         return getOrCreateByClassName(requestedClass.getName());
     }
 
