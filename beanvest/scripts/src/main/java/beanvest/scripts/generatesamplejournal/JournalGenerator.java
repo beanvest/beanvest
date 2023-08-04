@@ -1,5 +1,6 @@
 package beanvest.scripts.generatesamplejournal;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,9 +22,17 @@ public class JournalGenerator {
         generator.generate("20", AccountOperationGenerator.Operation.WITHDRAW, AccountOperationGenerator.Interval.QUARTERLY);
         generator.generate("10", AccountOperationGenerator.Operation.INTEREST, AccountOperationGenerator.Interval.MONTHLY);
 
-        generator = new AccountOperationGenerator(start, end, regularSaver);
-        generator.generate("100", AccountOperationGenerator.Operation.DEPOSIT, AccountOperationGenerator.Interval.MONTHLY);
-        generator.generate("15", AccountOperationGenerator.Operation.INTEREST, AccountOperationGenerator.Interval.MONTHLY);
+        var gen = new RegularSaverJournalGenerator(
+                start,
+                end,
+                new BigDecimal("0.05"),
+                new BigDecimal("3000")
+        );
+        gen.generateJournal();
+        for (var line : gen.getJournalLines()) {
+            regularSaver.addLine(line);
+        }
+
         return List.of(savings, trading, regularSaver);
     }
 }
