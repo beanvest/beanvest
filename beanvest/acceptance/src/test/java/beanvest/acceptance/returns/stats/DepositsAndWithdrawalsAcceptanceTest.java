@@ -4,12 +4,12 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class DepositsAndWithdrawalsAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void calculatesDepositsTotal() {
+        dsl.setColumns("cDeps");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -23,8 +23,8 @@ public class DepositsAndWithdrawalsAcceptanceTest {
 
 
     @Test
-    @Disabled("requires Result on CashStat")
     void holdingsHaveNoDepositsOrWithdrawals() {
+        dsl.setColumns("cWths,cDeps");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP

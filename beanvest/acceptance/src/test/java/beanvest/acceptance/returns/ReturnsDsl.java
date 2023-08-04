@@ -46,6 +46,9 @@ public class ReturnsDsl {
     public static final String CUMULATIVE_FEES = "cFees";
     public static final String PERIOD_INTEREST = "pIntr";
     public static final String CUMULATIVE_INTEREST = "cIntr";
+    public static final String PERIOD_WITHDRAWALS = "pWths";
+    public static final String PERIOD_DEPOSITS = "pDeps";
+    public static final String CUMULATIVE_DEPOSITS = "cDeps";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -266,7 +269,7 @@ public class ReturnsDsl {
     }
 
     public void verifyDeposits(String account, String period, String amount) {
-        verifyStat(account, period, amount, s->null);
+        verifyStat(account, period, amount, CUMULATIVE_DEPOSITS);
     }
 
     public void verifyWithdrawals(String account, String period, String amount) {
@@ -441,11 +444,11 @@ public class ReturnsDsl {
     }
 
     public void verifyDepositsDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, r -> null);
+        verifyStatDelta(account, period, expectedAmount, PERIOD_DEPOSITS);
     }
 
     public void verifyWithdrawalsDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, r -> null);
+        verifyStatDelta(account, period, expectedAmount, PERIOD_WITHDRAWALS);
     }
 
     public void verifyDividendsDelta(String account, String period, String expectedAmount) {

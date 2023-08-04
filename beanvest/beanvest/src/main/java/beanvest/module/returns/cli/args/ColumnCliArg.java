@@ -7,8 +7,10 @@ import static beanvest.module.returns.cli.columns.ColumnId.*;
 public enum ColumnCliArg {
     opened(OPENED, "opening date"),
     closed(CLOSED, "closing date"),
-    deps(DEPOSITS, "deposits"),
-    wths(WITHDRAWALS, "withdrawals"),
+    cdeps(DEPOSITS, "deposits"),
+    pdeps(DEPOSITS_PERIOD, "deposits per period"),
+    cwths(WITHDRAWALS, "withdrawals"),
+    pwths(WITHDRAWALS_PERIOD, "withdrawals per period"),
     dw(DEPOSITS_AND_WITHDRAWALS, "deposits plus withdrawals"),
     cintr(INTEREST, "interest"),
     pintr(INTEREST_PERIOD, "interest"),
