@@ -18,7 +18,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AccountsResolverTest {
+class AccountsResolver2Test {
 
     @BeforeEach
     void setUp() {

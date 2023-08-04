@@ -7,6 +7,7 @@ import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.JournalProcessor;
 import beanvest.processor.processing.AccountsResolver;
 import beanvest.processor.processing.PeriodSpec;
+import beanvest.processor.processingv2.AccountsResolver2;
 import beanvest.processor.time.PeriodInterval;
 import beanvest.processor.processing.Grouping;
 
@@ -42,9 +43,10 @@ public class ReturnsCalculatorApp {
                 throw new RuntimeException("Oops! No entries found.");
             }
             var periodSpec = new PeriodSpec(startDate, endDate, interval);
+            var accountsResolver2 = new AccountsResolver2(grouping, reportInvestments);
             var accountsResolver = new AccountsResolver(grouping, reportInvestments);
             var statsResult = statsCalculator.calculateStats(
-                    accountsResolver, journal, accountFilter, periodSpec, EXCLUDE_UNFINISHED);
+                    accountsResolver,accountsResolver2, journal, accountFilter, periodSpec, EXCLUDE_UNFINISHED);
 
             if (statsResult.hasError()) {
                 outputWriter.outputInputErrors(statsResult.error());

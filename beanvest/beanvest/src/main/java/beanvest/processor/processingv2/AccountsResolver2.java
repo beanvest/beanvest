@@ -1,4 +1,4 @@
-package beanvest.acceptance.returns.processingrework;
+package beanvest.processor.processingv2;
 
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Entry;
@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public class AccountsResolver2 implements Processor {
     private final Grouping grouping;
@@ -26,9 +27,7 @@ public class AccountsResolver2 implements Processor {
 
     public List<Account> resolveRelevantAccounts(AccountOperation op) {
         var account = op.account();
-        if (resolved.containsKey(account)) {
-            return resolved.get(account);
-        }
+        //TODO needs caching
         var result = new ArrayList<Account>();
 
         if (grouping.includesGroups()) {
@@ -70,9 +69,11 @@ public class AccountsResolver2 implements Processor {
     }
 
     @Override
-    public void process(Entry entry) {
-        if (entry instanceof AccountOperation op) {
-            resolveRelevantAccounts(op);
-        }
+    public void process(AccountOperation op) {
+        resolveRelevantAccounts(op);
+    }
+
+    public Set<String> getAccounts() {
+        return resolved.keySet();
     }
 }

@@ -8,7 +8,9 @@ import beanvest.processor.processing.EndOfPeriodTracker;
 import beanvest.processor.processing.PeriodInclusion;
 import beanvest.processor.processing.PeriodSpec;
 import beanvest.processor.processing.StatsCollectingJournalProcessor;
+import beanvest.processor.processingv2.StatsCollectingJournalProcessor2;
 import beanvest.processor.processing.collector.AccountStatsGatherer;
+import beanvest.processor.processingv2.AccountsResolver2;
 import beanvest.processor.time.Period;
 import beanvest.processor.validation.ValidatorError;
 import beanvest.result.Result;
@@ -21,14 +23,15 @@ public class JournalProcessor {
     private PeriodSpec periodSpec;
 
     public Result<PortfolioStatsDto, List<ValidatorError>> calculateStats(
-            AccountsResolver accountsResolver1,
+            AccountsResolver accountsResolver, AccountsResolver2 accountsResolver2,
             Journal journal,
             String accountFilter,
             PeriodSpec periodSpec,
             PeriodInclusion periodInclusion) {
 
-        var journalProcessor = new StatsCollectingJournalProcessor(accountsResolver1);
+        var journalProcessor = new StatsCollectingJournalProcessor(accountsResolver);
         this.periodSpec = periodSpec;
+//        var journalProcessor = new StatsCollectingJournalProcessor2(accountsResolver2);
         var endOfPeriodTracker = new EndOfPeriodTracker(this.periodSpec, periodInclusion, period -> finishPeriod(period, journalProcessor));
 
         var predicate = predicateFactory.buildPredicate(accountFilter, periodSpec.end());

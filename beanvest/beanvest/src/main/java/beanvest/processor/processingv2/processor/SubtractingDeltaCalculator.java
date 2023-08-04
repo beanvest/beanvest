@@ -1,5 +1,6 @@
-package beanvest.acceptance.returns.processingrework;
+package beanvest.processor.processingv2.processor;
 
+import beanvest.processor.processingv2.Calculator;
 import beanvest.result.ErrorFactory;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
