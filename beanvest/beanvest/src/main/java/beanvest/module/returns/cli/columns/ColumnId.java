@@ -1,10 +1,12 @@
 package beanvest.module.returns.cli.columns;
 
 import beanvest.processor.processingv2.PeriodInterestCalculator;
+import beanvest.processor.processingv2.processor.CashCalculator;
 import beanvest.processor.processingv2.processor.DepositsCalculator;
 import beanvest.processor.processingv2.processor.DividendCalculator;
 import beanvest.processor.processingv2.processor.FeesCalculator;
 import beanvest.processor.processingv2.processor.InterestCalculator;
+import beanvest.processor.processingv2.processor.PeriodCashCalculator;
 import beanvest.processor.processingv2.processor.PeriodDepositCalculator;
 import beanvest.processor.processingv2.processor.PeriodFeeCalculator;
 import beanvest.processor.processingv2.processor.PeriodRealizedGainCalculator;
@@ -37,7 +39,8 @@ public enum ColumnId {
     DIVIDENDS("cDiv", "dividends cumulative", DividendCalculator.class),
     DIVIDENDS_PERIOD("pDiv", "dividends per period", PeriodDividendCalculator.class),
     ACCOUNT_GAIN("aGain", "holdings value + cash + withdrawals - deposits", null),
-    CASH("cash", "cash", null),
+    CASH("cCash", "cash", CashCalculator.class),
+    CASH_PERIOD("pCash", "cash per period", PeriodCashCalculator.class),
     VALUE("value", "cash + market value of the holdings", null);
 
     public final String header;

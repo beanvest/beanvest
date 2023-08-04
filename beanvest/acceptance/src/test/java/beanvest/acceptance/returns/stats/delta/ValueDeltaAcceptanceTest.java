@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @Disabled("rework v2")
-
 public class ValueDeltaAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -23,7 +22,7 @@ public class ValueDeltaAcceptanceTest {
                 2022-12-31 price X 4
                 """);
 
-        dsl.verifyAccountValueDelta("trading", "2021", "3");
-        dsl.verifyAccountValueDelta("trading", "2022", "1");
+        dsl.verifyValueDelta("trading", "2021", "3");
+        dsl.verifyValueDelta("trading", "2022", "1");
     }
 }

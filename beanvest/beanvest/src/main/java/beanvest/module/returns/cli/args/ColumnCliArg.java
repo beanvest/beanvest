@@ -26,7 +26,8 @@ public enum ColumnCliArg {
     cdiv(DIVIDENDS, "dividends"),
     pdiv(DIVIDENDS_PERIOD, "dividends per period"),
     again(ACCOUNT_GAIN, "holdings value + cash + withdrawals - deposits"),
-    cash(CASH, "cash"),
+    ccash(CASH, "cash"),
+    pcash(CASH_PERIOD, "cash per period"),
     value(VALUE, "cash + market value of the holdings");
 
     public final ColumnId column;

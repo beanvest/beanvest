@@ -50,6 +50,10 @@ public class ReturnsDsl {
     public static final String PERIOD_DEPOSITS = "pDeps";
     public static final String CUMULATIVE_DEPOSITS = "cDeps";
     public static final String CUMULATIVE_REALIZED_GAINS = "cReGa";
+    public static final String CUMULATIVE_VALUE = "cValue";
+    public static final String PERIOD_VALUE = "pValue";
+    public static final String CUMUALTIVE_CASH = "cCash";
+    public static final String PERIOD_CASH = "pCash";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -258,7 +262,7 @@ public class ReturnsDsl {
     }
 
     public void verifyCash(String account, String period, String amount) {
-        verifyStat(account, period, amount, s -> null);
+        verifyStat(account, period, amount, CUMUALTIVE_CASH);
     }
 
     public void setDeltas() {
@@ -390,7 +394,7 @@ public class ReturnsDsl {
     }
 
     public void verifyValue(String account, String period, String amount) {
-        verifyValueStat(account, period, amount, s->null);
+        verifyStat(account, period, amount, CUMULATIVE_VALUE);
     }
 
     public void setCliOutput() {
@@ -436,7 +440,7 @@ public class ReturnsDsl {
     }
 
     public void verifyCashDelta(String account, String period, String expected) {
-        verifyStatDelta(account, period, expected, r -> null);
+        verifyStatDelta(account, period, expected, PERIOD_CASH);
     }
 
 
@@ -468,8 +472,8 @@ public class ReturnsDsl {
         verifyStatDelta(account, period, expectedAmount, r -> null);
     }
 
-    public void verifyAccountValueDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, r -> null);
+    public void verifyValueDelta(String account, String period, String expectedAmount) {
+        verifyStatDelta(account, period, expectedAmount, PERIOD_VALUE);
     }
 
     public void verifyFeesDelta(String account, String period, String expectedAmount) {
@@ -556,7 +560,7 @@ public class ReturnsDsl {
 
     public void verifyCashError(String account, String period, String error) {
         var result = getAccountPeriodReturns(account, period).get();
-        assertThat(result.stats().get("cash").error().getEnums())
+        assertThat(result.stats().get(CUMUALTIVE_CASH).error().getEnums())
                 .isEqualTo(List.of(ErrorEnum.valueOf(error)));
     }
 

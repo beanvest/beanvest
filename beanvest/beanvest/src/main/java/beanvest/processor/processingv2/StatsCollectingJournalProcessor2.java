@@ -20,12 +20,21 @@ public class StatsCollectingJournalProcessor2 {
 
 
     public StatsCollectingJournalProcessor2(AccountsResolver2 accountsResolver1, Map<String, Class<?>> statsToCalculate) {
-        serviceRegistry = new ServiceRegistry();
-        StatsCalculatorsRegistrar.registerDefaultCalculatorsFactories(serviceRegistry);
+        serviceRegistry = initRegistry(accountsResolver1);
+
         accountOpenDatesCollector = serviceRegistry.get(AccountOpenDatesCollector.class);
         accountsResolver = accountsResolver1;
         var column = ColumnId.DIVIDENDS;
         statsCalculator = new SelectedAccountStatsCalculator(serviceRegistry, statsToCalculate, accountsResolver1);
+    }
+
+    private ServiceRegistry initRegistry(AccountsResolver2 accountsResolver1) {
+        final ServiceRegistry serviceRegistry;
+        serviceRegistry = new ServiceRegistry();
+
+        StatsCalculatorsRegistrar.registerDefaultCalculatorsFactories(serviceRegistry);
+        serviceRegistry.registerFactory(AccountsResolver2.class, reg -> accountsResolver1);
+        return serviceRegistry;
     }
 
     public Set<ValidatorError> process(Entry entry) {

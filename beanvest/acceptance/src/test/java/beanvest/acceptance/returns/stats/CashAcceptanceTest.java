@@ -4,12 +4,12 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class CashAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void feesAreSubtracted() {
+        dsl.setColumns("cCash");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -23,6 +23,7 @@ public class CashAcceptanceTest {
 
     @Test
     void purchasesAreSubtracted() {
+        dsl.setColumns("cCash");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -37,6 +38,7 @@ public class CashAcceptanceTest {
 
     @Test
     void salesAreAddingToCashBalance() {
+        dsl.setColumns("cCash");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -51,6 +53,7 @@ public class CashAcceptanceTest {
 
     @Test
     void transactionFeesAreDeductedFromTotalPriceAndDoNotAffectCashBalance() {
+        dsl.setColumns("cCash");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -65,6 +68,7 @@ public class CashAcceptanceTest {
 
     @Test
     void interestIsIncludedInCashBalance() {
+        dsl.setColumns("cCash");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -79,6 +83,7 @@ public class CashAcceptanceTest {
 
     @Test
     void withdrawalsAreSubtracted() {
+        dsl.setColumns("cCash");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -92,6 +97,7 @@ public class CashAcceptanceTest {
 
     @Test
     void dividendsAreAdded() {
+        dsl.setColumns("cCash");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -107,6 +113,7 @@ public class CashAcceptanceTest {
 
     @Test
     void cashStatIsNotAvailableForHoldings() {
+        dsl.setColumns("cCash");
         dsl.setReportHoldings();
         dsl.runCalculateReturns("""
                 account trading
