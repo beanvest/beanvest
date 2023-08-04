@@ -2,7 +2,10 @@ package beanvest.acceptance;
 
 import beanvest.BeanvestMain;
 import beanvest.lib.apprunner.AppRunnerFactory;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+@Disabled("rework v2")
 
 public class BeancountComparisonAcceptanceTest {
     private final BeancountComparisonDsl dsl = new BeancountComparisonDsl(

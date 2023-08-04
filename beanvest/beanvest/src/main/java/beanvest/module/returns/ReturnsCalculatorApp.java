@@ -4,23 +4,25 @@ import beanvest.module.returns.cli.columns.ColumnId;
 import beanvest.parser.JournalParser;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
-import beanvest.processor.JournalProcessor;
+import beanvest.processor.JournalReportGenerator;
 import beanvest.processor.processing.AccountsResolver;
+import beanvest.processor.processing.Grouping;
 import beanvest.processor.processing.PeriodSpec;
 import beanvest.processor.processingv2.AccountsResolver2;
 import beanvest.processor.time.PeriodInterval;
-import beanvest.processor.processing.Grouping;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static beanvest.processor.processing.PeriodInclusion.EXCLUDE_UNFINISHED;
 
 public class ReturnsCalculatorApp {
     private final JournalParser journalParser;
     private final CliOutputWriter outputWriter;
-    private final JournalProcessor statsCalculator = new JournalProcessor();
+    private final JournalReportGenerator statsCalculator = new JournalReportGenerator();
 
     public ReturnsCalculatorApp(CliOutputWriter outputWriter,
                                 JournalParser journalParser) {
@@ -45,20 +47,26 @@ public class ReturnsCalculatorApp {
             var periodSpec = new PeriodSpec(startDate, endDate, interval);
             var accountsResolver2 = new AccountsResolver2(grouping, reportInvestments);
             var accountsResolver = new AccountsResolver(grouping, reportInvestments);
-            var statsResult = statsCalculator.calculateStats(
-                    accountsResolver,accountsResolver2, journal, accountFilter, periodSpec, EXCLUDE_UNFINISHED);
 
-            if (statsResult.hasError()) {
-                outputWriter.outputInputErrors(statsResult.error());
+            var statsToCalculate = convertToCalculatorMap(selectedColumns);
+            var statsResult2 = statsCalculator.calculateStats(
+                    accountsResolver, accountsResolver2, journal, accountFilter, periodSpec, EXCLUDE_UNFINISHED, statsToCalculate);
+
+            if (statsResult2.hasError()) {
+                outputWriter.outputInputErrors(statsResult2.error());
                 isSuccessful = false;
             } else {
-                outputWriter.outputResult(selectedColumns, statsResult.value(), statsMode);
+                outputWriter.outputResult(selectedColumns, statsResult2.value(), statsMode);
             }
         } catch (JournalNotFoundException e) {
             outputWriter.outputException(e);
             isSuccessful = false;
         }
         return isSuccessful ? Result.OK : Result.ERROR;
+    }
+
+    private static Map<String, Class<?>> convertToCalculatorMap(List<ColumnId> selectedColumns) {
+        return selectedColumns.stream().collect(Collectors.toMap((c) -> c.header, c -> c.calculator));
     }
 
     public enum Result {

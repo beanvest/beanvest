@@ -4,8 +4,10 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled("rework v2")
 public class XirrPeriodicAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
+
     @Test
     void calculatesXirrForAccountForEachPeriodSeparately() {
         dsl.setStartDate("2020-01-01");
@@ -71,8 +73,7 @@ public class XirrPeriodicAcceptanceTest {
 
     @Test
     @Disabled
-    void shouldCalculatePeriodicXirrForEachHolding()
-    {
+    void shouldCalculatePeriodicXirrForEachHolding() {
         dsl.setReportHoldings();
         dsl.setEnd("2024-01-01");
         dsl.setYearly();

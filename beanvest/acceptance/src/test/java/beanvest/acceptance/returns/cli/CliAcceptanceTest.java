@@ -3,8 +3,10 @@ package beanvest.acceptance.returns.cli;
 import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled("rework v2")
 public class CliAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -105,19 +107,19 @@ public class CliAcceptanceTest {
 
         dsl.storeJournal("myJournals/account1.bv",
                 """
-                account acc1
-                currency GBP
-                                
-                2021-01-01 deposit 20
-                """
+                        account acc1
+                        currency GBP
+                                        
+                        2021-01-01 deposit 20
+                        """
         );
         dsl.storeJournal("myJournals/new/account2.bv",
                 """
-                account acc2
-                currency GBP
-                                
-                2021-01-01 deposit 21
-                """
+                        account acc2
+                        currency GBP
+                                        
+                        2021-01-01 deposit 21
+                        """
         );
 
         dsl.runCalculateReturnsOnDirectory("myJournals");

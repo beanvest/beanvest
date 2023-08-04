@@ -8,13 +8,9 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Map;
 
-public class StatsV2 {
-    private final Collection<String> errors;
-    private final Map<Class<?>, Result<BigDecimal, UserErrors>> stats;
-
-    public StatsV2(Collection<String> errors, Map<Class<?>, Result<BigDecimal, UserErrors>> stats, AccountMetadata metadata) {
-        this.errors = errors;
-
-        this.stats = stats;
-    }
+public record StatsV2(
+        Collection<String> errors,
+        Map<String, Result<BigDecimal, UserErrors>> stats,
+        AccountMetadata metadata
+) {
 }

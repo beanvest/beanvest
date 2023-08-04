@@ -32,7 +32,7 @@ public class SubtractingDeltaCalculator implements Calculator {
         current.put(account, c);
         var p = previous.get(account);
         if (p == null) {
-            return Result.failure(ErrorFactory.deltaNotAvailableNoValueStats());
+            p = Result.success(BigDecimal.ZERO);
         }
         return c.combine(p, BigDecimal::subtract, UserErrors::join);
     }

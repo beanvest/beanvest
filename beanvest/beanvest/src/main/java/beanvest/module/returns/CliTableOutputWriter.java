@@ -3,6 +3,7 @@ package beanvest.module.returns;
 import beanvest.module.returns.cli.columns.ColumnId;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
+import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import beanvest.processor.validation.ValidatorError;
 import beanvest.processor.dto.PortfolioStatsDto;
 import beanvest.module.returns.cli.CliTablePrinter;
@@ -24,7 +25,7 @@ public class CliTableOutputWriter implements CliOutputWriter {
     }
 
     @Override
-    public void outputResult(List<ColumnId> selectedColumns, PortfolioStatsDto portfolioStats, CollectionMode collectionMode) {
+    public void outputResult(List<ColumnId> selectedColumns, PortfolioStatsDto2 portfolioStats, CollectionMode collectionMode) {
         errorMessagesExtractor.extractErrorsMessages(portfolioStats)
                 .forEach(stdErr::println);
         var columnsStringIds = selectedColumns.stream().map(s -> s.header).collect(Collectors.toList());

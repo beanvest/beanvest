@@ -5,6 +5,7 @@ import beanvest.lib.clitable.ColumnPadding;
 import beanvest.processor.dto.AccountPeriodDto;
 import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.processor.dto.ValueStatDto;
+import beanvest.processor.processingv2.StatsV2;
 import beanvest.result.ErrorEnum;
 
 import java.util.Optional;
@@ -19,7 +20,7 @@ record PeriodicXirrColumnSpec(ColumnId columnId, XirrResultExtractor extractor) 
                 accountPeriod -> convertResultToString(accountPeriod.getStats(period)));
     }
 
-    private String convertResultToString(Optional<StatsWithDeltasDto> maybeStats) {
+    private String convertResultToString(Optional<StatsV2> maybeStats) {
         return maybeStats.map(stats -> extractor.apply(stats).stat().fold(
                         gainValue -> ColumnValueFormatter.formatXirr(gainValue.doubleValue()),
                         ColumnValueFormatter::formatError))
@@ -27,6 +28,6 @@ record PeriodicXirrColumnSpec(ColumnId columnId, XirrResultExtractor extractor) 
     }
 
 
-    interface XirrResultExtractor extends Function<StatsWithDeltasDto, ValueStatDto> {
+    interface XirrResultExtractor extends Function<StatsV2, ValueStatDto> {
     }
 }

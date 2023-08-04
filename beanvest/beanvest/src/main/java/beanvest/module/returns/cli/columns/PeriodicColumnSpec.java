@@ -5,7 +5,7 @@ import beanvest.processor.dto.AccountPeriodDto;
 
 import java.util.Optional;
 
-public sealed interface PeriodicColumnSpec permits PeriodicCashColumnSpec, PeriodicValueColumnSpec, PeriodicXirrColumnSpec {
+public sealed interface PeriodicColumnSpec permits ColumnSpec, PeriodicValueColumnSpec, PeriodicXirrColumnSpec {
     ColumnId columnId();
 
     Column<AccountPeriodDto> toColumn(Optional<String> group, String period, boolean exact, boolean delta, String title);

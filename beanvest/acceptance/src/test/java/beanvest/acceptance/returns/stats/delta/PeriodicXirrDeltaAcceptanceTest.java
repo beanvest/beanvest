@@ -3,8 +3,7 @@ package beanvest.acceptance.returns.stats.delta;
 import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-@Disabled("implement as periodic xirr")
+@Disabled("rework v2")
 public class PeriodicXirrDeltaAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 

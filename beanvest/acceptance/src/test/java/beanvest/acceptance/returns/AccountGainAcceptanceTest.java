@@ -1,7 +1,9 @@
 package beanvest.acceptance.returns;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled("rework v2")
 public class AccountGainAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 

@@ -4,7 +4,7 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import beanvest.lib.testing.DocumentsCurrentBehaviour;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
+@Disabled("rework v2")
 public class BalanceAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 

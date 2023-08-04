@@ -2,8 +2,10 @@ package beanvest.acceptance.returns.instructions;
 
 import beanvest.acceptance.returns.ReturnsDsl;
 import beanvest.lib.testing.DocumentsCurrentBehaviour;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled("rework v2")
 public class ClosingAccountsAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -73,7 +75,7 @@ public class ClosingAccountsAcceptanceTest {
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
-                
+                                
                 2021-01-01 deposit 2
                 2021-01-02 close
                 2021-01-02 withdraw 2

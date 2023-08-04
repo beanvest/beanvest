@@ -15,10 +15,11 @@ public enum ColumnCliArg {
     ifee(INTEREST_FEES, "interest plus fees"),
     hval(HOLDINGS_VALUE, "date value"),
     xirr(XIRR, "xirr"),
-    xirrp(XIRRP, "xirrp"),
+    xirrp(XIRR_PERIOD, "xirrp"),
     rgain(REALIZED_GAIN, "realized gain"),
     ugain(UNREALIZED_GAIN, "unrealized gain"),
-    div(DIVIDENDS, "dividends"),
+    cdiv(DIVIDENDS, "dividends"),
+    pdiv(DIVIDENDS_PERIOD, "dividends per period"),
     again(ACCOUNT_GAIN, "holdings value + cash + withdrawals - deposits"),
     cash(CASH, "cash"),
     value(VALUE, "cash + market value of the holdings");

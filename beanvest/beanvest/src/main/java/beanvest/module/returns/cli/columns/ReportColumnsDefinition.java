@@ -1,6 +1,5 @@
 package beanvest.module.returns.cli.columns;
 
-import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.ColumnPadding;
 import beanvest.processor.dto.AccountPeriodDto;
@@ -17,18 +16,18 @@ public class ReportColumnsDefinition {
             new Column<>(ColumnId.CLOSED.header, ColumnPadding.LEFT, r -> r.closingDate().map(LocalDate::toString).orElse("-")));
 
     public static final List<PeriodicColumnSpec> COLUMNS = List.of(
-            new PeriodicCashColumnSpec(ColumnId.DEPOSITS, StatsWithDeltasDto::deposits),
-            new PeriodicCashColumnSpec(ColumnId.WITHDRAWALS, StatsWithDeltasDto::withdrawals),
-            new PeriodicCashColumnSpec(ColumnId.DIVIDENDS, StatsWithDeltasDto::dividends),
-            new PeriodicCashColumnSpec(ColumnId.INTEREST, StatsWithDeltasDto::interest),
-            new PeriodicCashColumnSpec(ColumnId.FEES, StatsWithDeltasDto::fees),
-            new PeriodicCashColumnSpec(ColumnId.REALIZED_GAIN, StatsWithDeltasDto::realizedGain),
-            new PeriodicCashColumnSpec(ColumnId.CASH, StatsWithDeltasDto::cash),
-            new PeriodicValueColumnSpec(ColumnId.UNREALIZED_GAIN, StatsWithDeltasDto::unrealizedGains),
-            new PeriodicValueColumnSpec(ColumnId.HOLDINGS_VALUE, StatsWithDeltasDto::holdingsValue),
-            new PeriodicValueColumnSpec(ColumnId.ACCOUNT_GAIN, StatsWithDeltasDto::accountGain),
-            new PeriodicXirrColumnSpec(ColumnId.XIRR, StatsWithDeltasDto::xirr),
-            new PeriodicXirrColumnSpec(ColumnId.XIRRP, StatsWithDeltasDto::xirrp)
+            new ColumnSpec(ColumnId.DEPOSITS),
+            new ColumnSpec(ColumnId.WITHDRAWALS),
+            new ColumnSpec(ColumnId.DIVIDENDS),
+            new ColumnSpec(ColumnId.INTEREST),
+            new ColumnSpec(ColumnId.FEES),
+            new ColumnSpec(ColumnId.REALIZED_GAIN),
+            new ColumnSpec(ColumnId.CASH),
+            new ColumnSpec(ColumnId.UNREALIZED_GAIN),
+            new ColumnSpec(ColumnId.HOLDINGS_VALUE),
+            new ColumnSpec(ColumnId.ACCOUNT_GAIN),
+            new ColumnSpec(ColumnId.XIRR),
+            new ColumnSpec(ColumnId.XIRR_PERIOD)
     );
     public static final List<ColumnId> COLUMNS_NEEDING_VALUATION = List.of(
             ColumnId.UNREALIZED_GAIN,

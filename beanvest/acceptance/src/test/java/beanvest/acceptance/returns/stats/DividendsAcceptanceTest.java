@@ -8,6 +8,7 @@ public class DividendsAcceptanceTest {
 
     @Test
     void calculatesDividend() {
+        dsl.setColumns("cDiv");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -25,6 +26,7 @@ public class DividendsAcceptanceTest {
 
     @Test
     void calculatesDividendOfHoldings() {
+        dsl.setColumns("cDiv");
         dsl.setReportHoldings();
         dsl.runCalculateReturns("""
                 account trading

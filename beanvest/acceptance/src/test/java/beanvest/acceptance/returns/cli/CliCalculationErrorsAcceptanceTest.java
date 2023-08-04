@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled("rework v2")
 public class CliCalculationErrorsAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 

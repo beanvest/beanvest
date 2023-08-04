@@ -8,6 +8,8 @@ import beanvest.lib.clitable.TableWriter;
 import beanvest.module.returns.cli.columns.ColumnId;
 import beanvest.module.returns.cli.columns.PeriodicColumnSpec;
 import beanvest.module.returns.cli.columns.ReportColumnsDefinition;
+import beanvest.processor.processingv2.dto.AccountDto2;
+import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import beanvest.processor.time.Period;
 
 import java.io.IOException;
@@ -27,12 +29,12 @@ public class CliTablePrinter implements ValuationNeededChecker {
         this.exact = exact;
     }
 
-    public void printCliOutput(PortfolioStatsDto stats, PrintStream output, List<String> selectedColumns, CollectionMode collectionMode) {
-        List<Column<AccountPeriodDto>> columns = createColumns(selectedColumns, collectionMode, stats.periods);
+    public void printCliOutput(PortfolioStatsDto2 stats, PrintStream output, List<String> selectedColumns, CollectionMode collectionMode) {
+        List<Column<AccountPeriodDto>> columns = createColumns(selectedColumns, collectionMode, stats.periods());
 
-        var rows = stats.accountDtos.stream()
-                .sorted(Comparator.comparing(accStats -> accStats.account))
-                .map(accStats -> new AccountPeriodDto(accStats.account, accStats.openingDate, accStats.closingDate, accStats.periodStats))
+        var rows = stats.accountDtos().stream()
+                .sorted(Comparator.comparing(AccountDto2::account))
+                .map(accStats -> new AccountPeriodDto(accStats.account(), accStats.openingDate(), accStats.closingDate(), accStats.periodStats()))
                 .toList();
 
         var writer = new StringWriter();
