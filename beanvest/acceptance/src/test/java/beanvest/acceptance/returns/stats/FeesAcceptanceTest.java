@@ -4,12 +4,12 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class FeesAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void calculatesFeesTotal() {
+        dsl.setColumns("cFees");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -29,6 +29,7 @@ public class FeesAcceptanceTest {
 
     @Test
     void feeMightBeNegativeInCaseOfReturnedFee() {
+        dsl.setColumns("cFees");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -43,6 +44,7 @@ public class FeesAcceptanceTest {
 
     @Test
     void shouldReturnSumOfCommissionsForHolding() {
+        dsl.setColumns("cFees");
         dsl.setReportHoldings();
 
         dsl.runCalculateReturns("""

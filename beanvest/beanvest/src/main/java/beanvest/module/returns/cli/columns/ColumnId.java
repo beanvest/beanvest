@@ -1,6 +1,9 @@
 package beanvest.module.returns.cli.columns;
 
 import beanvest.processor.processingv2.processor.DividendCalculator;
+import beanvest.processor.processingv2.processor.FeesCalculator;
+import beanvest.processor.processingv2.processor.PeriodFeeCalculator;
+import beanvest.processor.processingv2.processor.PlatformFeeCalculator;
 import beanvest.processor.processingv2.processor.PeriodDividendCalculator;
 
 public enum ColumnId {
@@ -11,7 +14,8 @@ public enum ColumnId {
     WITHDRAWALS("wths", "withdrawals", null),
     DEPOSITS_AND_WITHDRAWALS("dw", "deposits plus withdrawals", null),
     INTEREST("intr", "interest", null),
-    FEES("fees", "fees", null),
+    FEES("cFees", "platform and transaction fees", FeesCalculator.class),
+    FEES_PERIOD("pFees", "platform and transaction fees per period", PeriodFeeCalculator.class),
     INTEREST_FEES("if", "interest plus fees", null),
     HOLDINGS_VALUE("hVal", "holdings value", null),
     XIRR("xirr", "internal rate of return (cumulative)", null),

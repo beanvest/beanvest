@@ -3,12 +3,12 @@ package beanvest.acceptance.returns.stats.delta;
 import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-@Disabled("rework v2")
 public class FeesDeltaAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void calculatesFeesYearlyDelta() {
+        dsl.setColumns("pFees");
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
         dsl.runCalculateReturns("""

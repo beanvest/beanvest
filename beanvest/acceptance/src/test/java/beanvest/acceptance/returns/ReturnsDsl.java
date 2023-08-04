@@ -43,6 +43,7 @@ public class ReturnsDsl {
     public static final String CUMULATIVE_XIRR = "cXirr";
     public static final String CUMULATIVE_DIVIDEND = "cDiv";
     public static final String PERIOD_DIVIDEND = "pDiv";
+    public static final String CUMULATIVE_FEES = "cFees";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -235,7 +236,7 @@ public class ReturnsDsl {
     }
 
     public void verifyFeesTotal(String account, String period, String amount) {
-        verifyStat(account, period, amount, s -> null);
+        verifyColumnStat(account, period, amount, CUMULATIVE_FEES);
     }
 
     public void verifyRealizedGains(String account, String period, String amount) {
@@ -466,7 +467,7 @@ public class ReturnsDsl {
     }
 
     public void verifyFeesDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, r -> null);
+        verifyStatDelta(account, period, expectedAmount, "pFees");
     }
 
     private void verifyStatDelta(String account, String period, String expectedAmount, String statId) {
