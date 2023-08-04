@@ -44,6 +44,8 @@ public class ReturnsDsl {
     public static final String CUMULATIVE_DIVIDEND = "cDiv";
     public static final String PERIOD_DIVIDEND = "pDiv";
     public static final String CUMULATIVE_FEES = "cFees";
+    public static final String PERIOD_INTEREST = "pIntr";
+    public static final String CUMULATIVE_INTEREST = "cIntr";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -236,7 +238,7 @@ public class ReturnsDsl {
     }
 
     public void verifyFeesTotal(String account, String period, String amount) {
-        verifyColumnStat(account, period, amount, CUMULATIVE_FEES);
+        verifyStat(account, period, amount, CUMULATIVE_FEES);
     }
 
     public void verifyRealizedGains(String account, String period, String amount) {
@@ -248,7 +250,7 @@ public class ReturnsDsl {
     }
 
     public void verifyDividends(String account, String period, String amount) {
-        verifyColumnStat(account, period, amount, CUMULATIVE_DIVIDEND);
+        verifyStat(account, period, amount, CUMULATIVE_DIVIDEND);
     }
 
     public void verifyCash(String account, String period, String amount) {
@@ -272,7 +274,7 @@ public class ReturnsDsl {
     }
 
     public void verifyInterest(String account, String period, String amount) {
-        verifyStat(account, period, amount, s->null);
+        this.verifyStat(account, period, amount, CUMULATIVE_INTEREST);
     }
 
     public void setGroupingEnabled() {
@@ -451,7 +453,7 @@ public class ReturnsDsl {
     }
 
     public void verifyInterestDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, r -> null);
+        verifyStatDelta(account, period, expectedAmount, PERIOD_INTEREST);
     }
 
     public void verifyRealizedGainsDelta(String account, String period, String expectedAmount) {
@@ -493,7 +495,7 @@ public class ReturnsDsl {
                 .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
     }
 
-    private void verifyColumnStat(String account, String period, String expectedAmount, String columnId) {
+    private void verifyStat(String account, String period, String expectedAmount, String columnId) {
         var result = getAccountResults(account, period).get().stats().get(columnId).value();
 
         assertThat(result)

@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-class SimpleBalanceCollector {
+public class SimpleBalanceCollector {
     private final Map<String, BigDecimal> balances = new HashMap<>();
 
     public void add(String account, BigDecimal amount) {
