@@ -7,9 +7,11 @@ import beanvest.processor.processingv2.processor.FeesCalculator;
 import beanvest.processor.processingv2.processor.InterestCalculator;
 import beanvest.processor.processingv2.processor.PeriodDepositCalculator;
 import beanvest.processor.processingv2.processor.PeriodFeeCalculator;
+import beanvest.processor.processingv2.processor.PeriodRealizedGainCalculator;
 import beanvest.processor.processingv2.processor.PeriodWithdrawalCalculator;
 import beanvest.processor.processingv2.processor.PlatformFeeCalculator;
 import beanvest.processor.processingv2.processor.PeriodDividendCalculator;
+import beanvest.processor.processingv2.processor.RealizedGainCalculator;
 import beanvest.processor.processingv2.processor.WithdrawalCalculator;
 
 public enum ColumnId {
@@ -29,7 +31,8 @@ public enum ColumnId {
     HOLDINGS_VALUE("hVal", "holdings value", null),
     XIRR("xirr", "internal rate of return (cumulative)", null),
     XIRR_PERIOD("xirrp", "periodic (periodic)", null),
-    REALIZED_GAIN("rGain", "realized gain", null),
+    REALIZED_GAIN("cReGa", "realized gain", RealizedGainCalculator.class),
+    REALIZED_GAIN_PERIOD("pReGa", "realized gain per period", PeriodRealizedGainCalculator.class),
     UNREALIZED_GAIN("uGain", "unrealized gain", null),
     DIVIDENDS("cDiv", "dividends cumulative", DividendCalculator.class),
     DIVIDENDS_PERIOD("pDiv", "dividends per period", PeriodDividendCalculator.class),

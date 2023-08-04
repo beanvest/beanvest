@@ -4,12 +4,12 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class RealizedGainAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void realizedGainIsBasedOnAveragePurchasePrice() {
+        dsl.setColumns("cReGa");
         dsl.setEnd("2021-01-03");
         dsl.runCalculateReturns("""
                 account trading
@@ -17,15 +17,15 @@ public class RealizedGainAcceptanceTest {
                                 
                 2021-01-02 deposit 10
                 2021-01-03 buy 1 X for 10 with fee 1
-                2021-01-03 sell 1 X for 10 with fee 1
+                2021-01-03 sell 1 X for 11 with fee 1
                 """);
 
-        dsl.verifyRealizedGains("trading", "TOTAL", "0");
+        dsl.verifyRealizedGains("trading", "TOTAL", "1");
     }
 
     @Test
     void realizedGainsAreReducedBySellingFees() {
-        dsl.setEnd("2021-01-03");
+        dsl.setColumns("cReGa");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -40,6 +40,7 @@ public class RealizedGainAcceptanceTest {
 
     @Test
     void realizedGainsAreReducedByBuyingFees() {
+        dsl.setColumns("cReGa");
         dsl.setEnd("2021-01-03");
         dsl.runCalculateReturns("""
                 account trading
@@ -56,6 +57,7 @@ public class RealizedGainAcceptanceTest {
 
     @Test
     void calculatesGainWhenSellingInParts() {
+        dsl.setColumns("cReGa");
         dsl.setEnd("2021-01-03");
         dsl.runCalculateReturns("""
                 account trading
@@ -70,6 +72,7 @@ public class RealizedGainAcceptanceTest {
 
     @Test
     void realizedGainMayBeCalculatedPeriodicallyCumulatively() {
+        dsl.setColumns("cReGa");
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
         dsl.runCalculateReturns("""
@@ -89,6 +92,7 @@ public class RealizedGainAcceptanceTest {
 
     @Test
     void shouldCalculateRealizedGainOfHoldings() {
+        dsl.setColumns("cReGa");
         dsl.setReportHoldings();
         dsl.setEnd("2023-01-01");
         dsl.setYearly();

@@ -49,6 +49,7 @@ public class ReturnsDsl {
     public static final String PERIOD_WITHDRAWALS = "pWths";
     public static final String PERIOD_DEPOSITS = "pDeps";
     public static final String CUMULATIVE_DEPOSITS = "cDeps";
+    public static final String CUMULATIVE_REALIZED_GAINS = "cReGa";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -245,7 +246,7 @@ public class ReturnsDsl {
     }
 
     public void verifyRealizedGains(String account, String period, String amount) {
-        verifyStat(account, period, amount, s -> null);
+        verifyStat(account, period, amount, CUMULATIVE_REALIZED_GAINS);
     }
 
     public void verifyUnrealizedGains(String account, String period, String amount) {
@@ -460,7 +461,7 @@ public class ReturnsDsl {
     }
 
     public void verifyRealizedGainsDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, r -> null);
+        verifyStatDelta(account, period, expectedAmount, "pReGa");
     }
 
     public void verifyUnrealizedGainsDelta(String account, String period, String expectedAmount) {
