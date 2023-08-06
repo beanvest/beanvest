@@ -9,7 +9,8 @@ public class RealizedGainDeltaAcceptanceTest {
 
     @Test
     void realizedGainDeltasMayBeCalculatedPeriodically() {
-        dsl.setColumns("pReGa");
+        dsl.setColumns("RGain");
+        dsl.setDeltas();
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
         dsl.runCalculateReturns("""

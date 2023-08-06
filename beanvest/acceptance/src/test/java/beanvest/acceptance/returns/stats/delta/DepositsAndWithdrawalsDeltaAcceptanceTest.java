@@ -8,7 +8,8 @@ public class DepositsAndWithdrawalsDeltaAcceptanceTest {
 
     @Test
     void calculatesDepositsYearlyDelta() {
-        dsl.setColumns("pDeps");
+        dsl.setColumns("Deps");
+        dsl.setDeltas();
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
         dsl.runCalculateReturns("""
@@ -28,7 +29,8 @@ public class DepositsAndWithdrawalsDeltaAcceptanceTest {
 
     @Test
     void calculatesWithdrawalsYearlyDelta() {
-        dsl.setColumns("pWths");
+        dsl.setColumns("Wths");
+        dsl.setDeltas();
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
         dsl.runCalculateReturns("""

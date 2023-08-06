@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class PeriodsInCliAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -32,7 +31,7 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 2021  ╷ 2020  ╷
-                account │ deps  │ deps  │
+                account │ Deps  │ Deps  │
                 isa     │   300 │   200 │""");
     }
 
@@ -54,7 +53,7 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 21q1  ╷ 20q4  ╷ 20q3  ╷ 20q2  ╷ 20q1  ╷
-                account │ deps  │ deps  │ deps  │ deps  │ deps  │
+                account │ Deps  │ Deps  │ Deps  │ Deps  │ Deps  │
                 isa     │   300 │   300 │   300 │   200 │   100 │""");
     }
 
@@ -62,8 +61,8 @@ public class PeriodsInCliAcceptanceTest {
     void calculatesDeltasInYearlyIntervals() {
         dsl.setEnd("2022-01-01");
         dsl.setYearly();
+        dsl.setColumns("Deps");
         dsl.setDeltas();
-        dsl.setColumns("deps");
         dsl.setGroupingDisabled();
 
         dsl.runCalculateReturns("""
@@ -77,7 +76,7 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 2021  ╷ 2020  ╷
-                account │ Δdeps │ Δdeps │
+                account │ pDeps │ pDeps │
                 isa     │   100 │   200 │""");
     }
 
@@ -101,17 +100,17 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 2022  ╷ 2021  ╷
-                account │ Δdeps │ Δdeps │
+                account │ pDeps │ pDeps │
                 isa     │   100 │   100 │""");
     }
 
     @Test
     void calculatesDeltasInQuarterlyIntervalsPeriodic() {
         dsl.setEnd("2021-05-01");
-        dsl.setDeltas();
         dsl.setQuarterly();
         dsl.setGroupingDisabled();
-        dsl.setColumns("deps");
+        dsl.setColumns("Deps");
+        dsl.setDeltas();
 
         dsl.runCalculateReturns("""
                 account isa
@@ -124,18 +123,19 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 21q1  ╷ 20q4  ╷ 20q3  ╷ 20q2  ╷ 20q1  ╷
-                account │ Δdeps │ Δdeps │ Δdeps │ Δdeps │ Δdeps │
+                account │ pDeps │ pDeps │ pDeps │ pDeps │ pDeps │
                 isa     │     0 │     0 │   100 │   100 │   100 │""");
     }
 
     @Test
+    @Disabled("rework v2")
     void calculatesDeltasWithSomeStartingDate() {
-        dsl.setStartDate("2021-01-01");
+        dsl.setStartDate("2020-01-01");
         dsl.setEnd("2022-01-01");
         dsl.setYearly();
         dsl.setGroupingDisabled();
+        dsl.setColumns("Deps");
         dsl.setDeltas();
-        dsl.setColumns("deps");
 
         dsl.runCalculateReturns("""
                 account isa
@@ -147,15 +147,16 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 2021  ╷
-                account │ Δdeps │
+                account │ pDeps │
                 isa     │    50 │""");
     }
 
     @Test
+    @Disabled("rework v2: value calc not implemented yet")
     void printsTableJustFineIfThereIsNoDataAvailableForSomeOfThePeriods() {
         dsl.setEnd("2021-01-01");
         dsl.setYearly();
-        dsl.setColumns("cash");
+        dsl.setColumns("val");
         dsl.setGroupingDisabled();
 
         dsl.runCalculateReturns("""
@@ -172,45 +173,18 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                               ╷ 2020  ╷ 2019  ╷
-                account       │ cash  │ cash  │
+                account       │ Val   │ Val   │
                 openedEarlier │    10 │    10 │
                 openedLater   │    10 │     … │""");
     }
 
     @Test
-    void printsOneColumnWithDeltasWithoutSpecifiedInterval() {
-        dsl.setEnd("2021-01-01");
-        dsl.setStartDate("2019-01-01");
-        dsl.setDeltas();
-        dsl.setGroupingDisabled();
-        dsl.setColumns("deps");
-
-        dsl.runCalculateReturns("""
-                account openedEarlier
-                currency GBP
-
-                2019-06-01 deposit 10
-                ---
-                account openedLater
-                currency GBP
-
-                2020-06-01 deposit 10
-                """);
-
-        dsl.verifyOutput("""
-                              ╷ TOTAL ╷
-                account       │ Δdeps │
-                openedEarlier │    10 │
-                openedLater   │    10 │""");
-    }
-
-    @Test
     void shouldCalculateReturnsUntilEndOfLastMonthInDecemberAsWell() {
         dsl.setCliOutput();
-        dsl.setColumns("deps");
+        dsl.setColumns("Deps");
+        dsl.setDeltas();
         dsl.setGroupingDisabled();
         dsl.setMonthly();
-        dsl.setDeltas();
 
         dsl.setStartDate("2022-10-01");
         dsl.setEnd("month");
@@ -227,7 +201,7 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 22m11 ╷ 22m10 ╷
-                account │ Δdeps │ Δdeps │
+                account │ pDeps │ pDeps │
                 trading │   100 │   100 │""");
     }
 }

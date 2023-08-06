@@ -37,7 +37,8 @@ public class ReturnsCalculatorApp {
                       Grouping grouping,
                       LocalDate startDate,
                       PeriodInterval interval,
-                      CollectionMode statsMode, boolean reportInvestments) {
+                      CollectionMode statsMode,
+                      boolean reportInvestments) {
         boolean isSuccessful = true;
         try {
             var journal = journalParser.parse(journalsPaths);

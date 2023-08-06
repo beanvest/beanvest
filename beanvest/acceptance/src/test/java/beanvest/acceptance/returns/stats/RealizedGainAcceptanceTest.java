@@ -9,7 +9,7 @@ public class RealizedGainAcceptanceTest {
 
     @Test
     void realizedGainIsBasedOnAveragePurchasePrice() {
-        dsl.setColumns("cReGa");
+        dsl.setColumns("RGain");
         dsl.setEnd("2021-01-03");
         dsl.runCalculateReturns("""
                 account trading
@@ -25,7 +25,7 @@ public class RealizedGainAcceptanceTest {
 
     @Test
     void realizedGainsAreReducedBySellingFees() {
-        dsl.setColumns("cReGa");
+        dsl.setColumns("RGain");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -40,7 +40,7 @@ public class RealizedGainAcceptanceTest {
 
     @Test
     void realizedGainsAreReducedByBuyingFees() {
-        dsl.setColumns("cReGa");
+        dsl.setColumns("RGain");
         dsl.setEnd("2021-01-03");
         dsl.runCalculateReturns("""
                 account trading
@@ -57,7 +57,7 @@ public class RealizedGainAcceptanceTest {
 
     @Test
     void calculatesGainWhenSellingInParts() {
-        dsl.setColumns("cReGa");
+        dsl.setColumns("RGain");
         dsl.setEnd("2021-01-03");
         dsl.runCalculateReturns("""
                 account trading
@@ -72,7 +72,7 @@ public class RealizedGainAcceptanceTest {
 
     @Test
     void realizedGainMayBeCalculatedPeriodicallyCumulatively() {
-        dsl.setColumns("cReGa");
+        dsl.setColumns("RGain");
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
         dsl.runCalculateReturns("""
@@ -92,7 +92,7 @@ public class RealizedGainAcceptanceTest {
 
     @Test
     void shouldCalculateRealizedGainOfHoldings() {
-        dsl.setColumns("cReGa");
+        dsl.setColumns("RGain");
         dsl.setReportHoldings();
         dsl.setEnd("2023-01-01");
         dsl.setYearly();

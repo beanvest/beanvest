@@ -8,7 +8,8 @@ public class InterestDeltaAcceptanceTest {
 
     @Test
     void calculatesInterestYearlyDelta() {
-        dsl.setColumns("pIntr");
+        dsl.setColumns("Intr");
+        dsl.setDeltas();
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
         dsl.runCalculateReturns("""

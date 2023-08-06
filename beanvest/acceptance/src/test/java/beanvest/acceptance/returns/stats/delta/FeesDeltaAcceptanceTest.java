@@ -8,7 +8,8 @@ public class FeesDeltaAcceptanceTest {
 
     @Test
     void calculatesFeesYearlyDelta() {
-        dsl.setColumns("pFees");
+        dsl.setColumns("Fees");
+        dsl.setDeltas();
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
         dsl.runCalculateReturns("""

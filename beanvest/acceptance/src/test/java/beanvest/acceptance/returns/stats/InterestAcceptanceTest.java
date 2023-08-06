@@ -9,7 +9,7 @@ public class InterestAcceptanceTest {
 
     @Test
     void calculatesInterestTotal() {
-        dsl.setColumns("cIntr");
+        dsl.setColumns("Intr");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP

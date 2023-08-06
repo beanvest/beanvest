@@ -9,7 +9,7 @@ public class DepositsAndWithdrawalsAcceptanceTest {
 
     @Test
     void calculatesDepositsTotal() {
-        dsl.setColumns("cDeps");
+        dsl.setColumns("Deps");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -24,7 +24,7 @@ public class DepositsAndWithdrawalsAcceptanceTest {
 
     @Test
     void holdingsHaveNoDepositsOrWithdrawals() {
-        dsl.setColumns("cWths,cDeps");
+        dsl.setColumns("Wths,Deps");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP

@@ -40,20 +40,21 @@ public class ReturnsDsl {
     public static final String TOTAL = "TOTAL";
     public static final String DEFAULT_OFFSET = "0.05";
     public static final String COL_PERIOD_XIRR = "pXirr";
-    public static final String CUMULATIVE_XIRR = "cXirr";
-    public static final String CUMULATIVE_DIVIDEND = "cDiv";
+    public static final String CUMULATIVE_XIRR = "Xirr";
+    public static final String CUMULATIVE_DIVIDEND = "Div";
     public static final String PERIOD_DIVIDEND = "pDiv";
-    public static final String CUMULATIVE_FEES = "cFees";
+    public static final String CUMULATIVE_FEES = "Fees";
     public static final String PERIOD_INTEREST = "pIntr";
-    public static final String CUMULATIVE_INTEREST = "cIntr";
+    public static final String CUMULATIVE_INTEREST = "Intr";
     public static final String PERIOD_WITHDRAWALS = "pWths";
     public static final String PERIOD_DEPOSITS = "pDeps";
-    public static final String CUMULATIVE_DEPOSITS = "cDeps";
-    public static final String CUMULATIVE_REALIZED_GAINS = "cReGa";
-    public static final String CUMULATIVE_VALUE = "cValue";
-    public static final String PERIOD_VALUE = "pValue";
-    public static final String CUMUALTIVE_CASH = "cCash";
+    public static final String CUMULATIVE_DEPOSITS = "Deps";
+    public static final String CUMULATIVE_REALIZED_GAINS = "RGain";
+    public static final String CUMULATIVE_VALUE = "Val";
+    public static final String PERIOD_VALUE = "pVal";
+    public static final String CUMUALTIVE_CASH = "Cash";
     public static final String PERIOD_CASH = "pCash";
+    public static final String PERIOD_REALIZED_GAINS = "pRGain";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -465,7 +466,7 @@ public class ReturnsDsl {
     }
 
     public void verifyRealizedGainsDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, "pReGa");
+        verifyStatDelta(account, period, expectedAmount, PERIOD_REALIZED_GAINS);
     }
 
     public void verifyUnrealizedGainsDelta(String account, String period, String expectedAmount) {

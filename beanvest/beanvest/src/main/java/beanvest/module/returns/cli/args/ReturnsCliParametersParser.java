@@ -23,7 +23,6 @@ public class ReturnsCliParametersParser {
         final LocalDate startDate = parseResult.matchedOptionValue("--startDate", LocalDate.MIN);
         final String accountFilter = parseResult.matchedOptionValue("--account", ".*");
         final Optional<String> reportCurrency = Optional.ofNullable(parseResult.matchedOptionValue("--currency", ""));
-        var selectedColumns = Arrays.stream(parseResult.matchedOptionValue("--columns", new ColumnCliArg[0])).map(c -> c.column).collect(Collectors.toList());
 
         var exactValues = parseResult.matchedOptionValue("--exact", false);
         var reportInvestments = parseResult.matchedOptionValue("--report-investments", false);
@@ -32,6 +31,7 @@ public class ReturnsCliParametersParser {
         final PeriodInterval period = PeriodInterval.valueOf(intervalRaw.toUpperCase(Locale.ROOT));
         var grouping = parseResult.matchedOptionValue("--groups", AccountGroupingCliArg.DEFAULT).mappedValue;
         var onlyDeltas = parseResult.matchedOptionValue("--delta", false);
+        var selectedColumns = Arrays.stream(parseResult.matchedOptionValue("--columns", new ColumnCliArg[0])).map(c -> onlyDeltas ? c.periodicColumn : c.column).collect(Collectors.toList());
 
         var collectionMode = onlyDeltas ? CollectionMode.DELTA : CollectionMode.CUMULATIVE;
         return new ReturnsAppParameters(journalsPaths, endDate, startDate, accountFilter, reportCurrency, selectedColumns,

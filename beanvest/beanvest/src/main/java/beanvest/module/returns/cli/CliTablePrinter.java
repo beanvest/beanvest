@@ -1,13 +1,11 @@
 package beanvest.module.returns.cli;
 
-import beanvest.processor.dto.AccountPeriodDto;
-import beanvest.processor.dto.PortfolioStatsDto;
-import beanvest.processor.CollectionMode;
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.TableWriter;
-import beanvest.module.returns.cli.columns.ColumnId;
 import beanvest.module.returns.cli.columns.PeriodicColumnSpec;
 import beanvest.module.returns.cli.columns.ReportColumnsDefinition;
+import beanvest.processor.CollectionMode;
+import beanvest.processor.dto.AccountPeriodDto;
 import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import beanvest.processor.time.Period;
@@ -15,13 +13,14 @@ import beanvest.processor.time.Period;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringWriter;
-import java.util.*;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Stream;
 
-public class CliTablePrinter implements ValuationNeededChecker {
-
-    public static final String SYMBOL_DELTA = "Δ";
+public class CliTablePrinter {
     private final Boolean exact;
     private final TableWriter tableWriter = new TableWriter().setMinColumnWidth(5);
 
@@ -46,13 +45,6 @@ public class CliTablePrinter implements ValuationNeededChecker {
         output.print(writer);
     }
 
-    @Override
-    public boolean isValuationNeeded(List<String> selectedColumns, int periodsCount) {
-        var selectedColumnsIds = prepareSelectedColumnsOrGetDefault(selectedColumns, periodsCount);
-        return streamSelectedColumns(selectedColumnsIds)
-                .anyMatch(s -> ReportColumnsDefinition.COLUMNS_NEEDING_VALUATION.contains(s.columnId()));
-    }
-
     private List<Column<AccountPeriodDto>> createColumns(List<String> selectedColumns, CollectionMode collectionMode, List<Period> periods) {
         var periodTitles = periods.stream().map(Period::title).toList();
         var lowercaseSelectedColumns = prepareSelectedColumnsOrGetDefault(selectedColumns, periodTitles.size());
@@ -72,9 +64,8 @@ public class CliTablePrinter implements ValuationNeededChecker {
 
     private List<Column<AccountPeriodDto>> createPeriodicColumns(List<String> selectedColumns, String period, Optional<String> group, CollectionMode collectionMode) {
         var deltas = collectionMode == CollectionMode.DELTA;
-        final Function<ColumnId, String> title = (ColumnId columnId) -> (deltas ? SYMBOL_DELTA : "") + columnId.header;
         return streamSelectedColumns(selectedColumns)
-                .map(spec -> spec.toColumn(group, period, exact, deltas, title.apply(spec.columnId())))
+                .map(spec -> spec.toColumn(group, period, exact, deltas, spec.columnId().header))
                 .toList();
     }
 

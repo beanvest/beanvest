@@ -10,7 +10,8 @@ public class DividendsDeltaAcceptanceTest {
     void calculatesInterestYearlyDelta() {
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
-        dsl.setColumns("pDiv");
+        dsl.setColumns("Div");
+        dsl.setDeltas();
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
