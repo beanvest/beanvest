@@ -1,5 +1,6 @@
 package beanvest.processor.processingv2;
 
+import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processingv2.processor.CashCalculator;
 import beanvest.processor.processingv2.processor.DepositsCalculator;
 import beanvest.processor.processingv2.processor.DividendCalculator;
@@ -49,6 +50,8 @@ public class StatsCalculatorsRegistrar {
                 reg.get(AccountsResolver2.class)));
         serviceRegistry.registerFactory(PeriodCashCalculator.class, reg -> new PeriodCashCalculator(reg.get(CashCalculator.class)));
         serviceRegistry.registerFactory(PeriodDividendCalculator.class, reg -> new PeriodDividendCalculator(reg.get(DividendCalculator.class)));
+        serviceRegistry.registerFactory(ValueCalculator.class, reg -> new ValueCalculator(reg.get(HoldingsCollector.class), reg.get(CashCalculator.class), reg.get(LatestPricesBook.class)));
+        serviceRegistry.registerFactory(PeriodValueCalculator.class, reg -> new PeriodValueCalculator(reg.get(ValueCalculator.class)));
 
         return serviceRegistry;
     }

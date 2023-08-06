@@ -17,8 +17,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class LatestPricesBook {
     public static final int DEPTH_LIMIT = 1;
     private final Map<CurrencyPair, Price> prices = new HashMap<>();
-
-    public void add(Price price) {
+    public void process(Price price) {
         var currencyPair = getCurrencyPair(price);
         prices.put(currencyPair, price);
     }

@@ -2,7 +2,7 @@ package beanvest.processor.processingv2;
 
 import beanvest.journal.entry.AccountOperation;
 
-public interface Processor {
+public interface ProcessorV2 {
     void process(AccountOperation op);
 }
 

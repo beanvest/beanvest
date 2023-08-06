@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class AccountOpenDatesCollector implements Processor {
+public class AccountOpenDatesCollector implements ProcessorV2 {
     private final Map<String, LocalDate> firstActivity = new HashMap<>();
     private final Map<String, LocalDate> closingDate = new HashMap<>();
 

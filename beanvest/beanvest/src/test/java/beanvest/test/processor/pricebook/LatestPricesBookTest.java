@@ -22,16 +22,16 @@ class LatestPricesBookTest {
 
     @BeforeEach
     void setUp() {
-        priceBook.add(price("2021-01-01", "GBP", "5 PLN"));
-        priceBook.add(price("2021-01-02", "GBP", "5.1 PLN"));
+        priceBook.process(price("2021-01-01", "GBP", "5 PLN"));
+        priceBook.process(price("2021-01-02", "GBP", "5.1 PLN"));
     }
 
     @Test
     void getsLatestPriceForTheDate() {
 
         var date = "2022-01-02";
-        priceBook.add(price(date, "GBP", "5.2 PLN"));
-        priceBook.add(price(date, "GBP", "5.3 PLN"));
+        priceBook.process(price(date, "GBP", "5.2 PLN"));
+        priceBook.process(price(date, "GBP", "5.3 PLN"));
         assertThat(priceBook.getPrice(LocalDate.parse(date), "GBP", "PLN").value())
                 .usingRecursiveComparison().isEqualTo(Value.of("5.3 PLN"));
     }
@@ -39,8 +39,8 @@ class LatestPricesBookTest {
     @Test
     void twoStepConversion() {
         var priceBook = new LatestPricesBook();
-        priceBook.add(price("2021-01-01", "MSFT", "1 USD"));
-        priceBook.add(price("2021-01-01", "USD", "4 PLN"));
+        priceBook.process(price("2021-01-01", "MSFT", "1 USD"));
+        priceBook.process(price("2021-01-01", "USD", "4 PLN"));
         var converted = priceBook.convert(LocalDate.parse("2021-01-01"), "PLN", Value.of("1 MSFT"));
         assertThat(converted.value())
                 .usingRecursiveComparison().isEqualTo(Value.of("4 PLN"));

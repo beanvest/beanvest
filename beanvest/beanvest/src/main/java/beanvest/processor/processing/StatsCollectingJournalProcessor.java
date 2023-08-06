@@ -31,7 +31,7 @@ public class StatsCollectingJournalProcessor {
 
     public Set<ValidatorError> process(Entry entry) {
         if (entry instanceof Price p) {
-            latestPricesBook.add(p);
+            latestPricesBook.process(p);
         } else if (entry instanceof AccountOperation op) {
             for (Account account : accountsResolver
                     .resolveRelevantAccounts(op)) {

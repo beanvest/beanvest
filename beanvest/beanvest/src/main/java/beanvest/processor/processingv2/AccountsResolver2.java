@@ -1,7 +1,6 @@
 package beanvest.processor.processingv2;
 
 import beanvest.journal.entry.AccountOperation;
-import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.HoldingOperation;
 import beanvest.processor.processing.Account;
 import beanvest.processor.processing.AccountType;
@@ -15,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class AccountsResolver2 implements Processor {
+public class AccountsResolver2 implements ProcessorV2 {
     private final Grouping grouping;
     private final boolean includeInvestments;
     private final Map<String, List<Account>> resolved = new HashMap<>();

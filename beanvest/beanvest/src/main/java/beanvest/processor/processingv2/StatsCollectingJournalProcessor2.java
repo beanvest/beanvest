@@ -2,6 +2,7 @@ package beanvest.processor.processingv2;
 
 import beanvest.journal.entry.Entry;
 import beanvest.module.returns.cli.columns.ColumnId;
+import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.AccountMetadata;
 import beanvest.processor.time.Period;
 import beanvest.processor.validation.ValidatorError;
@@ -18,13 +19,11 @@ public class StatsCollectingJournalProcessor2 {
     private final AccountOpenDatesCollector accountOpenDatesCollector;
     private SelectedAccountStatsCalculator statsCalculator;
 
-
     public StatsCollectingJournalProcessor2(AccountsResolver2 accountsResolver1, Map<String, Class<?>> statsToCalculate) {
         serviceRegistry = initRegistry(accountsResolver1);
 
         accountOpenDatesCollector = serviceRegistry.get(AccountOpenDatesCollector.class);
         accountsResolver = accountsResolver1;
-        var column = ColumnId.DIVIDENDS;
         statsCalculator = new SelectedAccountStatsCalculator(serviceRegistry, statsToCalculate, accountsResolver1);
     }
 
@@ -34,6 +33,8 @@ public class StatsCollectingJournalProcessor2 {
 
         StatsCalculatorsRegistrar.registerDefaultCalculatorsFactories(serviceRegistry);
         serviceRegistry.registerFactory(AccountsResolver2.class, reg -> accountsResolver1);
+        var latestPricesBook = new LatestPricesBook();
+        serviceRegistry.registerFactory(LatestPricesBook.class, reg -> latestPricesBook);
         return serviceRegistry;
     }
 

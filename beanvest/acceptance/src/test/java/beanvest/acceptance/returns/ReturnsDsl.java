@@ -50,8 +50,8 @@ public class ReturnsDsl {
     public static final String PERIOD_DEPOSITS = "pDeps";
     public static final String CUMULATIVE_DEPOSITS = "Deps";
     public static final String CUMULATIVE_REALIZED_GAINS = "RGain";
-    public static final String CUMULATIVE_VALUE = "Val";
-    public static final String PERIOD_VALUE = "pVal";
+    public static final String CUMULATIVE_VALUE = "Value";
+    public static final String PERIOD_VALUE = "pValue";
     public static final String CUMUALTIVE_CASH = "Cash";
     public static final String PERIOD_CASH = "pCash";
     public static final String PERIOD_REALIZED_GAINS = "pRGain";

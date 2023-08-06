@@ -4,13 +4,13 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class ValueAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void calculatesAccountValue() {
         dsl.setEnd("2023-01-01");
+        dsl.setColumns("val");
         dsl.setYearly();
         dsl.runCalculateReturns("""
                 account trading
@@ -27,11 +27,12 @@ public class ValueAcceptanceTest {
     }
 
     @Test
-    @Disabled("doesnt seem to be working")
     void calculatesHoldingValue() {
         dsl.setReportHoldings();
+        dsl.setColumns("val");
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
+        dsl.setGroupingDisabled();
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -44,5 +45,32 @@ public class ValueAcceptanceTest {
 
         dsl.verifyValue("trading:X", "2021", "4");
         dsl.verifyValue("trading:X", "2022", "6");
+    }
+
+    @Test
+    @Disabled("fix account/holding naming that is using simple strings currently")
+    void calculatesHoldingValueOfMultipleAccounts() {
+        dsl.setReportHoldings();
+        dsl.setColumns("val");
+        dsl.setEnd("2023-01-01");
+        dsl.setYearly();
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-02 deposit 1
+                2021-01-03 buy 2 X for 2
+                2021-12-31 price X 2
+                ---
+                account trading2
+                currency GBP
+                                
+                2021-01-02 deposit 1
+                2021-01-03 buy 2 X for 2
+                2021-12-31 price X 2
+                """);
+
+        dsl.verifyValue("trading", "2021", "4");
+        dsl.verifyValue("trading2", "2021", "4");
     }
 }

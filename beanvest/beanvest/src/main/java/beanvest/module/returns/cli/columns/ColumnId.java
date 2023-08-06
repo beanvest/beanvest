@@ -1,5 +1,7 @@
 package beanvest.module.returns.cli.columns;
 
+import beanvest.processor.processingv2.PeriodValueCalculator;
+import beanvest.processor.processingv2.ValueCalculator;
 import beanvest.processor.processingv2.PeriodInterestCalculator;
 import beanvest.processor.processingv2.processor.CashCalculator;
 import beanvest.processor.processingv2.processor.DepositsCalculator;
@@ -39,8 +41,8 @@ public enum ColumnId {
     PROFIT_PERIOD("pAGain", "holdings value + cash + withdrawals - deposits", null),
     CASH("Cash", "cash", CashCalculator.class),
     CASH_PERIOD("pCash", "cash per period", PeriodCashCalculator.class),
-    VALUE("Value", "cash + market value of the holdings", null),
-    VALUE_PERIOD("pValue", "cash + market value of the holdings", null)
+    VALUE("Value", "cash + market value of the holdings", ValueCalculator.class),
+    VALUE_PERIOD("pValue", "cash + market value of the holdings", PeriodValueCalculator.class)
     ;
 
     public final String header;

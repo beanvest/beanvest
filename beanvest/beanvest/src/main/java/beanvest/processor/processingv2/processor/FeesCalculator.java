@@ -1,9 +1,6 @@
 package beanvest.processor.processingv2.processor;
 
-import beanvest.journal.entry.AccountOperation;
-import beanvest.journal.entry.Transaction;
 import beanvest.processor.processingv2.Calculator;
-import beanvest.processor.processingv2.Processor;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 

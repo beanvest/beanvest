@@ -11,7 +11,7 @@ import java.util.function.Function;
 public class ServiceRegistry {
     private final Map<String, Function<ServiceRegistry, Object>> factories = new HashMap<>();
     private final Map<String, Object> instances = new HashMap<>();
-    private final Set<Processor> processors = new HashSet<>();
+    private final Set<ProcessorV2> processors = new HashSet<>();
 
     public <T> void registerFactory(Class<T> builtClass, Function<ServiceRegistry, T> factory) {
         factories.put(builtClass.getName(), (Function<ServiceRegistry, Object>) factory);
@@ -35,13 +35,13 @@ public class ServiceRegistry {
         }
         var object = (T) factory.apply(this);
         instances.put(object.getClass().getName(), object);
-        if (object instanceof Processor) {
-            processors.add((Processor) object);
+        if (object instanceof ProcessorV2) {
+            processors.add((ProcessorV2) object);
         }
         return object;
     }
 
-    public Set<Processor> getProcessors() {
+    public Set<ProcessorV2> getProcessors() {
         return processors;
     }
 

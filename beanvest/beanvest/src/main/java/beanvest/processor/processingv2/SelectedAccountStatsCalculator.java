@@ -25,9 +25,9 @@ public class SelectedAccountStatsCalculator {
     private final ServiceRegistry serviceRegistry;
     private final Map<String, Class<?>> neededStats;
     private final AccountsResolver2 accountsResolver;
-    private final Set<Processor> processors;
-    private final LatestPricesBook latestPricesBook = new LatestPricesBook();
+    private final Set<ProcessorV2> processors;
     private final AccountOpenDatesCollector accountOpenDatesCollector;
+    private final LatestPricesBook priceBook;
 
     public SelectedAccountStatsCalculator(ServiceRegistry serviceRegistry, Map<String, Class<?>> neededStats, AccountsResolver2 accountsResolver) {
         this.serviceRegistry = serviceRegistry;
@@ -39,14 +39,16 @@ public class SelectedAccountStatsCalculator {
 
         serviceRegistry.instantiateServices(neededStats.values());
         accountOpenDatesCollector = serviceRegistry.get(AccountOpenDatesCollector.class);
+        priceBook = serviceRegistry.get(LatestPricesBook.class);
+
     }
 
     public LinkedHashSet<ValidatorError> process(Entry entry) {
         if (entry instanceof Price p) {
-            latestPricesBook.add(p);
+            priceBook.process(p);
         } else if (entry instanceof AccountOperation op) {
             accountsResolver.resolveRelevantAccounts(op);
-            for (Processor processor : processors) {
+            for (ProcessorV2 processor : processors) {
                 processor.process(op);
             }
         }

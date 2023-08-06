@@ -3,14 +3,14 @@ package beanvest.processor.processingv2.processor;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Sell;
 import beanvest.processor.processingv2.Calculator;
-import beanvest.processor.processingv2.Processor;
+import beanvest.processor.processingv2.ProcessorV2;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class RealizedGainCalculator implements Processor, Calculator {
+public class RealizedGainCalculator implements ProcessorV2, Calculator {
     SimpleBalanceCollector simpleBalanceCollector = new SimpleBalanceCollector();
     private HoldingsCollector holdingsCollector;
 

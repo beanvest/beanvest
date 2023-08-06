@@ -1,9 +1,7 @@
 package beanvest.processor.processingv2.processor;
 
-import beanvest.processor.processing.AccountType;
 import beanvest.processor.processingv2.AccountsResolver2;
 import beanvest.processor.processingv2.Calculator;
-import beanvest.processor.processingv2.Processor;
 import beanvest.result.ErrorFactory;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;

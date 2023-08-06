@@ -33,7 +33,7 @@ class FullAccountStatsCalculatorTest {
     void unrealizedGainAfterHoldingReduction(){
         calc.process(buy("2 X", "10 GBP"));
         calc.process(sell("1 X", "6 GBP"));
-        pricesBook.add(price("X", "7 GBP"));
+        pricesBook.process(price("X", "7 GBP"));
 
         assertThat(stats().unrealizedGain().value())
                 .isEqualByComparingTo(new BigDecimal(2));
@@ -41,7 +41,7 @@ class FullAccountStatsCalculatorTest {
 
     @Test
     void unrealizedGainAfterGreatPartialSale(){
-        pricesBook.add(price("X", "5 GBP"));
+        pricesBook.process(price("X", "5 GBP"));
         calc.process(buy("2 X", "10 GBP")); // avg cost 5
         calc.process(sell("1 X", "12 GBP")); //rgain 7, ugain 0, avg cost 5, value 5
 
@@ -50,7 +50,7 @@ class FullAccountStatsCalculatorTest {
         assertThat(stats().cash().value())
                 .isEqualByComparingTo(new BigDecimal(2));
 
-        pricesBook.add(price("X", "7 GBP")); //unrealized 2, value 7
+        pricesBook.process(price("X", "7 GBP")); //unrealized 2, value 7
 
         assertThat(stats().unrealizedGain().value())
                 .isEqualByComparingTo(new BigDecimal(2));
@@ -64,7 +64,7 @@ class FullAccountStatsCalculatorTest {
     void unrealizedGainSimple(){
         calc.process(buy("2 X", "10 GBP"));
         calc.process(buy("1 X", "2 GBP"));
-        pricesBook.add(price("X", "5 GBP"));
+        pricesBook.process(price("X", "5 GBP"));
 
 
         var stats = calc.calculateStats(LocalDate.now(), "GBP");
@@ -77,7 +77,7 @@ class FullAccountStatsCalculatorTest {
     void unrealizedGainWhenSoldOut(){
         calc.process(buy("2 X", "10 GBP"));
         calc.process(sell("2 X", "12 GBP"));
-        pricesBook.add(price("X", "8 GBP"));
+        pricesBook.process(price("X", "8 GBP"));
 
         var stats = calc.calculateStats(LocalDate.now(), "GBP");
 
