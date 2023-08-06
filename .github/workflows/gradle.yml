@@ -26,13 +26,13 @@ jobs:
         run: nix-shell --command './gradlew build -x test'
       - name: Run ./gradlew test
         run: nix-shell --command './gradlew test'
-      - name: Run ./gradlew generateUsageDoc
-        run: nix-shell --command './gradlew generateUsageDoc'
+#      - name: Run ./gradlew generateUsageDoc
+#        run: nix-shell --command './gradlew generateUsageDoc'
       - name: Run ./gradlew nativeCompile
         run: nix-shell --command './gradlew nativeCompile'
       - name: Run ./gradlew nativeTestCompile
         run: nix-shell --command './gradlew nativeTestCompile'
       - name: Run ./gradlew nativeTest
         run: nix-shell --command './gradlew nativeTest'
-      - name: Run ./gradlew generateUsageDocNative
-        run: nix-shell --command './gradlew generateUsageDocNative'
+#      - name: Run ./gradlew generateUsageDocNative
+#        run: nix-shell --command './gradlew generateUsageDocNative'
