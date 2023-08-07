@@ -14,7 +14,6 @@ import java.time.LocalDate;
 public class ValueCalculator implements Calculator {
     private final HoldingsCollector holdingsCollector;
     private final CashCalculator cashCalculator;
-    //    private final AccountsResolver2 accountsResolver2;
     private final LatestPricesBook pricesBook;
 
     public ValueCalculator(HoldingsCollector holdingsCollector, CashCalculator cashCalculator, LatestPricesBook pricesBook) {
@@ -25,10 +24,9 @@ public class ValueCalculator implements Calculator {
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(String account, LocalDate endDate, String targetCurrency) {
-//        var knownAccount = accountsResolver2.findKnownAccount(account);
+    public Result<BigDecimal, UserErrors> calculate(Entity entity, LocalDate endDate, String targetCurrency) {
         var balance = BigDecimal.ZERO;
-        var holdings = holdingsCollector.getHoldings(account);
+        var holdings = holdingsCollector.getHoldings(entity);
         for (Holding holding : holdings) {
             var converted = pricesBook.convert(endDate, targetCurrency, holding.asValue());
             if (converted.hasError()) {

@@ -38,7 +38,7 @@ public class CloseValidator implements Validator {
     private static ValidatorError createValidationError(Close close, Set<Holding> holdings, BigDecimal cash) {
         return new ValidatorError(
                 "Account `%s` is not empty on %s and can't be closed. Inventory: %s and %s GBP cash."
-                        .formatted(close.account(), close.date(), makeHoldingsPrintable(holdings), cash), close.originalLine().toString());
+                        .formatted(close.account2(), close.date(), makeHoldingsPrintable(holdings), cash), close.originalLine().toString());
     }
 
     private static List<String> makeHoldingsPrintable(Set<Holding> holdings) {

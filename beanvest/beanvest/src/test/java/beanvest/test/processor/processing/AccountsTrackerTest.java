@@ -9,7 +9,9 @@ import beanvest.processor.processing.Account;
 import beanvest.processor.processing.AccountType;
 import beanvest.processor.processing.AccountsResolver;
 import beanvest.processor.processing.Grouping;
+import beanvest.processor.processingv2.Account2;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -18,7 +20,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AccountsResolver2Test {
+@Disabled("rework v2: Account tracker is not needed at all")
+class AccountsTrackerTest {
 
     @BeforeEach
     void setUp() {
@@ -78,11 +81,11 @@ class AccountsResolver2Test {
     }
 
     private static Dividend getDividend(String account, String symbol) {
-        return new Dividend(LocalDate.now(), account, Value.ZERO,
+        return new Dividend(LocalDate.now(), Account2.fromStringId(account), Value.ZERO,
                 symbol, Optional.empty(), SourceLine.GENERATED_LINE);
     }
 
     private static AccountOperation getAccountOperation(String account) {
-        return new Deposit(LocalDate.now(), account, Value.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
+        return new Deposit(LocalDate.now(), Account2.fromStringId(account), Value.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
     }
 }

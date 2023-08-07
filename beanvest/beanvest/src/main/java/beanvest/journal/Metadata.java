@@ -1,8 +1,10 @@
 package beanvest.journal;
 
+import beanvest.processor.processingv2.Account2;
+
 import java.util.Optional;
 
-public record Metadata(String account, String currency, String source) {
+public record Metadata(Account2 account, String currency, String source) {
 
     public String currency() {
         if (this.currency == null) {

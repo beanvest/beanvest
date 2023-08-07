@@ -46,8 +46,7 @@ public class StatsCalculatorsRegistrar {
                 reg.get(PlatformFeeCalculator.class),
                 reg.get(DividendCalculator.class),
                 reg.get(SpentCalculator.class),
-                reg.get(EarnedCalculator.class),
-                reg.get(AccountsResolver2.class)));
+                reg.get(EarnedCalculator.class)));
         serviceRegistry.registerFactory(PeriodCashCalculator.class, reg -> new PeriodCashCalculator(reg.get(CashCalculator.class)));
         serviceRegistry.registerFactory(PeriodDividendCalculator.class, reg -> new PeriodDividendCalculator(reg.get(DividendCalculator.class)));
         serviceRegistry.registerFactory(ValueCalculator.class, reg -> new ValueCalculator(reg.get(HoldingsCollector.class), reg.get(CashCalculator.class), reg.get(LatestPricesBook.class)));

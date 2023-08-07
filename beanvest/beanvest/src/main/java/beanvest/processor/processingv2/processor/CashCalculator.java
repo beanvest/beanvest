@@ -1,7 +1,9 @@
 package beanvest.processor.processingv2.processor;
 
-import beanvest.processor.processingv2.AccountsResolver2;
+import beanvest.processor.processingv2.AccountHolding;
+import beanvest.processor.processingv2.AccountsTracker;
 import beanvest.processor.processingv2.Calculator;
+import beanvest.processor.processingv2.Entity;
 import beanvest.result.ErrorFactory;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
@@ -18,7 +20,6 @@ public class CashCalculator implements Calculator {
     private final DividendCalculator dividendCollector;
     private final SpentCalculator spentCollector;
     private final EarnedCalculator earnedCollector;
-    private final AccountsResolver2 accountsResolver;
 
     public CashCalculator(DepositsCalculator depositCollector,
                           WithdrawalCalculator withdrawalCollector,
@@ -26,8 +27,7 @@ public class CashCalculator implements Calculator {
                           PlatformFeeCalculator simpleFeeCollector,
                           DividendCalculator dividendCollector,
                           SpentCalculator spentCollector,
-                          EarnedCalculator earnedCollector,
-                          AccountsResolver2 accountsResolver) {
+                          EarnedCalculator earnedCollector) {
         this.depositCollector = depositCollector;
         this.withdrawalCollector = withdrawalCollector;
         this.interestCollector = interestCollector;
@@ -35,21 +35,20 @@ public class CashCalculator implements Calculator {
         this.dividendCollector = dividendCollector;
         this.spentCollector = spentCollector;
         this.earnedCollector = earnedCollector;
-        this.accountsResolver = accountsResolver;
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(String account, LocalDate endDate, String targetCurrency) {
-        if (accountsResolver.findKnownAccount(account).get().isHolding()) {
+    public Result<BigDecimal, UserErrors> calculate(Entity entity, LocalDate endDate, String targetCurrency) {
+        if (entity instanceof AccountHolding) {
             return Result.failure(ErrorFactory.disabledForAccountType());
         }
-        var calculate = depositCollector.calculate(account, endDate, targetCurrency);
-        var calculate1 = withdrawalCollector.calculate(account, endDate, targetCurrency);
-        var calculate2 = interestCollector.calculate(account, endDate, targetCurrency);
-        var calculate3 = simpleFeeCollector.calculate(account, endDate, targetCurrency);
-        var calculate4 = dividendCollector.calculate(account, endDate, targetCurrency);
-        var calculate5 = spentCollector.calculate(account, endDate, targetCurrency);
-        var calculate6 = earnedCollector.calculate(account, endDate, targetCurrency);
+        var calculate = depositCollector.calculate(entity, endDate, targetCurrency);
+        var calculate1 = withdrawalCollector.calculate(entity, endDate, targetCurrency);
+        var calculate2 = interestCollector.calculate(entity, endDate, targetCurrency);
+        var calculate3 = simpleFeeCollector.calculate(entity, endDate, targetCurrency);
+        var calculate4 = dividendCollector.calculate(entity, endDate, targetCurrency);
+        var calculate5 = spentCollector.calculate(entity, endDate, targetCurrency);
+        var calculate6 = earnedCollector.calculate(entity, endDate, targetCurrency);
 
         return Result.combine(
                 List.of(calculate,

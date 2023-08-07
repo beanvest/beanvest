@@ -8,7 +8,7 @@ import beanvest.processor.JournalReportGenerator;
 import beanvest.processor.processing.AccountsResolver;
 import beanvest.processor.processing.Grouping;
 import beanvest.processor.processing.PeriodSpec;
-import beanvest.processor.processingv2.AccountsResolver2;
+import beanvest.processor.processingv2.AccountsTracker;
 import beanvest.processor.time.PeriodInterval;
 
 import java.nio.file.Path;
@@ -46,7 +46,7 @@ public class ReturnsCalculatorApp {
                 throw new RuntimeException("Oops! No entries found.");
             }
             var periodSpec = new PeriodSpec(startDate, endDate, interval);
-            var accountsResolver2 = new AccountsResolver2(grouping, reportInvestments);
+            var accountsResolver2 = new AccountsTracker(grouping, reportInvestments);
             var accountsResolver = new AccountsResolver(grouping, reportInvestments);
 
             var statsToCalculate = convertToCalculatorMap(selectedColumns);

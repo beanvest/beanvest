@@ -10,37 +10,34 @@ import java.util.Map;
 import java.util.Optional;
 
 public class AccountOpenDatesCollector implements ProcessorV2 {
-    private final Map<String, LocalDate> firstActivity = new HashMap<>();
-    private final Map<String, LocalDate> closingDate = new HashMap<>();
+    private final Map<Entity, LocalDate> firstActivity = new HashMap<>();
+    private final Map<Entity, LocalDate> closingDate = new HashMap<>();
 
     @Override
     public void process(AccountOperation op) {
-        storeIfNotStored(op, ".*");
-        storeIfNotStored(op, op.account());
+        storeIfNotStored(op, op.account2());
+        for (Group group : op.account2().groups()) {
+            storeIfNotStored(op, group);
+        }
         if (op instanceof Transaction t) {
-            var holdingAccount = getHoldingAccount(t);
-            storeIfNotStored(op, holdingAccount);
+            storeIfNotStored(op, t.accountHolding());
         }
         if (op instanceof Close close) {
-            closingDate.put(op.account(), close.date());
+            closingDate.put(op.account2(), close.date());
         }
     }
 
-    private void storeIfNotStored(AccountOperation op, String key) {
+    private void storeIfNotStored(AccountOperation op, Entity key) {
         if (firstActivity.get(key) == null) {
             firstActivity.put(key, op.date());
         }
     }
 
-    private static String getHoldingAccount(Transaction t) {
-        return t.account() + ":" + t.holdingSymbol();
-    }
-
-    public Optional<LocalDate> getFirstActivity(String account) {
+    public Optional<LocalDate> getFirstActivity(Entity account) {
         return Optional.ofNullable(firstActivity.get(account));
     }
 
-    public Optional<LocalDate> getClosingDate(String account) {
+    public Optional<LocalDate> getClosingDate(Entity account) {
         return Optional.ofNullable(closingDate.get(account));
     }
 }

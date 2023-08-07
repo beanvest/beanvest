@@ -5,6 +5,7 @@ import beanvest.journal.entry.Deposit;
 import beanvest.journal.entry.Entry;
 import beanvest.parser.SourceLine;
 import beanvest.processor.processing.PeriodSpec;
+import beanvest.processor.processingv2.Account2;
 import beanvest.processor.time.Period;
 import beanvest.processor.time.PeriodInterval;
 import beanvest.processor.processing.EndOfPeriodTracker;
@@ -47,7 +48,7 @@ class EndOfPeriodTrackerTest {
     }
 
     private Entry createEntry(String date) {
-        return new Deposit(LocalDate.parse(date), "anAccount",
+        return new Deposit(LocalDate.parse(date), Account2.fromStringId("anAccount"),
                 Value.of("1", "GBP"), Optional.empty(), SourceLine.GENERATED_LINE);
     }
 }

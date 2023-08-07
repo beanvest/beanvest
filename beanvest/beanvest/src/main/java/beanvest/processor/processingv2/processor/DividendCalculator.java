@@ -3,6 +3,7 @@ package beanvest.processor.processingv2.processor;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Dividend;
 import beanvest.processor.processingv2.Calculator;
+import beanvest.processor.processingv2.Entity;
 import beanvest.processor.processingv2.ProcessorV2;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
@@ -16,12 +17,12 @@ public class DividendCalculator implements ProcessorV2, Calculator {
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Dividend div) {
-            simpleBalanceCollector.add(div.account() + ":" + div.holdingSymbol(), div.getCashAmount());
+            simpleBalanceCollector.add(div.accountHolding(), div.getCashAmount());
         }
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(String account, LocalDate endDate, String targetCurrency) {
+    public Result<BigDecimal, UserErrors> calculate(Entity account, LocalDate endDate, String targetCurrency) {
         return simpleBalanceCollector.calculate(account);
     }
 }

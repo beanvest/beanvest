@@ -24,30 +24,29 @@ public class SelectedAccountStatsCalculator {
 
     private final ServiceRegistry serviceRegistry;
     private final Map<String, Class<?>> neededStats;
-    private final AccountsResolver2 accountsResolver;
     private final Set<ProcessorV2> processors;
     private final AccountOpenDatesCollector accountOpenDatesCollector;
     private final LatestPricesBook priceBook;
+    private final AccountsTracker accountsTracker;
 
-    public SelectedAccountStatsCalculator(ServiceRegistry serviceRegistry, Map<String, Class<?>> neededStats, AccountsResolver2 accountsResolver) {
+    public SelectedAccountStatsCalculator(ServiceRegistry serviceRegistry, Map<String, Class<?>> neededStats, AccountsTracker accountsTracker) {
         this.serviceRegistry = serviceRegistry;
         this.neededStats = neededStats;
-        this.accountsResolver = accountsResolver;
+        this.accountsTracker = accountsTracker;
 
         processors = this.serviceRegistry.getProcessors();
-        processors.add(accountsResolver);
+        processors.add(accountsTracker);
 
         serviceRegistry.instantiateServices(neededStats.values());
         accountOpenDatesCollector = serviceRegistry.get(AccountOpenDatesCollector.class);
         priceBook = serviceRegistry.get(LatestPricesBook.class);
-
     }
 
     public LinkedHashSet<ValidatorError> process(Entry entry) {
         if (entry instanceof Price p) {
             priceBook.process(p);
         } else if (entry instanceof AccountOperation op) {
-            accountsResolver.resolveRelevantAccounts(op);
+            accountsTracker.process(op); //T
             for (ProcessorV2 processor : processors) {
                 processor.process(op);
             }
@@ -58,19 +57,20 @@ public class SelectedAccountStatsCalculator {
 
     public Map<String, StatsV2> calculateStats(Period period, String targetCurrency) {
         Map<String, StatsV2> result = new HashMap<>();
-        for (var account : accountsResolver.getAccounts()) {
+        var entities = accountsTracker.getEntities();
+        for (var account : entities) {
             Map<String, Result<BigDecimal, UserErrors>> stats = new HashMap<>();
             for (var neededStat : neededStats.entrySet()) {
                 var id = neededStat.getKey();
                 var calculator = serviceRegistry.getCollector(neededStat.getValue());
                 stats.put(id, calculator.calculate(account, period.endDate(), targetCurrency));
             }
-            result.put(account, new StatsV2(List.of(), stats, getMetadata(account)));
+            result.put(account.stringId(), new StatsV2(List.of(), stats, getMetadata(account)));
         }
         return result;
     }
 
-    public AccountMetadata getMetadata(String account) {
+    public AccountMetadata getMetadata(Entity account) {
         var firstActivity = accountOpenDatesCollector.getFirstActivity(account);
         return new AccountMetadata(
                 firstActivity.orElseThrow(() -> new IllegalStateException(

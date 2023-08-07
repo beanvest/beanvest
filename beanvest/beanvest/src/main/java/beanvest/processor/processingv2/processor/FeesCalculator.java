@@ -1,6 +1,7 @@
 package beanvest.processor.processingv2.processor;
 
 import beanvest.processor.processingv2.Calculator;
+import beanvest.processor.processingv2.Entity;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 
@@ -18,9 +19,11 @@ public class FeesCalculator implements Calculator {
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(String account, LocalDate endDate, String targetCurrency) {
-        return transactionFeeCalculator.calculate(account, endDate, targetCurrency).combine(
-                platformFeeCalculator.calculate(account, endDate, targetCurrency), BigDecimal::add, UserErrors::join
+    public Result<BigDecimal, UserErrors> calculate(Entity entity, LocalDate endDate, String targetCurrency) {
+        var calculate = transactionFeeCalculator.calculate(entity, endDate, targetCurrency);
+        var calculate1 = platformFeeCalculator.calculate(entity, endDate, targetCurrency);
+        return calculate.combine(
+                calculate1, BigDecimal::add, UserErrors::join
         );
     }
 }

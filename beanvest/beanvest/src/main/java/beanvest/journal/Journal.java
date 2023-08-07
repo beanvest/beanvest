@@ -23,8 +23,9 @@ public class Journal {
 
     public Journal(List<Entry> journalEntries, Collection<AccountDetails> accounts) {
         accounts.forEach(acc -> {
-            assert !this.accounts.containsKey(acc.pattern()) : "account `" + acc.pattern() + "` is already imported";
-            this.accounts.put(acc.pattern(), acc);
+            var accId = acc.account().stringId();
+            assert !this.accounts.containsKey(accId) : "account `" + accId + "` is already imported";
+            this.accounts.put(accId, acc);
         });
         var entriesGroupedByDay = new TreeMap<LocalDate, List<Entry>>();
         sortedEntries = new ArrayList<>(journalEntries).stream()
@@ -64,14 +65,14 @@ public class Journal {
 
     public Journal filterByAccount(String accountFilter) {
         var filteredAccounts = accounts.values().stream()
-                .filter(a -> a.pattern().matches(accountFilter))
+                .filter(a -> a.account().stringId().matches(accountFilter))
                 .collect(Collectors.toSet());
         var filteredAccountsNames = filteredAccounts.stream()
-                .map(AccountDetails::pattern)
+                .map(s -> s.account().stringId())
                 .collect(Collectors.toSet());
         var filteredEntries = this.getEntries().stream().filter(entry -> {
             if (entry instanceof AccountOperation opp) {
-                return filteredAccountsNames.contains(opp.account());
+                return filteredAccountsNames.contains(opp.account2().stringId());
             } else {
                 return true;
             }

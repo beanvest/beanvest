@@ -18,6 +18,8 @@ import beanvest.journal.entry.Price;
 import beanvest.journal.entry.Sell;
 import beanvest.journal.entry.Transaction;
 import beanvest.journal.entry.Withdrawal;
+import beanvest.processor.processingv2.Account2;
+import beanvest.processor.processingv2.AccountHolding;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -118,10 +120,10 @@ public class JournalParser {
     }
 
     private void postProcess(Journal journal) {
-        var inventory = new HashMap<Entity, Pair<LocalDate, BigDecimal>>();
+        HashMap<AccountHolding, Pair<LocalDate, BigDecimal>> inventory = new HashMap<>();
         for (var entry : journal.getEntries()) {
             if (entry instanceof Transaction transaction) {
-                var id = new SecurityImpl(transaction.account(), transaction.holdingSymbol());
+                var id = transaction.accountHolding();
                 var balance = inventory.getOrDefault(id, new Pair<>(entry.date(), BigDecimal.ZERO));
                 var change = transaction instanceof Buy ? transaction.units() : transaction.units().negate();
                 var newBalance = new Pair<>(entry.date(), balance.right().add(change));
@@ -132,10 +134,9 @@ public class JournalParser {
         inventory.entrySet()
                 .stream()
                 .filter(e -> e.getValue().right().compareTo(BigDecimal.ZERO) == 0)
-                .filter(e -> e.getKey() instanceof Security)
                 .map(e -> {
-                    var security = ((Security) e.getKey());
-                    return new Close(e.getValue().left(), security.account(), Optional.of(security.security()), Optional.empty(), SourceLine.GENERATED_LINE);
+                    var security = e.getKey();
+                    return new Close(e.getValue().left(), security.account2(), Optional.of(security.holding()), Optional.empty(), SourceLine.GENERATED_LINE);
                 })
                 .forEach(journal::add);
 
@@ -161,8 +162,10 @@ public class JournalParser {
                         AbstractMap.SimpleEntry::getValue));
 
         var currency = meta.get("currency");
+        var account = meta.get("account");
+        var acc = Account2.fromStringId(account);
         return new Metadata(
-                meta.get("account"),
+                acc,
                 currency,
                 source
         );
@@ -250,7 +253,7 @@ public class JournalParser {
         return new ArrayList<>();
     }
 
-    private String getAccount() {
+    private Account2 getAccount() {
         var account = metadata.account();
         if (account == null) {
             throw new RuntimeException("Account pattern is not set in " + metadata.source());
@@ -380,14 +383,14 @@ public class JournalParser {
         String account();
     }
 
-    interface Security extends Entity {
-        String security();
+    interface Instrument extends Entity {
+        String instrument();
     }
 
     public record InputFile(String path, String content) {
 
     }
 
-    record SecurityImpl(String account, String security) implements Security {
+    record InstrumentImpl(String account, String instrument) implements Instrument {
     }
 }

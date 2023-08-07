@@ -9,17 +9,21 @@ import beanvest.journal.entry.Sell;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.AccountType;
 import beanvest.processor.processing.FullAccountStatsCalculator;
+import beanvest.processor.processingv2.Account2;
+import beanvest.processor.processingv2.Group;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FullAccountStatsCalculatorTest {
 
+    public static final Account2 ACCOUNT = new Account2(new Group(List.of()), "a");
     private LatestPricesBook pricesBook;
     private FullAccountStatsCalculator calc;
 
@@ -89,10 +93,10 @@ class FullAccountStatsCalculatorTest {
     }
 
     private static Buy buy(String boughtHolding, String cost) {
-        return new Buy(LocalDate.now(), "a", Value.of(boughtHolding), Value.of(cost), BigDecimal.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
+        return new Buy(LocalDate.now(), ACCOUNT, Value.of(boughtHolding), Value.of(cost), BigDecimal.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
     }
 
     private static Sell sell(String soldHolding, String fetchedPrice) {
-        return new Sell(LocalDate.now(), "a", Value.of(soldHolding), Value.of(fetchedPrice), BigDecimal.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
+        return new Sell(LocalDate.now(), ACCOUNT, Value.of(soldHolding), Value.of(fetchedPrice), BigDecimal.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
     }
 }

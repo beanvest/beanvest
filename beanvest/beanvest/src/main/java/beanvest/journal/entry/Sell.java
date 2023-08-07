@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record Sell(LocalDate date, String account, Value value, Value totalPrice,
+public record Sell(LocalDate date, beanvest.processor.processingv2.Account2 account2, Value value, Value totalPrice,
                    BigDecimal fee, Optional<String> comment,
                    SourceLine originalLine) implements Transaction, HoldingOperation {
     @Override

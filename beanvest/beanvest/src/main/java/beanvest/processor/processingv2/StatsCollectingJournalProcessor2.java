@@ -1,7 +1,6 @@
 package beanvest.processor.processingv2;
 
 import beanvest.journal.entry.Entry;
-import beanvest.module.returns.cli.columns.ColumnId;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.AccountMetadata;
 import beanvest.processor.time.Period;
@@ -13,13 +12,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class StatsCollectingJournalProcessor2 {
-    private final AccountsResolver2 accountsResolver;
+    private final AccountsTracker accountsResolver;
     private final LinkedHashSet<ValidatorError> validatorErrors = new LinkedHashSet<>();
     private final ServiceRegistry serviceRegistry;
     private final AccountOpenDatesCollector accountOpenDatesCollector;
     private SelectedAccountStatsCalculator statsCalculator;
 
-    public StatsCollectingJournalProcessor2(AccountsResolver2 accountsResolver1, Map<String, Class<?>> statsToCalculate) {
+    public StatsCollectingJournalProcessor2(AccountsTracker accountsResolver1, Map<String, Class<?>> statsToCalculate) {
         serviceRegistry = initRegistry(accountsResolver1);
 
         accountOpenDatesCollector = serviceRegistry.get(AccountOpenDatesCollector.class);
@@ -27,12 +26,12 @@ public class StatsCollectingJournalProcessor2 {
         statsCalculator = new SelectedAccountStatsCalculator(serviceRegistry, statsToCalculate, accountsResolver1);
     }
 
-    private ServiceRegistry initRegistry(AccountsResolver2 accountsResolver1) {
+    private ServiceRegistry initRegistry(AccountsTracker accountsResolver1) {
         final ServiceRegistry serviceRegistry;
         serviceRegistry = new ServiceRegistry();
 
         StatsCalculatorsRegistrar.registerDefaultCalculatorsFactories(serviceRegistry);
-        serviceRegistry.registerFactory(AccountsResolver2.class, reg -> accountsResolver1);
+        serviceRegistry.registerFactory(AccountsTracker.class, reg -> accountsResolver1);
         var latestPricesBook = new LatestPricesBook();
         serviceRegistry.registerFactory(LatestPricesBook.class, reg -> latestPricesBook);
         return serviceRegistry;
@@ -50,10 +49,10 @@ public class StatsCollectingJournalProcessor2 {
 
     public Map<String, AccountMetadata> getMetadata() {
         var result = new HashMap<String, AccountMetadata>();
-        for (String account : accountsResolver.getAccounts()) {
+        for (Entity account : accountsResolver.getEntities()) {
             var firstActivity = accountOpenDatesCollector.getFirstActivity(account);
             var closingDate = accountOpenDatesCollector.getClosingDate(account);
-            result.put(account, new AccountMetadata(firstActivity.get(), closingDate));
+            result.put(account.stringId(), new AccountMetadata(firstActivity.get(), closingDate));
         }
         return result;
     }

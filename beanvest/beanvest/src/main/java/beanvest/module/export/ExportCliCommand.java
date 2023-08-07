@@ -9,6 +9,8 @@ import beanvest.processor.deprecated.JournalState;
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Interest;
 import beanvest.SubCommand;
+import beanvest.processor.processingv2.Account2;
+import beanvest.processor.processingv2.Group;
 import org.slf4j.Logger;
 import picocli.CommandLine;
 
@@ -92,7 +94,7 @@ public class ExportCliCommand implements SubCommand {
     private static void exportGains(String accountPrefix, ArrayList<JournalState> states, PrintWriter writer, List<String> selectedStats, String gainsAccount) {
         var transfers = new GainsTransactionGenerator(selectedStats).generateFakeGainsTransfers(states);
         final List<Entry> tt = transfers.stream()
-                .map(t -> (Entry)new Interest(t.date(), t.account() + ":Stats", t.value(), Optional.of("autogains"), SourceLine.GENERATED_LINE))
+                .map(t -> (Entry)new Interest(t.date(), new Account2(Group.fromStringId(t.account()), "Gains"), t.value(), Optional.of("autogains"), SourceLine.GENERATED_LINE))
                 .toList();
         var journal1 = new Journal(tt, List.of());
         var beanCountJournalWriter = new BeanCountJournalWriter(accountPrefix, false, "Income:Stats", gainsAccount);

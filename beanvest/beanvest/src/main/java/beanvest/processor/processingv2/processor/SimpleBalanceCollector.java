@@ -1,5 +1,6 @@
 package beanvest.processor.processingv2.processor;
 
+import beanvest.processor.processingv2.Entity;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 
@@ -8,17 +9,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SimpleBalanceCollector {
-    private final Map<String, BigDecimal> balances = new HashMap<>();
+    private final Map<Entity, BigDecimal> balances = new HashMap<>();
 
-    public void add(String account, BigDecimal amount) {
-        var newBalance = balances.getOrDefault(account, BigDecimal.ZERO).add(amount);
-        balances.put(account, newBalance);
+    public void add(Entity account2, BigDecimal amount) {
+        var newBalance = balances.getOrDefault(account2, BigDecimal.ZERO).add(amount);
+        balances.put(account2, newBalance);
     }
 
-    public Result<BigDecimal, UserErrors> calculate(String account) {
+    public Result<BigDecimal, UserErrors> calculate(Entity account) {
         var result = BigDecimal.ZERO;
-        for (String accountWithBalance : balances.keySet()) {
-            if (accountWithBalance.startsWith(account)) {
+        for (Entity accountWithBalance : balances.keySet()) {
+            if (account.contains(accountWithBalance)) {
                 result = result.add(balances.get(accountWithBalance));
             }
         }

@@ -3,6 +3,7 @@ package beanvest.processor.processingv2.processor;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Sell;
 import beanvest.processor.processingv2.Calculator;
+import beanvest.processor.processingv2.Entity;
 import beanvest.processor.processingv2.ProcessorV2;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
@@ -22,15 +23,15 @@ public class RealizedGainCalculator implements ProcessorV2, Calculator {
     public void process(AccountOperation op) {
         holdingsCollector.process(op);
         if (op instanceof Sell sell) {
-            var unitCost = holdingsCollector.getHolding(op.account() + ":" + sell.holdingSymbol()).averageCost();
+            var unitCost = holdingsCollector.getHolding(sell.accountHolding()).averageCost();
             var totalCost = unitCost.multiply(sell.units());
             var realizedGain = sell.totalPrice().amount().subtract(totalCost);
-            simpleBalanceCollector.add(sell.account() + ":" + sell.holdingSymbol(), realizedGain);
+            simpleBalanceCollector.add(sell.accountHolding(), realizedGain);
         }
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(String account, LocalDate endDate, String targetCurrency) {
+    public Result<BigDecimal, UserErrors> calculate(Entity account, LocalDate endDate, String targetCurrency) {
         return simpleBalanceCollector.calculate(account);
     }
 }
