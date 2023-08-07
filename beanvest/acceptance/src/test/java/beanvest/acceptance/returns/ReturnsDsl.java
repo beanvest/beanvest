@@ -13,6 +13,7 @@ import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import beanvest.result.ErrorEnum;
 import beanvest.result.Result;
+import beanvest.result.UserErrors;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.assertj.core.data.Offset;
@@ -55,6 +56,8 @@ public class ReturnsDsl {
     public static final String CUMUALTIVE_CASH = "Cash";
     public static final String PERIOD_CASH = "pCash";
     public static final String PERIOD_REALIZED_GAINS = "pRGain";
+    public static final String CUMULATIVE_UNREALIZED_GAINS = "UGain";
+    public static final String PERIOD_UNREALIZED_GAINS = "pUGain";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -255,7 +258,7 @@ public class ReturnsDsl {
     }
 
     public void verifyUnrealizedGains(String account, String period, String amount) {
-        verifyValueStat(account, period, amount, s -> null);
+        verifyStat(account, period, amount, CUMULATIVE_UNREALIZED_GAINS);
     }
 
     public void verifyDividends(String account, String period, String amount) {
@@ -470,7 +473,7 @@ public class ReturnsDsl {
     }
 
     public void verifyUnrealizedGainsDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, r -> null);
+        verifyStatDelta(account, period, expectedAmount, PERIOD_UNREALIZED_GAINS);
     }
 
     public void verifyValueDelta(String account, String period, String expectedAmount) {
@@ -505,11 +508,15 @@ public class ReturnsDsl {
     }
 
     private void verifyStat(String account, String period, String expectedAmount, String columnId) {
-        var result = getAccountResults(account, period).get().stats().get(columnId).value();
+        var result1 = getAccountResults(account, period).get().stats().get(columnId);
+        var result = result1.value();
+
+        var expected = new BigDecimal(expectedAmount);
+        var slack = Offset.offset(new BigDecimal(DEFAULT_OFFSET));
 
         assertThat(result)
                 .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
+                .isCloseTo(expected, slack);
     }
 
     @Deprecated //use verifyColumnStat instead

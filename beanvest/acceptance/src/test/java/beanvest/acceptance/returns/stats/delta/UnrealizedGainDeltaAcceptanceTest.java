@@ -4,7 +4,6 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class UnrealizedGainDeltaAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -12,6 +11,8 @@ public class UnrealizedGainDeltaAcceptanceTest {
     void calculatesUnrealizedGainDeltasYearly() {
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
+        dsl.setColumns("UGain");
+        dsl.setDeltas();
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP

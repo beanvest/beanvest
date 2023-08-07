@@ -1,6 +1,7 @@
 package beanvest.processor.processingv2;
 
 import beanvest.processor.pricebook.LatestPricesBook;
+import beanvest.processor.processingv2.processor.AccountOpenDatesCollector;
 import beanvest.processor.processingv2.processor.CashCalculator;
 import beanvest.processor.processingv2.processor.DepositsCalculator;
 import beanvest.processor.processingv2.processor.DividendCalculator;
@@ -12,12 +13,17 @@ import beanvest.processor.processingv2.processor.PeriodCashCalculator;
 import beanvest.processor.processingv2.processor.PeriodDepositCalculator;
 import beanvest.processor.processingv2.processor.PeriodDividendCalculator;
 import beanvest.processor.processingv2.processor.PeriodFeeCalculator;
+import beanvest.processor.processingv2.processor.PeriodInterestCalculator;
 import beanvest.processor.processingv2.processor.PeriodRealizedGainCalculator;
+import beanvest.processor.processingv2.processor.PeriodUnrealizedGainCalculator;
+import beanvest.processor.processingv2.processor.PeriodValueCalculator;
 import beanvest.processor.processingv2.processor.PeriodWithdrawalCalculator;
 import beanvest.processor.processingv2.processor.PlatformFeeCalculator;
 import beanvest.processor.processingv2.processor.RealizedGainCalculator;
 import beanvest.processor.processingv2.processor.SpentCalculator;
 import beanvest.processor.processingv2.processor.TransactionFeeCalculator;
+import beanvest.processor.processingv2.processor.UnrealizedGainCalculator;
+import beanvest.processor.processingv2.processor.ValueCalculator;
 import beanvest.processor.processingv2.processor.WithdrawalCalculator;
 
 public class StatsCalculatorsRegistrar {
@@ -51,6 +57,8 @@ public class StatsCalculatorsRegistrar {
         serviceRegistry.registerFactory(PeriodDividendCalculator.class, reg -> new PeriodDividendCalculator(reg.get(DividendCalculator.class)));
         serviceRegistry.registerFactory(ValueCalculator.class, reg -> new ValueCalculator(reg.get(HoldingsCollector.class), reg.get(CashCalculator.class), reg.get(LatestPricesBook.class)));
         serviceRegistry.registerFactory(PeriodValueCalculator.class, reg -> new PeriodValueCalculator(reg.get(ValueCalculator.class)));
+        serviceRegistry.registerFactory(UnrealizedGainCalculator.class, reg -> new UnrealizedGainCalculator(reg.get(HoldingsCollector.class), reg.get(ValueCalculator.class)));
+        serviceRegistry.registerFactory(PeriodUnrealizedGainCalculator.class, reg -> new PeriodUnrealizedGainCalculator(reg.get(UnrealizedGainCalculator.class)));
 
         return serviceRegistry;
     }

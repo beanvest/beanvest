@@ -1,8 +1,10 @@
 package beanvest.module.returns.cli.columns;
 
-import beanvest.processor.processingv2.PeriodValueCalculator;
-import beanvest.processor.processingv2.ValueCalculator;
-import beanvest.processor.processingv2.PeriodInterestCalculator;
+import beanvest.processor.processingv2.processor.PeriodUnrealizedGainCalculator;
+import beanvest.processor.processingv2.processor.PeriodValueCalculator;
+import beanvest.processor.processingv2.processor.UnrealizedGainCalculator;
+import beanvest.processor.processingv2.processor.ValueCalculator;
+import beanvest.processor.processingv2.processor.PeriodInterestCalculator;
 import beanvest.processor.processingv2.processor.CashCalculator;
 import beanvest.processor.processingv2.processor.DepositsCalculator;
 import beanvest.processor.processingv2.processor.DividendCalculator;
@@ -33,8 +35,8 @@ public enum ColumnId {
     XIRR_PERIOD("pXirr", "periodic (periodic)", null),
     REALIZED_GAIN("RGain", "realized gain", RealizedGainCalculator.class),
     REALIZED_GAIN_PERIOD("pRGain", "realized gain per period", PeriodRealizedGainCalculator.class),
-    UNREALIZED_GAIN("UGain", "unrealized gain", null),
-    UNREALIZED_GAIN_PERIOD("pUGain", "unrealized gain per period", null),
+    UNREALIZED_GAIN("UGain", "unrealized gain", UnrealizedGainCalculator.class),
+    UNREALIZED_GAIN_PERIOD("pUGain", "unrealized gain per period", PeriodUnrealizedGainCalculator.class),
     DIVIDENDS("Div", "dividends cumulative", DividendCalculator.class),
     DIVIDENDS_PERIOD("pDiv", "dividends per period", PeriodDividendCalculator.class),
     PROFIT("AGain", "holdings value + cash + withdrawals - deposits", null),

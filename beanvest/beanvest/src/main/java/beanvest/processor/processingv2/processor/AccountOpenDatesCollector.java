@@ -1,8 +1,11 @@
-package beanvest.processor.processingv2;
+package beanvest.processor.processingv2.processor;
 
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Close;
 import beanvest.journal.entry.Transaction;
+import beanvest.processor.processingv2.Entity;
+import beanvest.processor.processingv2.Group;
+import beanvest.processor.processingv2.ProcessorV2;
 
 import java.time.LocalDate;
 import java.util.HashMap;

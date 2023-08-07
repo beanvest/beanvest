@@ -1,4 +1,4 @@
-package beanvest.processor.processingv2;
+package beanvest.processor.processingv2.processor;
 
 import beanvest.processor.processingv2.processor.InterestCalculator;
 import beanvest.processor.processingv2.processor.SubtractingDeltaCalculator;

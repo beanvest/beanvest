@@ -4,13 +4,13 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class UnrealizedGainAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void calculatesUnrealizedGain() {
         dsl.setEnd("2021-01-06");
+        dsl.setColumns("UGain");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -27,6 +27,7 @@ public class UnrealizedGainAcceptanceTest {
     @Test
     void unrealizedGainAfterPartialSale() {
         dsl.setEnd("2021-01-06");
+        dsl.setColumns("UGain");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -43,6 +44,7 @@ public class UnrealizedGainAcceptanceTest {
     @Test
     void unrealizedGainIsZeroedWhenSelling() {
         dsl.setEnd("2021-01-06");
+        dsl.setColumns("UGain");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -59,6 +61,7 @@ public class UnrealizedGainAcceptanceTest {
     @Test
     void calculatesUnrealizedGainFromMultipleSecurities() {
         dsl.setEnd("2021-01-06");
+        dsl.setColumns("UGain");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -79,6 +82,7 @@ public class UnrealizedGainAcceptanceTest {
     void shouldCalculateUnrealizedGainOfHolding() {
         dsl.setReportHoldings();
         dsl.setEnd("2021-01-06");
+        dsl.setColumns("UGain");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP

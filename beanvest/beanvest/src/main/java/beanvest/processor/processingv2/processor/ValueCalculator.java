@@ -1,8 +1,10 @@
-package beanvest.processor.processingv2;
+package beanvest.processor.processingv2.processor;
 
 import beanvest.journal.Value;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.collector.Holding;
+import beanvest.processor.processingv2.Calculator;
+import beanvest.processor.processingv2.Entity;
 import beanvest.processor.processingv2.processor.CashCalculator;
 import beanvest.processor.processingv2.processor.HoldingsCollector;
 import beanvest.result.Result;
@@ -13,13 +15,10 @@ import java.time.LocalDate;
 
 public class ValueCalculator implements Calculator {
     private final HoldingsCollector holdingsCollector;
-    private final CashCalculator cashCalculator;
     private final LatestPricesBook pricesBook;
 
     public ValueCalculator(HoldingsCollector holdingsCollector, CashCalculator cashCalculator, LatestPricesBook pricesBook) {
         this.holdingsCollector = holdingsCollector;
-        this.cashCalculator = cashCalculator;
-//        this.accountsResolver2 = accountsResolver2;
         this.pricesBook = pricesBook;
     }
 
