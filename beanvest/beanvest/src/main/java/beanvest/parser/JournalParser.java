@@ -163,7 +163,7 @@ public class JournalParser {
 
         var currency = meta.get("currency");
         var account = meta.get("account");
-        var acc = Account2.fromStringId(account);
+        var acc = account == null ? null : Account2.fromStringId(account);
         return new Metadata(
                 acc,
                 currency,

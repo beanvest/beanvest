@@ -36,7 +36,13 @@ public record Account2(Group group, String name) implements Entity {
         if (group.isRoot()) {
             return name;
         } else {
-            return group.stringId() + ":" + name;
+            return group.actualStringId() + ":" + name;
         }
+    }
+
+    @Override
+    public String toString()
+    {
+        return "A/" + stringId();
     }
 }

@@ -5,19 +5,17 @@ import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.collector.Holding;
 import beanvest.processor.processingv2.Calculator;
 import beanvest.processor.processingv2.Entity;
-import beanvest.processor.processingv2.processor.CashCalculator;
-import beanvest.processor.processingv2.processor.HoldingsCollector;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class ValueCalculator implements Calculator {
+public class HoldingsValueCalculator implements Calculator {
     private final HoldingsCollector holdingsCollector;
     private final LatestPricesBook pricesBook;
 
-    public ValueCalculator(HoldingsCollector holdingsCollector, CashCalculator cashCalculator, LatestPricesBook pricesBook) {
+    public HoldingsValueCalculator(HoldingsCollector holdingsCollector, LatestPricesBook pricesBook) {
         this.holdingsCollector = holdingsCollector;
         this.pricesBook = pricesBook;
     }

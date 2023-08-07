@@ -1,9 +1,9 @@
 package beanvest.module.returns.cli.columns;
 
 import beanvest.processor.processingv2.processor.PeriodUnrealizedGainCalculator;
-import beanvest.processor.processingv2.processor.PeriodValueCalculator;
+import beanvest.processor.processingv2.processor.PeriodHoldingsValueCalculator;
 import beanvest.processor.processingv2.processor.UnrealizedGainCalculator;
-import beanvest.processor.processingv2.processor.ValueCalculator;
+import beanvest.processor.processingv2.processor.HoldingsValueCalculator;
 import beanvest.processor.processingv2.processor.PeriodInterestCalculator;
 import beanvest.processor.processingv2.processor.CashCalculator;
 import beanvest.processor.processingv2.processor.DepositsCalculator;
@@ -18,6 +18,7 @@ import beanvest.processor.processingv2.processor.PeriodWithdrawalCalculator;
 import beanvest.processor.processingv2.processor.PeriodDividendCalculator;
 import beanvest.processor.processingv2.processor.RealizedGainCalculator;
 import beanvest.processor.processingv2.processor.WithdrawalCalculator;
+import beanvest.processor.processingv2.processor.XirrCalculator;
 
 public enum ColumnId {
     ACCOUNT("Account", "account or group", null),
@@ -31,7 +32,7 @@ public enum ColumnId {
     INTEREST_PERIOD("pIntr", "interest per period", PeriodInterestCalculator.class),
     FEES("Fees", "platform and transaction fees", FeesCalculator.class),
     FEES_PERIOD("pFees", "platform and transaction fees per period", PeriodFeeCalculator.class),
-    XIRR("Xirr", "internal rate of return (cumulative)", null),
+    XIRR("Xirr", "internal rate of return (cumulative)", XirrCalculator.class),
     XIRR_PERIOD("pXirr", "periodic (periodic)", null),
     REALIZED_GAIN("RGain", "realized gain", RealizedGainCalculator.class),
     REALIZED_GAIN_PERIOD("pRGain", "realized gain per period", PeriodRealizedGainCalculator.class),
@@ -43,8 +44,8 @@ public enum ColumnId {
     PROFIT_PERIOD("pAGain", "holdings value + cash + withdrawals - deposits", null),
     CASH("Cash", "cash", CashCalculator.class),
     CASH_PERIOD("pCash", "cash per period", PeriodCashCalculator.class),
-    VALUE("Value", "cash + market value of the holdings", ValueCalculator.class),
-    VALUE_PERIOD("pValue", "cash + market value of the holdings", PeriodValueCalculator.class)
+    VALUE("Value", "cash + market value of the holdings", HoldingsValueCalculator.class),
+    VALUE_PERIOD("pValue", "cash + market value of the holdings", PeriodHoldingsValueCalculator.class)
     ;
 
     public final String header;

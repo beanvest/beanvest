@@ -4,13 +4,13 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class XirrCumulativeAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void perAccountCalculationUsesAccountOpeningDateAsAStartDate() {
         dsl.setEnd("2023-01-01");
+        dsl.setColumns("xirr");
 
         dsl.runCalculateReturns("""
                 account pension
@@ -26,6 +26,7 @@ public class XirrCumulativeAcceptanceTest {
     @Test
     void calculationsAreDoneForAllAccountsSeparately() {
         dsl.setEnd("2023-01-01");
+        dsl.setColumns("xirr");
 
         dsl.runCalculateReturns("""
                 account pension
@@ -41,6 +42,7 @@ public class XirrCumulativeAcceptanceTest {
     @Test
     void calculatesXirrSeparatelyForEachAccount() {
         dsl.setEnd("2021-12-31");
+        dsl.setColumns("xirr");
 
         dsl.runCalculateReturns("""
                 account smallerGain
@@ -65,6 +67,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setStartDate("2020-01-01");
         dsl.setEnd("2022-01-01");
         dsl.setYearly();
+        dsl.setColumns("xirr");
 
         dsl.runCalculateReturns("""
                 account savings
@@ -84,6 +87,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setStartDate("2020-01-01");
         dsl.setEnd("2022-01-01");
         dsl.setYearly();
+        dsl.setColumns("xirr");
 
         dsl.runCalculateReturns("""
                 account savings
@@ -99,6 +103,7 @@ public class XirrCumulativeAcceptanceTest {
     @Test
     void calculatesXirr() {
         dsl.setEnd("2023-01-01");
+        dsl.setColumns("xirr");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -115,6 +120,7 @@ public class XirrCumulativeAcceptanceTest {
     void valueFromBeforeTheStartIsUsedToCalculateXirr() {
         dsl.setStartDate("2019-01-01");
         dsl.setEnd("2020-01-01");
+        dsl.setColumns("xirr");
         dsl.runCalculateReturns("""
                 account savings
                 currency GBP
@@ -130,6 +136,7 @@ public class XirrCumulativeAcceptanceTest {
     void calculatesCumulativeXirrForEveryPeriod() {
         dsl.setYearly();
         dsl.setEnd("2023-01-01");
+        dsl.setColumns("xirr");
         dsl.runCalculateReturns("""
                 account savings
                 currency GBP
@@ -148,6 +155,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setYearly();
         dsl.setGroupingEnabled();
         dsl.setEnd("2023-01-01");
+        dsl.setColumns("xirr");
         dsl.runCalculateReturns("""
                 account savings
                 currency GBP
@@ -169,6 +177,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setYearly();
         dsl.setGroupingEnabled();
         dsl.setEnd("2023-01-01");
+        dsl.setColumns("xirr");
         dsl.runCalculateReturns("""
                 account savings
                 currency GBP
@@ -190,6 +199,7 @@ public class XirrCumulativeAcceptanceTest {
     void xirrOnLoanWithLoss() {
         dsl.setYearly();
         dsl.setGroupingEnabled();
+        dsl.setColumns("xirr");
         dsl.setEnd("2023-01-01");
         dsl.runCalculateReturns("""
                 account savings
@@ -213,6 +223,7 @@ public class XirrCumulativeAcceptanceTest {
     void shouldCalculateXirrForEachHolding() {
         dsl.setReportHoldings();
         dsl.setEnd("2023-01-01");
+        dsl.setColumns("xirr");
 
         dsl.runCalculateReturns("""
                 account pension

@@ -18,7 +18,7 @@ public class XirrPeriodicCalculator implements StatCalculator {
     private final AccountType accountType;
     private Result<BigDecimal, UserErrors> previousValue = Result.success(BigDecimal.ZERO);
     private LocalDate previousDate = LocalDate.MIN;
-    private XirrCalculator xirrCalculator = new XirrCalculator();
+    private CashflowsXirrCalculator xirrCalculator = new CashflowsXirrCalculator();
 
     public XirrPeriodicCalculator(
             PeriodCashFlowCollector fullCashFlowCollector,

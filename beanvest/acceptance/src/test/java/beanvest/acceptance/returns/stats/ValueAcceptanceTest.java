@@ -48,24 +48,23 @@ public class ValueAcceptanceTest {
     }
 
     @Test
-    @Disabled("fix account/holding naming that is using simple strings currently")
     void calculatesHoldingValueOfMultipleAccounts() {
         dsl.setReportHoldings();
         dsl.setColumns("val");
-        dsl.setEnd("2023-01-01");
+        dsl.setEnd("2022-01-01");
         dsl.setYearly();
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
                                 
-                2021-01-02 deposit 1
+                2021-01-02 deposit 2
                 2021-01-03 buy 2 X for 2
                 2021-12-31 price X 2
                 ---
                 account trading2
                 currency GBP
                                 
-                2021-01-02 deposit 1
+                2021-01-02 deposit 2
                 2021-01-03 buy 2 X for 2
                 2021-12-31 price X 2
                 """);

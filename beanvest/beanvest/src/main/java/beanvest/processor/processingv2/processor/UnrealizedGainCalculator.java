@@ -1,6 +1,5 @@
 package beanvest.processor.processingv2.processor;
 
-import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.collector.Holding;
 import beanvest.processor.processingv2.Calculator;
 import beanvest.processor.processingv2.Entity;
@@ -9,20 +8,19 @@ import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 public class UnrealizedGainCalculator implements Calculator {
     private final HoldingsCollector holdingsCollector;
-    private final ValueCalculator valueCalculator;
+    private final HoldingsValueCalculator holdingsValueCalculator;
 
-    public UnrealizedGainCalculator(HoldingsCollector holdingsCollector, ValueCalculator valueCalculator) {
+    public UnrealizedGainCalculator(HoldingsCollector holdingsCollector, HoldingsValueCalculator holdingsValueCalculator) {
         this.holdingsCollector = holdingsCollector;
-        this.valueCalculator = valueCalculator;
+        this.holdingsValueCalculator = holdingsValueCalculator;
     }
 
     @Override
     public Result<BigDecimal, UserErrors> calculate(Entity entity, LocalDate endDate, String targetCurrency) {
-        var calculate = valueCalculator.calculate(entity, endDate, targetCurrency);
+        var calculate = holdingsValueCalculator.calculate(entity, endDate, targetCurrency);
         if (calculate.hasError()) {
             return calculate;
         }

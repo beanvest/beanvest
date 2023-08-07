@@ -35,4 +35,10 @@ public record AccountHolding(Account2 account2, String holding) implements Entit
     public String stringId() {
         return account2.stringId() + ":" + holding;
     }
+
+    @Override
+    public String toString()
+    {
+        return "H/" + stringId();
+    }
 }

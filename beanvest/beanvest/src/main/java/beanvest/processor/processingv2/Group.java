@@ -22,6 +22,11 @@ public record Group(List<String> parts) implements Entity {
 
     @Override
     public String stringId() {
+        var groupString = actualStringId();
+        return groupString.isEmpty() ? ".*" : groupString + ":.*";
+    }
+
+    String actualStringId() {
         if (parts.isEmpty()) {
             return "";
         }
@@ -68,5 +73,11 @@ public record Group(List<String> parts) implements Entity {
 
     public boolean isRoot() {
         return parts.isEmpty();
+    }
+
+    @Override
+    public String toString()
+    {
+        return "G/" + stringId();
     }
 }

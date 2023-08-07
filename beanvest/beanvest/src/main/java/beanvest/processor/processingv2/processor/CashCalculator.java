@@ -39,9 +39,6 @@ public class CashCalculator implements Calculator {
 
     @Override
     public Result<BigDecimal, UserErrors> calculate(Entity entity, LocalDate endDate, String targetCurrency) {
-        if (entity instanceof AccountHolding) {
-            return Result.failure(ErrorFactory.disabledForAccountType());
-        }
         var calculate = depositCollector.calculate(entity, endDate, targetCurrency);
         var calculate1 = withdrawalCollector.calculate(entity, endDate, targetCurrency);
         var calculate2 = interestCollector.calculate(entity, endDate, targetCurrency);
