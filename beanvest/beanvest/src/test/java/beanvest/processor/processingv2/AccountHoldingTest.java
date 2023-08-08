@@ -1,6 +1,8 @@
 package beanvest.processor.processingv2;
 
-import org.junit.jupiter.api.Nested;
+import beanvest.journal.entity.Account2;
+import beanvest.journal.entity.AccountHolding;
+import beanvest.journal.entity.Group;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

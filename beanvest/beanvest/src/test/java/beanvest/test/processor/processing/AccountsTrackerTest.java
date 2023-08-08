@@ -9,7 +9,7 @@ import beanvest.processor.processing.Account;
 import beanvest.processor.processing.AccountType;
 import beanvest.processor.processing.AccountsResolver;
 import beanvest.processor.processing.Grouping;
-import beanvest.processor.processingv2.Account2;
+import beanvest.journal.entity.Account2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

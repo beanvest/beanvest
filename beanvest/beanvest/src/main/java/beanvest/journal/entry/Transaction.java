@@ -1,9 +1,7 @@
 package beanvest.journal.entry;
 
 import beanvest.journal.Value;
-import beanvest.processor.processingv2.Account2;
-import beanvest.processor.processingv2.AccountHolding;
-import beanvest.processor.processingv2.Entity;
+import beanvest.journal.entity.Account2;
 
 import java.math.BigDecimal;
 import java.util.Optional;

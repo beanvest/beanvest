@@ -7,8 +7,8 @@ import beanvest.journal.entry.DepositOrWithdrawal;
 import beanvest.journal.entry.Dividend;
 import beanvest.journal.entry.HoldingOperation;
 import beanvest.journal.entry.Transaction;
-import beanvest.processor.processingv2.AccountHolding;
-import beanvest.processor.processingv2.Entity;
+import beanvest.journal.entity.AccountHolding;
+import beanvest.journal.entity.Entity;
 import beanvest.processor.processingv2.ProcessorV2;
 
 import java.util.ArrayList;

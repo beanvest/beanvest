@@ -3,8 +3,8 @@ package beanvest.processor.processingv2.processor;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Close;
 import beanvest.journal.entry.Transaction;
-import beanvest.processor.processingv2.Entity;
-import beanvest.processor.processingv2.Group;
+import beanvest.journal.entity.Entity;
+import beanvest.journal.entity.Group;
 import beanvest.processor.processingv2.ProcessorV2;
 
 import java.time.LocalDate;

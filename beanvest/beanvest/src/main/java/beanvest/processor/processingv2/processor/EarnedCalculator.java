@@ -11,16 +11,16 @@ import beanvest.result.UserErrors;
 import java.math.BigDecimal;
 
 public class EarnedCalculator implements ProcessorV2, Calculator {
-    SimpleBalanceCollector simpleBalanceCollector = new SimpleBalanceCollector();
+    SimpleBalanceTracker simpleBalanceTracker = new SimpleBalanceTracker();
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Sell sell) {
-            simpleBalanceCollector.add(sell.account2(), sell.getCashAmount());
+            simpleBalanceTracker.add(sell.account2(), sell.getCashAmount());
         }
     }
 
     @Override
     public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
-        return simpleBalanceCollector.calculate(params.entity());
+        return simpleBalanceTracker.calculate(params.entity());
     }
 }

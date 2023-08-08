@@ -1,6 +1,6 @@
 package beanvest.processor.processingv2.processor;
 
-import beanvest.processor.processingv2.Entity;
+import beanvest.journal.entity.Entity;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SimpleBalanceCollector {
+public class SimpleBalanceTracker {
     private final Map<Entity, BigDecimal> balances = new HashMap<>();
 
     public void add(Entity account2, BigDecimal amount) {

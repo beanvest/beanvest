@@ -1,6 +1,6 @@
 package beanvest.journal.entry;
 
-import beanvest.processor.processingv2.AccountHolding;
+import beanvest.journal.entity.AccountHolding;
 
 public sealed interface HoldingOperation extends AccountOperation permits Buy, Dividend, Sell, Transaction {
     String holdingSymbol();

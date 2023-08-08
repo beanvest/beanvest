@@ -18,8 +18,8 @@ import beanvest.journal.entry.Price;
 import beanvest.journal.entry.Sell;
 import beanvest.journal.entry.Transaction;
 import beanvest.journal.entry.Withdrawal;
-import beanvest.processor.processingv2.Account2;
-import beanvest.processor.processingv2.AccountHolding;
+import beanvest.journal.entity.Account2;
+import beanvest.journal.entity.AccountHolding;
 
 import java.io.IOException;
 import java.math.BigDecimal;

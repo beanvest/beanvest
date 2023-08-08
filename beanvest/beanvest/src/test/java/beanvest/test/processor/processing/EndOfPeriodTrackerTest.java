@@ -5,7 +5,7 @@ import beanvest.journal.entry.Deposit;
 import beanvest.journal.entry.Entry;
 import beanvest.parser.SourceLine;
 import beanvest.processor.processing.PeriodSpec;
-import beanvest.processor.processingv2.Account2;
+import beanvest.journal.entity.Account2;
 import beanvest.processor.time.Period;
 import beanvest.processor.time.PeriodInterval;
 import beanvest.processor.processing.EndOfPeriodTracker;

@@ -5,7 +5,7 @@ import beanvest.journal.entry.Buy;
 import beanvest.journal.entry.Sell;
 import beanvest.journal.entry.Transaction;
 import beanvest.processor.processing.collector.Holding;
-import beanvest.processor.processingv2.Entity;
+import beanvest.journal.entity.Entity;
 import beanvest.processor.processingv2.ProcessorV2;
 
 import java.math.BigDecimal;

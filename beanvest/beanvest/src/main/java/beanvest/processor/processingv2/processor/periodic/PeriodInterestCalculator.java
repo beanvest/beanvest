@@ -1,7 +1,6 @@
-package beanvest.processor.processingv2.processor;
+package beanvest.processor.processingv2.processor.periodic;
 
 import beanvest.processor.processingv2.processor.InterestCalculator;
-import beanvest.processor.processingv2.processor.SubtractingDeltaCalculator;
 
 public class PeriodInterestCalculator extends SubtractingDeltaCalculator {
 

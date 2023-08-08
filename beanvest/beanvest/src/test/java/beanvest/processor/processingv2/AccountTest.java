@@ -1,5 +1,7 @@
 package beanvest.processor.processingv2;
 
+import beanvest.journal.entity.Account2;
+import beanvest.journal.entity.AccountHolding;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 

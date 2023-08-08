@@ -1,10 +1,11 @@
-package beanvest.processor.processingv2.processor;
+package beanvest.processor.processingv2.processor.periodic;
 
 import beanvest.processor.processing.calculator.CashflowsXirrCalculator;
 import beanvest.processor.processingv2.CalculationParams;
 import beanvest.processor.processingv2.Calculator;
-import beanvest.processor.processingv2.Entity;
-import beanvest.result.ErrorFactory;
+import beanvest.journal.entity.Entity;
+import beanvest.processor.processingv2.processor.CashCalculator;
+import beanvest.processor.processingv2.processor.HoldingsValueCalculator;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 

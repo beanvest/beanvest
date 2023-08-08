@@ -12,16 +12,16 @@ import java.math.BigDecimal;
 
 public class SpentCalculator  implements ProcessorV2, Calculator
 {
-    SimpleBalanceCollector simpleBalanceCollector = new SimpleBalanceCollector();
+    SimpleBalanceTracker simpleBalanceTracker = new SimpleBalanceTracker();
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Buy buy) {
-            simpleBalanceCollector.add(buy.account2(), buy.getCashAmount().negate());
+            simpleBalanceTracker.add(buy.account2(), buy.getCashAmount().negate());
         }
     }
 
     @Override
     public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
-        return simpleBalanceCollector.calculate(params.entity());
+        return simpleBalanceTracker.calculate(params.entity());
     }
 }

@@ -11,17 +11,17 @@ import beanvest.result.UserErrors;
 import java.math.BigDecimal;
 
 public class DividendCalculator implements ProcessorV2, Calculator {
-    SimpleBalanceCollector simpleBalanceCollector = new SimpleBalanceCollector();
+    SimpleBalanceTracker simpleBalanceTracker = new SimpleBalanceTracker();
 
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Dividend div) {
-            simpleBalanceCollector.add(div.accountHolding(), div.getCashAmount());
+            simpleBalanceTracker.add(div.accountHolding(), div.getCashAmount());
         }
     }
 
     @Override
     public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
-        return simpleBalanceCollector.calculate(params.entity());
+        return simpleBalanceTracker.calculate(params.entity());
     }
 }

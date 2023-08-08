@@ -1,22 +1,11 @@
-package beanvest.processor.processingv2.processor;
+package beanvest.processor.processingv2.processor.periodic;
 
 import beanvest.journal.CashFlow;
-import beanvest.journal.Value;
-import beanvest.journal.entry.AccountOperation;
-import beanvest.journal.entry.DepositOrWithdrawal;
-import beanvest.journal.entry.Dividend;
-import beanvest.journal.entry.HoldingOperation;
-import beanvest.journal.entry.Interest;
-import beanvest.journal.entry.Transaction;
-import beanvest.processor.processingv2.AccountHolding;
-import beanvest.processor.processingv2.Entity;
-import beanvest.processor.processingv2.ProcessorV2;
+import beanvest.journal.entity.Entity;
+import beanvest.processor.processingv2.processor.CashflowCollector;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PeriodCashflowCollector {

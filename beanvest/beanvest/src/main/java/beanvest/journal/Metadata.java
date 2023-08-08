@@ -1,6 +1,6 @@
 package beanvest.journal;
 
-import beanvest.processor.processingv2.Account2;
+import beanvest.journal.entity.Account2;
 
 import java.util.Optional;
 

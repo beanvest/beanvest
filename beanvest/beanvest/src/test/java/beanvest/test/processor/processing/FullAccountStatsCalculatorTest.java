@@ -9,8 +9,8 @@ import beanvest.journal.entry.Sell;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.AccountType;
 import beanvest.processor.processing.FullAccountStatsCalculator;
-import beanvest.processor.processingv2.Account2;
-import beanvest.processor.processingv2.Group;
+import beanvest.journal.entity.Account2;
+import beanvest.journal.entity.Group;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

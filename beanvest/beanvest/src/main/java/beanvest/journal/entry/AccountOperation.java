@@ -1,7 +1,7 @@
 package beanvest.journal.entry;
 
-import beanvest.processor.processingv2.Account2;
-import beanvest.processor.processingv2.Group;
+import beanvest.journal.entity.Account2;
+import beanvest.journal.entity.Group;
 
 import java.time.LocalDate;
 

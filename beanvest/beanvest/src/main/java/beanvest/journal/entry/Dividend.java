@@ -1,14 +1,14 @@
 package beanvest.journal.entry;
 
+import beanvest.journal.entity.Account2;
 import beanvest.parser.SourceLine;
 import beanvest.journal.Value;
-import beanvest.processor.processingv2.AccountHolding;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record Dividend(LocalDate date, beanvest.processor.processingv2.Account2 account2, Value value, String holdingSymbol, Optional<String> comment,
+public record Dividend(LocalDate date, Account2 account2, Value value, String holdingSymbol, Optional<String> comment,
                        SourceLine originalLine) implements Transfer, HoldingOperation {
     @Override
     public String toJournalLine() {

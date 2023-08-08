@@ -9,8 +9,8 @@ import beanvest.processor.deprecated.JournalState;
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Interest;
 import beanvest.SubCommand;
-import beanvest.processor.processingv2.Account2;
-import beanvest.processor.processingv2.Group;
+import beanvest.journal.entity.Account2;
+import beanvest.journal.entity.Group;
 import org.slf4j.Logger;
 import picocli.CommandLine;
 

@@ -1,4 +1,4 @@
-package beanvest.processor.processingv2;
+package beanvest.journal.entity;
 
 import java.util.Arrays;
 import java.util.List;

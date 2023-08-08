@@ -2,7 +2,7 @@ package beanvest.journal.entry;
 
 import beanvest.parser.SourceLine;
 import beanvest.journal.Value;
-import beanvest.processor.processingv2.Account2;
+import beanvest.journal.entity.Account2;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

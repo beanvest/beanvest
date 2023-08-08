@@ -1,5 +1,6 @@
 package beanvest.processor.processingv2;
 
+import beanvest.journal.entity.Entity;
 import beanvest.journal.entry.Entry;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.AccountMetadata;
