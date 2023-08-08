@@ -8,4 +8,6 @@ public interface Entity {
     List<Group> groups();
 
     String stringId();
+
+    boolean isHolding();
 }

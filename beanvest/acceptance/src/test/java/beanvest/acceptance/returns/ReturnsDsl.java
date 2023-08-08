@@ -13,7 +13,6 @@ import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import beanvest.result.ErrorEnum;
 import beanvest.result.Result;
-import beanvest.result.UserErrors;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.assertj.core.data.Offset;
@@ -282,7 +281,7 @@ public class ReturnsDsl {
     }
 
     public void verifyWithdrawals(String account, String period, String amount) {
-        verifyStat(account, period, amount, s->null);
+        verifyStat(account, period, amount, s->null, DEFAULT_OFFSET);
     }
 
     public void verifyInterest(String account, String period, String amount) {
@@ -500,11 +499,7 @@ public class ReturnsDsl {
     }
 
     private void verifyValueStat(String account, String period, String expectedAmount, Function<StatsV2, ValueStatDto> valueStatExtractor) {
-        var result = getAccountResults(account, period).get();
-        var value = valueStatExtractor.apply(result).stat().value();
-        assertThat(value)
-                .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
+        verifyStat(account, period, expectedAmount, valueStatExtractor, DEFAULT_OFFSET);
     }
 
     private void verifyStat(String account, String period, String expectedAmount, String columnId) {
@@ -520,20 +515,20 @@ public class ReturnsDsl {
     }
 
     @Deprecated //use verifyColumnStat instead
-    private void verifyStat(String account, String period, String expectedAmount, Function<StatsV2, ValueStatDto> valueStatExtractor) {
+    private void verifyStat(String account, String period, String expectedAmount, Function<StatsV2, ValueStatDto> valueStatExtractor, String defaultOffset) {
         var result = getAccountResults(account, period).get();
         var value = valueStatExtractor.apply(result).stat().value();
 
         assertThat(value)
                 .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
+                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(defaultOffset)));
     }
 
     public void verifyXirrPeriodic(String account, String period, String expectedAmount) {
         verifyStat(account, period, expectedAmount, statsWithDeltasDto ->
                 new ValueStatDto(
                         statsWithDeltasDto.stats().get(COL_PERIOD_XIRR).map(x -> x.multiply(new BigDecimal(100))),
-                        Optional.empty()));
+                        Optional.empty()), "0.5");
     }
 
     public void verifyDepositsError(String account, String period, String error) {

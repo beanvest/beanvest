@@ -1,8 +1,8 @@
 package beanvest.processor.processingv2.processor;
 
+import beanvest.processor.processingv2.CalculationParams;
 import beanvest.processor.processingv2.Calculator;
 import beanvest.processor.processingv2.Entity;
-import beanvest.result.ErrorFactory;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 
@@ -23,15 +23,15 @@ public class SubtractingDeltaCalculator implements Calculator {
     }
 
     @Override
-    public final Result<BigDecimal, UserErrors> calculate(Entity entity, LocalDate endDate, String targetCurrency) {
-        if (!endDate.equals(this.endDate)) {
+    public final Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
+        if (!params.endDate().equals(this.endDate)) {
             previous = current;
             current = new HashMap<>();
-            this.endDate = endDate;
+            this.endDate = params.endDate();
         }
-        var c = calculator.calculate(entity, endDate, targetCurrency);
-        current.put(entity, c);
-        var p = previous.get(entity);
+        var c = calculator.calculate(new CalculationParams(params.entity(), params.startDate(), params.endDate(), params.targetCurrency()));
+        current.put(params.entity(), c);
+        var p = previous.get(params.entity());
         if (p == null) {
             p = Result.success(BigDecimal.ZERO);
         }

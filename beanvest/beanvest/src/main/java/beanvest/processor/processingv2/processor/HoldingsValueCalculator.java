@@ -3,13 +3,12 @@ package beanvest.processor.processingv2.processor;
 import beanvest.journal.Value;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processing.collector.Holding;
+import beanvest.processor.processingv2.CalculationParams;
 import beanvest.processor.processingv2.Calculator;
-import beanvest.processor.processingv2.Entity;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class HoldingsValueCalculator implements Calculator {
     private final HoldingsCollector holdingsCollector;
@@ -21,11 +20,11 @@ public class HoldingsValueCalculator implements Calculator {
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(Entity entity, LocalDate endDate, String targetCurrency) {
+    public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
         var balance = BigDecimal.ZERO;
-        var holdings = holdingsCollector.getHoldings(entity);
+        var holdings = holdingsCollector.getHoldings(params.entity());
         for (Holding holding : holdings) {
-            var converted = pricesBook.convert(endDate, targetCurrency, holding.asValue());
+            var converted = pricesBook.convert(params.endDate(), params.targetCurrency(), holding.asValue());
             if (converted.hasError()) {
                 return converted.map(Value::amount);
             }

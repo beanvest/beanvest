@@ -1,22 +1,18 @@
 package beanvest.processor.processingv2.processor;
 
-import beanvest.processor.processingv2.AccountHolding;
-import beanvest.processor.processingv2.AccountsTracker;
+import beanvest.processor.processingv2.CalculationParams;
 import beanvest.processor.processingv2.Calculator;
-import beanvest.processor.processingv2.Entity;
-import beanvest.result.ErrorFactory;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 public class CashCalculator implements Calculator {
     private final DepositsCalculator depositCollector;
     private final WithdrawalCalculator withdrawalCollector;
     private final InterestCalculator interestCollector;
-    private final PlatformFeeCalculator simpleFeeCollector;
+    private final PlatformFeeCalculator platformFees;
     private final DividendCalculator dividendCollector;
     private final SpentCalculator spentCollector;
     private final EarnedCalculator earnedCollector;
@@ -24,37 +20,40 @@ public class CashCalculator implements Calculator {
     public CashCalculator(DepositsCalculator depositCollector,
                           WithdrawalCalculator withdrawalCollector,
                           InterestCalculator interestCollector,
-                          PlatformFeeCalculator simpleFeeCollector,
+                          PlatformFeeCalculator platformFees,
                           DividendCalculator dividendCollector,
                           SpentCalculator spentCollector,
                           EarnedCalculator earnedCollector) {
         this.depositCollector = depositCollector;
         this.withdrawalCollector = withdrawalCollector;
         this.interestCollector = interestCollector;
-        this.simpleFeeCollector = simpleFeeCollector;
+        this.platformFees = platformFees;
         this.dividendCollector = dividendCollector;
         this.spentCollector = spentCollector;
         this.earnedCollector = earnedCollector;
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(Entity entity, LocalDate endDate, String targetCurrency) {
-        var calculate = depositCollector.calculate(entity, endDate, targetCurrency);
-        var calculate1 = withdrawalCollector.calculate(entity, endDate, targetCurrency);
-        var calculate2 = interestCollector.calculate(entity, endDate, targetCurrency);
-        var calculate3 = simpleFeeCollector.calculate(entity, endDate, targetCurrency);
-        var calculate4 = dividendCollector.calculate(entity, endDate, targetCurrency);
-        var calculate5 = spentCollector.calculate(entity, endDate, targetCurrency);
-        var calculate6 = earnedCollector.calculate(entity, endDate, targetCurrency);
+    public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
+        if (params.entity().isHolding()) {
+            return Result.success(BigDecimal.ZERO);
+        }
+        var deposits = depositCollector.calculate(params);
+        var withdrawals = withdrawalCollector.calculate(params);
+        var interest = interestCollector.calculate(params);
+        var platformFees = this.platformFees.calculate(params);
+        var dividends = dividendCollector.calculate(params);
+        var spent = spentCollector.calculate(params);
+        var earned = earnedCollector.calculate(params);
 
         return Result.combine(
-                List.of(calculate,
-                        calculate1,
-                        calculate2,
-                        calculate3,
-                        calculate4,
-                        calculate5,
-                        calculate6
+                List.of(deposits,
+                        withdrawals,
+                        interest,
+                        platformFees,
+                        dividends,
+                        spent,
+                        earned
                 ), BigDecimal::add, UserErrors::join);
     }
 }

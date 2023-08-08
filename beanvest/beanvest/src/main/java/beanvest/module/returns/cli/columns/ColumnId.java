@@ -1,7 +1,9 @@
 package beanvest.module.returns.cli.columns;
 
+import beanvest.processor.processing.calculator.XirrPeriodicCalculator;
 import beanvest.processor.processingv2.processor.PeriodUnrealizedGainCalculator;
 import beanvest.processor.processingv2.processor.PeriodHoldingsValueCalculator;
+import beanvest.processor.processingv2.processor.PeriodXirrCalculator;
 import beanvest.processor.processingv2.processor.UnrealizedGainCalculator;
 import beanvest.processor.processingv2.processor.HoldingsValueCalculator;
 import beanvest.processor.processingv2.processor.PeriodInterestCalculator;
@@ -33,7 +35,7 @@ public enum ColumnId {
     FEES("Fees", "platform and transaction fees", FeesCalculator.class),
     FEES_PERIOD("pFees", "platform and transaction fees per period", PeriodFeeCalculator.class),
     XIRR("Xirr", "internal rate of return (cumulative)", XirrCalculator.class),
-    XIRR_PERIOD("pXirr", "periodic (periodic)", null),
+    XIRR_PERIOD("pXirr", "periodic (periodic)", PeriodXirrCalculator.class),
     REALIZED_GAIN("RGain", "realized gain", RealizedGainCalculator.class),
     REALIZED_GAIN_PERIOD("pRGain", "realized gain per period", PeriodRealizedGainCalculator.class),
     UNREALIZED_GAIN("UGain", "unrealized gain", UnrealizedGainCalculator.class),

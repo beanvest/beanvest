@@ -1,6 +1,7 @@
 package beanvest.processor.processing.calculator;
 
 import beanvest.journal.CashFlow;
+import beanvest.journal.Value;
 import beanvest.result.ErrorFactory;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
@@ -19,6 +20,12 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 public class CashflowsXirrCalculator {
+
+    public Result<BigDecimal, UserErrors> calculateXirr(LocalDate startDate, BigDecimal startValue, LocalDate endDate, List<CashFlow> relevantCashFlows, BigDecimal endingValue) {
+        relevantCashFlows.add(new CashFlow(startDate, Value.of(startValue, "GBP")));
+        return calculateXirr(endDate, relevantCashFlows, endingValue);
+    }
+
     public Result<BigDecimal, UserErrors> calculateXirr(LocalDate endDate, List<CashFlow> relevantCashFlows, BigDecimal endingValue) {
         var xirrTransactions = convertToXirrTransactions(
                 relevantCashFlows, endingValue,

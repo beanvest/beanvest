@@ -37,6 +37,11 @@ public record AccountHolding(Account2 account2, String holding) implements Entit
     }
 
     @Override
+    public boolean isHolding() {
+        return true;
+    }
+
+    @Override
     public String toString()
     {
         return "H/" + stringId();

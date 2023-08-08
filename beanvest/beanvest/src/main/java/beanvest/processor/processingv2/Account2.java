@@ -41,6 +41,11 @@ public record Account2(Group group, String name) implements Entity {
     }
 
     @Override
+    public boolean isHolding() {
+        return false;
+    }
+
+    @Override
     public String toString()
     {
         return "A/" + stringId();

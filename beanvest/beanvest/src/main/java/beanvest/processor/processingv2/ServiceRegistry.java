@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-@SuppressWarnings("unchecked") // maybe Class<?> instead of Objects and Strings would get rid of this warning?
+@SuppressWarnings("unchecked")
 public class ServiceRegistry {
     private final Map<String, Function<ServiceRegistry, Object>> factories = new HashMap<>();
     private final Map<String, Object> instances = new HashMap<>();

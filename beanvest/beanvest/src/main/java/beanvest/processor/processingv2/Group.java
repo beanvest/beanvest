@@ -26,6 +26,11 @@ public record Group(List<String> parts) implements Entity {
         return groupString.isEmpty() ? ".*" : groupString + ":.*";
     }
 
+    @Override
+    public boolean isHolding() {
+        return false;
+    }
+
     String actualStringId() {
         if (parts.isEmpty()) {
             return "";

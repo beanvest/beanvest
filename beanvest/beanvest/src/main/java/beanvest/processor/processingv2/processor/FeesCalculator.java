@@ -1,12 +1,11 @@
 package beanvest.processor.processingv2.processor;
 
+import beanvest.processor.processingv2.CalculationParams;
 import beanvest.processor.processingv2.Calculator;
-import beanvest.processor.processingv2.Entity;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class FeesCalculator implements Calculator {
 
@@ -19,9 +18,9 @@ public class FeesCalculator implements Calculator {
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(Entity entity, LocalDate endDate, String targetCurrency) {
-        var calculate = transactionFeeCalculator.calculate(entity, endDate, targetCurrency);
-        var calculate1 = platformFeeCalculator.calculate(entity, endDate, targetCurrency);
+    public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
+        var calculate = transactionFeeCalculator.calculate(new CalculationParams(params.entity(), params.startDate(), params.endDate(), params.targetCurrency()));
+        var calculate1 = platformFeeCalculator.calculate(new CalculationParams(params.entity(), params.startDate(), params.endDate(), params.targetCurrency()));
         return calculate.combine(
                 calculate1, BigDecimal::add, UserErrors::join
         );
