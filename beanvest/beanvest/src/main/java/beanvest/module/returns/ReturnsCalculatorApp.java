@@ -5,9 +5,8 @@ import beanvest.parser.JournalParser;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.JournalReportGenerator;
-import beanvest.processor.processing.AccountsResolver;
-import beanvest.processor.processing.Grouping;
-import beanvest.processor.processing.PeriodSpec;
+import beanvest.processor.processingv2.Grouping;
+import beanvest.processor.processingv2.PeriodSpec;
 import beanvest.processor.processingv2.AccountsTracker;
 import beanvest.processor.time.PeriodInterval;
 
@@ -17,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static beanvest.processor.processing.PeriodInclusion.EXCLUDE_UNFINISHED;
+import static beanvest.processor.processingv2.PeriodInclusion.EXCLUDE_UNFINISHED;
 
 public class ReturnsCalculatorApp {
     private final JournalParser journalParser;
@@ -46,12 +45,11 @@ public class ReturnsCalculatorApp {
                 throw new RuntimeException("Oops! No entries found.");
             }
             var periodSpec = new PeriodSpec(startDate, endDate, interval);
-            var accountsResolver2 = new AccountsTracker(grouping, reportInvestments);
-            var accountsResolver = new AccountsResolver(grouping, reportInvestments);
+            var accountsTracker = new AccountsTracker(grouping, reportInvestments);
 
             var statsToCalculate = convertToCalculatorMap(selectedColumns);
             var statsResult2 = statsCalculator.calculateStats(
-                    accountsResolver, accountsResolver2, journal, accountFilter, periodSpec, EXCLUDE_UNFINISHED, statsToCalculate);
+                    accountsTracker, journal, accountFilter, periodSpec, EXCLUDE_UNFINISHED, statsToCalculate);
 
             if (statsResult2.hasError()) {
                 outputWriter.outputInputErrors(statsResult2.error());

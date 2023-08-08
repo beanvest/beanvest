@@ -1,7 +1,7 @@
 package beanvest.module.returns;
 
 import beanvest.processor.CollectionMode;
-import beanvest.processor.processing.Grouping;
+import beanvest.processor.processingv2.Grouping;
 import beanvest.processor.time.PeriodInterval;
 
 import java.nio.file.Path;

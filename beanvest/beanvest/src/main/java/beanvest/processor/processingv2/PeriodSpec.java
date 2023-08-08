@@ -1,4 +1,4 @@
-package beanvest.processor.processing;
+package beanvest.processor.processingv2;
 
 import beanvest.processor.time.PeriodInterval;
 

@@ -2,6 +2,8 @@ package beanvest.processor.processing;
 
 import beanvest.journal.entry.Price;
 import beanvest.journal.entry.Entry;
+import beanvest.processor.processingv2.PeriodInclusion;
+import beanvest.processor.processingv2.PeriodSpec;
 import beanvest.processor.time.Period;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 import java.util.function.Consumer;
 
-import static beanvest.processor.processing.PeriodInclusion.INCLUDE_UNFINISHED;
-import static beanvest.processor.processing.Relevant.NOT_RELEVANT;
-import static beanvest.processor.processing.Relevant.RELEVANT;
+import static beanvest.processor.processingv2.PeriodInclusion.INCLUDE_UNFINISHED;
 import static beanvest.processor.time.PeriodInterval.NONE;
 
 public class EndOfPeriodTracker {

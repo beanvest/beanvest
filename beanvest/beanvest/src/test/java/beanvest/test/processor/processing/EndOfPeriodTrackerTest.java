@@ -4,7 +4,7 @@ import beanvest.journal.Value;
 import beanvest.journal.entry.Deposit;
 import beanvest.journal.entry.Entry;
 import beanvest.parser.SourceLine;
-import beanvest.processor.processing.PeriodSpec;
+import beanvest.processor.processingv2.PeriodSpec;
 import beanvest.journal.entity.Account2;
 import beanvest.processor.time.Period;
 import beanvest.processor.time.PeriodInterval;
@@ -15,8 +15,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static beanvest.processor.processing.PeriodInclusion.EXCLUDE_UNFINISHED;
-import static beanvest.processor.processing.PeriodInclusion.INCLUDE_UNFINISHED;
+import static beanvest.processor.processingv2.PeriodInclusion.EXCLUDE_UNFINISHED;
+import static beanvest.processor.processingv2.PeriodInclusion.INCLUDE_UNFINISHED;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EndOfPeriodTrackerTest {

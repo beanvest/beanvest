@@ -1,6 +1,5 @@
 package beanvest.processor.processingv2;
 
-import beanvest.processor.processing.AccountMetadata;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 

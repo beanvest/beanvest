@@ -3,7 +3,6 @@ package beanvest.processor.processingv2;
 import beanvest.journal.entity.Entity;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.HoldingOperation;
-import beanvest.processor.processing.Grouping;
 
 import java.util.Comparator;
 import java.util.HashSet;

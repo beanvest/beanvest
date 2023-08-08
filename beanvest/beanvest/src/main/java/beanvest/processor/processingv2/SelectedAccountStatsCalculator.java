@@ -5,7 +5,6 @@ import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Price;
 import beanvest.processor.pricebook.LatestPricesBook;
-import beanvest.processor.processing.AccountMetadata;
 import beanvest.processor.processingv2.processor.AccountOpenDatesCollector;
 import beanvest.processor.time.Period;
 import beanvest.processor.validation.ValidatorError;

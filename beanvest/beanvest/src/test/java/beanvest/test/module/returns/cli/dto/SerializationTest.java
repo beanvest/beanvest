@@ -5,7 +5,7 @@ import beanvest.processor.dto.AccountDto;
 import beanvest.processor.dto.PortfolioStatsDto;
 import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.processor.dto.ValueStatDto;
-import beanvest.processor.processing.PeriodSpec;
+import beanvest.processor.processingv2.PeriodSpec;
 import beanvest.processor.time.Period;
 import beanvest.processor.time.PeriodInterval;
 import beanvest.result.ErrorFactory;

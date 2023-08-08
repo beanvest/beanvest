@@ -1,4 +1,4 @@
-package beanvest.processor.processing.calculator;
+package beanvest.processor.processingv2;
 
 import beanvest.journal.CashFlow;
 import beanvest.journal.Value;

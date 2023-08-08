@@ -1,6 +1,6 @@
 package beanvest.test.processor.time;
 
-import beanvest.processor.processing.PeriodSpec;
+import beanvest.processor.processingv2.PeriodSpec;
 
 public class PeriodCalculator {
     private final PeriodSpec periodSpec;

@@ -1,6 +1,6 @@
 package beanvest.test.processor.processing.collector;
 
-import beanvest.processor.processing.collector.Holding;
+import beanvest.processor.processingv2.Holding;
 import org.assertj.core.util.BigDecimalComparator;
 import org.junit.jupiter.api.Test;
 

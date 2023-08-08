@@ -1,10 +1,12 @@
 package beanvest.module.returns.cli.args;
 
-import beanvest.processor.processing.Grouping;
+
+import beanvest.processor.processingv2.Grouping;
 
 import java.util.Arrays;
 
-import static beanvest.processor.processing.Grouping.*;
+import static beanvest.processor.processingv2.Grouping.*;
+
 
 public enum AccountGroupingCliArg {
     yes(WITH_GROUPS),

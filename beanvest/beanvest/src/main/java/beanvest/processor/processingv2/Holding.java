@@ -1,4 +1,4 @@
-package beanvest.processor.processing.collector;
+package beanvest.processor.processingv2;
 
 import beanvest.journal.Value;
 

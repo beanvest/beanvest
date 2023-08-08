@@ -1,6 +1,5 @@
 package beanvest.processor.processingv2;
 
-import beanvest.processor.processing.AccountMetadata;
 import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import beanvest.processor.time.Period;

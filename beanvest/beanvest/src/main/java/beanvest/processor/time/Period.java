@@ -1,6 +1,6 @@
 package beanvest.processor.time;
 
-import beanvest.processor.processing.PeriodSpec;
+import beanvest.processor.processingv2.PeriodSpec;
 
 import java.time.LocalDate;
 

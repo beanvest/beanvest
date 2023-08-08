@@ -1,6 +1,6 @@
 package beanvest.test.processor.time;
 
-import beanvest.processor.processing.PeriodSpec;
+import beanvest.processor.processingv2.PeriodSpec;
 import beanvest.processor.time.Period;
 import beanvest.processor.time.PeriodInterval;
 import org.junit.jupiter.api.Test;

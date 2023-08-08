@@ -1,4 +1,4 @@
-package beanvest.processor.processing;
+package beanvest.processor.processingv2;
 
 public enum Grouping {
     WITH_GROUPS,

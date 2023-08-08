@@ -1,6 +1,6 @@
 package beanvest.processor.processingv2.processor;
 
-import beanvest.processor.processing.collector.Holding;
+import beanvest.processor.processingv2.Holding;
 import beanvest.processor.processingv2.CalculationParams;
 import beanvest.processor.processingv2.Calculator;
 import beanvest.result.Result;
