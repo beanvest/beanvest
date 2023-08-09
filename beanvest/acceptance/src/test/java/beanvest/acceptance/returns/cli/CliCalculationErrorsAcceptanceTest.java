@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class CliCalculationErrorsAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -44,11 +43,12 @@ public class CliCalculationErrorsAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""                                
-                account  xirr
+                account  Xirr
                 trading     PN""");
     }
 
     @Test
+    @Disabled("rework v2: warnings are missing")
     void showsWarningIfHoldingHasNoPricesAtAll() {
         dsl.setEnd("2022-02-01");
         dsl.setColumns("ugain");
@@ -63,6 +63,7 @@ public class CliCalculationErrorsAcceptanceTest {
     }
 
     @Test
+    @Disabled("rework v2: warnings are missing")
     void showsWarningIfLastKnownPriceIsTooOld() {
         dsl.setEnd("2022-02-01");
         dsl.setColumns("ugain");
@@ -97,7 +98,7 @@ public class CliCalculationErrorsAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 2021  ╷ 2020  ╷
-                account │ Δdeps │ Δdeps │
+                account │ pDeps │ pDeps │
                 trading │     … │    10 │""");
     }
 
