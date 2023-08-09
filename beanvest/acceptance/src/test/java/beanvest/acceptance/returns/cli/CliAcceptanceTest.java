@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class CliAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -22,7 +21,7 @@ public class CliAcceptanceTest {
 
     @Test
     void calculatesStatsOnWholeJournalByDefault() {
-        dsl.setColumns("cash");
+        dsl.setColumns("val");
         dsl.setGroupingDisabled();
 
         dsl.runCalculateReturns(
@@ -35,7 +34,7 @@ public class CliAcceptanceTest {
                         """);
 
         dsl.verifyOutput("""
-                account  cash
+                account  Value
                 taxable     20""");
     }
 
@@ -59,7 +58,7 @@ public class CliAcceptanceTest {
     void statsAreCalculatedForAllAccounts() {
         dsl.setEnd("2023-01-01");
         dsl.setGroupingDisabled();
-        dsl.setColumns("cash");
+        dsl.setColumns("Val");
 
         dsl.runCalculateReturns("""
                 account isa
@@ -74,7 +73,7 @@ public class CliAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""
-                account  cash
+                account  Value
                 isa         20
                 pension     15""");
     }
@@ -83,7 +82,7 @@ public class CliAcceptanceTest {
     void shouldShowSpecifiedColumns() {
         dsl.setEnd("2023-01-01");
         dsl.setGroupingDisabled();
-        dsl.setColumns("deps,wths");
+        dsl.setColumns("Deps,Wths");
 
         dsl.runCalculateReturns("""
                 account isa
@@ -94,7 +93,7 @@ public class CliAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""
-                account  deps   wths
+                account  Deps   Wths
                 isa         20    -10""");
     }
 
@@ -103,7 +102,7 @@ public class CliAcceptanceTest {
         dsl.setEnd("2022-01-01");
         dsl.setStartDate("2021-01-01");
         dsl.setGroupingDisabled();
-        dsl.setColumns("deps");
+        dsl.setColumns("Deps");
 
         dsl.storeJournal("myJournals/account1.bv",
                 """
@@ -125,7 +124,7 @@ public class CliAcceptanceTest {
         dsl.runCalculateReturnsOnDirectory("myJournals");
 
         dsl.verifyOutput("""
-                account  deps
+                account  Deps
                 acc1        20
                 acc2        21""");
     }
