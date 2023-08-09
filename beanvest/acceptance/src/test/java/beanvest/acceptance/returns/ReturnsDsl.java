@@ -58,6 +58,7 @@ public class ReturnsDsl {
     public static final String PERIOD_REALIZED_GAINS = "pRGain";
     public static final String CUMULATIVE_UNREALIZED_GAINS = "UGain";
     public static final String PERIOD_UNREALIZED_GAINS = "pUGain";
+    public static final String NET_COST = "Cost";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -334,9 +335,13 @@ public class ReturnsDsl {
                 .outputIs(processedExpectedOutput);
     }
 
-    public ReturnsDsl verifyAccountGain(String account, String period, String amount) {
-        verifyValueStat(account, period, amount, s -> null);
+    public ReturnsDsl verifyProfit(String account, String period, String amount) {
+        verifyStat(account, period, amount, "profit");
         return this;
+    }
+
+    public void verifyCost(String account, String period, String amount) {
+        verifyStat(account, period, amount, NET_COST);
     }
 
     public void verifyXirrCumulative(String account, String period, String amount) {
@@ -483,13 +488,13 @@ public class ReturnsDsl {
     public void verifyFeesDelta(String account, String period, String expectedAmount) {
         verifyStatDelta(account, period, expectedAmount, "pFees");
     }
-
     private void verifyStatDelta(String account, String period, String expectedAmount, String statId) {
         var result = getAccountResults(account, period).get().stats().get(statId).value();
         assertThat(result)
                 .usingComparator(BigDecimal::compareTo)
                 .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
     }
+
     @Deprecated //use verifyStatDelta instead
     private void verifyStatDelta(String account, String period, String expectedAmount, Function<StatsV2, Optional<BigDecimal>> statExtractor) {
         var result = getAccountResults(account, period).get();

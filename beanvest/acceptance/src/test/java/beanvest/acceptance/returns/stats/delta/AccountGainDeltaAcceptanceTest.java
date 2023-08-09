@@ -78,8 +78,8 @@ public class AccountGainDeltaAcceptanceTest {
                 """
         );
 
-        dsl.verifyAccountGain("trading", "21m01", "0");
-        dsl.verifyAccountGain("trading", "21m02", "-2");
+        dsl.verifyProfit("trading", "21m01", "0");
+        dsl.verifyProfit("trading", "21m02", "-2");
     }
 
     @Test
@@ -98,6 +98,6 @@ public class AccountGainDeltaAcceptanceTest {
                 """
         );
 
-        dsl.verifyAccountGain("trading", "21m01", "2");
+        dsl.verifyProfit("trading", "21m01", "2");
     }
 }

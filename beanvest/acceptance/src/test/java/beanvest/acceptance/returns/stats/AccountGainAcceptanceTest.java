@@ -24,7 +24,7 @@ public class AccountGainAcceptanceTest {
                 """
         );
 
-        dsl.verifyAccountGain("trading", "TOTAL", "300");
+        dsl.verifyProfit("trading", "TOTAL", "300");
     }
 
 
@@ -40,7 +40,7 @@ public class AccountGainAcceptanceTest {
                 2021-03-02 close
                 """);
 
-        dsl.verifyAccountGain("trading", "TOTAL", "100")
+        dsl.verifyProfit("trading", "TOTAL", "100")
                 .verifyClosingDate("trading", "2021-03-02");
     }
 
@@ -60,6 +60,6 @@ public class AccountGainAcceptanceTest {
                 """
         );
 
-        dsl.verifyAccountGain("trading:VLS", "TOTAL", "15");
+        dsl.verifyProfit("trading:VLS", "TOTAL", "15");
     }
 }

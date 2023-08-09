@@ -10,7 +10,7 @@ public class AccountGainAcceptanceTest {
     @Test
     void considerSellsWithWithdrawalsWhenCalculatingGain() {
         dsl.setEnd("2022-01-01");
-
+        dsl.setColumns("profit");
         dsl.runCalculateReturns("""
                 account isa
                 currency GBP
@@ -21,7 +21,7 @@ public class AccountGainAcceptanceTest {
                 2022-01-01 price APPL 22 GBP
                 """);
 
-        dsl.verifyAccountGain("isa", "TOTAL", "10");
+        dsl.verifyProfit("isa", "TOTAL", "10");
     }
 
     @Test
@@ -37,7 +37,7 @@ public class AccountGainAcceptanceTest {
                 2022-01-01 price X 10 GBP
                 """);
 
-        dsl.verifyAccountGain("isa", "TOTAL", "5");
+        dsl.verifyProfit("isa", "TOTAL", "5");
     }
 
     @Test
@@ -52,7 +52,7 @@ public class AccountGainAcceptanceTest {
                 2022-01-01 price VLS 110 GBP
                 """);
 
-        dsl.verifyAccountGain("isa", "TOTAL", "10");
+        dsl.verifyProfit("isa", "TOTAL", "10");
     }
 
     // ending cash is used in the formula but not starting cash

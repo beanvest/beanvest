@@ -34,7 +34,7 @@ public class StartAndEndDateAcceptanceTest {
                 2022-05-02 price VLS 100 GBP
                 """);
 
-        dsl.verifyAccountGain("trading", "TOTAL", "-20");
+        dsl.verifyProfit("trading", "TOTAL", "-20");
     }
 
     @Test

@@ -125,7 +125,7 @@ public class CurrenciesAcceptanceTest {
                 2021-01-21 price PLN 0.20 GBP
                 """);
 
-        dsl.verifyAccountGain("trading", "TOTAL", "2");
+        dsl.verifyProfit("trading", "TOTAL", "2");
     }
 
     @Test
@@ -144,7 +144,7 @@ public class CurrenciesAcceptanceTest {
                 2021-01-02 price QWE 3 GBP
                 """);
 
-        dsl.verifyAccountGain("trading", "TOTAL", "1");
+        dsl.verifyProfit("trading", "TOTAL", "1");
     }
 
     @Test
@@ -160,6 +160,6 @@ public class CurrenciesAcceptanceTest {
                 2021-01-21 price VLS 300 USD
                 """);
 
-        dsl.verifyAccountGain("trading", "TOTAL", "100");
+        dsl.verifyProfit("trading", "TOTAL", "100");
     }
 }

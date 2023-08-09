@@ -10,13 +10,20 @@ import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
 
-public class EarnedCalculator implements ProcessorV2, Calculator {
+public class CostMovedAtSaleCalculator implements ProcessorV2, Calculator {
     SimpleBalanceTracker simpleBalanceTracker = new SimpleBalanceTracker();
+    HoldingsCollector holdingsCollector;
+
+    public CostMovedAtSaleCalculator(HoldingsCollector holdingsCollector) {
+        this.holdingsCollector = holdingsCollector;
+    }
+
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Sell sell) {
-            var add = sell.getCashAmount().subtract(sell.fee());
-            simpleBalanceTracker.add(sell.accountHolding(), add);
+
+            var costMoved = holdingsCollector.getHolding(sell.accountHolding()).averageCost().multiply(sell.units());
+            simpleBalanceTracker.add(sell.accountHolding(), costMoved);
         }
     }
 

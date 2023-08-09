@@ -29,6 +29,7 @@ public class ReportColumnsDefinition {
             new ColumnSpec(ColumnId.DIVIDENDS),
             new ColumnSpec(ColumnId.DIVIDENDS_PERIOD),
 
+            new ColumnSpec(ColumnId.NET_COST),
             new ColumnSpec(ColumnId.REALIZED_GAIN),
             new ColumnSpec(ColumnId.REALIZED_GAIN_PERIOD),
             new ColumnSpec(ColumnId.UNREALIZED_GAIN),

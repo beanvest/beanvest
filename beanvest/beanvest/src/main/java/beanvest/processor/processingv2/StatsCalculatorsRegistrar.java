@@ -4,6 +4,10 @@ import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processingv2.processor.AccountOpenDatesCollector;
 import beanvest.processor.processingv2.processor.CashCalculator;
 import beanvest.processor.processingv2.processor.CashflowCollector;
+import beanvest.processor.processingv2.processor.CostMovedAtSaleCalculator;
+import beanvest.processor.processingv2.processor.NetCostCalculator;
+import beanvest.processor.processingv2.processor.NetCostOfAccountCalculator;
+import beanvest.processor.processingv2.processor.NetCostOfHoldingCalculator;
 import beanvest.processor.processingv2.processor.DepositsCalculator;
 import beanvest.processor.processingv2.processor.DividendCalculator;
 import beanvest.processor.processingv2.processor.EarnedCalculator;
@@ -71,6 +75,13 @@ public class StatsCalculatorsRegistrar {
                 reg.get(CashCalculator.class)));
         serviceRegistry.registerFactory(PeriodXirrCalculator.class, reg -> new PeriodXirrCalculator(reg.get(PeriodCashflowCollector.class),
                 reg.get(HoldingsValueCalculator.class), reg.get(CashCalculator.class)));
+        serviceRegistry.registerFactory(NetCostOfAccountCalculator.class, reg -> new NetCostOfAccountCalculator(reg.get(DepositsCalculator.class),
+                reg.get(WithdrawalCalculator.class)));
+        serviceRegistry.registerFactory(CostMovedAtSaleCalculator.class, reg -> new CostMovedAtSaleCalculator(reg.get(HoldingsCollector.class)));
+        serviceRegistry.registerFactory(NetCostOfHoldingCalculator.class, reg -> new NetCostOfHoldingCalculator(reg.get(SpentCalculator.class),
+                reg.get(CostMovedAtSaleCalculator.class)));
+        serviceRegistry.registerFactory(NetCostCalculator.class, reg -> new NetCostCalculator(reg.get(NetCostOfAccountCalculator.class),
+                reg.get(NetCostOfHoldingCalculator.class)));
 
         return serviceRegistry;
     }

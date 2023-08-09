@@ -25,9 +25,9 @@ public class MultipleAccountsAcceptanceTest {
                 2023-01-01 price MSFT 1000 GBP
                 """);
 
-        dsl.verifyAccountGain("pension", "TOTAL", "500")
+        dsl.verifyProfit("pension", "TOTAL", "500")
                 .verifyXirrCumulative("pension", "TOTAL", "18.9");
-        dsl.verifyAccountGain("isa", "TOTAL", "500")
+        dsl.verifyProfit("isa", "TOTAL", "500")
                 .verifyXirrCumulative("isa", "TOTAL", "18.9");
     }
 
@@ -52,7 +52,7 @@ public class MultipleAccountsAcceptanceTest {
                 2023-01-01 price TSLA 150 GBP
                 """);
 
-        dsl.verifyAccountGain(".*", "TOTAL", "60")
+        dsl.verifyProfit(".*", "TOTAL", "60")
                 .verifyXirrCumulative(".*", "TOTAL", "6.78");
     }
 
@@ -77,6 +77,6 @@ public class MultipleAccountsAcceptanceTest {
                 2023-01-01 price MSFT 102 GBP
                 """);
 
-        dsl.verifyAccountGain(".*", "TOTAL", "3");
+        dsl.verifyProfit(".*", "TOTAL", "3");
     }
 }
