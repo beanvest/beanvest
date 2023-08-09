@@ -23,8 +23,12 @@ public class AccountsTracker implements ProcessorV2 {
 
     @Override
     public void process(AccountOperation op) {
-        if (includeInvestments && op instanceof HoldingOperation h) {
-            entities.add(h.accountHolding());
+        if (includeInvestments) {
+            if (op instanceof HoldingOperation h) {
+                entities.add(h.accountHolding());
+            } else {
+                entities.add(op.account2().cashHolding());
+            }
         }
         if (includeAccounts) {
             entities.add(op.account2());

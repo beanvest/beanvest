@@ -1,7 +1,6 @@
 package beanvest.processor.deprecated;
 
 import beanvest.journal.entry.Entry;
-import beanvest.processor.processing.StatsCollectingJournalProcessor;
 import beanvest.processor.validation.ValidatorError;
 
 import java.util.List;

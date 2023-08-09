@@ -1,7 +1,6 @@
 package beanvest.processor.deprecated;
 
 import beanvest.journal.entry.AccountOperation;
-import beanvest.processor.processing.StatsCollectingJournalProcessor;
 
 import java.util.AbstractMap;
 import java.util.HashMap;

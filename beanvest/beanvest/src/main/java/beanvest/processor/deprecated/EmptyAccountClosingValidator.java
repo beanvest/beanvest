@@ -2,7 +2,6 @@ package beanvest.processor.deprecated;
 
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Close;
-import beanvest.processor.processing.StatsCollectingJournalProcessor;
 import beanvest.processor.validation.ValidatorError;
 
 import java.math.BigDecimal;

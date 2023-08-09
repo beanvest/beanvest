@@ -8,8 +8,9 @@ public class DepositsAndWithdrawalsAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
-    void calculatesDepositsTotal() {
+    void calculatesDeposits() {
         dsl.setColumns("Deps");
+        dsl.setReportHoldings();
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -19,8 +20,25 @@ public class DepositsAndWithdrawalsAcceptanceTest {
                 """);
 
         dsl.verifyDeposits("trading", "TOTAL", "133");
+        dsl.verifyDeposits("trading:CashGBP", "TOTAL", "133");
     }
 
+    @Test
+    void calculatesWithdrawals() {
+        dsl.setColumns("Wths");
+        dsl.setReportHoldings();
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-02 deposit 100
+                2022-06-05 withdraw 20
+                2022-06-05 withdraw 10
+                """);
+
+        dsl.verifyWithdrawals("trading", "TOTAL", "-30");
+        dsl.verifyWithdrawals("trading:CashGBP", "TOTAL", "-30");
+    }
 
     @Test
     void holdingsHaveNoDepositsOrWithdrawals() {

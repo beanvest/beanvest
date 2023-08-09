@@ -2,6 +2,7 @@ package beanvest.processor.processingv2;
 
 import beanvest.journal.entity.Account2;
 import beanvest.journal.entity.AccountHolding;
+import beanvest.journal.entity.Entity;
 import beanvest.journal.entity.Group;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -9,60 +10,50 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GroupTest {
-    @Nested
-    class GroupContainsGroupTest {
-        @Test
-        void groupContainsGroup() {
-            assertThat(Group.fromStringId("a").contains(Group.fromStringId("a:b"))).isTrue();
-        }
-
-        @Test
-        void groupContainsSelf() {
-            assertThat(Group.fromStringId("a").contains(Group.fromStringId("a"))).isTrue();
-        }
-
-        @Test
-        void groupDoesNotContainGroup() {
-            assertThat(Group.fromStringId("a:b").contains(Group.fromStringId("a:c"))).isFalse();
-        }
-
-        @Test
-        void groupDoesNotContainGroupOfLowerLevel() {
-            assertThat(Group.fromStringId("a:b").contains(Group.fromStringId("a:c:d"))).isFalse();
-        }
-
-        @Test
-        void groupDoesNotContainGroupFromOtherHighLevelGroup() {
-            assertThat(Group.fromStringId("a:b").contains(Group.fromStringId("b:b"))).isFalse();
-        }
-
-        @Test
-        void groupDoesNotContainHigherLevelGroup() {
-            assertThat(Group.fromStringId("a:b").contains(Group.fromStringId("a"))).isFalse();
-        }
+    @Test
+    void groupDoesContain() {
+        assertContains("G/a", "G/a");
+        assertContains("G/a", "G/a:b");
+        assertContains("G/a", "A/a:c");
+        assertContains("G/a", "A/a:c:d");
+        assertContains("G/a", "H/a:b:x");
+        assertContains("G/a", "H/a:b:c:x");
+        assertContains("G/a", "H/a:b:y");
+        assertContains("G/a", "C/a:b:cash");
     }
 
-    @Nested
-    class GroupContainsAccountTest {
-        @Test
-        void groupContainsAccount() {
-            assertThat(Group.fromStringId("a").contains(Account2.fromStringId("a:trading"))).isTrue();
-        }
-        @Test
-        void groupDoesNotContainAccount() {
-            assertThat(Group.fromStringId("b").contains(Account2.fromStringId("a:trading"))).isFalse();
-        }
-    }
-    @Nested
-    class GroupContainsHoldingTest {
-        @Test
-        void groupContainsHolding() {
-            assertThat(Group.fromStringId("a").contains(AccountHolding.fromStringId("a:b:trading:X"))).isTrue();
-        }
+    @Test
+    void accountDoesContain() {
+        assertContains("A/a", "A/a");
+        assertContains("A/a", "H/a:x");
+        assertContains("A/a:b", "H/a:b:x");
+        assertContains("A/a:b", "C/a:b:cash");
+        assertContains("A/a", "C/a:cash");
 
-        @Test
-        void groupDoesNotContainAccount() {
-            assertThat(Group.fromStringId("b").contains(Account2.fromStringId("a:trading:Y"))).isFalse();
-        }
+        assertNotContains("A/a", "A/a:b");
+        assertNotContains("A/a", "A/a:b:c");
+    }
+
+    @Test
+    void groupDoesNotContain() {
+        assertNotContains("G/a", "G/b");
+        assertNotContains("G/a", "G/b:c");
+        assertNotContains("G/a", "A/b:c");
+        assertNotContains("G/a", "A/b:c:d");
+        assertNotContains("G/a", "H/b:b:x");
+        assertNotContains("G/a:c", "H/a:b:c:x");
+        assertNotContains("G/b", "C/a:b:cash");
+    }
+
+    private void assertContains(String s, String s1) {
+        var entity = Entity.fromStringId(s);
+        var entity2 = Entity.fromStringId(s1);
+        assertThat(entity.contains(entity2)).as(entity.stringId() + " should contain " + entity2.stringId()).isTrue();
+    }
+
+    private void assertNotContains(String s, String s1) {
+        var entity = Entity.fromStringId(s);
+        var entity2 = Entity.fromStringId(s1);
+        assertThat(entity.contains(entity2)).as(entity.stringId() + " should NOT contain " + entity2.stringId()).isFalse();
     }
 }

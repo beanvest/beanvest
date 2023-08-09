@@ -21,7 +21,10 @@ public record Account2(Group group, String name) implements Entity {
             return this.group().contains(entity.group()) && entity.equals(this);
         }
         if (entity instanceof AccountHolding holding) {
-            return holding.account2().contains(this);
+            return this.contains(holding.account2());
+        }
+        if (entity instanceof AccountCashHolding holding) {
+            return this.contains(holding.account2());
         }
         return false;
     }
@@ -46,8 +49,17 @@ public record Account2(Group group, String name) implements Entity {
     }
 
     @Override
+    public boolean isCashHolding() {
+        return false;
+    }
+
+    @Override
     public String toString()
     {
         return "A/" + stringId();
+    }
+
+    public AccountCashHolding cashHolding() {
+        return new AccountCashHolding(this, "CashGBP");
     }
 }

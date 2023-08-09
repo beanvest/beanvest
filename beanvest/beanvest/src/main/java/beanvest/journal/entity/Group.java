@@ -31,6 +31,11 @@ public record Group(List<String> parts) implements Entity {
         return false;
     }
 
+    @Override
+    public boolean isCashHolding() {
+        return false;
+    }
+
     String actualStringId() {
         if (parts.isEmpty()) {
             return "";
@@ -46,13 +51,10 @@ public record Group(List<String> parts) implements Entity {
     public boolean contains(Entity entity) {
         if (entity instanceof Group group) {
             return containsGroup(group);
-        } else if (entity instanceof Account2 acc){
-            return containsGroup(acc.group());
-        } else if (entity instanceof AccountHolding ah)
-        {
-            return containsGroup(ah.group());
+        } else {
+            var group = entity.group();
+            return containsGroup(group);
         }
-        throw new UnsupportedOperationException("unsupported entity: " + entity.getClass());
     }
 
     private boolean containsGroup(Group group) {

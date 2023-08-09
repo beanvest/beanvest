@@ -3,7 +3,6 @@ package beanvest.processor.deprecated;
 import beanvest.processor.validation.ValidatorError;
 import beanvest.journal.entry.Balance;
 import beanvest.journal.entry.Entry;
-import beanvest.processor.processing.StatsCollectingJournalProcessor;
 
 import java.util.ArrayList;
 import java.util.List;

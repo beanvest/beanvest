@@ -3,7 +3,6 @@ package beanvest.processor.deprecated;
 import beanvest.processor.validation.ValidatorError;
 import beanvest.journal.CashFlow;
 import beanvest.journal.Holdings;
-import beanvest.processor.processing.StatsCollectingJournalProcessor;
 
 import java.time.LocalDate;
 import java.util.List;

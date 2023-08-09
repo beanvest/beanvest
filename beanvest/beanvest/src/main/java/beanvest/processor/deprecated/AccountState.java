@@ -14,7 +14,6 @@ import beanvest.journal.CashStats;
 import beanvest.journal.entry.Close;
 import beanvest.journal.entry.Deposit;
 import beanvest.journal.entry.Fee;
-import beanvest.processor.processing.StatsCollectingJournalProcessor;
 import beanvest.result.Result;
 
 import java.math.BigDecimal;

@@ -46,6 +46,7 @@ public class ReturnsDsl {
     public static final String CUMULATIVE_FEES = "Fees";
     public static final String PERIOD_INTEREST = "pIntr";
     public static final String CUMULATIVE_INTEREST = "Intr";
+    public static final String WITHDRAWALS = "Wths";
     public static final String PERIOD_WITHDRAWALS = "pWths";
     public static final String PERIOD_DEPOSITS = "pDeps";
     public static final String CUMULATIVE_DEPOSITS = "Deps";
@@ -281,7 +282,7 @@ public class ReturnsDsl {
     }
 
     public void verifyWithdrawals(String account, String period, String amount) {
-        verifyStat(account, period, amount, s->null, DEFAULT_OFFSET);
+        verifyStat(account, period, amount, WITHDRAWALS);
     }
 
     public void verifyInterest(String account, String period, String amount) {

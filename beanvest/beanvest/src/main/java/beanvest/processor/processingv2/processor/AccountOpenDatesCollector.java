@@ -1,6 +1,7 @@
 package beanvest.processor.processingv2.processor;
 
 import beanvest.journal.entry.AccountOperation;
+import beanvest.journal.entry.CashOperation;
 import beanvest.journal.entry.Close;
 import beanvest.journal.entry.Transaction;
 import beanvest.journal.entity.Entity;
@@ -21,6 +22,9 @@ public class AccountOpenDatesCollector implements ProcessorV2 {
         storeIfNotStored(op, op.account2());
         for (Group group : op.account2().groups()) {
             storeIfNotStored(op, group);
+        }
+        if (op instanceof CashOperation c) {
+            storeIfNotStored(op, c.cashAccount());
         }
         if (op instanceof Transaction t) {
             storeIfNotStored(op, t.accountHolding());

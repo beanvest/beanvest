@@ -15,7 +15,7 @@ public class WithdrawalCalculator implements ProcessorV2, Calculator {
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Withdrawal dep) {
-            simpleBalanceTracker.add(dep.account2(), dep.getCashAmount().negate());
+            simpleBalanceTracker.add(dep.cashAccount(), dep.getCashAmount().negate());
         }
     }
 
