@@ -1,11 +1,11 @@
 package beanvest.acceptance.returns.cli;
 
 import beanvest.acceptance.returns.ReturnsDsl;
+import beanvest.lib.testing.WorkInProgress;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class HoldingsStatsCliAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -15,9 +15,11 @@ public class HoldingsStatsCliAcceptanceTest {
     }
 
     @Test
+    @WorkInProgress(description = "profit,opened,closed,cost are missing, xirr shouldnt be zero")
     void shouldCalculateUnrealizedGainForEachHolding() {
         dsl.setEnd("2022-01-01");
         dsl.setGroupingDisabled();
+        dsl.setColumns("deps,wths,div,intr,fees,rgain,ugain,val,xirr"); //TODO add profit
         dsl.setReportHoldings();
 
         dsl.runCalculateReturns("""
@@ -31,13 +33,15 @@ public class HoldingsStatsCliAcceptanceTest {
                 2021-01-01 sell 1 APPL for 49 with fee 2
                 2021-12-31 price APPL 45 GBP
                 2021-12-31 price MSFT 48 GBP
+                2021-12-31 withdraw 1
                 """);
 
         dsl.verifyOutput("""
-                account           opened      closed  deps   wths   div    intr   fees   rGain  cash   uGain  hVal   aGain  xirr   xirrp
-                fidelityIsa       2021-01-01  -          90      0      1      0     -6      9     50     -2     48      8    8.9    8.9
-                fidelityIsa:APPL  2021-01-01  -           0      0      0      0     -4      9      -      0      0      9      …      …
-                fidelityIsa:MSFT  2021-01-01  -           0      0      1      0     -2      0      -     -2     48     -1      …   -2.0""");
+                account              Deps   Wths   Intr   Fees   Div    RGain  UGain  Value  Xirr
+                fidelityIsa             90     -1      0     -6      1      9     -2     95      0
+                fidelityIsa:APPL         0      0      0     -4      0      9      0      0      …
+                fidelityIsa:CashGBP     90     -1      0     -6      1      9     -2     47      0
+                fidelityIsa:MSFT         0      0      0     -2      1      0     -2     48     -0""");
     }
 }
 

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class GroupingCliAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -38,7 +37,7 @@ public class GroupingCliAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""
-                account     deps
+                account     Deps
                 .*              7
                 pension:.*      3
                 pension:a       1
