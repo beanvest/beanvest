@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class CliStatsAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -36,7 +35,7 @@ public class CliStatsAcceptanceTest {
 
 
         dsl.verifyOutput("""                                
-                account  fees
+                account  Fees
                 trading  -7.50""");
     }
 
@@ -64,11 +63,12 @@ public class CliStatsAcceptanceTest {
 
         dsl.verifyOutput("""         
                         ╷ 2022  ╷ 2021  ╷
-                account │ Δfees │ Δfees │
+                account │ pFees │ pFees │
                 trading │ -3.30 │ -4.20 │""");
     }
 
     @Test
+    @Disabled("rework v2")
     void calculatesInterestYearlyDelta() {
         dsl.setEnd("2023-01-01");
         dsl.setDeltas();
@@ -88,9 +88,9 @@ public class CliStatsAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""         
-                        ╷ 2022   ╷ 2021   ╷
-                account │ ΔaGain │ ΔaGain │
-                trading │      9 │      7 │""");
+                        ╷ 2022    ╷ 2021    ╷
+                account │ pProfit │ pProfit │
+                trading │       9 │       7 │""");
     }
 }
 
