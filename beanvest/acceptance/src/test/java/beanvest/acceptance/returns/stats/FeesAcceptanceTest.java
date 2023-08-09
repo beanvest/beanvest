@@ -10,6 +10,7 @@ public class FeesAcceptanceTest {
     @Test
     void calculatesFeesTotal() {
         dsl.setColumns("Fees");
+        dsl.setReportHoldings();
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -25,6 +26,7 @@ public class FeesAcceptanceTest {
                 """);
 
         dsl.verifyFeesTotal("trading", "TOTAL", "-7.5");
+        dsl.verifyFeesTotal("trading:CashGBP", "TOTAL", "-7.5");
     }
 
     @Test

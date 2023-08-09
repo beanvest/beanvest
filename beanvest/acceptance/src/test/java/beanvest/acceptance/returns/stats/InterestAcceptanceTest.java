@@ -10,6 +10,7 @@ public class InterestAcceptanceTest {
     @Test
     void calculatesInterestTotal() {
         dsl.setColumns("Intr");
+        dsl.setReportHoldings();
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -21,6 +22,7 @@ public class InterestAcceptanceTest {
                 """);
 
         dsl.verifyInterest("trading", "TOTAL", "11.2");
+        dsl.verifyInterest("trading:CashGBP", "TOTAL", "11.2");
     }
 
     @Test

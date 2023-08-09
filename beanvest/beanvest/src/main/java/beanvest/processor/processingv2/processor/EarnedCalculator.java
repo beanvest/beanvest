@@ -15,7 +15,8 @@ public class EarnedCalculator implements ProcessorV2, Calculator {
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Sell sell) {
-            simpleBalanceTracker.add(sell.account2(), sell.getCashAmount());
+            var add = sell.getCashAmount().subtract(sell.fee());
+            simpleBalanceTracker.add(sell.cashAccount(), add);
         }
     }
 

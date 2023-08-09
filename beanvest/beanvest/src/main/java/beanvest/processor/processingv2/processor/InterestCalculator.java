@@ -15,7 +15,7 @@ public class InterestCalculator implements ProcessorV2, Calculator {
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Interest intr) {
-            simpleBalanceTracker.add(intr.account2(), intr.getCashAmount());
+            simpleBalanceTracker.add(intr.cashAccount(), intr.getCashAmount());
         }
     }
 

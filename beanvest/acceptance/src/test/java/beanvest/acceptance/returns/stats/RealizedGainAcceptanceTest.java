@@ -11,6 +11,7 @@ public class RealizedGainAcceptanceTest {
     void realizedGainIsBasedOnAveragePurchasePrice() {
         dsl.setColumns("RGain");
         dsl.setEnd("2021-01-03");
+        dsl.setReportHoldings();
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -21,6 +22,7 @@ public class RealizedGainAcceptanceTest {
                 """);
 
         dsl.verifyRealizedGains("trading", "TOTAL", "1");
+        dsl.verifyRealizedGains("trading:X", "TOTAL", "1");
     }
 
     @Test
