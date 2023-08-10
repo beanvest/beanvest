@@ -14,7 +14,6 @@ public class CliHoldingsStatsAcceptanceTest {
     }
 
     @Test
-    @WorkInProgress(description = "profit,opened,closed are missing, xirr shouldnt be zero; precise review needed")
     void shouldCalculateUnrealizedGainForEachHolding() {
         dsl.setEnd("2022-01-01");
         dsl.setGroupingDisabled();

@@ -21,9 +21,9 @@ repos:
         entry: ./gradlew generateSampleJournal
         always_run: true
         pass_filenames: false
-#      - id: generate-usage-doc
-#        name: gradle generateUsageDoc
-#        language: system
-#        entry: ./gradlew generateUsageDoc
-#        always_run: true
-#        pass_filenames: false
+      - id: generate-usage-doc
+        name: gradle generateUsageDoc
+        language: system
+        entry: ./gradlew generateUsageDoc
+        always_run: true
+        pass_filenames: false

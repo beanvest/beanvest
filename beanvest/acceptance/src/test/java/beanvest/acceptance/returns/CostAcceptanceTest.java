@@ -111,7 +111,7 @@ public class CostAcceptanceTest {
     }
 
     @Test
-    void netCostOfCash_paltformFeesAreNotAffectingIt() {
+    void netCostOfCash_platformFeesAreNotAffectingIt() {
         dsl.setEnd("2022-01-01");
         dsl.setColumns("NCost");
         dsl.setReportHoldings();

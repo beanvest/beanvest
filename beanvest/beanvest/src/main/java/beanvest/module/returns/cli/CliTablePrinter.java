@@ -65,7 +65,7 @@ public class CliTablePrinter {
     private List<Column<AccountPeriodDto>> createPeriodicColumns(List<String> selectedColumns, String period, Optional<String> group, CollectionMode collectionMode) {
         var deltas = collectionMode == CollectionMode.DELTA;
         return streamSelectedColumns(selectedColumns)
-                .map(spec -> spec.toColumn(group, period, exact, deltas, spec.columnId().header))
+                .map(spec -> spec.toColumn(group, period, exact, spec.columnId().header))
                 .toList();
     }
 

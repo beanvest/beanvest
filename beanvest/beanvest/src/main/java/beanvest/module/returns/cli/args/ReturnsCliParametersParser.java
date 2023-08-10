@@ -25,7 +25,7 @@ public class ReturnsCliParametersParser {
         final Optional<String> reportCurrency = Optional.ofNullable(parseResult.matchedOptionValue("--currency", ""));
 
         var exactValues = parseResult.matchedOptionValue("--exact", false);
-        var reportInvestments = parseResult.matchedOptionValue("--report-investments", false);
+        var reportInvestments = parseResult.matchedOptionValue("--report-holdings", false);
         var jsonFormat = parseResult.matchedOptionValue("--json", false);
         final String intervalRaw = parseResult.matchedOptionValue("--interval", PeriodInterval.NONE.name());
         final PeriodInterval period = PeriodInterval.valueOf(intervalRaw.toUpperCase(Locale.ROOT));

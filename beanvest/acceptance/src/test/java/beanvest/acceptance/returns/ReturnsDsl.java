@@ -94,7 +94,7 @@ public class ReturnsDsl {
             args.add("--end=" + cliOptions.end);
         }
         if (cliOptions.reportInvestments) {
-            args.add("--report-investments");
+            args.add("--report-holdings");
         }
         if (cliOptions.start != null) {
             args.add("--startDate=" + cliOptions.start);

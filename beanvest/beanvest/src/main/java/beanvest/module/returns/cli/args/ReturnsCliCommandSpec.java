@@ -57,7 +57,7 @@ public class ReturnsCliCommandSpec {
                     .type(Boolean.class)
                     .description("Output as json")
                     .build())
-            .addOption(CommandLine.Model.OptionSpec.builder("--report-investments")
+            .addOption(CommandLine.Model.OptionSpec.builder("--report-holdings")
                     .type(Boolean.class)
                     .description("Generate report for each investment")
                     .build())
