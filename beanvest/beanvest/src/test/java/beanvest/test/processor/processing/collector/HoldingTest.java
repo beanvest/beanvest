@@ -1,45 +1,123 @@
 package beanvest.test.processor.processing.collector;
 
 import beanvest.processor.processingv2.Holding;
-import org.assertj.core.util.BigDecimalComparator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
+import static java.math.BigDecimal.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HoldingTest {
+    private Holding holding;
+
+    @BeforeEach
+    void setUp() {
+        holding = holding();
+    }
+
     @Test
     void averageCostAfterAdditions() {
-        var holding = new Holding("APPL", BigDecimal.TEN, BigDecimal.ONE);
-        var newHolding = holding.addBought(BigDecimal.TEN, BigDecimal.TEN);
-        assertThat(newHolding.averageCost())
-                .usingComparatorForType(BigDecimalComparator.BIG_DECIMAL_COMPARATOR, BigDecimal.class)
-                .isEqualByComparingTo(BigDecimal.ONE);
+        updateHolding("10", "-10");
+        updateHolding("10", "-10");
+
+        assertAverageCost("-1");
     }
+
+    private void updateHolding(String amountChange, String cost) {
+        holding.update(d(amountChange), d(cost));
+    }
+
     @Test
     void averageCostAfterAdditions2() {
-        var holding = new Holding("APPL", BigDecimal.ONE, BigDecimal.TEN);
-        var newHolding = holding.addBought(BigDecimal.ONE, BigDecimal.TEN);
-        assertThat(newHolding.averageCost())
-                .usingComparatorForType(BigDecimalComparator.BIG_DECIMAL_COMPARATOR, BigDecimal.class)
-                .isEqualByComparingTo(BigDecimal.TEN);
+        updateHolding("1", "-10");
+        updateHolding("1", "-10");
+        assertAverageCost("-10");
     }
 
     @Test
-    void averageCostAfterSelling() {
-        var holding = new Holding("MSFT", BigDecimal.TEN, BigDecimal.ONE);
-        var newHolding = holding.reduceSold(BigDecimal.ONE);
-        assertThat(newHolding.averageCost())
-                .isEqualByComparingTo(BigDecimal.ONE);
+    void averageCostIsTheSameAfterSelling() {
+        updateHolding("10", "-10");
+        assertAverageCost("-1");
+
+        updateHolding("-5", "13");
+        assertAverageCost("-1");
     }
 
     @Test
-    void averageCostAfterSelling2() {
-        var holding = new Holding("MSFT", BigDecimal.TEN, BigDecimal.ONE);
-        var newHolding = holding.reduceSold(new BigDecimal(2));
+    void keepLastAverageCostWhenSoldOut() {
+        updateHolding("10", "-10");
+        updateHolding("-10", "15");
 
-        assertThat(newHolding.averageCost())
-                .isEqualByComparingTo(BigDecimal.ONE);
+        assertAverageCost("-1");
+    }
+
+    @Test
+    void costMightBePositiveIfShortSelling() {
+        updateHolding("-10", "10");
+        updateHolding("-10", "20");
+
+        assertAverageCost("-1.5");
+    }
+
+    @Test
+    void feesMightReduceCashWithoutAffectingTheCost() {
+        updateHolding("10", "-10");
+        assertTotalCost("-10");
+        assertAverageCost("-1");
+
+        updateWithoutTouchingTotalCost("-5");
+        assertTotalCost("-10");
+        assertAverageCost("-2");
+    }
+
+    private void assertTotalCost(String s) {
+        assertThat(holding.totalCost()).isEqualByComparingTo(new BigDecimal(s));
+    }
+
+    private void updateWithoutTouchingTotalCost(String unitsChange) {
+        holding.updateWhileKeepingTheCost(d(unitsChange));
+    }
+
+    private void assertAverageCost(String expectedAverageCost) {
+        assertThat(holding.averageCost())
+                .isEqualByComparingTo(d(expectedAverageCost));
+    }
+
+    @Test
+    void fromShortToRegular() {
+        updateHolding("-10", "10");
+        assertAverageCost("-1");
+
+        updateHolding("5", "-200");
+        assertAverageCost("-1");
+
+        updateHolding("15", "-150"); // goes over 0. first 5 for 50 then 10 for 100
+        assertAverageCost("-10");
+    }
+
+    @Test
+    void fromRegularToShort() {
+        updateHolding("10", "-10");
+        assertAverageCost("-1");
+
+        updateHolding("-5", "12");
+        assertAverageCost("-1");
+
+        updateHolding("-15", "45"); // goes over 0. first 5 for 15 then 10 for 30
+        assertAverageCost("-3");
+    }
+
+    private static Holding holding() {
+        return new Holding("AAPL", ZERO, ZERO);
+    }
+
+    private static Holding getHolding(String amount, String totalCost) {
+        return new Holding("APPL", new BigDecimal(amount), new BigDecimal(totalCost));
+    }
+
+    private BigDecimal d(String number) {
+        return new BigDecimal(number);
     }
 }

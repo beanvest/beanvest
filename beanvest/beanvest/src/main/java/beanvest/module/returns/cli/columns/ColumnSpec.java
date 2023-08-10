@@ -7,8 +7,7 @@ import beanvest.processor.dto.AccountPeriodDto;
 
 import java.util.Optional;
 
-record ColumnSpec(ColumnId columnId) implements PeriodicColumnSpec {
-    @Override
+public record ColumnSpec(ColumnId columnId) {
     public Column<AccountPeriodDto> toColumn(Optional<String> group, String period, boolean exact, boolean delta, String title) {
         return new Column<>(
                 group,

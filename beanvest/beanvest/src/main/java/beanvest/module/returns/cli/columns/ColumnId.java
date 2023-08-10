@@ -2,6 +2,7 @@ package beanvest.module.returns.cli.columns;
 
 import beanvest.processor.processingv2.ValueCalculator;
 import beanvest.processor.processingv2.processor.NetCostCalculator;
+import beanvest.processor.processingv2.processor.ProfitCalculator;
 import beanvest.processor.processingv2.processor.periodic.PeriodUnrealizedGainCalculator;
 import beanvest.processor.processingv2.processor.periodic.PeriodValueCalculator;
 import beanvest.processor.processingv2.processor.periodic.PeriodXirrCalculator;
@@ -42,8 +43,8 @@ public enum ColumnId {
     UNREALIZED_GAIN_PERIOD("pUGain", "unrealized gain per period", PeriodUnrealizedGainCalculator.class),
     DIVIDENDS("Div", "dividends cumulative", DividendCalculator.class),
     DIVIDENDS_PERIOD("pDiv", "dividends per period", PeriodDividendCalculator.class),
-    PROFIT("AGain", "holdings value + cash + withdrawals - deposits", null),
-    PROFIT_PERIOD("pAGain", "holdings value + cash + withdrawals - deposits", null),
+    PROFIT("Profit", "holdings value + cash + withdrawals - deposits", ProfitCalculator.class),
+    PROFIT_PERIOD("pProfit", "holdings value + cash + withdrawals - deposits", null),
     CASH("Cash", "cash", CashCalculator.class),
     CASH_PERIOD("pCash", "cash per period", PeriodCashCalculator.class),
     NET_COST("Cost", "total cost of account or holding", NetCostCalculator.class),

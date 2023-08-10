@@ -25,10 +25,10 @@ public class UnrealizedGainCalculator implements Calculator {
         }
 
         var cost = BigDecimal.ZERO;
-        var holdings = holdingsCollector.getHoldings(params.entity());
+        var holdings = holdingsCollector.getInstrumentHoldings(params.entity());
         for (Holding holding : holdings) {
             cost = cost.add(holding.totalCost());
         }
-        return Result.success(calculate.value().subtract(cost));
+        return Result.success(calculate.value().add(cost));
     }
 }

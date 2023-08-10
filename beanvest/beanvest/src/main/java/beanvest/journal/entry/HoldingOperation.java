@@ -1,6 +1,6 @@
 package beanvest.journal.entry;
 
-import beanvest.journal.entity.AccountHolding;
+import beanvest.journal.entity.AccountInstrumentHolding;
 
 public sealed interface HoldingOperation extends AccountOperation permits Buy, Dividend, Sell, Transaction {
     String holdingSymbol();
@@ -9,7 +9,7 @@ public sealed interface HoldingOperation extends AccountOperation permits Buy, D
         return this.account() + ":" + this.holdingSymbol();
     }
 
-    default AccountHolding accountHolding() {
-        return new AccountHolding(account2(), holdingSymbol());
+    default AccountInstrumentHolding accountHolding() {
+        return new AccountInstrumentHolding(account2(), holdingSymbol());
     }
 }

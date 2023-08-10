@@ -59,6 +59,7 @@ public class ReturnsDsl {
     public static final String CUMULATIVE_UNREALIZED_GAINS = "UGain";
     public static final String PERIOD_UNREALIZED_GAINS = "pUGain";
     public static final String NET_COST = "Cost";
+    public static final String PROFIT = "Profit";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -336,7 +337,7 @@ public class ReturnsDsl {
     }
 
     public ReturnsDsl verifyProfit(String account, String period, String amount) {
-        verifyStat(account, period, amount, "profit");
+        verifyStat(account, period, amount, PROFIT);
         return this;
     }
 

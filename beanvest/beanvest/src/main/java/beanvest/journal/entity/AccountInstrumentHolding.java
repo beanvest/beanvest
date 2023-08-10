@@ -3,13 +3,13 @@ package beanvest.journal.entity;
 import java.util.Arrays;
 import java.util.List;
 
-public record AccountCashHolding(Account2 account2, String holding) implements Entity, AccountHolding {
+public record AccountInstrumentHolding(Account2 account2, String holding) implements Entity, AccountHolding {
     public static Entity fromStringId(String s) {
         var parts = Arrays.stream(s.split(":")).toList();
         if (parts.size() == 1) {
             throw new UnsupportedOperationException("holding as to be in an account. StringId given: " + s);
         }
-        return new AccountCashHolding(new Account2(
+        return new AccountInstrumentHolding(new Account2(
                 new Group(parts.subList(0, parts.size() - 2)),
                 parts.get(parts.size() - 2)),
                 parts.get(parts.size() - 1)
@@ -18,11 +18,7 @@ public record AccountCashHolding(Account2 account2, String holding) implements E
 
     @Override
     public boolean contains(Entity entity) {
-        if (entity instanceof AccountCashHolding ch) {
-            return ch.holding.equals(this.holding);
-        } else {
-            return false;
-        }
+        return this.equals(entity);
     }
 
     @Override
@@ -47,7 +43,7 @@ public record AccountCashHolding(Account2 account2, String holding) implements E
 
     @Override
     public boolean isCashHolding() {
-        return true;
+        return false;
     }
 
     @Override

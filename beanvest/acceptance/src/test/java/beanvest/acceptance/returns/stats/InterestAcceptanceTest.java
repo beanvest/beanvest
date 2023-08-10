@@ -22,7 +22,7 @@ public class InterestAcceptanceTest {
                 """);
 
         dsl.verifyInterest("trading", "TOTAL", "11.2");
-        dsl.verifyInterest("trading:CashGBP", "TOTAL", "11.2");
+        dsl.verifyInterest("trading:GBP", "TOTAL", "11.2");
     }
 
     @Test

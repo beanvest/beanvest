@@ -22,7 +22,7 @@ public class HoldingsValueCalculator implements Calculator {
     @Override
     public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
         var balance = BigDecimal.ZERO;
-        var holdings = holdingsCollector.getHoldings(params.entity());
+        var holdings = holdingsCollector.getInstrumentHoldings(params.entity());
         for (Holding holding : holdings) {
             var converted = pricesBook.convert(params.endDate(), params.targetCurrency(), holding.asValue());
             if (converted.hasError()) {
@@ -32,6 +32,4 @@ public class HoldingsValueCalculator implements Calculator {
         }
         return Result.success(balance);
     }
-
-
 }

@@ -15,11 +15,11 @@ public class HoldingsStatsCliAcceptanceTest {
     }
 
     @Test
-    @WorkInProgress(description = "profit,opened,closed,cost are missing, xirr shouldnt be zero")
+    @WorkInProgress(description = "profit,opened,closed are missing, xirr shouldnt be zero; precise review needed")
     void shouldCalculateUnrealizedGainForEachHolding() {
         dsl.setEnd("2022-01-01");
         dsl.setGroupingDisabled();
-        dsl.setColumns("deps,wths,div,intr,fees,rgain,ugain,val,xirr"); //TODO add profit
+        dsl.setColumns("deps,wths,div,intr,fees,ncost,rgain,ugain,val,xirr"); //TODO add profit
         dsl.setReportHoldings();
 
         dsl.runCalculateReturns("""
@@ -33,15 +33,16 @@ public class HoldingsStatsCliAcceptanceTest {
                 2021-01-01 sell 1 APPL for 49 with fee 2
                 2021-12-31 price APPL 45 GBP
                 2021-12-31 price MSFT 48 GBP
+                2021-12-31 fee 1
                 2021-12-31 withdraw 1
                 """);
 
         dsl.verifyOutput("""
-                account              Deps   Wths   Intr   Fees   Div    RGain  UGain  Value  Xirr
-                fidelityIsa             90     -1      0     -6      1      9     -2     95      0
-                fidelityIsa:APPL         0      0      0     -4      0      9      0      0      …
-                fidelityIsa:CashGBP     90     -1      0     -6      1      9     -2     47      0
-                fidelityIsa:MSFT         0      0      0     -2      1      0     -2     48     -0""");
+                account           Deps   Wths   Intr   Fees   Xirr   RGain  UGain  Div    Cost   Value
+                fidelityIsa          90     -1      0     -7      0      9     -2      1     89     94
+                fidelityIsa:APPL      0      0      0     -4      …      9      0      0      0      0
+                fidelityIsa:GBP      90     -1      0     -1      …      0      0      0     39     46
+                fidelityIsa:MSFT      0      0      0     -2     -0      0     -2      1     50     48""");
     }
 }
 

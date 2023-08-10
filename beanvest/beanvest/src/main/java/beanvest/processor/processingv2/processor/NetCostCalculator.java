@@ -9,23 +9,15 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class NetCostCalculator implements Calculator {
-    private final NetCostOfAccountCalculator netCostOfAccountCalculator;
-    private final NetCostOfHoldingCalculator netCostOfHoldingCalculator;
+    private final HoldingsCostCalculator netCostOfHoldingCalculator;
 
     public NetCostCalculator(
-            NetCostOfAccountCalculator netCostOfAccountCalculator,
-            NetCostOfHoldingCalculator netCostOfHoldingCalculator) {
-        this.netCostOfAccountCalculator = netCostOfAccountCalculator;
+            HoldingsCostCalculator netCostOfHoldingCalculator) {
         this.netCostOfHoldingCalculator = netCostOfHoldingCalculator;
     }
 
     @Override
     public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
-        var holdingCost = netCostOfHoldingCalculator.calculate(params);
-        var accountCost = netCostOfAccountCalculator.calculate(params);
-        return Result.combine(List.of(
-                        holdingCost,
-                        accountCost),
-                BigDecimal::add, UserErrors::join);
+        return netCostOfHoldingCalculator.calculate(params);
     }
 }

@@ -1,10 +1,6 @@
 package beanvest.processor.processingv2;
 
-import beanvest.journal.entity.Account2;
-import beanvest.journal.entity.AccountHolding;
 import beanvest.journal.entity.Entity;
-import beanvest.journal.entity.Group;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,6 +28,14 @@ class GroupTest {
 
         assertNotContains("A/a", "A/a:b");
         assertNotContains("A/a", "A/a:b:c");
+    }
+
+    @Test
+    void cashContains() {
+        assertContains("C/a:c", "C/a:c");
+
+        assertNotContains("C/a:c", "A/a");
+        assertNotContains("C/a:c", "A/a:b");
     }
 
     @Test

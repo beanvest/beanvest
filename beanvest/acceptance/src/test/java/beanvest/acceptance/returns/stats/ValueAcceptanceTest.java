@@ -39,7 +39,7 @@ public class ValueAcceptanceTest {
                 2021-01-02 withdraw 2
                 """);
 
-        dsl.verifyValue("trading:CashGBP", "2021", "1");
+        dsl.verifyValue("trading:GBP", "2021", "1");
         dsl.verifyValue("trading", "2021", "1");
     }
 
@@ -58,7 +58,7 @@ public class ValueAcceptanceTest {
                 2021-01-02 sell 1 X for 4
                 """);
 
-        dsl.verifyValue("trading:CashGBP", "2021", "5");
+        dsl.verifyValue("trading:GBP", "2021", "5");
         dsl.verifyValue("trading", "2021", "5");
     }
 
@@ -77,7 +77,7 @@ public class ValueAcceptanceTest {
                 2021-01-02 sell 1 X for 4 with fee 1
                 """);
 
-        dsl.verifyValue("trading:CashGBP", "2021", "3");
+        dsl.verifyValue("trading:GBP", "2021", "3");
         dsl.verifyValue("trading", "2021", "3");
     }
 
@@ -95,7 +95,7 @@ public class ValueAcceptanceTest {
                 2021-01-03 interest 2
                 """);
 
-        dsl.verifyValue("trading:CashGBP", "2021", "5");
+        dsl.verifyValue("trading:GBP", "2021", "5");
         dsl.verifyValue("trading", "2021", "5");
     }
 

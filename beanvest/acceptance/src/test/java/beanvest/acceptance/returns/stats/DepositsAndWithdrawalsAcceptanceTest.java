@@ -20,7 +20,7 @@ public class DepositsAndWithdrawalsAcceptanceTest {
                 """);
 
         dsl.verifyDeposits("trading", "TOTAL", "133");
-        dsl.verifyDeposits("trading:CashGBP", "TOTAL", "133");
+        dsl.verifyDeposits("trading:GBP", "TOTAL", "133");
     }
 
     @Test
@@ -37,7 +37,7 @@ public class DepositsAndWithdrawalsAcceptanceTest {
                 """);
 
         dsl.verifyWithdrawals("trading", "TOTAL", "-30");
-        dsl.verifyWithdrawals("trading:CashGBP", "TOTAL", "-30");
+        dsl.verifyWithdrawals("trading:GBP", "TOTAL", "-30");
     }
 
     @Test

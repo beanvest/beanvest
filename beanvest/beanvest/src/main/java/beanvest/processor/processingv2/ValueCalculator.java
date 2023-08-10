@@ -18,11 +18,9 @@ public class ValueCalculator implements Calculator {
 
     @Override
     public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
-        var calculate = cashCalculator.calculate(params);
-        if (params.entity().isCashHolding()) {
-            return calculate;
-        } else {
-            return calculate.combine(holdingsValueCalculator.calculate(params), BigDecimal::add, UserErrors::join);
-        }
+        var holdingsValue = holdingsValueCalculator.calculate(params);
+        var cashValue = cashCalculator.calculate(params);
+        return holdingsValue
+                .combine(cashValue, BigDecimal::add, UserErrors::join);
     }
 }

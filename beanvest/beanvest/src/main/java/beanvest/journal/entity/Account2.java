@@ -20,7 +20,7 @@ public record Account2(Group group, String name) implements Entity {
         if (entity instanceof Account2) {
             return this.group().contains(entity.group()) && entity.equals(this);
         }
-        if (entity instanceof AccountHolding holding) {
+        if (entity instanceof AccountInstrumentHolding holding) {
             return this.contains(holding.account2());
         }
         if (entity instanceof AccountCashHolding holding) {
@@ -60,6 +60,6 @@ public record Account2(Group group, String name) implements Entity {
     }
 
     public AccountCashHolding cashHolding() {
-        return new AccountCashHolding(this, "CashGBP");
+        return new AccountCashHolding(this, "GBP");
     }
 }

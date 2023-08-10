@@ -19,7 +19,7 @@ import beanvest.journal.entry.Sell;
 import beanvest.journal.entry.Transaction;
 import beanvest.journal.entry.Withdrawal;
 import beanvest.journal.entity.Account2;
-import beanvest.journal.entity.AccountHolding;
+import beanvest.journal.entity.AccountInstrumentHolding;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -120,7 +120,7 @@ public class JournalParser {
     }
 
     private void postProcess(Journal journal) {
-        HashMap<AccountHolding, Pair<LocalDate, BigDecimal>> inventory = new HashMap<>();
+        HashMap<AccountInstrumentHolding, Pair<LocalDate, BigDecimal>> inventory = new HashMap<>();
         for (var entry : journal.getEntries()) {
             if (entry instanceof Transaction transaction) {
                 var id = transaction.accountHolding();

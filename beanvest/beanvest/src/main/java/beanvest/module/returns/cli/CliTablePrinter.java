@@ -2,7 +2,7 @@ package beanvest.module.returns.cli;
 
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.TableWriter;
-import beanvest.module.returns.cli.columns.PeriodicColumnSpec;
+import beanvest.module.returns.cli.columns.ColumnSpec;
 import beanvest.module.returns.cli.columns.ReportColumnsDefinition;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.dto.AccountPeriodDto;
@@ -85,7 +85,7 @@ public class CliTablePrinter {
                 .toList();
     }
 
-    private static Stream<PeriodicColumnSpec> streamSelectedColumns(List<String> selectedColumnsOrDefaultSet) {
+    private static Stream<ColumnSpec> streamSelectedColumns(List<String> selectedColumnsOrDefaultSet) {
         return ReportColumnsDefinition.COLUMNS.stream()
                 .filter(col -> selectedColumnsOrDefaultSet.contains(col.columnId().header.toLowerCase(Locale.ROOT)));
     }

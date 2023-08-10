@@ -65,7 +65,8 @@ public class SelectedAccountStatsCalculator {
                 var id = neededStat.getKey();
                 var calculator = serviceRegistry.getCollector(neededStat.getValue());
 
-                stats.put(id, calculator.calculate(new CalculationParams(account, period.startDate(), period.endDate(), targetCurrency)));
+                var stat = calculator.calculate(new CalculationParams(account, period.startDate(), period.endDate(), targetCurrency));
+                stats.put(id, stat);
             }
             result.put(account.stringId(), new StatsV2(List.of(), stats, getMetadata(account)));
         }

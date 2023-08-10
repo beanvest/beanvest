@@ -16,7 +16,7 @@ public class SpentCalculator  implements ProcessorV2, Calculator
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Buy buy) {
-            simpleBalanceTracker.add(buy.accountHolding(), buy.getCashAmount().negate());
+            simpleBalanceTracker.add(buy.cashAccount(), buy.getCashAmount().negate());
         }
     }
 

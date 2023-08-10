@@ -38,6 +38,12 @@ public class UnrealizedGainAcceptanceTest {
                 2021-01-05 sell 1 X for 7
                 """);
 
+        /*                 cost  value  ugain
+          dep 10
+          buy 2X for 10      10      -      -
+          price X 6          10     12      2
+          sell 1X for 7       5      6      1
+         */
         dsl.verifyUnrealizedGains("trading", "TOTAL", "1");
     }
 

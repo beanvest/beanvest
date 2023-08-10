@@ -7,7 +7,7 @@ import beanvest.journal.entry.DepositOrWithdrawal;
 import beanvest.journal.entry.Dividend;
 import beanvest.journal.entry.HoldingOperation;
 import beanvest.journal.entry.Transaction;
-import beanvest.journal.entity.AccountHolding;
+import beanvest.journal.entity.AccountInstrumentHolding;
 import beanvest.journal.entity.Entity;
 import beanvest.processor.processingv2.ProcessorV2;
 
@@ -42,7 +42,7 @@ public class CashflowCollector implements ProcessorV2 {
 
     public List<CashFlow> getCashflows(Entity entity) {
         Map<Entity, List<CashFlow>> operations;
-        if (entity instanceof AccountHolding) {
+        if (entity instanceof AccountInstrumentHolding) {
             operations = holdingsOperations;
         } else {
             operations = accountOperations;

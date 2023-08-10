@@ -10,7 +10,7 @@ public interface Entity {
         return switch (type) {
             case "G" -> Group.fromStringId(mainBit);
             case "A" -> Account2.fromStringId(mainBit);
-            case "H" -> AccountHolding.fromStringId(mainBit);
+            case "H" -> AccountInstrumentHolding.fromStringId(mainBit);
             case "C" -> AccountCashHolding.fromStringId(mainBit);
             default -> throw new UnsupportedOperationException("unknown entity: " + id);
         };

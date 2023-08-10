@@ -11,8 +11,8 @@ import beanvest.result.UserErrors;
 import java.math.BigDecimal;
 
 public class RealizedGainCalculator implements ProcessorV2, Calculator {
-    SimpleBalanceTracker simpleBalanceTracker = new SimpleBalanceTracker();
-    private HoldingsCollector holdingsCollector;
+    private final SimpleBalanceTracker simpleBalanceTracker = new SimpleBalanceTracker();
+    private final HoldingsCollector holdingsCollector;
 
     public RealizedGainCalculator() {
         this.holdingsCollector = new HoldingsCollector();
@@ -23,8 +23,8 @@ public class RealizedGainCalculator implements ProcessorV2, Calculator {
         holdingsCollector.process(op);
         if (op instanceof Sell sell) {
             var unitCost = holdingsCollector.getHolding(sell.accountHolding()).averageCost();
-            var totalCost = unitCost.multiply(sell.units());
-            var realizedGain = sell.totalPrice().amount().subtract(totalCost);
+            var totalCost =  unitCost.multiply(sell.units());
+            var realizedGain = sell.totalPrice().amount().add(totalCost);
             simpleBalanceTracker.add(sell.accountHolding(), realizedGain);
         }
     }

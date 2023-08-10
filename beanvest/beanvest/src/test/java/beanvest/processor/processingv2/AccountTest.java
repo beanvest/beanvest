@@ -1,7 +1,7 @@
 package beanvest.processor.processingv2;
 
 import beanvest.journal.entity.Account2;
-import beanvest.journal.entity.AccountHolding;
+import beanvest.journal.entity.AccountInstrumentHolding;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +36,7 @@ class AccountTest {
     class AccountContainsHoldingsTest {
         @Test
         void accountContainsHolding() {
-            assertThat(Account2.fromStringId("a").contains(AccountHolding.fromStringId("a:b"))).isTrue();
+            assertThat(Account2.fromStringId("a").contains(AccountInstrumentHolding.fromStringId("a:b"))).isTrue();
         }
 
         @Test

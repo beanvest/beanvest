@@ -65,6 +65,6 @@ public class DividendsAcceptanceTest {
                 2022-12-31 price Y 10 GBP
                 """);
 
-        dsl.verifyValue("trading:CashGBP", "TOTAL", "5");
+        dsl.verifyValue("trading:GBP", "TOTAL", "5");
     }
 }

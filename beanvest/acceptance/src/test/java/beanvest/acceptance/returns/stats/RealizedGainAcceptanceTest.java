@@ -1,14 +1,13 @@
 package beanvest.acceptance.returns.stats;
 
 import beanvest.acceptance.returns.ReturnsDsl;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class RealizedGainAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
-    void realizedGainIsBasedOnAveragePurchasePrice() {
+    void realizedGainIsBasedOnAverageCost() {
         dsl.setColumns("RGain");
         dsl.setEnd("2021-01-03");
         dsl.setReportHoldings();
