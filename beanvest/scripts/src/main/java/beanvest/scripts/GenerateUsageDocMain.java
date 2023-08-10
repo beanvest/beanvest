@@ -13,7 +13,7 @@ import java.util.List;
 public class GenerateUsageDocMain {
     private static final List<Example> EXAMPLES = List.of(
             new Example(
-                    "returns $samplesDir$ --end=2023-07-01 --columns=Deps,Wths,Div,Intr,Fees,RGain,UGain,Val,profit,xirr",
+                    "returns $samplesDir$ --end=2023-07-01 --columns=Deps,Wths,Div,Intr,Fees,Val,Cost,Profit",
                     "Print various stats for all accounts and groups on each level of the accounts for whole period"),
             new Example(
                     "returns $samplesDir$ --columns deps,wths --interval=quarter",

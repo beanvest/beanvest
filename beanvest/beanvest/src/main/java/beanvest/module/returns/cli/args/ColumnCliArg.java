@@ -22,7 +22,7 @@ public enum ColumnCliArg {
     xirr(XIRR, XIRR_PERIOD, "xirr"),
 
     val(VALUE, VALUE_PERIOD, "date value"),
-    ncost(NET_COST, NET_COST, "Net cost - gross cost minus benefits (withdrawals, dividends, sale revenue etc)"),
+    cost(NET_COST, NET_COST, "Net cost - gross cost minus benefits (withdrawals, dividends, sale revenue etc)"),
     profit(PROFIT, PROFIT_PERIOD, "value - cost");
 
 

@@ -8,7 +8,7 @@ public class CostAcceptanceTest {
     @Test
     void netCostOfAccount_withdrawalsReduceIt() {
         dsl.setEnd("2022-01-01");
-        dsl.setColumns("NCost");
+        dsl.setColumns("cost");
         dsl.runCalculateReturns("""
                 account isa
                 currency GBP
@@ -23,7 +23,7 @@ public class CostAcceptanceTest {
     @Test
     void netCostOfAccount_withdrawalsReduceItBasedOnAverageCostPerUnit() {
         dsl.setEnd("2022-01-01");
-        dsl.setColumns("NCost");
+        dsl.setColumns("cost");
         dsl.runCalculateReturns("""
                 account isa
                 currency GBP
@@ -39,7 +39,7 @@ public class CostAcceptanceTest {
     @Test
     void netCostOfAccount_withHoldings() {
         dsl.setEnd("2022-01-01");
-        dsl.setColumns("NCost");
+        dsl.setColumns("cost");
         dsl.setReportHoldings();
         dsl.runCalculateReturns("""
                 account isa
@@ -56,7 +56,7 @@ public class CostAcceptanceTest {
     @Test
     void netCostOfHolding_shouldBeMoneySpentMinusMoneyEarnedWhenSelling() {
         dsl.setEnd("2022-01-01");
-        dsl.setColumns("NCost");
+        dsl.setColumns("cost");
         dsl.setReportHoldings();
 
         dsl.runCalculateReturns("""
@@ -75,7 +75,7 @@ public class CostAcceptanceTest {
     @Test
     void netCostOfCash_withRelizedGain() {
         dsl.setEnd("2022-01-01");
-        dsl.setColumns("NCost");
+        dsl.setColumns("cost");
         dsl.setReportHoldings();
 
         dsl.runCalculateReturns("""
@@ -95,7 +95,7 @@ public class CostAcceptanceTest {
     @Test
     void netCostOfCash_interestIsNotAffectingIt() {
         dsl.setEnd("2022-01-01");
-        dsl.setColumns("NCost");
+        dsl.setColumns("cost");
         dsl.setReportHoldings();
 
         dsl.runCalculateReturns("""
@@ -113,7 +113,7 @@ public class CostAcceptanceTest {
     @Test
     void netCostOfCash_platformFeesAreNotAffectingIt() {
         dsl.setEnd("2022-01-01");
-        dsl.setColumns("NCost");
+        dsl.setColumns("cost");
         dsl.setReportHoldings();
 
         dsl.runCalculateReturns("""
@@ -131,7 +131,7 @@ public class CostAcceptanceTest {
     @Test
     void netCostOfCash_transactionFeesAreNotAffectingIt() {
         dsl.setEnd("2022-01-01");
-        dsl.setColumns("NCost");
+        dsl.setColumns("cost");
         dsl.setReportHoldings();
 
         dsl.runCalculateReturns("""
@@ -149,7 +149,7 @@ public class CostAcceptanceTest {
     @Test
     void netCostOfCash_borrowedCapital() {
         dsl.setEnd("2022-01-01");
-        dsl.setColumns("NCost");
+        dsl.setColumns("cost");
         dsl.setGroupingEnabled();
 
         dsl.runCalculateReturns("""

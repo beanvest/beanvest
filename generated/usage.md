@@ -2,15 +2,15 @@
 
 - Print various stats for all accounts and groups on each level of the accounts for whole period
   ```bash
-  beanvest returns sample --end=2023-07-01 --columns=Deps,Wths,Div,Intr,Fees,RGain,UGain,Val,profit,xirr
+  beanvest returns sample --end=2023-07-01 --columns=Deps,Wths,Div,Intr,Fees,Val,Cost,Profit
   ```
   ```
-  account              Deps    Wths   Intr   Fees   Xirr   RGain  UGain  Div    Profit  Value
-  .*                   24,090   -140    352    -70      0      0      0      0     274  24,232
-  saving:.*             6,420   -140    352      0      0      0      0      0     344   6,632
-  saving:regularSaver   3,000      0    162      0      0      0      0      0     162   3,162
-  saving:savings        3,420   -140    190      0      0      0      0      0     183   3,470
-  trading              17,670      0      0    -70     -0      0      0      0     -70  17,600
+  account              Deps    Wths   Intr   Fees   Div    Profit  Cost     Value
+  .*                   24,090   -140    352    -70      0     274  -23,957  24,232
+  saving:.*             6,420   -140    352      0      0     344   -6,287   6,632
+  saving:regularSaver   3,000      0    162      0      0     162   -3,000   3,162
+  saving:savings        3,420   -140    190      0      0     183   -3,287   3,470
+  trading              17,670      0      0    -70      0     -70  -17,670  17,600
   ```
 - Print cumulative deposits and withdrawals for accounts and groups for each quarter
   ```bash

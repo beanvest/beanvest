@@ -17,7 +17,7 @@ public class CliHoldingsStatsAcceptanceTest {
     void shouldCalculateUnrealizedGainForEachHolding() {
         dsl.setEnd("2022-01-01");
         dsl.setGroupingDisabled();
-        dsl.setColumns("deps,wths,div,intr,fees,ncost,rgain,ugain,val,xirr,profit");
+        dsl.setColumns("deps,wths,div,intr,fees,cost,rgain,ugain,val,xirr,profit");
         dsl.setReportHoldings();
 
         dsl.runCalculateReturns("""
