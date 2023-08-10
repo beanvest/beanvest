@@ -16,8 +16,9 @@ public class RealizedGainAcceptanceTest {
                 currency GBP
                                 
                 2021-01-02 deposit 10
-                2021-01-03 buy 1 X for 10 with fee 1
-                2021-01-03 sell 1 X for 11 with fee 1
+                2021-01-03 buy 1 X for 10
+                2021-01-03 buy 1 X for 20
+                2021-01-03 sell 1 X for 16
                 """);
 
         dsl.verifyRealizedGains("trading", "TOTAL", "1");
@@ -33,10 +34,9 @@ public class RealizedGainAcceptanceTest {
                                 
                 2021-01-02 deposit 10
                 2021-01-03 buy 1 X for 10
-                2021-01-03 sell 1 X for 10 with fee 1
-                2021-01-03 price X 10
+                2021-01-03 sell 1 X for 12 with fee 1
                 """);
-        dsl.verifyRealizedGains("trading", "TOTAL", "0");
+        dsl.verifyRealizedGains("trading", "TOTAL", "1");
     }
 
     @Test

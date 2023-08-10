@@ -23,8 +23,10 @@ public class RealizedGainCalculator implements ProcessorV2, Calculator {
         holdingsCollector.process(op);
         if (op instanceof Sell sell) {
             var unitCost = holdingsCollector.getHolding(sell.accountHolding()).averageCost();
-            var totalCost =  unitCost.multiply(sell.units());
-            var realizedGain = sell.totalPrice().amount().add(totalCost);
+            var totalCost = unitCost.multiply(sell.units());
+            var realizedGain = sell.totalPrice().amount()
+                    .subtract(sell.fee())
+                    .add(totalCost);
             simpleBalanceTracker.add(sell.accountHolding(), realizedGain);
         }
     }
