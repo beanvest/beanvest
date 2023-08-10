@@ -43,12 +43,11 @@ public enum ColumnId {
     UNREALIZED_GAIN_PERIOD("pUGain", "unrealized gain per period", PeriodUnrealizedGainCalculator.class),
     DIVIDENDS("Div", "dividends cumulative", DividendCalculator.class),
     DIVIDENDS_PERIOD("pDiv", "dividends per period", PeriodDividendCalculator.class),
-    PROFIT("Profit", "holdings value + cash + withdrawals - deposits", ProfitCalculator.class),
+    PROFIT("Profit", "value - cost", ProfitCalculator.class),
     PROFIT_PERIOD("pProfit", "holdings value + cash + withdrawals - deposits", null),
     CASH("Cash", "cash", CashCalculator.class),
     CASH_PERIOD("pCash", "cash per period", PeriodCashCalculator.class),
     NET_COST("Cost", "total cost of account or holding", NetCostCalculator.class),
-//    COST_PERIOD("Cost", "total cost of account or holding", CostPeriodCalculator.class),
     VALUE("Value", "cash + market value of the holdings", ValueCalculator.class),
     VALUE_PERIOD("pValue", "cash + market value of the holdings", PeriodValueCalculator.class)
     ;

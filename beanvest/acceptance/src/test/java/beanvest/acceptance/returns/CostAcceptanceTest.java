@@ -17,7 +17,7 @@ public class CostAcceptanceTest {
                 2021-01-01 withdraw 20
                 """);
 
-        dsl.verifyCost("isa", "TOTAL", "80");
+        dsl.verifyCost("isa", "TOTAL", "-80");
     }
 
     @Test
@@ -33,7 +33,7 @@ public class CostAcceptanceTest {
                 2021-01-01 withdraw 5
                 """);
 
-        dsl.verifyCost("isa", "TOTAL", "7.5");
+        dsl.verifyCost("isa", "TOTAL", "-7.5");
     }
 
     @Test
@@ -48,9 +48,9 @@ public class CostAcceptanceTest {
                 2021-01-01 deposit 50
                 2021-01-01 buy 1 APPL for 20
                 """);
-        dsl.verifyCost("isa", "TOTAL", "50");
-        dsl.verifyCost("isa:APPL", "TOTAL", "20");
-        dsl.verifyCost("isa:GBP", "TOTAL", "30");
+        dsl.verifyCost("isa", "TOTAL", "-50");
+        dsl.verifyCost("isa:APPL", "TOTAL", "-20");
+        dsl.verifyCost("isa:GBP", "TOTAL", "-30");
     }
 
     @Test
@@ -69,7 +69,7 @@ public class CostAcceptanceTest {
                 2021-01-01 dividend 3 from APPL
                 """);
 
-        dsl.verifyCost("isa:APPL", "TOTAL", "25");
+        dsl.verifyCost("isa:APPL", "TOTAL", "-25");
     }
 
     @Test
@@ -87,9 +87,9 @@ public class CostAcceptanceTest {
                 2021-01-01 sell 1 APPL for 7
                 """);
 
-        dsl.verifyCost("isa", "TOTAL", "5");
+        dsl.verifyCost("isa", "TOTAL", "-5");
         dsl.verifyCost("isa:APPL", "TOTAL", "0");
-        dsl.verifyCost("isa:GBP", "TOTAL", "5");
+        dsl.verifyCost("isa:GBP", "TOTAL", "-5");
     }
 
     @Test
@@ -106,8 +106,8 @@ public class CostAcceptanceTest {
                 2021-01-01 interest 2
                 """);
 
-        dsl.verifyCost("isa", "TOTAL", "5");
-        dsl.verifyCost("isa:GBP", "TOTAL", "5");
+        dsl.verifyCost("isa", "TOTAL", "-5");
+        dsl.verifyCost("isa:GBP", "TOTAL", "-5");
     }
 
     @Test
@@ -124,8 +124,8 @@ public class CostAcceptanceTest {
                 2021-01-01 fee 3
                 """);
 
-        dsl.verifyCost("isa", "TOTAL", "5");
-        dsl.verifyCost("isa:GBP", "TOTAL", "5");
+        dsl.verifyCost("isa", "TOTAL", "-5");
+        dsl.verifyCost("isa:GBP", "TOTAL", "-5");
     }
 
     @Test
@@ -142,8 +142,8 @@ public class CostAcceptanceTest {
                 2021-01-01 buy 1 X for 5 with fee 2
                 """);
 
-        dsl.verifyCost("isa", "TOTAL", "5");
-        dsl.verifyCost("isa:X", "TOTAL", "5");
+        dsl.verifyCost("isa", "TOTAL", "-5");
+        dsl.verifyCost("isa:X", "TOTAL", "-5");
     }
 
     @Test
@@ -165,7 +165,7 @@ public class CostAcceptanceTest {
                 """);
 
         dsl.verifyCost("leveraged:.*", "TOTAL", "0");
-        dsl.verifyCost("leveraged:isa", "TOTAL", "100");
-        dsl.verifyCost("leveraged:loan", "TOTAL", "-100");
+        dsl.verifyCost("leveraged:isa", "TOTAL", "-100");
+        dsl.verifyCost("leveraged:loan", "TOTAL", "100");
     }
 }

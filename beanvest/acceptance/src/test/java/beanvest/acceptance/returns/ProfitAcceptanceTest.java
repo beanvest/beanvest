@@ -1,16 +1,14 @@
 package beanvest.acceptance.returns;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("Work in progress")
 public class ProfitAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
-    void considerDepositsWhenCalculatingProfit() {
+    void shouldProfitFromUnrealizedGain() {
         dsl.setEnd("2022-01-01");
-        dsl.setColumns("profit,ncost");
+        dsl.setColumns("profit");
 
         dsl.runCalculateReturns("""
                 account isa
@@ -18,44 +16,69 @@ public class ProfitAcceptanceTest {
                                 
                 2021-01-01 deposit 10
                 2021-01-01 buy 1 X for 5
-                2021-12-31 price X 5 GBP
+                2021-12-31 price X 7 GBP
                 """);
 
-        dsl.verifyCost("isa", "TOTAL", "10");
-        dsl.verifyProfit("isa", "TOTAL", "0");
+        dsl.verifyProfit("isa", "TOTAL", "2");
     }
 
     @Test
-    void considerDepositsForBuysWhenCalculatingGain() {
+    void shouldProfitFromDividendsAndInterest() {
         dsl.setEnd("2022-01-01");
+        dsl.setColumns("profit");
 
         dsl.runCalculateReturns("""
                 account isa
                 currency GBP
-                               
-                2021-01-01 deposit and buy 1 VLS for 100
-                2022-01-01 price VLS 110 GBP
+                                
+                2021-01-01 deposit 10
+                2021-01-01 buy 1 X for 10
+                2021-12-31 dividend 2 from X
+                2021-12-31 interest 3
+                2021-12-31 price X 10
                 """);
 
-        dsl.verifyProfit("isa", "TOTAL", "10");
+        dsl.verifyProfit("isa", "TOTAL", "5");
     }
 
-    // ending cash is used in the formula but not starting cash
-    // while we also have delta of value
     @Test
-    void considerSellsWithWithdrawalsWhenCalculatingGain() {
+    void feesShouldReduceProfit() {
         dsl.setEnd("2022-01-01");
         dsl.setColumns("profit");
+
+        dsl.runCalculateReturns("""
+                account isa
+                currency GBP
+                                
+                2021-01-01 deposit 10
+                2021-01-01 buy 1 X for 10
+                2021-12-31 sell 1 X for 20 with fee 1
+                2021-12-31 fee 1
+                """);
+
+        dsl.verifyProfit("isa", "TOTAL", "8");
+    }
+
+    @Test
+    void withdrawalsReduceProfitBasedAverageCost() {
+        dsl.setEnd("2022-01-01");
+        dsl.setColumns("profit");
+
         dsl.runCalculateReturns("""
                 account isa
                 currency GBP
                                 
                 2021-01-01 deposit 100
-                2021-01-01 buy 5 APPL for 100
-                2021-12-31 sell and withdraw 1 APPL for 22
-                2022-01-01 price APPL 22 GBP
+                2021-01-01 interest 10
+                2021-01-01 withdraw 55
                 """);
+        /*
+                                        value - cost = profit
+                2021-01-01 deposit 100    100   100       0
+                2021-01-01 interest 10    110   100      10
+                2021-01-01 withdraw 55    100   110/2     5
+         */
 
-        dsl.verifyProfit("isa", "TOTAL", "10");
+        dsl.verifyProfit("isa", "TOTAL", "5");
     }
 }

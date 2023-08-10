@@ -19,7 +19,7 @@ public class HoldingsCostCalculator implements Calculator {
     public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
         var cost = BigDecimal.ZERO;
         for (Holding holding : holdingsCollector.getHoldingsAndCash(params.entity())) {
-            cost = cost.subtract(holding.totalCost());
+            cost = cost.add(holding.totalCost());
         }
         return Result.success(cost);
     }
