@@ -518,6 +518,7 @@ public class ReturnsDsl {
 
         assertThat(result)
                 .usingComparator(BigDecimal::compareTo)
+                .as("Stat `%s` for `%s` in period `%s`".formatted(columnId, account, period))
                 .isCloseTo(expected, slack);
     }
 

@@ -19,7 +19,7 @@ public record AccountCashHolding(Account2 account2, String holding) implements E
     @Override
     public boolean contains(Entity entity) {
         if (entity instanceof AccountCashHolding ch) {
-            return ch.holding.equals(this.holding);
+            return ch.holding.equals(this.holding) && ch.account2.equals(this.account2);
         } else {
             return false;
         }

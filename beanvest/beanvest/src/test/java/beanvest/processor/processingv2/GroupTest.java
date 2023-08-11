@@ -36,6 +36,8 @@ class GroupTest {
 
         assertNotContains("C/a:c", "A/a");
         assertNotContains("C/a:c", "A/a:b");
+        assertNotContains("C/a:c", "C/a:b");
+        assertNotContains("C/a:c", "C/b:c");
     }
 
     @Test
