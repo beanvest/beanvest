@@ -8,6 +8,7 @@ dependencies {
     implementation(project(":beanvest:beanvest"))
     implementation(project(":beanvest:lib:util"))
     implementation(project(":beanvest:lib:apprunner"))
+    implementation(libs.gson)
     implementation(libs.bundles.logging)
 }
 
@@ -41,5 +42,13 @@ tasks.register('generateSampleJournal', JavaExec) {
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath
     mainClass = "beanvest.scripts.GenerateSampleJournalMain"
+    jvmArgs = ["-Dproject.dir=" + project.rootDir]
+}
+tasks.register('generateSampleJsonNative', JavaExec) {
+    group = "generation"
+    description = "Regenerates sample journal"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "beanvest.scripts.GenerateSampleJsonMain"
+    environment("NATIVE_BIN_PATH", "${project.rootDir}/beanvest/beanvest/build/native/nativeCompile/beanvest")
     jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }

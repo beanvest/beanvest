@@ -27,3 +27,9 @@ repos:
         entry: ./gradlew generateUsageDoc
         always_run: true
         pass_filenames: false
+      - id: generate-sample-json
+        name: gradle generateSampleJson
+        language: system
+        entry: ./gradlew generateSampleJson
+        always_run: true
+        pass_filenames: false

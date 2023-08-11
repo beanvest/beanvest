@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class GenerateUsageDocMain {
-    private static final List<Example> EXAMPLES = List.of(
+    public static final List<Example> EXAMPLES = List.of(
             new Example(
                     "returns $samplesDir$ --end=2023-07-01 --columns=Deps,Wths,Div,Intr,Fees,Val,Cost,Profit",
                     "Print various stats for all accounts and groups on each level of the accounts for whole period"),

@@ -1,0 +1,212 @@
+{
+  "accounts": [
+    ".*",
+    "saving:.*",
+    "saving:regularSaver",
+    "saving:savings",
+    "trading"
+  ],
+  "periods": [
+    {
+      "start": "-999999999-01-01",
+      "end": "2023-07-01",
+      "spec": {
+        "start": "-999999999-01-01",
+        "end": "2023-07-01",
+        "interval": "NONE"
+      }
+    }
+  ],
+  "accountDtos": [
+    {
+      "account": ".*",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "TOTAL": {
+          "errors": [],
+          "stats": {
+            "Div": {
+              "value": 0
+            },
+            "Wths": {
+              "value": -140
+            },
+            "Intr": {
+              "value": 351.68
+            },
+            "Deps": {
+              "value": 24090
+            },
+            "Value": {
+              "value": 24231.68
+            },
+            "Profit": {
+              "value": 274.313874194766605135598989433775723097753600
+            },
+            "Fees": {
+              "value": -70
+            },
+            "Cost": {
+              "value": -23957.366125805233394864401010566224276902246400
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:.*",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "TOTAL": {
+          "errors": [],
+          "stats": {
+            "Div": {
+              "value": 0
+            },
+            "Wths": {
+              "value": -140
+            },
+            "Intr": {
+              "value": 351.68
+            },
+            "Deps": {
+              "value": 6420
+            },
+            "Value": {
+              "value": 6631.68
+            },
+            "Profit": {
+              "value": 344.313874194766605135598989433775723097753600
+            },
+            "Fees": {
+              "value": 0
+            },
+            "Cost": {
+              "value": -6287.366125805233394864401010566224276902246400
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:regularSaver",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "TOTAL": {
+          "errors": [],
+          "stats": {
+            "Div": {
+              "value": 0
+            },
+            "Wths": {
+              "value": 0
+            },
+            "Intr": {
+              "value": 161.68
+            },
+            "Deps": {
+              "value": 3000
+            },
+            "Value": {
+              "value": 3161.68
+            },
+            "Profit": {
+              "value": 161.68
+            },
+            "Fees": {
+              "value": 0
+            },
+            "Cost": {
+              "value": -3000
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:savings",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "TOTAL": {
+          "errors": [],
+          "stats": {
+            "Div": {
+              "value": 0
+            },
+            "Wths": {
+              "value": -140
+            },
+            "Intr": {
+              "value": 190
+            },
+            "Deps": {
+              "value": 3420
+            },
+            "Value": {
+              "value": 3470
+            },
+            "Profit": {
+              "value": 182.633874194766605135598989433775723097753600
+            },
+            "Fees": {
+              "value": 0
+            },
+            "Cost": {
+              "value": -3287.366125805233394864401010566224276902246400
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    },
+    {
+      "account": "trading",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "TOTAL": {
+          "errors": [],
+          "stats": {
+            "Div": {
+              "value": 0
+            },
+            "Wths": {
+              "value": 0
+            },
+            "Intr": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 17670
+            },
+            "Value": {
+              "value": 17600
+            },
+            "Profit": {
+              "value": -70
+            },
+            "Fees": {
+              "value": -70
+            },
+            "Cost": {
+              "value": -17670
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    }
+  ]
+}

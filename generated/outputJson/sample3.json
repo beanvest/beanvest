@@ -1,0 +1,517 @@
+{
+  "accounts": [
+    ".*",
+    "saving:.*",
+    "saving:regularSaver",
+    "saving:savings",
+    "trading"
+  ],
+  "periods": [
+    {
+      "start": "2022-01-01",
+      "end": "2022-03-31",
+      "spec": {
+        "start": "-999999999-01-01",
+        "end": "2023-08-11",
+        "interval": "QUARTER"
+      }
+    },
+    {
+      "start": "2022-04-01",
+      "end": "2022-06-30",
+      "spec": {
+        "start": "-999999999-01-01",
+        "end": "2023-08-11",
+        "interval": "QUARTER"
+      }
+    },
+    {
+      "start": "2022-07-01",
+      "end": "2022-09-30",
+      "spec": {
+        "start": "-999999999-01-01",
+        "end": "2023-08-11",
+        "interval": "QUARTER"
+      }
+    },
+    {
+      "start": "2022-10-01",
+      "end": "2022-12-31",
+      "spec": {
+        "start": "-999999999-01-01",
+        "end": "2023-08-11",
+        "interval": "QUARTER"
+      }
+    },
+    {
+      "start": "2023-01-01",
+      "end": "2023-03-31",
+      "spec": {
+        "start": "-999999999-01-01",
+        "end": "2023-08-11",
+        "interval": "QUARTER"
+      }
+    },
+    {
+      "start": "2023-04-01",
+      "end": "2023-06-30",
+      "spec": {
+        "start": "-999999999-01-01",
+        "end": "2023-08-11",
+        "interval": "QUARTER"
+      }
+    }
+  ],
+  "accountDtos": [
+    {
+      "account": ".*",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "22q4": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -80
+            },
+            "Deps": {
+              "value": 16320
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q3": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -60
+            },
+            "Deps": {
+              "value": 12240
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "23q2": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -120
+            },
+            "Deps": {
+              "value": 22980
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q2": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -40
+            },
+            "Deps": {
+              "value": 8160
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "23q1": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -100
+            },
+            "Deps": {
+              "value": 19650
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q1": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -20
+            },
+            "Deps": {
+              "value": 4080
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:.*",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "22q4": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -80
+            },
+            "Deps": {
+              "value": 5160
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q3": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -60
+            },
+            "Deps": {
+              "value": 3870
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "23q2": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -120
+            },
+            "Deps": {
+              "value": 6240
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q2": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -40
+            },
+            "Deps": {
+              "value": 2580
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "23q1": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -100
+            },
+            "Deps": {
+              "value": 5700
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q1": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -20
+            },
+            "Deps": {
+              "value": 1290
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:regularSaver",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "22q4": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 3000
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q3": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 2250
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "23q2": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 3000
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q2": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 1500
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "23q1": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 3000
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q1": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 750
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:savings",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "22q4": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -80
+            },
+            "Deps": {
+              "value": 2160
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q3": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -60
+            },
+            "Deps": {
+              "value": 1620
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "23q2": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -120
+            },
+            "Deps": {
+              "value": 3240
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q2": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -40
+            },
+            "Deps": {
+              "value": 1080
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "23q1": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -100
+            },
+            "Deps": {
+              "value": 2700
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q1": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -20
+            },
+            "Deps": {
+              "value": 540
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    },
+    {
+      "account": "trading",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "22q4": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 11160
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q3": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 8370
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "23q2": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 16740
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q2": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 5580
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "23q1": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 13950
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        },
+        "22q1": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 2790
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    }
+  ]
+}

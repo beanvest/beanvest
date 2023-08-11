@@ -27,6 +27,12 @@ repos:
         entry: ./gradlew generateUsageDoc
         always_run: true
         pass_filenames: false
+      - id: generate-sample-json
+        name: gradle generateSampleJson
+        language: system
+        entry: ./gradlew generateSampleJson
+        always_run: true
+        pass_filenames: false
 
       - id: gradle-native-compile
         name: gradle nativeCompile
@@ -50,5 +56,11 @@ repos:
         name: gradle generateUsageDocNative
         language: system
         entry: ./gradlew generateUsageDocNative
+        always_run: true
+        pass_filenames: false
+      - id: generate-sample-json
+        name: gradle generateSampleJsonNative
+        language: system
+        entry: ./gradlew generateSampleJsonNative
         always_run: true
         pass_filenames: false
