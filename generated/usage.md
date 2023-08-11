@@ -12,6 +12,21 @@
   saving:savings        3,420   -140    190      0      0     183   -3,287   3,470
   trading              17,670      0      0    -70      0     -70  -17,670  17,600
   ```
+- Print cash stats on holdings, accounts and groups
+  ```bash
+  beanvest returns sample --end=2023-07-01 --columns=Deps,Wths,Val,Cost,Profit --report-holdings
+  ```
+  ```
+  account                  Deps    Wths   Profit  Cost     Value
+  .*                       24,090   -140     274  -23,957  24,232
+  saving:.*                 6,420   -140     344   -6,287   6,632
+  saving:regularSaver       3,000      0     162   -3,000   3,162
+  saving:regularSaver:GBP   3,000      0     162   -3,000   3,162
+  saving:savings            3,420   -140     183   -3,287   3,470
+  saving:savings:GBP        3,420   -140     183   -3,287   3,470
+  trading                  17,670      0     -70  -17,670  17,600
+  trading:GBP              17,670      0     -70  -17,670  17,600
+  ```
 - Print cumulative deposits and withdrawals for accounts and groups for each quarter
   ```bash
   beanvest returns sample --columns deps,wths --interval=quarter
