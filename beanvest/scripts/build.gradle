@@ -18,7 +18,6 @@ test {
         exceptionFormat = 'full'
     }
 }
-
 tasks.register('generateUsageDoc', JavaExec) {
     dependsOn("generateSampleJournal")
     group = "generation"
@@ -42,6 +41,13 @@ tasks.register('generateSampleJournal', JavaExec) {
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath
     mainClass = "beanvest.scripts.GenerateSampleJournalMain"
+    jvmArgs = ["-Dproject.dir=" + project.rootDir]
+}
+tasks.register('generateSampleJson', JavaExec) {
+    group = "generation"
+    description = "Regenerates sample journal"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "beanvest.scripts.GenerateSampleJsonMain"
     jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }
 tasks.register('generateSampleJsonNative', JavaExec) {

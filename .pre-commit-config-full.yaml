@@ -1,66 +1,11 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
--   repo: local
-    hooks:
-      - id: gradle-build
-        name: gradle build
-        language: system
-        entry: ./gradlew build -x test
-        always_run: true
-        pass_filenames: false
-      - id: gradle-test
-        name: gradle test
-        language: system
-        entry: ./gradlew test
-        always_run: true
-        pass_filenames: false
-      - id: generate-sample-journal
-        name: gradle generateSampleJournal
-        language: system
-        entry: ./gradlew generateSampleJournal
-        always_run: true
-        pass_filenames: false
-      - id: generate-usage-doc
-        name: gradle generateUsageDoc
-        language: system
-        entry: ./gradlew generateUsageDoc
-        always_run: true
-        pass_filenames: false
-      - id: generate-sample-json
-        name: gradle generateSampleJson
-        language: system
-        entry: ./gradlew generateSampleJson
-        always_run: true
-        pass_filenames: false
-
-      - id: gradle-native-compile
-        name: gradle nativeCompile
-        language: system
-        entry: ./gradlew nativeCompile
-        always_run: true
-        pass_filenames: false
-      - id: gradle-native-test-compile
-        name: gradle nativeTestCompile
-        language: system
-        entry: ./gradlew nativeTestCompile
-        always_run: true
-        pass_filenames: false
-      - id: gradle-native-test
-        name: gradle nativeTest
-        language: system
-        entry: ./gradlew nativeTest
-        always_run: true
-        pass_filenames: false
-      - id: generate-usage-doc-native
-        name: gradle generateUsageDocNative
-        language: system
-        entry: ./gradlew generateUsageDocNative
-        always_run: true
-        pass_filenames: false
-      - id: generate-sample-json
-        name: gradle generateSampleJsonNative
-        language: system
-        entry: ./gradlew generateSampleJsonNative
-        always_run: true
-        pass_filenames: false
+  -   repo: local
+      hooks:
+        - id: build-test-generate-native
+          name: build & test & generate (+native)
+          language: system
+          entry: ./gradlew all nativeAll
+          always_run: true
+          pass_filenames: false
