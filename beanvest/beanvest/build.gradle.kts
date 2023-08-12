@@ -21,6 +21,7 @@ dependencies {
     testImplementation(libs.openCsv)
 }
 
+
 tasks {
     test {
         useJUnitPlatform()

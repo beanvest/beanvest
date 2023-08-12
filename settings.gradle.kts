@@ -7,7 +7,8 @@ include(
         "beanvest:lib:jsonassert",
         "beanvest:lib:testing",
         "beanvest:lib:util",
-        "beanvest:scripts",
+        "beanvest:scripts:usagegen",
+        "beanvest:scripts:tsgen",
 )
 
 dependencyResolutionManagement {
@@ -36,6 +37,9 @@ dependencyResolutionManagement {
             library("openCsv", "com.opencsv", "opencsv").version("5.7.1")
             library("picocli", "info.picocli", "picocli").version("4.7.4")
             library("xirr", "org.decampo", "xirr").version("1.2")
+
+            // https://mvnrepository.com/artifact/cz.habarta.typescript-generator/typescript-generator-maven-plugin
+            library("typescriptGenerator", "cz.habarta.typescript-generator", "typescript-generator-maven-plugin").version("3.2.1263")
         }
     }
 }

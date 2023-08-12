@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'beanvest.scripts'
+group 'beanvest.scripts.usagegen'
 
 dependencies {
     implementation(project(":beanvest:beanvest"))
@@ -10,6 +10,7 @@ dependencies {
     implementation(project(":beanvest:lib:apprunner"))
     implementation(libs.gson)
     implementation(libs.bundles.logging)
+    implementation(libs.typescriptGenerator)
 }
 
 test {
@@ -23,7 +24,7 @@ tasks.register('generateUsageDoc', JavaExec) {
     group = "generation"
     description = "Regenerates usage doc based on generated sample journals"
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = "beanvest.scripts.GenerateUsageDocMain"
+    mainClass = "beanvest.scripts.usagegen.GenerateUsageDocMain"
     jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }
 tasks.register('generateUsageDocNative', JavaExec) {
@@ -32,7 +33,7 @@ tasks.register('generateUsageDocNative', JavaExec) {
     group = "generation"
     description = "Regenerates usage doc based on generated sample journals using native build"
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = "beanvest.scripts.GenerateUsageDocMain"
+    mainClass = "beanvest.scripts.usagegen.GenerateUsageDocMain"
     environment("NATIVE_BIN_PATH", "${project.rootDir}/beanvest/beanvest/build/native/nativeCompile/beanvest")
     jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }
@@ -40,21 +41,21 @@ tasks.register('generateSampleJournal', JavaExec) {
     group = "generation"
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = "beanvest.scripts.GenerateSampleJournalMain"
+    mainClass = "beanvest.scripts.usagegen.GenerateSampleJournalMain"
     jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }
 tasks.register('generateSampleJson', JavaExec) {
     group = "generation"
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = "beanvest.scripts.GenerateSampleJsonMain"
+    mainClass = "beanvest.scripts.usagegen.GenerateSampleJsonMain"
     jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }
 tasks.register('generateSampleJsonNative', JavaExec) {
     group = "generation"
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = "beanvest.scripts.GenerateSampleJsonMain"
+    mainClass = "beanvest.scripts.usagegen.GenerateSampleJsonMain"
     environment("NATIVE_BIN_PATH", "${project.rootDir}/beanvest/beanvest/build/native/nativeCompile/beanvest")
     jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }

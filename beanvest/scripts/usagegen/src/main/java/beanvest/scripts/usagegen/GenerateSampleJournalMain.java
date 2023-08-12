@@ -1,7 +1,7 @@
-package beanvest.scripts;
+package beanvest.scripts.usagegen;
 
-import beanvest.scripts.generatesamplejournal.JournalGenerator;
-import beanvest.scripts.generatesamplejournal.JournalWriter;
+import beanvest.scripts.usagegen.generatesamplejournal.JournalGenerator;
+import beanvest.scripts.usagegen.generatesamplejournal.JournalWriter;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

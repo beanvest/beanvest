@@ -1,4 +1,4 @@
-package beanvest.scripts.generateusagedoc;
+package beanvest.scripts.usagegen.generateusagedoc;
 
 import beanvest.lib.apprunner.AppRunner;
 

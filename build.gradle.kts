@@ -18,16 +18,18 @@ allprojects {
     }
 }
 tasks.register("generate") {
-    dependsOn(":beanvest:scripts:generateSampleJournal",
-            ":beanvest:scripts:generateUsageDoc",
-            ":beanvest:scripts:generateSampleJson")
+    dependsOn(":beanvest:scripts:usagegen:generateSampleJournal",
+            ":beanvest:scripts:usagegen:generateUsageDoc",
+            ":beanvest:scripts:usagegen:generateSampleJson",
+            ":beanvest:scripts:tsgen:generateTypescriptTypes")
     group = "generation"
     description = "Regenerates everything"
 }
 tasks.register("nativeGenerate") {
-    dependsOn(":beanvest:scripts:generateSampleJournal",
-            ":beanvest:scripts:generateUsageDocNative",
-            ":beanvest:scripts:generateSampleJsonNative")
+    dependsOn(":beanvest:scripts:usagegen:generateSampleJournal",
+            ":beanvest:scripts:usagegen:generateUsageDocNative",
+            ":beanvest:scripts:usagegen:generateSampleJsonNative",
+            ":beanvest:scripts:tsgen:generateTypescriptTypes")
     group = "generation"
     description = "Regenerates everything using native build"
 }

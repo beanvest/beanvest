@@ -1,6 +1,6 @@
-package beanvest.scripts.generateusagedoc;
+package beanvest.scripts.usagegen.generateusagedoc;
 
-import beanvest.scripts.generateusagedoc.ExampleRunner.ExampleWithOutput;
+import beanvest.scripts.usagegen.generateusagedoc.ExampleRunner.ExampleWithOutput;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,10 +1,10 @@
-package beanvest.scripts;
+package beanvest.scripts.usagegen;
 
 import beanvest.BeanvestMain;
 import beanvest.lib.apprunner.AppRunnerFactory;
-import beanvest.scripts.generateusagedoc.ExampleRunner;
-import beanvest.scripts.generateusagedoc.ExampleRunner.Example;
-import beanvest.scripts.generateusagedoc.UsageDocWriter;
+import beanvest.scripts.usagegen.generateusagedoc.ExampleRunner;
+import beanvest.scripts.usagegen.generateusagedoc.ExampleRunner.Example;
+import beanvest.scripts.usagegen.generateusagedoc.UsageDocWriter;
 
 import java.io.IOException;
 import java.nio.file.Path;

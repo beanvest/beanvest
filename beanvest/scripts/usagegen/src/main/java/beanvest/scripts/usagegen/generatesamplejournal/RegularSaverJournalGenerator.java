@@ -1,4 +1,4 @@
-package beanvest.scripts.generatesamplejournal;
+package beanvest.scripts.usagegen.generatesamplejournal;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

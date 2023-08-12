@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group 'beanvest.scripts.tsgen'
+
+dependencies {
+    implementation(project(":beanvest:beanvest"))
+    implementation(libs.bundles.logging)
+    implementation(libs.typescriptGenerator)
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
+tasks.register('generateTypescriptTypes', JavaExec) {
+    group = "generation"
+    description = "Regenerates sample journal"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "beanvest.scripts.tsgen.GenerateTypescriptTypesMain"
+    jvmArgs = ["-Dproject.dir=" + project.rootDir]
+}
