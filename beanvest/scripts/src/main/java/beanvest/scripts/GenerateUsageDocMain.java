@@ -19,7 +19,7 @@ public class GenerateUsageDocMain {
                     "returns $samplesDir$ --end=2023-07-01 --columns=Deps,Wths,Val,Cost,Profit --report-holdings",
                     "Print cash stats on holdings, accounts and groups"),
             new Example(
-                    "returns $samplesDir$ --columns deps,wths --interval=quarter",
+                    "returns $samplesDir$ --end=2023-07-01 --columns deps,wths --interval=quarter",
                     "Print cumulative deposits and withdrawals for accounts and groups for each quarter")
 //            new Example(
 //                    "returns $samplesDir$ --columns deps,wths --interval=quarter --delta",

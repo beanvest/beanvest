@@ -7,6 +7,7 @@ pkgs.mkShell {
     pkgs.beancount
     pkgs.fava
     pkgs.pre-commit
+    pkgs.nodejs_20
 
     pkgs.git
     pkgs.vim

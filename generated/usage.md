@@ -29,7 +29,7 @@
   ```
 - Print cumulative deposits and withdrawals for accounts and groups for each quarter
   ```bash
-  beanvest returns sample --columns deps,wths --interval=quarter
+  beanvest returns sample --end=2023-07-01 --columns deps,wths --interval=quarter
   ```
   ```
                       ╷ 23q2          ╷ 23q1          ╷ 22q4          ╷ 22q3          ╷ 22q2         ╷ 22q1         ╷
