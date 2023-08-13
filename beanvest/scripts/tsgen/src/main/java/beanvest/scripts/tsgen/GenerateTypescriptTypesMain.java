@@ -18,7 +18,7 @@ public class GenerateTypescriptTypesMain {
         String generated = typeScriptGenerator.generateTypeScript(Input.from(PortfolioStatsDto2.class));
         String sanitized = removeNonDeterministicDetails(generated);
 
-        Files.writeString(Path.of(projectDir + "/generated/apiTypes.ts"), sanitized);
+        Files.writeString(Path.of(projectDir + "/generated/apiTypes.d.ts"), sanitized);
     }
 
     private static String removeNonDeterministicDetails(String generated) {
