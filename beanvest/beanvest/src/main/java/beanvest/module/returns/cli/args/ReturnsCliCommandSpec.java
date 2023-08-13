@@ -1,6 +1,6 @@
 package beanvest.module.returns.cli.args;
 
-import beanvest.module.returns.cli.columns.ColumnId;
+import beanvest.module.returns.StatDefinition;
 import beanvest.processor.time.PeriodInterval;
 import picocli.CommandLine;
 
@@ -40,7 +40,7 @@ public class ReturnsCliCommandSpec {
                     .type(String.class)
                     .auxiliaryTypes(ColumnCliArg[].class)
                     .description("Comma-separated column selection. Eg 'rgain,xirr'. Available columns: "
-                                 + Arrays.stream(ColumnId.values())
+                                 + Arrays.stream(StatDefinition.values())
                                          .map(c -> "\n  * \"" + c.header.toLowerCase(Locale.ROOT) + "\" - " + c.name)
                                          .collect(Collectors.joining(", ")))
                     .build())

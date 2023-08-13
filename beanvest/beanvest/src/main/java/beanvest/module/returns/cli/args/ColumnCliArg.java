@@ -1,8 +1,8 @@
 package beanvest.module.returns.cli.args;
 
-import beanvest.module.returns.cli.columns.ColumnId;
+import beanvest.module.returns.StatDefinition;
 
-import static beanvest.module.returns.cli.columns.ColumnId.*;
+import static beanvest.module.returns.StatDefinition.*;
 
 public enum ColumnCliArg {
     opened(OPENED, OPENED, "opening date"),
@@ -26,11 +26,11 @@ public enum ColumnCliArg {
     profit(PROFIT, PROFIT_PERIOD, "value - cost");
 
 
-    public final ColumnId column;
-    public final ColumnId periodicColumn;
+    public final StatDefinition column;
+    public final StatDefinition periodicColumn;
     public final String name;
 
-    ColumnCliArg(ColumnId column, ColumnId periodicColumn, String name) {
+    ColumnCliArg(StatDefinition column, StatDefinition periodicColumn, String name) {
         this.column = column;
         this.periodicColumn = periodicColumn;
         this.name = name;

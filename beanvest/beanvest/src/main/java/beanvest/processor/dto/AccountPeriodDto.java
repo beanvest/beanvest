@@ -1,6 +1,6 @@
 package beanvest.processor.dto;
 
-import beanvest.processor.processingv2.StatsV2;
+import beanvest.processor.processingv2.dto.StatsV2;
 
 import java.time.LocalDate;
 import java.util.Map;

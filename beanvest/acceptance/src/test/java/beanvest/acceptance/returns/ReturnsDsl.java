@@ -8,7 +8,7 @@ import beanvest.lib.testing.TestFiles;
 import beanvest.lib.testing.asserts.AssertCliExecutionResult;
 import beanvest.lib.util.gson.GsonFactory;
 import beanvest.processor.dto.ValueStatDto;
-import beanvest.processor.processingv2.StatsV2;
+import beanvest.processor.processingv2.dto.StatsV2;
 import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import beanvest.result.ErrorEnum;

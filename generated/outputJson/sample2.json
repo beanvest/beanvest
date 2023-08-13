@@ -10,15 +10,14 @@
     "trading:GBP"
   ],
   "periods": [
-    {
-      "start": "-999999999-01-01",
-      "end": "2023-07-01",
-      "spec": {
-        "start": "-999999999-01-01",
-        "end": "2023-07-01",
-        "interval": "NONE"
-      }
-    }
+    "TOTAL"
+  ],
+  "stats": [
+    "Deps",
+    "Wths",
+    "Value",
+    "Cost",
+    "Profit"
   ],
   "accountDtos": [
     {

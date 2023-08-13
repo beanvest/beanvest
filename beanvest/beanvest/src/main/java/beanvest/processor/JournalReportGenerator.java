@@ -14,6 +14,7 @@ import beanvest.processor.validation.ValidatorError;
 import beanvest.result.Result;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,8 @@ public class JournalReportGenerator {
             Journal journal,
             String accountFilter,
             PeriodSpec periodSpec,
-            PeriodInclusion periodInclusion, Map<String, Class<?>> statsToCalculate) {
+            PeriodInclusion periodInclusion,
+            LinkedHashMap<String, Class<?>> statsToCalculate) {
 
         this.periodSpec = periodSpec;
         var journalProcessor2 = new StatsCollectingJournalProcessor2(accountsResolver1, statsToCalculate);
@@ -48,7 +50,7 @@ public class JournalReportGenerator {
         }
         endOfPeriodTracker.finishPeriodsUpToEndDate();
 
-        var stats = accountStatsGatherer.getPortfolioStats(journalProcessor2.getMetadata());
+        var stats = accountStatsGatherer.getPortfolioStats(journalProcessor2.getMetadata(), new ArrayList<>(statsToCalculate.keySet()));
         return Result.success(stats);
     }
 

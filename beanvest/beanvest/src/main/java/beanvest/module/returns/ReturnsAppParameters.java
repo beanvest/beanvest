@@ -16,7 +16,7 @@ public record ReturnsAppParameters(
         LocalDate startDate,
         String accountFilter,
         Optional<String> reportCurrency,
-        List<beanvest.module.returns.cli.columns.ColumnId> selectedColumns,
+        List<StatDefinition> selectedColumns,
         Boolean exactValues,
         Boolean jsonFormat,
         PeriodInterval period,

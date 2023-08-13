@@ -11,7 +11,7 @@ public class ErrorMessagesExtractor {
         var result = new ArrayList<String>();
         for (var accountDto : periodStats.accountDtos()) {
             for (var period : periodStats.periods()) {
-                var statsWithDeltasDto = accountDto.periodStats().get(period.title());
+                var statsWithDeltasDto = accountDto.periodStats().get(period);
                 if (statsWithDeltasDto != null) {
                     result.addAll(statsWithDeltasDto.errors());
                 }

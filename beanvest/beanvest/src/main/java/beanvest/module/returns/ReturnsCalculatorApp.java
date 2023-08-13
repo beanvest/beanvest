@@ -1,6 +1,5 @@
 package beanvest.module.returns;
 
-import beanvest.module.returns.cli.columns.ColumnId;
 import beanvest.parser.JournalParser;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
@@ -12,6 +11,7 @@ import beanvest.processor.time.PeriodInterval;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,7 +30,7 @@ public class ReturnsCalculatorApp {
     }
 
     public Result run(List<Path> journalsPaths,
-                      List<ColumnId> selectedColumns,
+                      List<StatDefinition> selectedColumns,
                       LocalDate endDate,
                       String accountFilter,
                       Grouping grouping,
@@ -64,8 +64,8 @@ public class ReturnsCalculatorApp {
         return isSuccessful ? Result.OK : Result.ERROR;
     }
 
-    private static Map<String, Class<?>> convertToCalculatorMap(List<ColumnId> selectedColumns) {
-        return selectedColumns.stream().collect(Collectors.toMap((c) -> c.header, c -> c.calculator));
+    private static LinkedHashMap<String, Class<?>> convertToCalculatorMap(List<StatDefinition> selectedColumns) {
+        return selectedColumns.stream().collect(Collectors.toMap((c) -> c.header, c -> c.calculator, (aClass, aClass2) -> null, LinkedHashMap::new));
     }
 
     public enum Result {

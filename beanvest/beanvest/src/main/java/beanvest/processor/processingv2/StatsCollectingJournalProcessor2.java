@@ -3,13 +3,12 @@ package beanvest.processor.processingv2;
 import beanvest.journal.entity.Entity;
 import beanvest.journal.entry.Entry;
 import beanvest.processor.pricebook.LatestPricesBook;
+import beanvest.processor.processingv2.dto.StatsV2;
 import beanvest.processor.processingv2.processor.AccountOpenDatesCollector;
 import beanvest.processor.time.Period;
 import beanvest.processor.validation.ValidatorError;
 
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.Set;
 
 public class StatsCollectingJournalProcessor2 {
@@ -19,7 +18,7 @@ public class StatsCollectingJournalProcessor2 {
     private final AccountOpenDatesCollector accountOpenDatesCollector;
     private SelectedAccountStatsCalculator statsCalculator;
 
-    public StatsCollectingJournalProcessor2(AccountsTracker accountsResolver1, Map<String, Class<?>> statsToCalculate) {
+    public StatsCollectingJournalProcessor2(AccountsTracker accountsResolver1, LinkedHashMap<String, Class<?>> statsToCalculate) {
         serviceRegistry = initRegistry(accountsResolver1);
 
         accountOpenDatesCollector = serviceRegistry.get(AccountOpenDatesCollector.class);

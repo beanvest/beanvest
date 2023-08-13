@@ -2,6 +2,7 @@ package beanvest.processor.processingv2;
 
 import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
+import beanvest.processor.processingv2.dto.StatsV2;
 import beanvest.processor.time.Period;
 
 import java.util.ArrayList;
@@ -58,11 +59,11 @@ public class AccountStatsGatherer2 { //TODO move to calculators
         return periods.stream().sorted().toList();
     }
 
-    public PortfolioStatsDto2 getPortfolioStats(Map<String, AccountMetadata> metadata) {
-
+    public PortfolioStatsDto2 getPortfolioStats(Map<String, AccountMetadata> metadata, List<String> statsNames) {
         return new PortfolioStatsDto2(
                 getAccountsSorted(),
-                getTimePointsSorted(),
+                getTimePointsSorted().stream().map(Period::title).toList(),
+                statsNames,
                 getStats(metadata));
     }
 }

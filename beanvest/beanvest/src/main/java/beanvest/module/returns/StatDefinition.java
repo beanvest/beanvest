@@ -1,4 +1,4 @@
-package beanvest.module.returns.cli.columns;
+package beanvest.module.returns;
 
 import beanvest.processor.processingv2.ValueCalculator;
 import beanvest.processor.processingv2.processor.NetCostCalculator;
@@ -23,7 +23,7 @@ import beanvest.processor.processingv2.processor.RealizedGainCalculator;
 import beanvest.processor.processingv2.processor.WithdrawalCalculator;
 import beanvest.processor.processingv2.processor.XirrCalculator;
 
-public enum ColumnId {
+public enum StatDefinition {
     ACCOUNT("Account", "account or group", null),
     OPENED("Opened", "opening date", null),
     CLOSED("Closed", "closing date", null),
@@ -56,9 +56,9 @@ public enum ColumnId {
     public final String name;
     public final Class<?> calculator;
 
-    ColumnId(String header, String name, Class<?> calculator) {
-        this.header = header;
-        this.name = name;
+    StatDefinition(String shortName, String description, Class<?> calculator) {
+        this.header = shortName;
+        this.name = description;
         this.calculator = calculator;
     }
 }

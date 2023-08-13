@@ -1,8 +1,12 @@
 package beanvest.processor.processingv2.dto;
 
-import beanvest.processor.time.Period;
-
 import java.util.List;
+import java.util.Set;
 
-public record PortfolioStatsDto2(List<String> accounts, List<Period> periods, List<AccountDto2> accountDtos) {
+public record PortfolioStatsDto2(
+        List<String> accounts,
+        List<String> periods,
+        List<String> stats,
+        List<AccountDto2> accountDtos
+) {
 }

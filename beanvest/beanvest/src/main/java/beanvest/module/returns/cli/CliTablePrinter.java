@@ -13,11 +13,7 @@ import beanvest.processor.time.Period;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class CliTablePrinter {
@@ -45,18 +41,17 @@ public class CliTablePrinter {
         output.print(writer);
     }
 
-    private List<Column<AccountPeriodDto>> createColumns(List<String> selectedColumns, CollectionMode collectionMode, List<Period> periods) {
-        var periodTitles = periods.stream().map(Period::title).toList();
-        var lowercaseSelectedColumns = prepareSelectedColumnsOrGetDefault(selectedColumns, periodTitles.size());
+    private List<Column<AccountPeriodDto>> createColumns(List<String> selectedColumns, CollectionMode collectionMode, List<String> periods) {
+        var lowercaseSelectedColumns = prepareSelectedColumnsOrGetDefault(selectedColumns, periods.size());
 
         var columns = new ArrayList<>(getMainColumns(lowercaseSelectedColumns));
         if (collectionMode == CollectionMode.CUMULATIVE && periods.size() == 1) {
             columns.addAll(createPeriodicColumns(lowercaseSelectedColumns, "TOTAL", Optional.empty(), collectionMode));
         } else {
             periods.stream().sorted(Comparator.reverseOrder())
-                    .filter(period -> period.title() != null)
+                    .filter(Objects::nonNull)
                     .forEach(period -> columns.addAll(
-                            createPeriodicColumns(lowercaseSelectedColumns, period.title(), Optional.of(period.title()), collectionMode))
+                            createPeriodicColumns(lowercaseSelectedColumns, period, Optional.of(period), collectionMode))
                     );
         }
         return columns;
@@ -65,7 +60,7 @@ public class CliTablePrinter {
     private List<Column<AccountPeriodDto>> createPeriodicColumns(List<String> selectedColumns, String period, Optional<String> group, CollectionMode collectionMode) {
         var deltas = collectionMode == CollectionMode.DELTA;
         return streamSelectedColumns(selectedColumns)
-                .map(spec -> spec.toColumn(group, period, exact, spec.columnId().header))
+                .map(spec -> spec.toColumn(group, period, exact, spec.statsDefinition().header))
                 .toList();
     }
 
@@ -87,7 +82,7 @@ public class CliTablePrinter {
 
     private static Stream<ColumnSpec> streamSelectedColumns(List<String> selectedColumnsOrDefaultSet) {
         return ReportColumnsDefinition.COLUMNS.stream()
-                .filter(col -> selectedColumnsOrDefaultSet.contains(col.columnId().header.toLowerCase(Locale.ROOT)));
+                .filter(col -> selectedColumnsOrDefaultSet.contains(col.statsDefinition().header.toLowerCase(Locale.ROOT)));
     }
 
     private static List<Column<AccountPeriodDto>> getMainColumns(List<String> selectedColumns) {

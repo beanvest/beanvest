@@ -52,6 +52,7 @@ tasks.register('generateSampleJson', JavaExec) {
     jvmArgs = ["-Dproject.dir=" + project.rootDir]
 }
 tasks.register('generateSampleJsonNative', JavaExec) {
+    dependsOn(":beanvest:beanvest:nativeCompile")
     group = "generation"
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath

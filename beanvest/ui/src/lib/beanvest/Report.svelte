@@ -19,17 +19,28 @@
 {#if report }
     <table>
         <tr>
-            <th>accounts</th>
+            <td></td>
             {#each report.periods as period}
-                <th>{period.start}</th>
+                <th colspan="{report.stats.length}">{period}</th>
+
             {/each}
         </tr>
+        <tr>
+            <th>accounts</th>
+            {#each report.periods as period}
+            {#each report.stats as stat}
+                <th>{stat}</th>
+            {/each}
+                {/each}
+
+        </tr>
         {#each report.accountDtos as accountDto}
-            <tr><td>{accountDto.account}</td>
+            <tr>
+                <td>{accountDto.account}</td>
                 {#each Object.entries(accountDto.periodStats) as [periodTitle, stats]}
                     {#each Object.entries(stats.stats) as [statName, value]}
-                    <td class="value">{value.value.toFixed(0)}</td>
-                        {/each}
+                        <td class="value">{value.value.toFixed(0)}</td>
+                    {/each}
                 {/each}
             </tr>
 
@@ -38,6 +49,10 @@
 {/if}
 
 <style>
+    table td {
+        padding: 5px;
+    }
+
     td.value {
         text-align: right;
     }

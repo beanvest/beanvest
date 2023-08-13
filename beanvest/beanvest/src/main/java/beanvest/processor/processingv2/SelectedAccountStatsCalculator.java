@@ -5,6 +5,7 @@ import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Price;
 import beanvest.processor.pricebook.LatestPricesBook;
+import beanvest.processor.processingv2.dto.StatsV2;
 import beanvest.processor.processingv2.processor.AccountOpenDatesCollector;
 import beanvest.processor.time.Period;
 import beanvest.processor.validation.ValidatorError;
@@ -12,10 +13,7 @@ import beanvest.result.Result;
 import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Set;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -30,7 +28,7 @@ public class SelectedAccountStatsCalculator {
     private final LatestPricesBook priceBook;
     private final AccountsTracker accountsTracker;
 
-    public SelectedAccountStatsCalculator(ServiceRegistry serviceRegistry, Map<String, Class<?>> neededStats, AccountsTracker accountsTracker) {
+    public SelectedAccountStatsCalculator(ServiceRegistry serviceRegistry, LinkedHashMap<String, Class<?>> neededStats, AccountsTracker accountsTracker) {
         this.serviceRegistry = serviceRegistry;
         this.neededStats = neededStats;
         this.accountsTracker = accountsTracker;
