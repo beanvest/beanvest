@@ -28,7 +28,7 @@
 
     <div class="b-example-divider b-example-vr"></div>
 
-    <div class="d-flex flex-column flex-shrink-0 p-5 bg-body-tertiary" style="width: 500px;">
+    <div class="d-flex w-100 p-3 bg-body-tertiary" style="width: 500px;">
         <slot></slot>
     </div>
 </main>

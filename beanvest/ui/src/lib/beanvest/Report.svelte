@@ -1,4 +1,6 @@
 <script>
+    import {onMount} from "svelte";
+
     const apiURL = "http://localhost:5173/sample1.json";
 
     /** @type {PortfolioStatsDto2} */
@@ -12,10 +14,11 @@
         report = await response.json();
     }
 
-
+    onMount(() => {
+        fetchReport();
+    })
 </script>
 
-<div on:click={fetchReport}>load report</div>
 {#if report }
     <table>
         <tr>
@@ -28,10 +31,10 @@
         <tr>
             <th>accounts</th>
             {#each report.periods as period}
-            {#each report.stats as stat}
-                <th>{stat}</th>
-            {/each}
+                {#each report.stats as stat}
+                    <th>{stat}</th>
                 {/each}
+            {/each}
 
         </tr>
         {#each report.accountDtos as accountDto}
