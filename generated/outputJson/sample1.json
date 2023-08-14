@@ -3,7 +3,6 @@
     ".*",
     "saving:.*",
     "saving:regularSaver",
-    "saving:savings",
     "trading"
   ],
   "periods": [
@@ -31,39 +30,25 @@
               "value": 0
             },
             "Wths": {
-              "value": -140
+              "value": 0
             },
             "Intr": {
-              "value": 351.68
+              "value": 161.68
             },
             "Deps": {
-              "value": 25420
+              "value": 22000
             },
             "Value": {
-              "error": {
-                "errors": [
-                  {
-                    "error": "PRICE_NEEDED",
-                    "maybeMessage": "No price set for SPX/GBP before or on 2023-07-01"
-                  }
-                ]
-              }
+              "value": 22161.50
             },
             "Profit": {
-              "error": {
-                "errors": [
-                  {
-                    "error": "PRICE_NEEDED",
-                    "maybeMessage": "No price set for SPX/GBP before or on 2023-07-01"
-                  }
-                ]
-              }
+              "value": 161.50
             },
             "Fees": {
               "value": 0
             },
             "Cost": {
-              "value": -25287.366125805233394864401010566224276902246400
+              "value": -22000
             }
           },
           "metadata": {
@@ -83,25 +68,25 @@
               "value": 0
             },
             "Wths": {
-              "value": -140
+              "value": 0
             },
             "Intr": {
-              "value": 351.68
+              "value": 161.68
             },
             "Deps": {
-              "value": 6420
+              "value": 3000
             },
             "Value": {
-              "value": 6631.68
+              "value": 3161.68
             },
             "Profit": {
-              "value": 344.313874194766605135598989433775723097753600
+              "value": 161.68
             },
             "Fees": {
               "value": 0
             },
             "Cost": {
-              "value": -6287.366125805233394864401010566224276902246400
+              "value": -3000
             }
           },
           "metadata": {
@@ -149,44 +134,6 @@
       }
     },
     {
-      "account": "saving:savings",
-      "openingDate": "2022-01-01",
-      "periodStats": {
-        "TOTAL": {
-          "errors": [],
-          "stats": {
-            "Div": {
-              "value": 0
-            },
-            "Wths": {
-              "value": -140
-            },
-            "Intr": {
-              "value": 190
-            },
-            "Deps": {
-              "value": 3420
-            },
-            "Value": {
-              "value": 3470
-            },
-            "Profit": {
-              "value": 182.633874194766605135598989433775723097753600
-            },
-            "Fees": {
-              "value": 0
-            },
-            "Cost": {
-              "value": -3287.366125805233394864401010566224276902246400
-            }
-          },
-          "metadata": {
-            "firstActivity": "2022-01-01"
-          }
-        }
-      }
-    },
-    {
       "account": "trading",
       "openingDate": "2022-01-01",
       "periodStats": {
@@ -206,24 +153,10 @@
               "value": 19000
             },
             "Value": {
-              "error": {
-                "errors": [
-                  {
-                    "error": "PRICE_NEEDED",
-                    "maybeMessage": "No price set for SPX/GBP before or on 2023-07-01"
-                  }
-                ]
-              }
+              "value": 18999.82
             },
             "Profit": {
-              "error": {
-                "errors": [
-                  {
-                    "error": "PRICE_NEEDED",
-                    "maybeMessage": "No price set for SPX/GBP before or on 2023-07-01"
-                  }
-                ]
-              }
+              "value": -0.18
             },
             "Fees": {
               "value": 0

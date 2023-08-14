@@ -3,7 +3,7 @@ package beanvest.scripts.usagegen.generatesamplejournal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountJournal {
+public class AccountJournal implements JournalFile {
 
     private final String name;
     private final List<String> lines = new ArrayList<>();
@@ -16,7 +16,8 @@ public class AccountJournal {
         lines.add(line);
     }
 
-    public CharSequence getContent() {
+    @Override
+    public CharSequence content() {
         var content = new ArrayList<String>();
         var header = createAccountHeader();
         content.addAll(header);
@@ -24,7 +25,8 @@ public class AccountJournal {
         return String.join("\n", content);
     }
 
-    public String getName() {
+    @Override
+    public String name() {
         return name;
     }
 

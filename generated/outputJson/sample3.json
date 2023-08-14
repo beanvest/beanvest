@@ -3,7 +3,6 @@
     ".*",
     "saving:.*",
     "saving:regularSaver",
-    "saving:savings",
     "trading"
   ],
   "periods": [
@@ -27,10 +26,10 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": -80
+              "value": 0
             },
             "Deps": {
-              "value": 17160
+              "value": 15000
             }
           },
           "metadata": {
@@ -41,10 +40,10 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": -60
+              "value": 0
             },
             "Deps": {
-              "value": 12870
+              "value": 11250
             }
           },
           "metadata": {
@@ -55,10 +54,10 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": -120
+              "value": 0
             },
             "Deps": {
-              "value": 24240
+              "value": 21000
             }
           },
           "metadata": {
@@ -69,10 +68,10 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": -40
+              "value": 0
             },
             "Deps": {
-              "value": 8580
+              "value": 7500
             }
           },
           "metadata": {
@@ -83,10 +82,10 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": -100
+              "value": 0
             },
             "Deps": {
-              "value": 20700
+              "value": 18000
             }
           },
           "metadata": {
@@ -97,10 +96,10 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": -20
+              "value": 0
             },
             "Deps": {
-              "value": 4290
+              "value": 3750
             }
           },
           "metadata": {
@@ -117,10 +116,10 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": -80
+              "value": 0
             },
             "Deps": {
-              "value": 5160
+              "value": 3000
             }
           },
           "metadata": {
@@ -131,10 +130,10 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": -60
+              "value": 0
             },
             "Deps": {
-              "value": 3870
+              "value": 2250
             }
           },
           "metadata": {
@@ -145,10 +144,10 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": -120
+              "value": 0
             },
             "Deps": {
-              "value": 6240
+              "value": 3000
             }
           },
           "metadata": {
@@ -159,10 +158,10 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": -40
+              "value": 0
             },
             "Deps": {
-              "value": 2580
+              "value": 1500
             }
           },
           "metadata": {
@@ -173,10 +172,10 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": -100
+              "value": 0
             },
             "Deps": {
-              "value": 5700
+              "value": 3000
             }
           },
           "metadata": {
@@ -187,10 +186,10 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": -20
+              "value": 0
             },
             "Deps": {
-              "value": 1290
+              "value": 750
             }
           },
           "metadata": {
@@ -281,96 +280,6 @@
             },
             "Deps": {
               "value": 750
-            }
-          },
-          "metadata": {
-            "firstActivity": "2022-01-01"
-          }
-        }
-      }
-    },
-    {
-      "account": "saving:savings",
-      "openingDate": "2022-01-01",
-      "periodStats": {
-        "22q4": {
-          "errors": [],
-          "stats": {
-            "Wths": {
-              "value": -80
-            },
-            "Deps": {
-              "value": 2160
-            }
-          },
-          "metadata": {
-            "firstActivity": "2022-01-01"
-          }
-        },
-        "22q3": {
-          "errors": [],
-          "stats": {
-            "Wths": {
-              "value": -60
-            },
-            "Deps": {
-              "value": 1620
-            }
-          },
-          "metadata": {
-            "firstActivity": "2022-01-01"
-          }
-        },
-        "23q2": {
-          "errors": [],
-          "stats": {
-            "Wths": {
-              "value": -120
-            },
-            "Deps": {
-              "value": 3240
-            }
-          },
-          "metadata": {
-            "firstActivity": "2022-01-01"
-          }
-        },
-        "22q2": {
-          "errors": [],
-          "stats": {
-            "Wths": {
-              "value": -40
-            },
-            "Deps": {
-              "value": 1080
-            }
-          },
-          "metadata": {
-            "firstActivity": "2022-01-01"
-          }
-        },
-        "23q1": {
-          "errors": [],
-          "stats": {
-            "Wths": {
-              "value": -100
-            },
-            "Deps": {
-              "value": 2700
-            }
-          },
-          "metadata": {
-            "firstActivity": "2022-01-01"
-          }
-        },
-        "22q1": {
-          "errors": [],
-          "stats": {
-            "Wths": {
-              "value": -20
-            },
-            "Deps": {
-              "value": 540
             }
           },
           "metadata": {
