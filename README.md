@@ -4,7 +4,14 @@
   Once you have [Nix](https://nixos.org/), `nix-shell` will start bash configured with all the necessary tools. 
   You can see dependencies in [shell.nix](shell.nix).
   
-## Building
+## Building, testing, generating
+
+- building, testing and generating everything
+  ```bash
+  ./gradlew all
+  ./gradlew nativeAll
+  ```
+  
 - running tests
   ```bash
   ./gradlew test
@@ -21,6 +28,7 @@
   ./gradlew generateUsageDoc
   ./gradlew generateUsageDocNative
   ```
+
 
 ## Running it
 See [usage examples](generated/usage.md).
