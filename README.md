@@ -1,3 +1,4 @@
+[![Java CI with Gradle](https://github.com/beanvest/beanvest/actions/workflows/gradle.yml/badge.svg)](https://github.com/beanvest/beanvest/actions/workflows/gradle.yml)
 # Beanvest
 
 ## Getting all the tools
