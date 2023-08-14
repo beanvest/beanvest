@@ -6,11 +6,11 @@
   ```
   ```
   account              Deps    Wths   Intr   Fees   Div    Profit  Cost     Value
-  .*                   24,090   -140    352    -70      0     274  -23,957  24,232
-  saving:.*             6,420   -140    352      0      0     344   -6,287   6,632
-  saving:regularSaver   3,000      0    162      0      0     162   -3,000   3,162
-  saving:savings        3,420   -140    190      0      0     183   -3,287   3,470
-  trading              17,670      0      0    -70      0     -70  -17,670  17,600
+  .*                   25,420   -140    352      0      0      PN  -25,287     PN
+  saving:.*             6,420   -140    352      0      0     344   -6,287  6,632
+  saving:regularSaver   3,000      0    162      0      0     162   -3,000  3,162
+  saving:savings        3,420   -140    190      0      0     183   -3,287  3,470
+  trading              19,000      0      0      0      0      PN  -19,000     PN
   ```
 - Print cash stats on holdings, accounts and groups
   ```bash
@@ -18,14 +18,15 @@
   ```
   ```
   account                  Deps    Wths   Profit  Cost     Value
-  .*                       24,090   -140     274  -23,957  24,232
-  saving:.*                 6,420   -140     344   -6,287   6,632
-  saving:regularSaver       3,000      0     162   -3,000   3,162
-  saving:regularSaver:GBP   3,000      0     162   -3,000   3,162
-  saving:savings            3,420   -140     183   -3,287   3,470
-  saving:savings:GBP        3,420   -140     183   -3,287   3,470
-  trading                  17,670      0     -70  -17,670  17,600
-  trading:GBP              17,670      0     -70  -17,670  17,600
+  .*                       25,420   -140      PN  -25,287     PN
+  saving:.*                 6,420   -140     344   -6,287  6,632
+  saving:regularSaver       3,000      0     162   -3,000  3,162
+  saving:regularSaver:GBP   3,000      0     162   -3,000  3,162
+  saving:savings            3,420   -140     183   -3,287  3,470
+  saving:savings:GBP        3,420   -140     183   -3,287  3,470
+  trading                  19,000      0      PN  -19,000     PN
+  trading:GBP              19,000      0       0   -1,000  1,000
+  trading:SPX                   0      0      PN  -18,000     PN
   ```
 - Print cumulative deposits and withdrawals for accounts and groups for each quarter
   ```bash
@@ -34,9 +35,9 @@
   ```
                       ╷ 23q2          ╷ 23q1          ╷ 22q4          ╷ 22q3          ╷ 22q2         ╷ 22q1         ╷
   account             │ Deps    Wths  │ Deps    Wths  │ Deps    Wths  │ Deps    Wths  │ Deps   Wths  │ Deps   Wths  │
-  .*                  │ 22,980   -120 │ 19,650   -100 │ 16,320    -80 │ 12,240    -60 │ 8,160    -40 │ 4,080    -20 │
+  .*                  │ 24,240   -120 │ 20,700   -100 │ 17,160    -80 │ 12,870    -60 │ 8,580    -40 │ 4,290    -20 │
   saving:.*           │  6,240   -120 │  5,700   -100 │  5,160    -80 │  3,870    -60 │ 2,580    -40 │ 1,290    -20 │
   saving:regularSaver │  3,000      0 │  3,000      0 │  3,000      0 │  2,250      0 │ 1,500      0 │   750      0 │
   saving:savings      │  3,240   -120 │  2,700   -100 │  2,160    -80 │  1,620    -60 │ 1,080    -40 │   540    -20 │
-  trading             │ 16,740      0 │ 13,950      0 │ 11,160      0 │  8,370      0 │ 5,580      0 │ 2,790      0 │
+  trading             │ 18,000      0 │ 15,000      0 │ 12,000      0 │  9,000      0 │ 6,000      0 │ 3,000      0 │
   ```
