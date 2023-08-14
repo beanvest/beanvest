@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PriceJournal implements JournalFile {
+public class PriceJournal implements CompleteJournal {
     private final String name;
     List<String> lines = new ArrayList<>();
 

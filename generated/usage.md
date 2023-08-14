@@ -6,11 +6,11 @@
   ```
   ```
   account              Deps    Wths   Intr   Fees   Div    Profit  Cost     Value
-  .*                   25,420   -140    352      0      0     344  -25,287  25,632
+  .*                   25,420   -140    352      0      0   1,682  -25,287  26,970
   saving:.*             6,420   -140    352      0      0     344   -6,287   6,632
   saving:regularSaver   3,000      0    162      0      0     162   -3,000   3,162
   saving:savings        3,420   -140    190      0      0     183   -3,287   3,470
-  trading              19,000      0      0      0      0      -0  -19,000  19,000
+  trading              19,000      0      0      0      0   1,338  -19,000  20,338
   ```
 - Print cash stats on holdings, accounts and groups
   ```bash
@@ -18,15 +18,15 @@
   ```
   ```
   account                  Deps    Wths   Profit  Cost     Value
-  .*                       25,420   -140     344  -25,287  25,632
+  .*                       25,420   -140   1,682  -25,287  26,970
   saving:.*                 6,420   -140     344   -6,287   6,632
   saving:regularSaver       3,000      0     162   -3,000   3,162
   saving:regularSaver:GBP   3,000      0     162   -3,000   3,162
   saving:savings            3,420   -140     183   -3,287   3,470
   saving:savings:GBP        3,420   -140     183   -3,287   3,470
-  trading                  19,000      0      -0  -19,000  19,000
+  trading                  19,000      0   1,338  -19,000  20,338
   trading:GBP              19,000      0       0   -1,000   1,000
-  trading:SPX                   0      0      -0  -18,000  18,000
+  trading:SPX                   0      0   1,338  -18,000  19,338
   ```
 - Print cumulative deposits and withdrawals for accounts and groups for each quarter
   ```bash

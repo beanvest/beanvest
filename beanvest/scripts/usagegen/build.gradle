@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.bundles.logging)
     implementation(libs.typescriptGenerator)
+    testImplementation(libs.bundles.testing)
 }
 
 test {

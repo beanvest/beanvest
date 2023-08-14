@@ -6,10 +6,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
 
-public class JournalWriter {
-    private static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(JournalWriter.class.getName());
+public class JournalFilesWriter {
+    private static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(JournalFilesWriter.class.getName());
 
-    public void writeToFiles(Path outputDir, Set<JournalFile> journals) {
+    public void writeToFiles(Path outputDir, Set<CompleteJournal> journals) {
         deleteDirectoryContents(outputDir);
 
         for (var journal : journals) {

@@ -1,18 +1,18 @@
-package beanvest.scripts.usagegen.generatesamplejournal.generator;
+package beanvest.scripts.usagegen.generatesamplejournal.generator.account;
 
-import beanvest.scripts.usagegen.generatesamplejournal.AccountJournal;
+import beanvest.scripts.usagegen.generatesamplejournal.CompleteJournal;
 import beanvest.scripts.usagegen.generatesamplejournal.CoveredPeriod;
-import beanvest.scripts.usagegen.generatesamplejournal.JournalFile;
-import beanvest.scripts.usagegen.generatesamplejournal.JournalGenerator;
+import beanvest.scripts.usagegen.generatesamplejournal.generator.JournalGenerator;
+import beanvest.scripts.usagegen.generatesamplejournal.generator.JournalWriter;
 
 import java.time.LocalDate;
 
 public class SavingsAccountGenerator implements JournalGenerator {
-    private final AccountJournal accountWriter;
+    private final JournalWriter accountWriter;
     private final AccountOperationGenerator generator;
 
-    public SavingsAccountGenerator(String name, CoveredPeriod coveredPeriod) {
-        accountWriter = new AccountJournal(name);
+    public SavingsAccountGenerator(CoveredPeriod coveredPeriod, JournalWriter accountWriter1) {
+        accountWriter = accountWriter1;
         this.generator = new AccountOperationGenerator(coveredPeriod.start(), coveredPeriod.end(), accountWriter);
         generate();
 
@@ -31,7 +31,7 @@ public class SavingsAccountGenerator implements JournalGenerator {
     }
 
     @Override
-    public JournalFile getJournal() {
-        return accountWriter;
+    public CompleteJournal getJournal() {
+        return accountWriter.finish();
     }
 }

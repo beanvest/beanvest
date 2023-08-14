@@ -1,6 +1,7 @@
 package beanvest.scripts.usagegen.generatesamplejournal;
 
-public interface JournalFile {
+public interface CompleteJournal {
     CharSequence content();
+
     String name();
 }
