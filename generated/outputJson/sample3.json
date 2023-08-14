@@ -30,7 +30,7 @@
               "value": -80
             },
             "Deps": {
-              "value": 16320
+              "value": 17160
             }
           },
           "metadata": {
@@ -44,7 +44,7 @@
               "value": -60
             },
             "Deps": {
-              "value": 12240
+              "value": 12870
             }
           },
           "metadata": {
@@ -58,7 +58,7 @@
               "value": -120
             },
             "Deps": {
-              "value": 22980
+              "value": 24240
             }
           },
           "metadata": {
@@ -72,7 +72,7 @@
               "value": -40
             },
             "Deps": {
-              "value": 8160
+              "value": 8580
             }
           },
           "metadata": {
@@ -86,7 +86,7 @@
               "value": -100
             },
             "Deps": {
-              "value": 19650
+              "value": 20700
             }
           },
           "metadata": {
@@ -100,7 +100,7 @@
               "value": -20
             },
             "Deps": {
-              "value": 4080
+              "value": 4290
             }
           },
           "metadata": {
@@ -390,7 +390,7 @@
               "value": 0
             },
             "Deps": {
-              "value": 11160
+              "value": 12000
             }
           },
           "metadata": {
@@ -404,7 +404,7 @@
               "value": 0
             },
             "Deps": {
-              "value": 8370
+              "value": 9000
             }
           },
           "metadata": {
@@ -418,7 +418,7 @@
               "value": 0
             },
             "Deps": {
-              "value": 16740
+              "value": 18000
             }
           },
           "metadata": {
@@ -432,7 +432,7 @@
               "value": 0
             },
             "Deps": {
-              "value": 5580
+              "value": 6000
             }
           },
           "metadata": {
@@ -446,7 +446,7 @@
               "value": 0
             },
             "Deps": {
-              "value": 13950
+              "value": 15000
             }
           },
           "metadata": {
@@ -460,7 +460,7 @@
               "value": 0
             },
             "Deps": {
-              "value": 2790
+              "value": 3000
             }
           },
           "metadata": {

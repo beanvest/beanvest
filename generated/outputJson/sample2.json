@@ -7,7 +7,8 @@
     "saving:savings",
     "saving:savings:GBP",
     "trading",
-    "trading:GBP"
+    "trading:GBP",
+    "trading:SPX"
   ],
   "periods": [
     "TOTAL"
@@ -31,16 +32,30 @@
               "value": -140
             },
             "Deps": {
-              "value": 24090
+              "value": 25420
             },
             "Value": {
-              "value": 24231.68
+              "error": {
+                "errors": [
+                  {
+                    "error": "PRICE_NEEDED",
+                    "maybeMessage": "No price set for SPX/GBP before or on 2023-07-01"
+                  }
+                ]
+              }
             },
             "Profit": {
-              "value": 274.313874194766605135598989433775723097753600
+              "error": {
+                "errors": [
+                  {
+                    "error": "PRICE_NEEDED",
+                    "maybeMessage": "No price set for SPX/GBP before or on 2023-07-01"
+                  }
+                ]
+              }
             },
             "Cost": {
-              "value": -23957.366125805233394864401010566224276902246400
+              "value": -25287.366125805233394864401010566224276902246400
             }
           },
           "metadata": {
@@ -205,16 +220,30 @@
               "value": 0
             },
             "Deps": {
-              "value": 17670
+              "value": 19000
             },
             "Value": {
-              "value": 17600
+              "error": {
+                "errors": [
+                  {
+                    "error": "PRICE_NEEDED",
+                    "maybeMessage": "No price set for SPX/GBP before or on 2023-07-01"
+                  }
+                ]
+              }
             },
             "Profit": {
-              "value": -70
+              "error": {
+                "errors": [
+                  {
+                    "error": "PRICE_NEEDED",
+                    "maybeMessage": "No price set for SPX/GBP before or on 2023-07-01"
+                  }
+                ]
+              }
             },
             "Cost": {
-              "value": -17670
+              "value": -19000
             }
           },
           "metadata": {
@@ -234,20 +263,63 @@
               "value": 0
             },
             "Deps": {
-              "value": 17670
+              "value": 19000
             },
             "Value": {
-              "value": 17600
+              "value": 1000
             },
             "Profit": {
-              "value": -70
+              "value": 0
             },
             "Cost": {
-              "value": -17670
+              "value": -1000
             }
           },
           "metadata": {
             "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    },
+    {
+      "account": "trading:SPX",
+      "openingDate": "2022-01-03",
+      "periodStats": {
+        "TOTAL": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 0
+            },
+            "Value": {
+              "error": {
+                "errors": [
+                  {
+                    "error": "PRICE_NEEDED",
+                    "maybeMessage": "No price set for SPX/GBP before or on 2023-07-01"
+                  }
+                ]
+              }
+            },
+            "Profit": {
+              "error": {
+                "errors": [
+                  {
+                    "error": "PRICE_NEEDED",
+                    "maybeMessage": "No price set for SPX/GBP before or on 2023-07-01"
+                  }
+                ]
+              }
+            },
+            "Cost": {
+              "value": -18000
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-03"
           }
         }
       }
