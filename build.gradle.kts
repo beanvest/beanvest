@@ -42,7 +42,7 @@ tasks.register("all") {
 tasks.register("nativeAll") {
     group = "all"
     description = "build, test and generate using native binaries."
-    dependsOn("build",
+    dependsOn("all",
             ":beanvest:acceptance:nativeTest",
             ":beanvest:beanvest:nativeTest",
             "nativeGenerate")
