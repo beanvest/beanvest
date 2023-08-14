@@ -1,4 +1,6 @@
-package beanvest.scripts.usagegen.generatesamplejournal;
+package beanvest.scripts.usagegen.generatesamplejournal.generator;
+
+import beanvest.scripts.usagegen.generatesamplejournal.AccountJournal;
 
 import java.time.LocalDate;
 import java.time.Period;

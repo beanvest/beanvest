@@ -4,6 +4,8 @@
     "saving:.*",
     "saving:regularSaver",
     "saving:regularSaver:GBP",
+    "saving:savings",
+    "saving:savings:GBP",
     "trading",
     "trading:GBP",
     "trading:SPX"
@@ -27,19 +29,19 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": 0
+              "value": -140
             },
             "Deps": {
-              "value": 22000
+              "value": 25420
             },
             "Value": {
-              "value": 22161.50
+              "value": 25631.50
             },
             "Profit": {
-              "value": 161.50
+              "value": 344.133874194766605135598989433775723097753600
             },
             "Cost": {
-              "value": -22000
+              "value": -25287.366125805233394864401010566224276902246400
             }
           },
           "metadata": {
@@ -56,19 +58,19 @@
           "errors": [],
           "stats": {
             "Wths": {
-              "value": 0
+              "value": -140
             },
             "Deps": {
-              "value": 3000
+              "value": 6420
             },
             "Value": {
-              "value": 3161.68
+              "value": 6631.68
             },
             "Profit": {
-              "value": 161.68
+              "value": 344.313874194766605135598989433775723097753600
             },
             "Cost": {
-              "value": -3000
+              "value": -6287.366125805233394864401010566224276902246400
             }
           },
           "metadata": {
@@ -127,6 +129,64 @@
             },
             "Cost": {
               "value": -3000
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:savings",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "TOTAL": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -140
+            },
+            "Deps": {
+              "value": 3420
+            },
+            "Value": {
+              "value": 3470
+            },
+            "Profit": {
+              "value": 182.633874194766605135598989433775723097753600
+            },
+            "Cost": {
+              "value": -3287.366125805233394864401010566224276902246400
+            }
+          },
+          "metadata": {
+            "firstActivity": "2022-01-01"
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:savings:GBP",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "TOTAL": {
+          "errors": [],
+          "stats": {
+            "Wths": {
+              "value": -140
+            },
+            "Deps": {
+              "value": 3420
+            },
+            "Value": {
+              "value": 3470
+            },
+            "Profit": {
+              "value": 182.633874194766605135598989433775723097753600
+            },
+            "Cost": {
+              "value": -3287.366125805233394864401010566224276902246400
             }
           },
           "metadata": {
