@@ -1,16 +1,19 @@
 <script>
-    const columns = {
-        "rgain": "Realized gain",
-        "ugain": "Unrealized gain",
-        "cost": "Cost",
-        "value": "Value",
-        "profit": "Profit",
-        "xirr": "Xirr"
+    import {onMount} from "svelte";
+
+    const apiURL = "http://localhost:5173/options.json";
+
+    $: columns = []
+
+    async function fetchOptions() {
+        const response = await fetch(apiURL);
+        let body = await response.json();
+        columns = body.columns.map(c => c.id);
     }
-    const columnGroups = [
-        ["rgain", "ugain", "xirr"],
-        ["cost", "value", "profit"]
-    ]
+
+    onMount(() => {
+        fetchOptions();
+    })
 
     $: filters = {
         startDate: null,
@@ -73,7 +76,7 @@
             <div class="m-1">
                 {#each filters.selectedColumns as colId, i}
                     <button type="button" class="btn btn-primary btn-warning"
-                            on:click={() => removeColumn(i)}>{columns[colId]}</button>
+                            on:click={() => removeColumn(i)}>{colId}</button>
                     {#if filters.selectedColumns.length > i + 1}
                         <button type="button" class="btn btn-secondary btn-sm" on:click={() => swap(i)}>⇆</button>
                     {/if}
@@ -83,16 +86,14 @@
 
         <div class="m-3">
             <label>Columns available:</label>
-            {#each columnGroups as group}
-                <div class="m-1">
-                    {#each group as colId}
-                        {#if !filters.selectedColumns.includes(colId)}
-                            <button type="button" class="btn btn-secondary btn-sm"
-                                    on:click={() => addColumn(colId)}>{columns[colId]}</button>
-                        {/if}
-                    {/each}
-                </div>
-            {/each}
+            <div class="m-1">
+                {#each columns as colId}
+                    {#if !filters.selectedColumns.includes(colId)}
+                        <button type="button" class="btn btn-secondary btn-sm"
+                                on:click={() => addColumn(colId)}>{colId}</button>
+                    {/if}
+                {/each}
+            </div>
         </div>
     </form>
 </div>
