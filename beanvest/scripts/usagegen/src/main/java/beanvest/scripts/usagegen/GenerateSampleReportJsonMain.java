@@ -9,7 +9,7 @@ import beanvest.scripts.usagegen.generateusagedoc.ExampleRunner.Example;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public class GenerateSampleJsonMain {
+public class GenerateSampleReportJsonMain {
     public static void main(String[] args) throws IOException {
         var projectDir = Path.of(System.getProperty("project.dir"));
         var samplesDir = Path.of(projectDir + "/sample");

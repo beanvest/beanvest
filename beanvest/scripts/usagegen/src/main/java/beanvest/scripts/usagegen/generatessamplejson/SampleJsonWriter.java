@@ -1,6 +1,7 @@
 package beanvest.scripts.usagegen.generatessamplejson;
 
 import beanvest.scripts.usagegen.generateusagedoc.ExampleRunner.ExampleWithOutput;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SampleJsonWriter {
+    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private final Path outputDir;
 
     public SampleJsonWriter(Path outputDir) {
@@ -20,13 +22,11 @@ public class SampleJsonWriter {
 
     public void writeJson(List<ExampleWithOutput> examples) {
         try {
-            var gson = new GsonBuilder().setPrettyPrinting().create();
             for (int i = 0; i < examples.size(); i++) {
                 ExampleWithOutput example = examples.get(i);
-                var jsonString = example.commandOutput();
-                var jsonTree = JsonParser.parseString(jsonString);
-                var prettyPrintedJson = gson.toJson(jsonTree);
-                Files.writeString(Path.of(outputDir + "/sample%d.json".formatted(i + 1)), prettyPrintedJson);
+                var filename = "sample%d.json".formatted(i + 1);
+                var outputPath = outputDir + "/" + filename;
+                writeJson(example, outputPath);
             }
 
         } catch (IOException e) {
@@ -34,10 +34,10 @@ public class SampleJsonWriter {
         }
     }
 
-    private static String indent(String content, int spaces) {
-        var indent = " ".repeat(spaces);
-        return Arrays.stream(content.split("\n"))
-                .map(line -> indent + line)
-                .collect(Collectors.joining("\n"));
+    public static void writeJson(ExampleWithOutput example, String outputPath) throws IOException {
+        var jsonString = example.commandOutput();
+        var jsonTree = JsonParser.parseString(jsonString);
+        var prettyPrintedJson = GSON.toJson(jsonTree);
+        Files.writeString(Path.of(outputPath), prettyPrintedJson);
     }
 }

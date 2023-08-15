@@ -7,6 +7,7 @@ import beanvest.module.journal.JournalCliCommand;
 import beanvest.module.returns.ReturnsCliCommand;
 import beanvest.module.returns.cli.args.ColumnCliArg;
 import beanvest.module.returns.cli.args.ColumnCliArgConverter;
+import beanvest.options.OptionsCliCommand;
 import picocli.CommandLine;
 
 import java.io.PrintStream;
@@ -18,7 +19,9 @@ public final class BeanvestMain extends BaseMain {
             new ExportCliCommand(),
             new ImportCliCommand(),
             new JournalCliCommand(),
-            new ReturnsCliCommand());
+            new ReturnsCliCommand(),
+            new OptionsCliCommand()
+    );
     private static final CommandLine.Model.CommandSpec SPEC = getSpec();
     private static final int GENERIC_ERROR_CODE = 1;
 

@@ -14,19 +14,28 @@ dependencies {
     testImplementation(libs.bundles.testing)
 }
 
+
+var generatedDir = project.rootDir.toString() + "/generated/"
+var sampleDir = project.rootDir.toString() + "/sample/"
+var usualJvmArgs = [
+        "-Dproject.dir=${project.rootDir}",
+        "-Dgenerated.dir=$generatedDir",
+        "-Dsample.dir=$sampleDir"]
+
 test {
     useJUnitPlatform()
     testLogging {
         exceptionFormat = 'full'
     }
 }
+
 tasks.register('generateUsageDoc', JavaExec) {
     dependsOn("generateSampleJournal")
     group = "generation"
     description = "Regenerates usage doc based on generated sample journals"
     classpath = sourceSets.main.runtimeClasspath
     mainClass = "beanvest.scripts.usagegen.GenerateUsageDocMain"
-    jvmArgs = ["-Dproject.dir=" + project.rootDir]
+    jvmArgs = usualJvmArgs
 }
 tasks.register('generateUsageDocNative', JavaExec) {
     dependsOn("generateSampleJournal")
@@ -36,28 +45,36 @@ tasks.register('generateUsageDocNative', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass = "beanvest.scripts.usagegen.GenerateUsageDocMain"
     environment("NATIVE_BIN_PATH", "${project.rootDir}/beanvest/beanvest/build/native/nativeCompile/beanvest")
-    jvmArgs = ["-Dproject.dir=" + project.rootDir]
+    jvmArgs = usualJvmArgs
 }
 tasks.register('generateSampleJournal', JavaExec) {
     group = "generation"
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath
     mainClass = "beanvest.scripts.usagegen.GenerateSampleJournalMain"
-    jvmArgs = ["-Dproject.dir=" + project.rootDir]
+    jvmArgs = usualJvmArgs
 }
 tasks.register('generateSampleJson', JavaExec) {
     group = "generation"
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = "beanvest.scripts.usagegen.GenerateSampleJsonMain"
-    jvmArgs = ["-Dproject.dir=" + project.rootDir]
+    mainClass = "beanvest.scripts.usagegen.GenerateSampleReportJsonMain"
+    jvmArgs = usualJvmArgs
 }
 tasks.register('generateSampleJsonNative', JavaExec) {
     dependsOn(":beanvest:beanvest:nativeCompile")
     group = "generation"
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = "beanvest.scripts.usagegen.GenerateSampleJsonMain"
+    mainClass = "beanvest.scripts.usagegen.GenerateSampleReportJsonMain"
     environment("NATIVE_BIN_PATH", "${project.rootDir}/beanvest/beanvest/build/native/nativeCompile/beanvest")
-    jvmArgs = ["-Dproject.dir=" + project.rootDir]
+    jvmArgs = usualJvmArgs
+}
+
+tasks.register('generateSampleOptions', JavaExec) {
+    group = "generation"
+    description = "Regenerates sample options output"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "beanvest.scripts.usagegen.GenerateSampleOptionsMain"
+    jvmArgs = usualJvmArgs
 }

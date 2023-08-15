@@ -28,11 +28,11 @@ public enum ColumnCliArg {
 
     public final StatDefinition column;
     public final StatDefinition periodicColumn;
-    public final String name;
+    public final String fullName;
 
-    ColumnCliArg(StatDefinition column, StatDefinition periodicColumn, String name) {
+    ColumnCliArg(StatDefinition column, StatDefinition periodicColumn, String fullName) {
         this.column = column;
         this.periodicColumn = periodicColumn;
-        this.name = name;
+        this.fullName = fullName;
     }
 }

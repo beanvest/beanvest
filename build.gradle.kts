@@ -2,7 +2,9 @@ import org.gradle.api.JavaVersion.VERSION_17
 
 plugins {
     id("java")
+    id("application")
 }
+
 
 allprojects {
     apply(plugin = "java")
@@ -17,10 +19,24 @@ allprojects {
         }
     }
 }
+abstract class BeanvestJavaExec : JavaExec() {
+    init {
+        val generatedDir = project.rootDir.toString() + "/generated/"
+        val sampleDir = project.rootDir.toString() + "/sample/"
+
+        jvmArgs = listOf(
+            "-Dproject.dir=${project.rootDir}",
+            "-Dgenerated.dir=$generatedDir",
+            "-Dsample.dir=$sampleDir",
+        )
+    }
+}
+
 tasks.register("generate") {
     dependsOn(":beanvest:scripts:usagegen:generateSampleJournal",
             ":beanvest:scripts:usagegen:generateUsageDoc",
             ":beanvest:scripts:usagegen:generateSampleJson",
+            ":beanvest:scripts:usagegen:generateSampleOptions",
             ":beanvest:scripts:tsgen:generateTypescriptTypes")
     group = "generation"
     description = "Regenerates everything"

@@ -1,0 +1,43 @@
+{
+  "columns": [
+    {
+      "id": "opened"
+    },
+    {
+      "id": "closed"
+    },
+    {
+      "id": "deps"
+    },
+    {
+      "id": "wths"
+    },
+    {
+      "id": "intr"
+    },
+    {
+      "id": "fees"
+    },
+    {
+      "id": "div"
+    },
+    {
+      "id": "rgain"
+    },
+    {
+      "id": "ugain"
+    },
+    {
+      "id": "xirr"
+    },
+    {
+      "id": "val"
+    },
+    {
+      "id": "cost"
+    },
+    {
+      "id": "profit"
+    }
+  ]
+}

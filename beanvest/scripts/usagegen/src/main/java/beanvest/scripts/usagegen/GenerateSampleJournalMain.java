@@ -9,10 +9,8 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 
 public class GenerateSampleJournalMain {
-    public static final Path DEFUALT_OUTPUT_PATH = Path.of(System.getProperty("project.dir") + "/sample");
-
     public static void main(String[] args) {
-        var outputDirPath = args.length > 0 ? Path.of(args[0]).toAbsolutePath() : DEFUALT_OUTPUT_PATH;
+        var outputDirPath = Path.of(System.getProperty("sample.dir"));
         if (!Files.exists(outputDirPath)) {
             throw new IllegalArgumentException("Path does not exist: " + args[0]);
         }
