@@ -19,18 +19,6 @@ allprojects {
         }
     }
 }
-abstract class BeanvestJavaExec : JavaExec() {
-    init {
-        val generatedDir = project.rootDir.toString() + "/generated/"
-        val sampleDir = project.rootDir.toString() + "/sample/"
-
-        jvmArgs = listOf(
-            "-Dproject.dir=${project.rootDir}",
-            "-Dgenerated.dir=$generatedDir",
-            "-Dsample.dir=$sampleDir",
-        )
-    }
-}
 
 tasks.register("generate") {
     dependsOn(":beanvest:scripts:usagegen:generateSampleJournal",
@@ -55,7 +43,7 @@ tasks.register("all") {
     description = "build, test and generate."
     dependsOn("build",
             "test",
-            "beanvest:ui:jsTest",
+            ":beanvest:ui:uiTest",
             "generate")
 }
 tasks.register("nativeAll") {

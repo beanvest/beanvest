@@ -1,7 +1,7 @@
 <script>
     import 'bootstrap/dist/css/bootstrap.min.css';
-    import Report from "$lib/beanvest/Report.svelte";
-    import Filters from "$lib/beanvest/Filters.svelte";
+    import Report from "../components/Report.svelte";
+    import Filters from "../components/Filters.svelte";
 
 </script>
 

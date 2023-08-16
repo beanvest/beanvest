@@ -4,7 +4,7 @@ plugins {
 group = "beanvest.ui"
 val npm = "/nix/store/1gnvy2dhh311c900hzyw6ppjdhnir2s5-nodejs-20.5.0/bin/npm";
 
-tasks.register("jsInstall") {
+tasks.register("uiInstallDeps") {
     doLast {
         exec {
             commandLine("$npm", "install")
@@ -12,11 +12,20 @@ tasks.register("jsInstall") {
     }
 }
 
-tasks.register("jsTest") {
-    dependsOn("jsInstall")
+tasks.register("uiTest") {
+    dependsOn("uiInstallDeps")
     doLast {
         exec {
             commandLine("$npm", "run", "test:unit", "--", "--run")
+        }
+    }
+}
+
+tasks.register("uiDev") {
+    dependsOn("uiInstallDeps")
+    doLast {
+        exec {
+            commandLine("$npm", "run", "dev")
         }
     }
 }

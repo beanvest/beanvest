@@ -5,25 +5,25 @@ import beanvest.module.returns.StatDefinition;
 import static beanvest.module.returns.StatDefinition.*;
 
 public enum ColumnCliArg {
-    opened(OPENED, OPENED, "opening date"),
-    closed(CLOSED, CLOSED, "closing date"),
+    opened(OPENED, OPENED, "Opening date"),
+    closed(CLOSED, CLOSED, "Closing date"),
 
-    deps(DEPOSITS, DEPOSITS_PERIOD, "deposits"),
-    wths(WITHDRAWALS, WITHDRAWALS_PERIOD, "withdrawals"),
+    deps(DEPOSITS, DEPOSITS_PERIOD, "Deposits"),
+    wths(WITHDRAWALS, WITHDRAWALS_PERIOD, "Withdrawals"),
 
-    intr(INTEREST, INTEREST_PERIOD, "interest"),
-    fees(FEES, FEES_PERIOD, "fees"),
+    intr(INTEREST, INTEREST_PERIOD, "Interest"),
+    fees(FEES, FEES_PERIOD, "Fees"),
 
-    div(DIVIDENDS, DIVIDENDS_PERIOD, "dividends"),
+    div(DIVIDENDS, DIVIDENDS_PERIOD, "Dividends"),
 
-    rgain(REALIZED_GAIN, REALIZED_GAIN_PERIOD, "realized gain"),
-    ugain(UNREALIZED_GAIN, UNREALIZED_GAIN_PERIOD, "unrealized gain"),
+    rgain(REALIZED_GAIN, REALIZED_GAIN_PERIOD, "Realized gain"),
+    ugain(UNREALIZED_GAIN, UNREALIZED_GAIN_PERIOD, "Unrealized gain"),
 
-    xirr(XIRR, XIRR_PERIOD, "xirr"),
+    xirr(XIRR, XIRR_PERIOD, "Annualized return"),
 
-    val(VALUE, VALUE_PERIOD, "date value"),
-    cost(NET_COST, NET_COST, "Net cost - gross cost minus benefits (withdrawals, dividends, sale revenue etc)"),
-    profit(PROFIT, PROFIT_PERIOD, "value - cost");
+    val(VALUE, VALUE_PERIOD, "Value"),
+    cost(NET_COST, NET_COST, "Cost"),
+    profit(PROFIT, PROFIT_PERIOD, "Profit");
 
 
     public final StatDefinition column;

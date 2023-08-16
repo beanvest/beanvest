@@ -6,6 +6,6 @@ repos:
       - id: build-test-generate
         name: build & test & generate
         language: system
-        entry: ./gradlew all
+        entry: ./gradlew all --stacktrace
         always_run: true
         pass_filenames: false

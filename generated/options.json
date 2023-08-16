@@ -2,55 +2,55 @@
   "columnDtos": [
     {
       "id": "opened",
-      "fullName": "opening date"
+      "fullName": "Opening date"
     },
     {
       "id": "closed",
-      "fullName": "closing date"
+      "fullName": "Closing date"
     },
     {
       "id": "deps",
-      "fullName": "deposits"
+      "fullName": "Deposits"
     },
     {
       "id": "wths",
-      "fullName": "withdrawals"
+      "fullName": "Withdrawals"
     },
     {
       "id": "intr",
-      "fullName": "interest"
+      "fullName": "Interest"
     },
     {
       "id": "fees",
-      "fullName": "fees"
+      "fullName": "Fees"
     },
     {
       "id": "div",
-      "fullName": "dividends"
+      "fullName": "Dividends"
     },
     {
       "id": "rgain",
-      "fullName": "realized gain"
+      "fullName": "Realized gain"
     },
     {
       "id": "ugain",
-      "fullName": "unrealized gain"
+      "fullName": "Unrealized gain"
     },
     {
       "id": "xirr",
-      "fullName": "xirr"
+      "fullName": "Annualized return"
     },
     {
       "id": "val",
-      "fullName": "date value"
+      "fullName": "Value"
     },
     {
       "id": "cost",
-      "fullName": "Net cost - gross cost minus benefits (withdrawals, dividends, sale revenue etc)"
+      "fullName": "Cost"
     },
     {
       "id": "profit",
-      "fullName": "value - cost"
+      "fullName": "Profit"
     }
   ]
 }

@@ -7,14 +7,15 @@ type ColumnDtoById = {
 export class Filters {
     _columns: ColumnDtoById;
 
-    startDate: string|null = null;
+    startDate: string|null = null
     endDate: string|null = null
-    selectedColumns: ColumnDto[] = []
-    interval: string[] = []
+    selectedColumns: ColumnDto[]
+    interval: string
     deltas: boolean
 
 
     constructor(columns: ColumnDto[]) {
+        this.selectedColumns = [];
         this._columns = columns.reduce(function (map, obj) {
             map[obj.id] = obj;
             return map;
