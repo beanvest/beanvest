@@ -7,8 +7,8 @@ type ColumnDtoById = {
 export class Filters {
     _columns: ColumnDtoById;
 
-    private startDate: string|null = null
-    private endDate: string|null = null
+    private startDate: string | null = null
+    private endDate: string | null = null
     private readonly selectedColumns: string[]
     private interval: string
     private deltas: boolean
@@ -22,7 +22,7 @@ export class Filters {
         }, {});
     }
 
-    addColumn(colId) {
+    public addColumn(colId) {
         if (!this._columns.hasOwnProperty(colId)) {
             throw new ReferenceError("Unknown column `" + colId + "`");
         }
@@ -31,19 +31,22 @@ export class Filters {
         }
     }
 
-    removeColumn(i) {
+    public removeColumn(i) {
         this.selectedColumns.splice(i, 1)
     }
 
-    swap(i) {
+    public swap(i) {
         let tmp = this.selectedColumns[i];
         this.selectedColumns[i] = this.selectedColumns[i + 1];
         this.selectedColumns[i + 1] = tmp;
     }
 
-    getSelectedColumns(): ColumnDto[]
-    {
+    public getSelectedColumns(): ColumnDto[] {
         return this.selectedColumns.map(colId => this._columns[colId])
+    }
+
+    public isSelected(colId: string): boolean {
+        return this.selectedColumns.includes(colId)
     }
 }
 

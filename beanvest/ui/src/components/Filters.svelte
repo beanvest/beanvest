@@ -65,10 +65,10 @@
         <div class="col-auto">
             <label>Columns selected: </label>
             <div class="m-1">
-                {#each filters.selectedColumns as column, i}
+                {#each filters.getSelectedColumns() as column, i}
                     <button type="button" class="btn btn-primary btn-warning"
                             on:click={() => removeColumn(i)}>{column.fullName}</button>
-                    {#if filters.selectedColumns.length > i + 1}
+                    {#if filters.getSelectedColumns().length > i + 1}
                         <button type="button" class="btn btn-secondary btn-sm" on:click={() => swap(i)}>⇆</button>
                     {/if}
                 {/each}
@@ -78,12 +78,16 @@
         <div class="m-3">
             <label>Columns available:</label>
             <div class="m-1">
-                {#each columns as column}
-                    {#if !filters.selectedColumns.includes(column.id)}
-                        <button type="button" class="btn btn-secondary btn-sm"
-                                on:click={() => addColumn(column.id)}>{column.fullName}</button>
-                    {/if}
-                {/each}
+                {#if columns.length === filters.getSelectedColumns().length}
+                    none
+                {:else}
+                    {#each columns as column}
+                        {#if !filters.isSelected(column.id)}
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                    on:click={() => addColumn(column.id)}>{column.fullName}</button>
+                        {/if}
+                    {/each}
+                {/if}
             </div>
         </div>
     </form>
