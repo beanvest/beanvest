@@ -21,10 +21,9 @@ public class OptionsCliCommand implements SubCommand {
 
     public int run(CommandLine.ParseResult subcommand, PrintStream stdOut, PrintStream stdErr) {
         var list = Stream.of(ColumnCliArg.values())
-                .map(Enum::name)
-                .map(Column::new)
+                .map(columnCliArg -> new ColumnDto(columnCliArg.name(), columnCliArg.fullName))
                 .toList();
-        var json = getGson().toJson(new Options(list));
+        var json = getGson().toJson(new OptionsDto(list));
         stdOut.println(json);
         return 0;
     }
@@ -38,9 +37,9 @@ public class OptionsCliCommand implements SubCommand {
         return CMD_SPEC;
     }
 
-    record Options(List<Column> columns) {
+    public record OptionsDto(List<ColumnDto> columnDtos) {
     }
 
-    record Column(String id) {
+    public record ColumnDto(String id, String fullName) {
     }
 }

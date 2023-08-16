@@ -2,6 +2,7 @@ rootProject.name = "beanvest"
 include(
         "beanvest:acceptance",
         "beanvest:beanvest",
+        "beanvest:ui",
         "beanvest:lib:apprunner",
         "beanvest:lib:clitable",
         "beanvest:lib:jsonassert",

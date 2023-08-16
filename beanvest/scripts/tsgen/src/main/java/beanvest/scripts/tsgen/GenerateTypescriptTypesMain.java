@@ -1,5 +1,6 @@
 package beanvest.scripts.tsgen;
 
+import beanvest.options.OptionsCliCommand;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import cz.habarta.typescript.generator.*;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +16,10 @@ public class GenerateTypescriptTypesMain {
         String projectDir = System.getProperty("project.dir");
 
         TypeScriptGenerator typeScriptGenerator = createConfiguredGenerator();
-        String generated = typeScriptGenerator.generateTypeScript(Input.from(PortfolioStatsDto2.class));
+        String generated = typeScriptGenerator.generateTypeScript(Input.from(
+                PortfolioStatsDto2.class,
+                OptionsCliCommand.OptionsDto.class
+        ));
         String sanitized = removeNonDeterministicDetails(generated);
 
         Files.writeString(Path.of(projectDir + "/generated/apiTypes.d.ts"), sanitized);

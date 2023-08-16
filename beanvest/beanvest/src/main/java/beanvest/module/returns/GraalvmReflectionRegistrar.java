@@ -1,5 +1,6 @@
 package beanvest.module.returns;
 
+import beanvest.options.OptionsCliCommand;
 import beanvest.processor.dto.AccountDto;
 import beanvest.processor.dto.AccountPeriodDto;
 import beanvest.processor.dto.PortfolioStatsDto;
@@ -36,7 +37,11 @@ public class GraalvmReflectionRegistrar implements Feature {
                 ErrorEnum.class,
                 Optional.class,
                 Period.class,
-                PeriodInterval.class
+                PeriodInterval.class,
+
+                OptionsCliCommand.OptionsDto.class,
+                OptionsCliCommand.ColumnDto.class
+
         );
         classes.forEach(c -> {
             RuntimeReflection.register(c);

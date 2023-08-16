@@ -53,7 +53,10 @@ tasks.register("nativeGenerate") {
 tasks.register("all") {
     group = "all"
     description = "build, test and generate."
-    dependsOn("build", "test", "generate")
+    dependsOn("build",
+            "test",
+            "beanvest:ui:jsTest",
+            "generate")
 }
 tasks.register("nativeAll") {
     group = "all"

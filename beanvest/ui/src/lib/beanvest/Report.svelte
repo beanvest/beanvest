@@ -1,11 +1,10 @@
-<script>
-    import {onMount} from "svelte";
+<script lang="ts">
+    import {onMount} from "svelte"
+    import {PortfolioStatsDto2, StatsV2} from "$lib/apiTypes.d.ts"
 
-    const apiURL = "http://localhost:5173/sample1.json";
+    const apiURL = "http://localhost:5173/sample1.json"
 
-    /** @type {PortfolioStatsDto2} */
-    report;
-
+    let report: PortfolioStatsDto2;
     $: report = null;
 
     async function fetchReport() {
@@ -49,6 +48,9 @@
 
         {/each}
     </table>
+{/if}
+{#if !report }
+    Loading report...
 {/if}
 
 <style>
