@@ -7,6 +7,7 @@ group 'beanvest.lib.util'
 dependencies {
     implementation libs.gson
     testImplementation libs.bundles.testing
+    testImplementation project(":beanvest:lib:testing")
 }
 
 test {
