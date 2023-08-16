@@ -7,11 +7,11 @@ type ColumnDtoById = {
 export class Filters {
     _columns: ColumnDtoById;
 
-    startDate: string|null = null
-    endDate: string|null = null
-    selectedColumns: ColumnDto[]
-    interval: string
-    deltas: boolean
+    private startDate: string|null = null
+    private endDate: string|null = null
+    private readonly selectedColumns: string[]
+    private interval: string
+    private deltas: boolean
 
 
     constructor(columns: ColumnDto[]) {
@@ -23,8 +23,12 @@ export class Filters {
     }
 
     addColumn(colId) {
-        let column = this._columns[colId];
-        this.selectedColumns.push(column)
+        if (!this._columns.hasOwnProperty(colId)) {
+            throw new ReferenceError("Unknown column `" + colId + "`");
+        }
+        if (!this.selectedColumns.includes(colId)) {
+            this.selectedColumns.push(colId)
+        }
     }
 
     removeColumn(i) {
@@ -35,6 +39,11 @@ export class Filters {
         let tmp = this.selectedColumns[i];
         this.selectedColumns[i] = this.selectedColumns[i + 1];
         this.selectedColumns[i + 1] = tmp;
+    }
+
+    getSelectedColumns(): ColumnDto[]
+    {
+        return this.selectedColumns.map(colId => this._columns[colId])
     }
 }
 
