@@ -30,7 +30,7 @@ public class GenerateTypescriptTypesMain {
         Settings settings = new Settings();
         settings.outputFileType = TypeScriptFileType.implementationFile;
         settings.mapClasses = ClassMapping.asClasses;
-        settings.outputKind = TypeScriptOutputKind.global;
+        settings.outputKind = TypeScriptOutputKind.module;
         settings.jsonLibrary = JsonLibrary.gson;
 
         return new TypeScriptGenerator(settings);
