@@ -13,7 +13,7 @@ public enum AccountGroupingCliArg {
     no(NO_GROUPS),
     only(ONLY_GROUPS);
 
-    public static AccountGroupingCliArg DEFAULT = yes;
+    public static final AccountGroupingCliArg DEFAULT = yes;
 
     public final Grouping mappedValue;
 

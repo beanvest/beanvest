@@ -40,9 +40,9 @@ public class ReturnsCliCommandSpec {
                     .type(String.class)
                     .auxiliaryTypes(ColumnCliArg[].class)
                     .description("Comma-separated column selection. Eg 'rgain,xirr'. Available columns: "
-                                 + Arrays.stream(StatDefinition.values())
-                                         .map(c -> "\n  * \"" + c.header.toLowerCase(Locale.ROOT) + "\" - " + c.name)
-                                         .collect(Collectors.joining(", ")))
+                            + Arrays.stream(StatDefinition.values())
+                            .map(c -> "\n  * \"" + c.header.toLowerCase(Locale.ROOT) + "\" - " + c.name)
+                            .collect(Collectors.joining(", ")))
                     .build())
             .addOption(CommandLine.Model.OptionSpec.builder("--account", "-a")
                     .defaultValue(".*")
@@ -73,15 +73,17 @@ public class ReturnsCliCommandSpec {
                     .type(Enum.class)
                     .auxiliaryTypes(AccountGroupingCliArg.class)
                     .description("groups nested accounts and calculates stats for groups. "
-                                 + printValidValues(AccountGroupingCliArg.valuesAsStrings()))
+                            + printValidValues(AccountGroupingCliArg.valuesAsStrings()))
                     .defaultValue(String.valueOf(AccountGroupingCliArg.DEFAULT))
                     .build())
             .addOption(CommandLine.Model.OptionSpec.builder("--interval")
-                    .type(String.class)
+                    .type(Enum.class)
+                    .auxiliaryTypes(PeriodInterval.class)
                     .description("Report stats in intervals of specified length. Valid values:\n"
-                                 + Arrays.stream(PeriodInterval.values())
-                                         .map(Enum::toString)
-                                         .collect(Collectors.joining(", ")))
+                            + Arrays.stream(PeriodInterval.values())
+                            .map(Enum::toString)
+                            .map(String::toLowerCase)
+                            .collect(Collectors.joining(", ")))
                     .build());
 
     private static String printValidValues(String[] elements) {

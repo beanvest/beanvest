@@ -1,6 +1,6 @@
 import {expect, it, describe} from 'vitest';
 import {Filters} from "$lib/beanvest/filters.ts";
-import {ColumnDto} from "$lib/beanvest/apiTypes.d.ts";
+import {ColumnDto, OptionsDto} from "$lib/beanvest/apiTypes.d.ts";
 
 describe('filters', () => {
     it('has no selected columns by default', () => {
@@ -34,13 +34,40 @@ describe('filters', () => {
         filters.addColumn("pro")
         expect(filters.isSelected("pro")).true;
     })
+    it('cant add unknown column', () => {
+        let filters = createFilters();
+
+        expect(() => filters.addColumn("asjdhkasjd")).to.throw();
+    })
+
+    it('can set interval', () => {
+        let filters = createFilters();
+        expect(filters.isSelected("none")).false;
+
+        filters.setInterval("MONTH")
+        expect(filters.getInterval()).eq("MONTH");
+    })
+    it('cant set wrong interval', () => {
+        let filters = createFilters();
+
+        expect(() => filters.setInterval("laskdj")).to.throw()
+    })
+
+    it('can be constructed without data', () => {
+        Filters.createEmpty();
+    })
 });
 
 function createFilters() {
-    return new Filters([
+    let columns = [
         columnDto("xirr", "Xirr"),
         columnDto("pro", "Profit")
-    ]);
+    ];
+    let optionsDto = new OptionsDto();
+    optionsDto.columns = columns;
+    optionsDto.intervals = ["MONTH", "QUARTER", "NONE"];
+
+    return new Filters(optionsDto);
 }
 
 function columnDto(id: string, fullName: string) {

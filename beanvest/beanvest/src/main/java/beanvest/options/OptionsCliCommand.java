@@ -4,6 +4,7 @@ package beanvest.options;
 import beanvest.SubCommand;
 import beanvest.lib.util.gson.GsonFactory;
 import beanvest.module.returns.cli.args.ColumnCliArg;
+import beanvest.processor.time.PeriodInterval;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import picocli.CommandLine;
@@ -23,7 +24,7 @@ public class OptionsCliCommand implements SubCommand {
         var list = Stream.of(ColumnCliArg.values())
                 .map(columnCliArg -> new ColumnDto(columnCliArg.name(), columnCliArg.fullName))
                 .toList();
-        var json = getGson().toJson(new OptionsDto(list));
+        var json = getGson().toJson(new OptionsDto(list, List.of(PeriodInterval.values())));
         stdOut.println(json);
         return 0;
     }
@@ -37,7 +38,7 @@ public class OptionsCliCommand implements SubCommand {
         return CMD_SPEC;
     }
 
-    public record OptionsDto(List<ColumnDto> columnDtos) {
+    public record OptionsDto(List<ColumnDto> columns, List<PeriodInterval> intervals) {
     }
 
     public record ColumnDto(String id, String fullName) {

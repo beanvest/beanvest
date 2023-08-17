@@ -10,7 +10,8 @@ export class PortfolioStatsDto2 {
 }
 
 export class OptionsDto {
-    columnDtos: ColumnDto[];
+    columns: ColumnDto[];
+    intervals: PeriodInterval[];
 }
 
 export class AccountDto2 {
@@ -49,5 +50,7 @@ export class UserError {
     error: ErrorEnum;
     maybeMessage?: string;
 }
+
+export type PeriodInterval = "NONE" | "YEAR" | "QUARTER" | "MONTH";
 
 export type ErrorEnum = "DISABLED_FOR_ACCOUNT_TYPE" | "PRICE_NEEDED" | "ACCOUNT_NOT_OPEN_YET" | "XIRR_CALCULATION_FAILURE" | "XIRR_PERIOD_TOO_SHORT" | "VALIDATION_ERROR" | "XIRR_NO_TRANSACTIONS" | "DELTA_NOT_AVAILABLE" | "DELTA_NOT_AVAILABLE_NO_VALUE_STATS" | "CALCULATION_DISABLED";

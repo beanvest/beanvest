@@ -2,17 +2,13 @@
     import {onMount} from "svelte";
     import {fetchOptions} from "$lib/beanvest/api.ts";
     import {Filters} from "$lib/beanvest/filters.ts";
-    import type {ColumnDto} from "$lib/beanvest/apiTypes.d.ts";
-
 
     let filters: Filters;
-    $: filters = new Filters([]);
+    $: filters = Filters.createEmpty();
 
-    let columns: ColumnDto[] = [];
     onMount(() => {
         fetchOptions().then(options => {
-            filters = new Filters(options.columnDtos);
-            columns = options.columnDtos;
+            filters = new Filters(options);
         });
     })
 
@@ -48,10 +44,9 @@
         <div class="col-auto">
             <label for="endDate" class="form-label">Interval</label>
             <select class="form-select" aria-label="Report period">
-                <option selected>none</option>
-                <option value="MONTH">month</option>
-                <option value="QUARTER">quarter</option>
-                <option value="YEAR">year</option>
+                {#each filters.legalOptions.intervals as interval}
+                    <option value="{interval}">{interval[0].toUpperCase() + interval.substring(1).toLowerCase()}</option>
+                {/each}
             </select>
         </div>
 
@@ -78,10 +73,10 @@
         <div class="m-3">
             <label>Columns available:</label>
             <div class="m-1">
-                {#if columns.length === filters.getSelectedColumns().length}
+                {#if filters.legalOptions.columns.length === filters.getSelectedColumns().length}
                     none
                 {:else}
-                    {#each columns as column}
+                    {#each filters.legalOptions.columns as column}
                         {#if !filters.isSelected(column.id)}
                             <button type="button" class="btn btn-secondary btn-sm"
                                     on:click={() => addColumn(column.id)}>{column.fullName}</button>

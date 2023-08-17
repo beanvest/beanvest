@@ -1,11 +1,13 @@
-import {ColumnDto} from "$lib/beanvest/apiTypes.d.ts";
+import {ColumnDto, OptionsDto} from "$lib/beanvest/apiTypes.d.ts";
+import type {PeriodInterval} from "$lib/beanvest/apiTypes.d.ts";
 
 type ColumnDtoById = {
     [key: string]: ColumnDto;
 }
 
 export class Filters {
-    _columns: ColumnDtoById;
+    private _columns: ColumnDtoById;
+    public legalOptions: OptionsDto;
 
     private startDate: string | null = null
     private endDate: string | null = null
@@ -13,13 +15,21 @@ export class Filters {
     private interval: string
     private deltas: boolean
 
+    public static createEmpty() {
+        let optionsDto = new OptionsDto();
+        optionsDto.columns = [];
+        optionsDto.intervals = [];
+        return new Filters(optionsDto)
+    }
 
-    constructor(columns: ColumnDto[]) {
+    private constructor(options: OptionsDto) {
         this.selectedColumns = [];
-        this._columns = columns.reduce(function (map, obj) {
-            map[obj.id] = obj;
-            return map;
-        }, {});
+        this._columns = options.columns
+            .reduce(function (map, obj) {
+                map[obj.id] = obj;
+                return map;
+            }, {});
+        this.legalOptions = options;
     }
 
     public addColumn(colId) {
@@ -47,6 +57,17 @@ export class Filters {
 
     public isSelected(colId: string): boolean {
         return this.selectedColumns.includes(colId)
+    }
+
+    setInterval(interval: PeriodInterval) {
+        if (!this.legalOptions.intervals.includes(interval)) {
+            throw new Error("unknown interval " + interval)
+        }
+        this.interval = interval;
+    }
+
+    getInterval(): string {
+        return this.interval;
     }
 }
 

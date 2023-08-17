@@ -20,15 +20,14 @@ public class ReturnsCliParametersParser {
         final Optional<LocalDate> overrideToday = Optional.ofNullable(parseResult.matchedOptionValue("--override-today", null));
         var today = overrideToday.orElseGet(LocalDate::now);
         var endDate = getEndDate(parseResult, today);
-        final LocalDate startDate = parseResult.matchedOptionValue("--startDate", LocalDate.MIN);
-        final String accountFilter = parseResult.matchedOptionValue("--account", ".*");
-        final Optional<String> reportCurrency = Optional.ofNullable(parseResult.matchedOptionValue("--currency", ""));
+        var startDate = parseResult.matchedOptionValue("--startDate", LocalDate.MIN);
+        var accountFilter = parseResult.matchedOptionValue("--account", ".*");
+        var reportCurrency = Optional.ofNullable(parseResult.matchedOptionValue("--currency", ""));
 
         var exactValues = parseResult.matchedOptionValue("--exact", false);
         var reportInvestments = parseResult.matchedOptionValue("--report-holdings", false);
         var jsonFormat = parseResult.matchedOptionValue("--json", false);
-        final String intervalRaw = parseResult.matchedOptionValue("--interval", PeriodInterval.NONE.name());
-        final PeriodInterval period = PeriodInterval.valueOf(intervalRaw.toUpperCase(Locale.ROOT));
+        var period = parseResult.matchedOptionValue("--interval", PeriodInterval.NONE);
         var grouping = parseResult.matchedOptionValue("--groups", AccountGroupingCliArg.DEFAULT).mappedValue;
         var onlyDeltas = parseResult.matchedOptionValue("--delta", false);
         var selectedColumns = Arrays.stream(parseResult.matchedOptionValue("--columns", new ColumnCliArg[0])).map(c -> onlyDeltas ? c.periodicColumn : c.column).collect(Collectors.toList());

@@ -1,5 +1,5 @@
 {
-  "columnDtos": [
+  "columns": [
     {
       "id": "opened",
       "fullName": "Opening date"
@@ -52,5 +52,11 @@
       "id": "profit",
       "fullName": "Profit"
     }
+  ],
+  "intervals": [
+    "NONE",
+    "YEAR",
+    "QUARTER",
+    "MONTH"
   ]
 }

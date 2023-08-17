@@ -1,6 +1,6 @@
 <script lang="ts">
     import {onMount} from "svelte"
-    import {PortfolioStatsDto2, StatsV2} from "$lib/apiTypes.d.ts"
+    import {PortfolioStatsDto2, StatsV2} from "$lib/beanvest/apiTypes.d.ts"
 
     const apiURL = "http://localhost:5173/sample1.json"
 
