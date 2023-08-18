@@ -8,12 +8,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CmdRunnerTest {
 
-    @Test @Disabled
-    void testBigOutput() throws IOException, InterruptedException {
+    @Test
+    void testBigStdOutput() throws IOException, InterruptedException {
         StringBuilder content = new StringBuilder();
         for (int i = 0; i < 10000; i++) {
             content.append("This is a test line\n");
@@ -25,8 +23,8 @@ class CmdRunnerTest {
         command.runSuccessfully(List.of("cat", file.toAbsolutePath().toString()));
     }
 
-    @Test @Disabled
-    void testBigStdOutput() throws IOException, InterruptedException {
+    @Test
+    void testBigStdError() throws IOException, InterruptedException {
         StringBuilder content = new StringBuilder();
         for (int i = 0; i < 10000; i++) {
             content.append("This is a test line\n");
