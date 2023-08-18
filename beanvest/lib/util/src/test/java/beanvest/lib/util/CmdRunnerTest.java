@@ -1,7 +1,6 @@
 package beanvest.lib.util;
 
 import beanvest.lib.testing.TestFiles;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -12,11 +11,7 @@ class CmdRunnerTest {
 
     @Test
     void testBigStdOutput() throws IOException, InterruptedException {
-        StringBuilder content = new StringBuilder();
-        for (int i = 0; i < 10000; i++) {
-            content.append("This is a test line\n");
-        }
-        var file = TestFiles.writeToTempFile(content.toString());
+        var file = TestFiles.writeToTempFile("This is a test line\n".repeat(10000));
 
         var command = new CmdRunner(Path.of("/"));
 
@@ -25,11 +20,7 @@ class CmdRunnerTest {
 
     @Test
     void testBigStdError() throws IOException, InterruptedException {
-        StringBuilder content = new StringBuilder();
-        for (int i = 0; i < 10000; i++) {
-            content.append("This is a test line\n");
-        }
-        var file = TestFiles.writeToTempFile(content.toString());
+        var file = TestFiles.writeToTempFile("This is a test line\n".repeat(10000));
 
         var command = new CmdRunner(Path.of("/"));
 
