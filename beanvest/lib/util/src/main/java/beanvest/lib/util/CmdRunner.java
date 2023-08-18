@@ -6,46 +6,53 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class CmdRunner {
     private final File cwd;
+    private final ExecutorService execService = Executors.newFixedThreadPool(2);
 
     public CmdRunner(Path cwd) {
         this.cwd = cwd.toAbsolutePath().toFile();
     }
 
-    public CmdResult runSuccessfully(List<String> command) throws IOException, InterruptedException {
+    public CmdResult runSuccessfully(List<String> command) {
+        try {
+            var process = new ProcessBuilder()
+                    .command(command)
+                    .directory(cwd)
+                    .start();
 
-        var process = new ProcessBuilder()
-                .command(command)
-                .directory(cwd)
-                .start();
+            var stdOut = readWholeProcessOutput(process.getInputStream());
+            var stdErr = readWholeProcessOutput(process.getErrorStream());
 
-        var stdOut = readWholeProcessOutput(process.getInputStream(), "stdOut thread");
-        var stdErr = readWholeProcessOutput(process.getErrorStream(), "stdErr thread");
+            int exitCode = process.waitFor();
 
-        int exitCode = process.waitFor();
 
-        if (exitCode != 0) {
-            throw new RuntimeException("Process `%s` returned exit code %d. \nStderr: %s\nStdout: %s".formatted(command, exitCode, stdOut, stdErr));
+            var stdOutString = stdOut.get();
+            var stdErrString = stdErr.get();
+
+            if (exitCode != 0) {
+                throw new RuntimeException("Process `%s` returned exit code %d. \nStderr: %s\nStdout: %s".formatted(command, exitCode, stdOutString, stdErrString));
+            }
+
+            return new CmdResult(command, stdOutString, stdErrString, exitCode);
+        } catch (ExecutionException | IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        return new CmdResult(command, stdOut, stdErr, exitCode);
     }
 
-    private static String readWholeProcessOutput(InputStream stream, String threadName) {
-        var stdOut = new AtomicReference<String>();
-        var threadOut = new Thread(() -> {
+    private Future<String> readWholeProcessOutput(InputStream stream) {
+        return execService.submit(() -> {
             try {
-                stdOut.set(new String(stream.readAllBytes(), StandardCharsets.UTF_8));
+                return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
-        threadOut.setName(threadName);
-        threadOut.start();
-
-        return stdOut.get();
     }
 
 }
