@@ -1,17 +1,16 @@
 package beanvest.lib.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class CmdRunner {
+public class CmdRunner implements AutoCloseable {
     private final File cwd;
     private final ExecutorService execService = Executors.newFixedThreadPool(2);
 
@@ -19,7 +18,22 @@ public class CmdRunner {
         this.cwd = cwd.toAbsolutePath().toFile();
     }
 
+    public CmdRunner() {
+        this.cwd = new File(System.getProperty("user.dir"));
+    }
+
     public CmdResult runSuccessfully(List<String> command) {
+        var cmdResult = run(command);
+
+        if (cmdResult.exitCode() != 0) {
+            throw new RuntimeException("Process `%s` returned exit code %d. \nStderr: %s\nStdout: %s"
+                    .formatted(command, cmdResult.exitCode(), cmdResult.stdOut(), cmdResult.stdErr()));
+        }
+        return cmdResult;
+    }
+
+    public CmdResult run(List<String> command) {
+        CmdResult cmdResult;
         try {
             var process = new ProcessBuilder()
                     .command(command)
@@ -30,19 +44,14 @@ public class CmdRunner {
             var stdErr = readWholeProcessOutput(process.getErrorStream());
 
             int exitCode = process.waitFor();
-
-
             var stdOutString = stdOut.get();
             var stdErrString = stdErr.get();
 
-            if (exitCode != 0) {
-                throw new RuntimeException("Process `%s` returned exit code %d. \nStderr: %s\nStdout: %s".formatted(command, exitCode, stdOutString, stdErrString));
-            }
-
-            return new CmdResult(command, stdOutString, stdErrString, exitCode);
+            cmdResult = new CmdResult(command, stdOutString, stdErrString, exitCode);
         } catch (ExecutionException | IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+        return cmdResult;
     }
 
     private Future<String> readWholeProcessOutput(InputStream stream) {
@@ -55,4 +64,7 @@ public class CmdRunner {
         });
     }
 
+    public void close() {
+        execService.shutdown();
+    }
 }

@@ -2,13 +2,11 @@ package beanvest.lib.apprunner;
 
 import java.util.List;
 
-public interface AppRunner {
+public interface AppRunner extends AutoCloseable {
 
     CliExecutionResult run(List<String> args);
 
-    CliExecutionResult run(List<String> vmParams, List<String> args);
-
     CliExecutionResult runSuccessfully(List<String> args);
 
-    CliExecutionResult runSuccessfully(List<String> vmParams, List<String> args);
+    void close();
 }

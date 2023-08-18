@@ -1,5 +1,6 @@
 package beanvest.acceptance;
 
+import beanvest.lib.util.CmdRunner;
 import beanvest.parser.ValueFormatException;
 import beanvest.journal.Value;
 import com.opencsv.CSVReader;
@@ -8,7 +9,6 @@ import com.opencsv.exceptions.CsvException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -19,6 +19,7 @@ import java.util.Map;
 
 public class BeanReport {
     private String stdOut;
+    private CmdRunner cmdRunner = new CmdRunner();
 
     public Map<LocalDate, Value> readBalances(Path ledgerFile, String account) {
         if (!Files.exists(ledgerFile)) {
@@ -33,11 +34,12 @@ public class BeanReport {
     }
 
     public Holdings readHoldings(Path bcJournal) throws IOException, InterruptedException, CsvException {
-        stdOut = runCommandSuccessfully(List.of("bean-report",
+        var command = List.of("bean-report",
                 bcJournal.toString(),
                 "-f", "csv",
                 "holdings"
-        ));
+        );
+        stdOut = cmdRunner.runSuccessfully(command).stdOut();
         var holdings = new Holdings();
         try (var reader = readCsv(stdOut)) {
             reader.readNext(); //skip headers
@@ -67,7 +69,7 @@ public class BeanReport {
         return stdOut;
     }
 
-    static class Holdings {
+    public static class Holdings {
         List<Holding> holdings = new ArrayList<>();
 
         public void add(Holding holding) {
@@ -85,12 +87,12 @@ public class BeanReport {
     }
 
     private Map<LocalDate, Value> getBalanceHistory(Path ledgerFile, String account) throws IOException, InterruptedException, CsvException {
-        final String stdOut2 = runCommandSuccessfully(List.of("bean-query",
+        stdOut = cmdRunner.runSuccessfully(List.of("bean-query",
                 "-f", "csv",
                 ledgerFile.toString(),
                 String.format("select date, balance where account ~ '%s'", account)
-        ));
-        var reader = readCsv(stdOut2);
+        )).stdOut();
+        var reader = readCsv(stdOut);
         var balances = new HashMap<LocalDate, Value>();
         reader.readNext(); //skip headers
 
@@ -102,18 +104,6 @@ public class BeanReport {
             }
         });
         return balances;
-    }
-
-    private String runCommandSuccessfully(List<String> command) throws IOException, InterruptedException {
-        var process = new ProcessBuilder().command(command).start();
-
-        var i = process.waitFor();
-        var stdOut = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-        if (i != 0) {
-            var err = new String(process.getErrorStream().readAllBytes(), StandardCharsets.UTF_8);
-            throw new RuntimeException("bean-report returned exit code " + i + ". \nStderr:" + err + "\nStdout: " + stdOut);
-        }
-        return stdOut;
     }
 
     private CSVReader readCsv(String out) {

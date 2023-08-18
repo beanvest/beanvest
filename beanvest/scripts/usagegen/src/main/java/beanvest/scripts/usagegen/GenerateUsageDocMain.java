@@ -31,11 +31,12 @@ public class GenerateUsageDocMain {
         var samplesDir = Path.of(projectDir + "/sample");
         var outputFile = Path.of(projectDir + "/generated/usage.md");
 
-        var runner = AppRunnerFactory.createRunner(BeanvestMain.class);
-        var exampleRunner = new ExampleRunner(runner, samplesDir);
-        var exampleDocWriter = new UsageDocWriter(outputFile, samplesDir);
+        try (var runner = AppRunnerFactory.createRunner(BeanvestMain.class)) {
+            var exampleRunner = new ExampleRunner(runner, samplesDir);
+            var exampleDocWriter = new UsageDocWriter(outputFile, samplesDir);
 
-        var content = exampleRunner.generate(EXAMPLES);
-        exampleDocWriter.writeDoc(content);
+            var content = exampleRunner.generate(EXAMPLES);
+            exampleDocWriter.writeDoc(content);
+        }
     }
 }

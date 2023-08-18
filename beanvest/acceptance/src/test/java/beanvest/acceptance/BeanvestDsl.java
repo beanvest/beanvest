@@ -16,11 +16,16 @@ public class BeanvestDsl {
         appRunner = AppRunnerFactory.createRunner(BeanvestMain.class);
     }
 
+    public void close()
+    {
+        appRunner.close();
+    }
+
     private final AppRunner appRunner;
     private CliExecutionResult cliRunResult;
 
     public void run() {
-        cliRunResult = appRunner.run(List.of(), List.of());
+        cliRunResult = appRunner.run(List.of());
     }
 
     public void verifyHasPrintedUsage() {

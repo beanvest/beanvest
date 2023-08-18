@@ -1,6 +1,7 @@
 package beanvest.lib.apprunner;
 
 import beanvest.lib.apprunner.main.BaseMain;
+import beanvest.lib.util.CmdRunner;
 
 import java.util.Optional;
 
@@ -18,6 +19,6 @@ public class AppRunnerFactory {
         var jar = System.getenv("NATIVE_BIN_PATH");
         return jar == null
                 ? new ReflectionRunner(mainClass, subcommand)
-                : new NativeBinRunner(jar, subcommand);
+                : new NativeBinRunner(new CmdRunner(), jar, subcommand);
     }
 }

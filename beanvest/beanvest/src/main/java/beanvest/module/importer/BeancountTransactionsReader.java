@@ -1,5 +1,6 @@
 package beanvest.module.importer;
 
+import beanvest.lib.util.CmdRunner;
 import beanvest.parser.ValueFormatException;
 import beanvest.journal.Value;
 import com.opencsv.CSVReader;
@@ -22,6 +23,12 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class BeancountTransactionsReader {
     private static final Logger LOGGER = getLogger(BeancountTransactionsReader.class.getName());
     public static final int PROCESS_TIMEOUT_SECONDS = 2;
+    private final CmdRunner cmdRunner;
+
+    public BeancountTransactionsReader(CmdRunner cmdRunner) {
+
+        this.cmdRunner = cmdRunner;
+    }
 
     public List<Transaction> getTransfers(Path ledgerFile, String account) {
         var transfers = new ArrayList<Transaction>();
@@ -35,7 +42,7 @@ public class BeancountTransactionsReader {
                 "/usr/bin/bash", "-c", bashLine);
 
         try {
-            runCommandSuccessfully(command);
+            cmdRunner.runSuccessfully(command);
             var output = String.join("\n", Files.readAllLines(Path.of(tempFileOut), StandardCharsets.UTF_8));
 //            var err = String.join("\n", Files.readAllLines(Path.of(tempFileErr), StandardCharsets.UTF_8));
             try (var reader = readCsv(output)) {
@@ -79,14 +86,7 @@ public class BeancountTransactionsReader {
         return new CSVReader(new StringReader(out));
     }
 
-    private void runCommandSuccessfully(List<String> command) throws IOException, InterruptedException {
-        var exitCode = new ProcessBuilder().command(command).start().waitFor();
-        if (exitCode != 0) {
-            throw new RuntimeException("command %s retuned exit code %d".formatted(command, exitCode));
-        }
-    }
-
-    record Transaction(LocalDate date, Value value, String comment, String account, String id) {
+    public record Transaction(LocalDate date, Value value, String comment, String account, String id) {
 
         public TransactionType type() {
             if (isIncome()) {
@@ -111,7 +111,7 @@ public class BeancountTransactionsReader {
         }
     }
 
-    enum TransactionType {
+    public enum TransactionType {
         INCOME,
         EXPENSE,
         TRANSFER

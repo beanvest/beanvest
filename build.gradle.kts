@@ -23,7 +23,7 @@ allprojects {
 tasks.register("generate") {
     dependsOn(":beanvest:scripts:usagegen:generateSampleJournal",
             ":beanvest:scripts:usagegen:generateUsageDoc",
-            ":beanvest:scripts:usagegen:generateSampleJson",
+            ":beanvest:scripts:usagegen:generateSampleReportJson",
             ":beanvest:scripts:usagegen:generateSampleOptions",
             ":beanvest:scripts:tsgen:generateTypescriptTypes")
     group = "generation"
@@ -32,7 +32,7 @@ tasks.register("generate") {
 tasks.register("nativeGenerate") {
     dependsOn(":beanvest:scripts:usagegen:generateSampleJournal",
             ":beanvest:scripts:usagegen:generateUsageDocNative",
-            ":beanvest:scripts:usagegen:generateSampleJsonNative",
+            ":beanvest:scripts:usagegen:generateSampleReportJsonNative",
             ":beanvest:scripts:tsgen:generateTypescriptTypes")
     group = "generation"
     description = "Regenerates everything using native build"

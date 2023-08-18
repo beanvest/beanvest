@@ -60,7 +60,6 @@ public class ReflectionRunner implements AppRunner {
         return run(List.of(), args);
     }
 
-    @Override
     public CliExecutionResult run(List<String> vmParams, List<String> args) {
         try {
             var appArgs = new ArrayList<>(args);
@@ -93,7 +92,7 @@ public class ReflectionRunner implements AppRunner {
     }
 
     @Override
-    public CliExecutionResult runSuccessfully(List<String> vmParams, List<String> args) {
-        throw new UnsupportedOperationException();
+    public void close() {
+
     }
 }

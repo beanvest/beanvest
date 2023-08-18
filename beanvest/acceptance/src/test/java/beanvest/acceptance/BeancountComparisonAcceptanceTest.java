@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @Disabled("rework v2")
-
 public class BeancountComparisonAcceptanceTest {
     private final BeancountComparisonDsl dsl = new BeancountComparisonDsl(
             AppRunnerFactory.createRunner(BeanvestMain.class, "export"),

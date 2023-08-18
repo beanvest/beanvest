@@ -2,6 +2,7 @@ package beanvest.module.importer;
 
 
 import beanvest.SubCommand;
+import beanvest.lib.util.CmdRunner;
 import picocli.CommandLine;
 
 import java.io.PrintStream;
@@ -44,8 +45,8 @@ public class ImportCliCommand implements SubCommand {
         final boolean debug = subcommand.matchedOptionValue("--debug", false);
         final List<String> accountsToIgnore = List.of(subcommand.matchedOptionValue("--ignore", "").split(","));
 
-
-        var beancountTransactionsReader = new BeancountTransactionsReader();
+        var cmdRunner = new CmdRunner();
+        var beancountTransactionsReader = new BeancountTransactionsReader(cmdRunner);
         var transfers = beancountTransactionsReader.getTransfers(path, accountPattern);
         var writer = new PrintWriter(stdOut);
 

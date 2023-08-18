@@ -6,6 +6,7 @@ group 'beanvest.lib.apprunner'
 
 dependencies {
     implementation libs.bundles.logging
+    implementation project(':beanvest:lib:util')
 }
 
 test {

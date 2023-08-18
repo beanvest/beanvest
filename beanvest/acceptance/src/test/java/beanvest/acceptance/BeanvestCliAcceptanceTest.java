@@ -1,9 +1,15 @@
 package beanvest.acceptance;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 public class BeanvestCliAcceptanceTest {
     BeanvestDsl dsl = new BeanvestDsl();
+
+    @AfterEach
+    void tearDown() {
+        dsl.close();
+    }
 
     @Test
     void shouldPrintUsageIfNoSubcommandSpecified() {

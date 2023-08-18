@@ -54,14 +54,14 @@ tasks.register('generateSampleJournal', JavaExec) {
     mainClass = "beanvest.scripts.usagegen.GenerateSampleJournalMain"
     jvmArgs = usualJvmArgs
 }
-tasks.register('generateSampleJson', JavaExec) {
+tasks.register('generateSampleReportJson', JavaExec) {
     group = "generation"
     description = "Regenerates sample journal"
     classpath = sourceSets.main.runtimeClasspath
     mainClass = "beanvest.scripts.usagegen.GenerateSampleReportJsonMain"
     jvmArgs = usualJvmArgs
 }
-tasks.register('generateSampleJsonNative', JavaExec) {
+tasks.register('generateSampleReportJsonNative', JavaExec) {
     dependsOn(":beanvest:beanvest:nativeCompile")
     group = "generation"
     description = "Regenerates sample journal"
