@@ -3,20 +3,15 @@ package beanvest.module.returns.cli.columns;
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.ColumnPadding;
 import beanvest.module.returns.StatDefinition;
-import beanvest.processor.dto.AccountPeriodDto;
+import beanvest.processor.processingv2.dto.AccountDto2;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 
 public class ReportColumnsDefinition {
-    public static final String ALWAYS_VISIBLE = "account";
-    public static final List<Column<AccountPeriodDto>> COLUMNS_BASIC = List.of(
-            new Column<>(ALWAYS_VISIBLE, ColumnPadding.LEFT, AccountPeriodDto::account),
-            new Column<>(StatDefinition.OPENED.header, ColumnPadding.LEFT, r -> r.openingDate().toString()),
-            new Column<>(StatDefinition.CLOSED.header, ColumnPadding.LEFT, r -> r.closingDate().map(LocalDate::toString).orElse("-")));
-
-    public static final List<ColumnSpec> COLUMNS = Arrays.stream(StatDefinition.values()).map(ColumnSpec::new).toList();
-    public static final List<StatDefinition> DEFAULT_COLUMNS_SINGLE_PERIOD = List.of(StatDefinition.XIRR, StatDefinition.PROFIT);
-    public static final List<StatDefinition> DEFAULT_COLUMNS_MULTIPLE_PERIODS = Arrays.stream(StatDefinition.values()).toList();
+    public static final String ACCOUNT_COLUMN = "Account";
+    public static final Map<String, Column<AccountDto2>> COLUMNS_ACCOUNT = Map.of(
+            "Account", new Column<>(ACCOUNT_COLUMN, ColumnPadding.LEFT, AccountDto2::account),
+            "Opened", new Column<>(StatDefinition.OPENED.header, ColumnPadding.LEFT, r -> r.openingDate().toString()),
+            "Closed", new Column<>(StatDefinition.CLOSED.header, ColumnPadding.LEFT, r -> r.closingDate().map(LocalDate::toString).orElse("-")));
 }

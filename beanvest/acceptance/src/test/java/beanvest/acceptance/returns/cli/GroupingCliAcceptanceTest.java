@@ -37,7 +37,7 @@ public class GroupingCliAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""
-                account     Deps
+                Account     Deps
                 .*              7
                 pension:.*      3
                 pension:a       1

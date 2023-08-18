@@ -5,7 +5,6 @@ import beanvest.result.ErrorEnum;
 import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 public class ColumnValueFormatter {
     public static String formatMoney(boolean exact, BigDecimal cashValue) {
@@ -14,11 +13,6 @@ public class ColumnValueFormatter {
 
     public static String formatMoney(boolean exact, Result<BigDecimal, UserErrors> stat) {
         return stat.fold(s -> formatMoney(exact, s), ColumnValueFormatter::formatError);
-    }
-
-    public static String formatMoney(boolean exact, Optional<BigDecimal> delta) {
-        return delta.map(val -> String.format(exact ? "%,.2f" : "%,.0f", val))
-                .orElseGet(() -> formatError(ErrorEnum.DELTA_NOT_AVAILABLE));
     }
 
     public static String formatError(ErrorEnum error) {
@@ -41,7 +35,10 @@ public class ColumnValueFormatter {
         return formatError(err.errors.get(0).error());
     }
 
-    public static String formatXirr(double value) {
-        return String.format("%,.1f", value*100);
+    public static String formatXirr(Result<BigDecimal, UserErrors> value) {
+        return value.fold(
+                v -> String.format("%,.1f", v.floatValue() * 100),
+                ColumnValueFormatter::formatError
+        );
     }
 }

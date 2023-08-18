@@ -6,6 +6,7 @@ import beanvest.processor.dto.AccountPeriodDto;
 import beanvest.processor.dto.PortfolioStatsDto;
 import beanvest.processor.dto.StatsWithDeltasDto;
 import beanvest.processor.dto.ValueStatDto;
+import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.time.Period;
 import beanvest.processor.time.PeriodInterval;
 import beanvest.result.ErrorEnum;
@@ -27,7 +28,7 @@ public class GraalvmReflectionRegistrar implements Feature {
         //TODO trim it down
         var classes = List.of(
                 PortfolioStatsDto.class,
-                AccountDto.class,
+                AccountDto2.class,
                 AccountPeriodDto.class,
                 StatsWithDeltasDto.class,
                 ValueStatDto.class,

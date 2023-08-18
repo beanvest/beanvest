@@ -31,7 +31,7 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 2021  ╷ 2020  ╷
-                account │ Deps  │ Deps  │
+                Account │ Deps  │ Deps  │
                 isa     │   300 │   200 │""");
     }
 
@@ -53,7 +53,7 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 21q1  ╷ 20q4  ╷ 20q3  ╷ 20q2  ╷ 20q1  ╷
-                account │ Deps  │ Deps  │ Deps  │ Deps  │ Deps  │
+                Account │ Deps  │ Deps  │ Deps  │ Deps  │ Deps  │
                 isa     │   300 │   300 │   300 │   200 │   100 │""");
     }
 
@@ -76,7 +76,7 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 2021  ╷ 2020  ╷
-                account │ pDeps │ pDeps │
+                Account │ pDeps │ pDeps │
                 isa     │   100 │   200 │""");
     }
 
@@ -100,7 +100,7 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 2022  ╷ 2021  ╷
-                account │ pDeps │ pDeps │
+                Account │ pDeps │ pDeps │
                 isa     │   100 │   100 │""");
     }
 
@@ -123,7 +123,7 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 21q1  ╷ 20q4  ╷ 20q3  ╷ 20q2  ╷ 20q1  ╷
-                account │ pDeps │ pDeps │ pDeps │ pDeps │ pDeps │
+                Account │ pDeps │ pDeps │ pDeps │ pDeps │ pDeps │
                 isa     │     0 │     0 │   100 │   100 │   100 │""");
     }
 
@@ -147,7 +147,7 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 2021  ╷
-                account │ pDeps │
+                Account │ pDeps │
                 isa     │    50 │""");
     }
 
@@ -201,7 +201,7 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 22m11 ╷ 22m10 ╷
-                account │ pDeps │ pDeps │
+                Account │ pDeps │ pDeps │
                 trading │   100 │   100 │""");
     }
 }

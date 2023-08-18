@@ -34,7 +34,7 @@ public class CliAcceptanceTest {
                         """);
 
         dsl.verifyOutput("""
-                account  Value
+                Account  Value
                 taxable     20""");
     }
 
@@ -73,7 +73,7 @@ public class CliAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""
-                account  Value
+                Account  Value
                 isa         20
                 pension     15""");
     }
@@ -93,7 +93,7 @@ public class CliAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""
-                account  Deps   Wths
+                Account  Deps   Wths
                 isa         20    -10""");
     }
 
@@ -124,7 +124,7 @@ public class CliAcceptanceTest {
         dsl.runCalculateReturnsOnDirectory("myJournals");
 
         dsl.verifyOutput("""
-                account  Deps
+                Account  Deps
                 acc1        20
                 acc2        21""");
     }

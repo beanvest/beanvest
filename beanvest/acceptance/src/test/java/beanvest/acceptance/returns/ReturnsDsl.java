@@ -133,9 +133,6 @@ public class ReturnsDsl {
         if (cliOptions.showClosed) {
             args.add("--show-closed");
         }
-        if (cliOptions.exact) {
-            args.add("--exact");
-        }
         if (!cliOptions.columns.isEmpty()) {
             args.add("--columns=" + String.join(",", cliOptions.columns));
         }
@@ -273,10 +270,6 @@ public class ReturnsDsl {
 
     public void setDeltas() {
         cliOptions.delta = true;
-    }
-
-    public void setExact() {
-        cliOptions.exact = true;
     }
 
     public void verifyDeposits(String account, String period, String amount) {
@@ -594,7 +587,6 @@ public class ReturnsDsl {
         public Groups groups;
         public boolean onlyFinishedPeriods = false;
         public boolean delta = false;
-        public boolean exact = false;
         public String interval = null;
         public boolean showClosed = false;
         public String currency;

@@ -43,7 +43,7 @@ public class CliCalculationErrorsAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""                                
-                account  Xirr
+                Account  Xirr
                 trading     PN""");
     }
 
@@ -98,7 +98,7 @@ public class CliCalculationErrorsAcceptanceTest {
 
         dsl.verifyOutput("""
                         ╷ 2021  ╷ 2020  ╷
-                account │ pDeps │ pDeps │
+                Account │ pDeps │ pDeps │
                 trading │     … │    10 │""");
     }
 
