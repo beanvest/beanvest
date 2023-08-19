@@ -1,9 +1,7 @@
 package beanvest.acceptance.returns;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class LeveragedReturnsAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -11,6 +9,8 @@ public class LeveragedReturnsAcceptanceTest {
     void shouldCalculateLeveragedReturnsWithOnlyInclusionOfCreditAccount() {
         dsl.setCurrentDate("2023-01-01");
         dsl.setGroupingEnabled();
+        dsl.setColumns("xirr");
+
         dsl.runCalculateReturns("""
                 account saving
                 currency GBP
@@ -32,6 +32,8 @@ public class LeveragedReturnsAcceptanceTest {
     void shouldCalculateResultsWhenLeveragedFromAnyArbitraryMoment() {
         dsl.setCurrentDate("2023-01-01");
         dsl.setGroupingEnabled();
+        dsl.setColumns("xirr");
+
         dsl.runCalculateReturns("""
                 account saving
                 currency GBP
@@ -53,6 +55,8 @@ public class LeveragedReturnsAcceptanceTest {
     void shouldCalculateReturnsIfLeverageIsLargerThanCapital() {
         dsl.setCurrentDate("2023-01-01");
         dsl.setGroupingEnabled();
+        dsl.setColumns("xirr");
+
         dsl.runCalculateReturns("""
                 account saving
                 currency GBP
