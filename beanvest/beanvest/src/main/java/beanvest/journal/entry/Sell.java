@@ -42,8 +42,4 @@ public record Sell(LocalDate date, Account2 account2, Value value, Value totalPr
     public BigDecimal getRawAmountMoved() {
         return totalPrice.amount().negate();
     }
-
-    public Value priceAfterFee() {
-        return totalPrice.add(fee.negate());
-    }
 }

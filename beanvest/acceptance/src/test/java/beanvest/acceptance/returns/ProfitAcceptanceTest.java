@@ -56,7 +56,7 @@ public class ProfitAcceptanceTest {
                 2021-12-31 fee 1
                 """);
 
-        dsl.verifyProfit("isa", "TOTAL", "8");
+        dsl.verifyProfit("isa", "TOTAL", "9");
     }
 
     @Test

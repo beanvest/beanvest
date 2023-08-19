@@ -13,6 +13,7 @@ import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import beanvest.result.ErrorEnum;
 import beanvest.result.Result;
+import beanvest.result.UserErrors;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.assertj.core.data.Offset;
@@ -22,10 +23,7 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -350,7 +348,7 @@ public class ReturnsDsl {
         var periodStats = getAccountResults(account).periodStats();
         if (!periodStats.containsKey(period)) {
             throw new RuntimeException("Stats for period `" + period + "` for account `" + account + "` requested but not found. Periods available for this account: "
-                                       + periodStats.keySet().stream().sorted().collect(Collectors.joining(", ")));
+                    + periodStats.keySet().stream().sorted().collect(Collectors.joining(", ")));
         }
         return Optional.ofNullable(periodStats.get(period));
     }
@@ -378,8 +376,8 @@ public class ReturnsDsl {
                 .findFirst();
         assertThat(first)
                 .as("Result expected to contain stats for account `" + account + "` but it doesn't. "
-                    + "Accounts that actually have some stats: `"
-                    + resultDto.accountDtos().stream().map(AccountDto2::account).collect(Collectors.joining("`, `")) + "`")
+                        + "Accounts that actually have some stats: `"
+                        + resultDto.accountDtos().stream().map(AccountDto2::account).collect(Collectors.joining("`, `")) + "`")
                 .isPresent();
         return first.get();
     }
@@ -482,6 +480,7 @@ public class ReturnsDsl {
     public void verifyFeesDelta(String account, String period, String expectedAmount) {
         verifyStatDelta(account, period, expectedAmount, "pFees");
     }
+
     private void verifyStatDelta(String account, String period, String expectedAmount, String statId) {
         var result = getAccountResults(account, period).get().stats().get(statId).value();
         assertThat(result)
@@ -502,8 +501,27 @@ public class ReturnsDsl {
         verifyStat(account, period, expectedAmount, valueStatExtractor, DEFAULT_OFFSET);
     }
 
+    private List<String> getAllAccountsWithStatsInPeriod(String period) {
+        var resultDto = getResultDto();
+        return resultDto.accountDtos().stream()
+                .filter(acc -> acc.periodStats().containsKey(period))
+                .map(AccountDto2::account).toList();
+    }
+
+
     private void verifyStat(String account, String period, String expectedAmount, String columnId) {
-        var result1 = getAccountResults(account, period).get().stats().get(columnId);
+        var accountResults = getAccountResults(account, period);
+        if (accountResults.isEmpty()) {
+            throw new RuntimeException("account `%s` has no stats for period `%s`. Only following accounts have stats in that period: %s"
+                    .formatted(account, period, getAllAccountsWithStatsInPeriod(period)));
+        }
+        var stats = accountResults.get().stats();
+        if (!stats.containsKey(columnId)) {
+            throw new RuntimeException("Account `%s` doesnt have stat `%s` in period `%s`. It has only stats: %s".formatted(account, columnId, period, stats.keySet()));
+        }
+        var result1 = stats
+                .get(columnId);
+
         var result = result1.value();
 
         var expected = new BigDecimal(expectedAmount);

@@ -36,9 +36,9 @@ public class CliHoldingsStatsAcceptanceTest {
 
         dsl.verifyOutput("""
                 Account           Deps   Wths   Intr   Fees   Xirr   RGain  UGain  Div    Profit  Cost   Value
-                fidelityIsa          90     -1      7     -5   22.2      3     10      1      20    -89    109
+                fidelityIsa          90     -1      7     -5   24.4      3     10      1      22    -89    111
                 fidelityIsa:APPL      0      0      0     -4  114.3      3     10      1      10    -20     30
-                fidelityIsa:GBP      90     -1      7     -1      …      0      0      0      10    -69     79""");
+                fidelityIsa:GBP      90     -1      7     -1      …      0      0      0      12    -69     81""");
     }
 }
 

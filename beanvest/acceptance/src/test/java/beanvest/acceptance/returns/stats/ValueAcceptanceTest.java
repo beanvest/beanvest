@@ -77,8 +77,8 @@ public class ValueAcceptanceTest {
                 2021-01-02 sell 1 X for 4 with fee 1
                 """);
 
-        dsl.verifyValue("trading:GBP", "2021", "3");
-        dsl.verifyValue("trading", "2021", "3");
+        dsl.verifyValue("trading:GBP", "2021", "4");
+        dsl.verifyValue("trading", "2021", "4");
     }
 
     @Test
@@ -144,5 +144,25 @@ public class ValueAcceptanceTest {
 
         dsl.verifyValue("trading", "2021", "4");
         dsl.verifyValue("trading2", "2021", "4");
+    }
+
+
+    @Test
+    void cashWhenSellingIsAfterFee() {
+        dsl.setColumns("val");
+        dsl.setReportHoldings();
+
+        dsl.runCalculateReturns("""
+                account account
+                currency GBP
+                    
+                2017-04-10 deposit 500
+
+                2017-08-15 buy 1 X for 500 with fee 1.50
+                2017-08-16 sell 1 X for 507.82 with fee 1.50
+                            
+                """);
+
+        dsl.verifyValue("account:GBP", "TOTAL", "507.82");
     }
 }

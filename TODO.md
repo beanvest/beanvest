@@ -9,4 +9,4 @@
 - **BeancountUI**: journal UI through export to beancount format and display with fava
 
 ## Bugs
-- ProcessRunner hangs when there is too much output
+- Cash going below 0 throws `Should not cross zero when updating holding without affecting the cost.`

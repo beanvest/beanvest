@@ -26,7 +26,7 @@ public class HoldingsCollector implements ProcessorV2 {
     private final Map<AccountHolding, Holding> holdings = new HashMap<>();
 
     public Holding getHolding(AccountHolding accountHolding) {
-        return  holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, BigDecimal.ZERO));
+        return holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, BigDecimal.ZERO));
     }
 
     public List<Holding> getHoldingsAndCash(Entity account) {
@@ -35,6 +35,7 @@ public class HoldingsCollector implements ProcessorV2 {
                 .map(holdings::get)
                 .collect(Collectors.toList());
     }
+
     public List<Holding> getInstrumentHoldings(Entity account) {
         return holdings.keySet().stream()
                 .filter(holding -> holding instanceof AccountInstrumentHolding)
@@ -57,11 +58,12 @@ public class HoldingsCollector implements ProcessorV2 {
             if (op instanceof Buy buy) {
                 getHolding(tr.cashAccount()).update(buy.totalPrice().amount().negate(), buy.totalPrice().amount());
                 getHolding(tr.accountHolding()).update(buy.units(), buy.totalPrice().amount().negate());
+
             } else if (op instanceof Sell sell) {
                 var holding = getHolding(tr.accountHolding());
                 holding.update(sell.units().negate(), holding.totalCost());
                 var costOfBuy = holding.averageCost().multiply(sell.units());
-                getHolding(tr.cashAccount()).update(sell.priceAfterFee().amount(), costOfBuy);
+                getHolding(tr.cashAccount()).update(sell.totalPrice().amount(), costOfBuy);
             }
         }
         if (op instanceof Deposit dep) {
@@ -73,8 +75,8 @@ public class HoldingsCollector implements ProcessorV2 {
         if (op instanceof Interest dep) {
             getHolding(dep.cashAccount()).updateWhileKeepingTheCost(dep.getCashAmount());
         }
-        if (op instanceof Fee dep) {
-            getHolding(dep.cashAccount()).updateWhileKeepingTheCost(dep.getCashAmount().negate());
+        if (op instanceof Fee fee) {
+            getHolding(fee.cashAccount()).updateWhileKeepingTheCost(fee.getCashAmount().negate());
         }
         if (op instanceof Dividend dep) {
             getHolding(dep.cashAccount()).updateWhileKeepingTheCost(dep.getCashAmount());

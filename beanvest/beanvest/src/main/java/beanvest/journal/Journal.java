@@ -29,7 +29,7 @@ public class Journal {
         });
         var entriesGroupedByDay = new TreeMap<LocalDate, List<Entry>>();
         sortedEntries = new ArrayList<>(journalEntries).stream()
-                .sorted(Comparator.comparing(Entry::date))
+                .sorted(Comparator.comparing(Entry::date).thenComparing(Entry::originalLine))
                 .toList();
         var prices = new ArrayList<Price>();
         for (var entry : sortedEntries) {
