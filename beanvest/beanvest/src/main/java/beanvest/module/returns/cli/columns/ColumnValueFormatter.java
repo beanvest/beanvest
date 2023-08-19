@@ -1,18 +1,14 @@
 package beanvest.module.returns.cli.columns;
 
-import beanvest.result.Result;
 import beanvest.result.ErrorEnum;
 import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class ColumnValueFormatter {
     public static String formatMoney(boolean exact, BigDecimal cashValue) {
         return String.format(exact ? "%,.2f" : "%,.0f", cashValue);
-    }
-
-    public static String formatMoney(boolean exact, Result<BigDecimal, UserErrors> stat) {
-        return stat.fold(s -> formatMoney(exact, s), ColumnValueFormatter::formatError);
     }
 
     public static String formatError(ErrorEnum error) {
@@ -35,10 +31,7 @@ public class ColumnValueFormatter {
         return formatError(err.errors.get(0).error());
     }
 
-    public static String formatXirr(Result<BigDecimal, UserErrors> value) {
-        return value.fold(
-                v -> String.format("%,.1f", v.floatValue() * 100),
-                ColumnValueFormatter::formatError
-        );
+    public static String actuallyFormatXirr(BigDecimal v) {
+        return v.multiply(new BigDecimal(100)).setScale(1, RoundingMode.HALF_UP).toPlainString();
     }
 }

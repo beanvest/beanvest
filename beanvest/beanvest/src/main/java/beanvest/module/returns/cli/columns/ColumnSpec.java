@@ -14,13 +14,16 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public record ColumnSpec(StatDefinition statsDefinition) {
-    public Column<AccountDto2> toColumn(Optional<String> group, String period, String title, Function<Result<BigDecimal, UserErrors>, String> formatter) {
+    public Column<AccountDto2> toColumn(Optional<String> group, String period, String title, Function<BigDecimal, String> formatter) {
         return new Column<>(
                 group,
                 title,
                 ColumnPadding.RIGHT,
                 accountPeriodStats -> Optional.ofNullable(accountPeriodStats.periodStats().get(period))
-                        .map(stats -> formatter.apply(getStat(stats)))
+                        .map(stats -> stats.stats()
+                                .get(statsDefinition.header)
+                                .fold(formatter, ColumnValueFormatter::formatError
+                        ))
                         .orElseGet(() -> ColumnValueFormatter.formatError(ErrorEnum.ACCOUNT_NOT_OPEN_YET)));
     }
 

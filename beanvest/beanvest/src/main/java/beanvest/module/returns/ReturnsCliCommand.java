@@ -25,7 +25,7 @@ public class ReturnsCliCommand implements SubCommand {
     }
 
     private static ReturnsCalculatorApp.Result run(PrintStream stdOut, PrintStream stdErr, ReturnsAppParameters params) {
-        var cliTablePrinter = new CliTablePrinter(params.exactValues());
+        var cliTablePrinter = new CliTablePrinter();
         var cliOutputWriter = params.jsonFormat()
                 ? new CliJsonOutputWriter(stdOut, stdErr)
                 : new CliTableOutputWriter(stdOut, stdErr, cliTablePrinter);

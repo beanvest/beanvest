@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CliPrinterTest {
     @Test
     void sampleCliOutput() {
-        var cliPrinter = new CliTablePrinter(false);
+        var cliPrinter = new CliTablePrinter();
         var res = new PortfolioStatsDto2(List.of("Trading:Serious"), List.of("2021", "2022"),
                 List.of("Xirr"),
                 List.of(new AccountDto2("Trading:Serious",

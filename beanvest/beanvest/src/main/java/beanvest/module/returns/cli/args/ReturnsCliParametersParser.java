@@ -24,7 +24,6 @@ public class ReturnsCliParametersParser {
         var accountFilter = parseResult.matchedOptionValue("--account", ".*");
         var reportCurrency = Optional.ofNullable(parseResult.matchedOptionValue("--currency", ""));
 
-        var exactValues = parseResult.matchedOptionValue("--exact", false);
         var reportInvestments = parseResult.matchedOptionValue("--report-holdings", false);
         var jsonFormat = parseResult.matchedOptionValue("--json", false);
         var period = parseResult.matchedOptionValue("--interval", PeriodInterval.NONE);
@@ -34,7 +33,7 @@ public class ReturnsCliParametersParser {
 
         var collectionMode = onlyDeltas ? CollectionMode.DELTA : CollectionMode.CUMULATIVE;
         return new ReturnsAppParameters(journalsPaths, endDate, startDate, accountFilter, reportCurrency, selectedColumns,
-                exactValues, jsonFormat, period, grouping, collectionMode, "TOTAL", reportInvestments);
+                jsonFormat, period, grouping, collectionMode, "TOTAL", reportInvestments);
     }
 
     private static LocalDate getEndDate(CommandLine.ParseResult parseResult, LocalDate today) {

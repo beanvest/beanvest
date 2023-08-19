@@ -21,13 +21,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class CliTablePrinter {
-    public static final Map<String, Function<Result<BigDecimal, UserErrors>, String>> CUSTOM_FORMATTERS = Map.of(
-            StatDefinition.XIRR.header, ColumnValueFormatter::formatXirr
+    public static final Map<String, Function<BigDecimal, String>> CUSTOM_FORMATTERS = Map.of(
+            StatDefinition.XIRR.header, ColumnValueFormatter::actuallyFormatXirr,
+            StatDefinition.XIRR_PERIOD.header, ColumnValueFormatter::actuallyFormatXirr
     );
     private final TableWriter tableWriter = new TableWriter().setMinColumnWidth(5);
-
-    public CliTablePrinter(Boolean exact) {
-    }
 
     public void printCliOutput(PortfolioStatsDto2 stats, PrintStream output, List<String> selectedColumns, CollectionMode collectionMode) {
         var periods = new ArrayList<>(stats.periods());
@@ -92,7 +90,7 @@ public class CliTablePrinter {
                 .toList();
     }
 
-    private Function<Result<BigDecimal, UserErrors>, String> getFormatter(ColumnSpec spec) {
+    private Function<BigDecimal, String> getFormatter(ColumnSpec spec) {
         return CUSTOM_FORMATTERS.getOrDefault(spec.statsDefinition().header, (s) -> ColumnValueFormatter.formatMoney(false, s));
     }
 

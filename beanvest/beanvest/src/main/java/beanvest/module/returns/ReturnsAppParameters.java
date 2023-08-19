@@ -17,7 +17,6 @@ public record ReturnsAppParameters(
         String accountFilter,
         Optional<String> reportCurrency,
         List<StatDefinition> selectedColumns,
-        Boolean exactValues,
         Boolean jsonFormat,
         PeriodInterval period,
         Grouping grouping,

@@ -89,5 +89,26 @@ public class CliStatsAcceptanceTest {
                 Account │ pAGain │ pAGain │
                 trading │      9 │      7 │""");
     }
+
+    @Test
+    void calculatesPeriodicXirr() {
+        dsl.setEnd("2023-01-01");
+        dsl.setDeltas();
+        dsl.setColumns("xirr");
+        dsl.setGroupingDisabled();
+        dsl.setYearly();
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-02 deposit 100
+                2022-06-05 interest 10
+                """);
+
+        dsl.verifyOutput("""         
+                        ╷ 2022  ╷ 2021  ╷
+                Account │ pXirr │ pXirr │
+                trading │  10.0 │   0.0 │""");
+    }
 }
 
