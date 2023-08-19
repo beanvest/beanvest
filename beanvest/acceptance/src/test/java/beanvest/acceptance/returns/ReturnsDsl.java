@@ -395,9 +395,9 @@ public class ReturnsDsl {
         return first.get();
     }
 
-    public ReturnsDsl verifyGainIsPositive(String account) {
-        var result = getAccountPeriodReturns(account).get();
-        assertThat(result.stats().get("aGain").value())
+    public ReturnsDsl verifyAccountGainIsPositive(String account, String period) {
+        var stat = getStat(account, period, "AGain");
+        assertThat(stat.value())
                 .usingComparator(BigDecimal::compareTo)
                 .isGreaterThan(BigDecimal.ZERO);
         return this;
@@ -460,6 +460,7 @@ public class ReturnsDsl {
     public void verifyDepositsPlusWithdrawalsDelta(String account, String period, String expectedAmount) {
         verifyStatDelta(account, period, expectedAmount, PERIOD_DEPOSITS_PLUS_WITHDRAWALS);
     }
+
     public void verifyAccountGainDelta(String account, String period, String expectedAmount) {
         verifyStatDelta(account, period, expectedAmount, ACCOUNT_GAIN_PERIODIC);
     }

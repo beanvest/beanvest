@@ -1,14 +1,13 @@
 package beanvest.acceptance.returns;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class StartAndEndDateAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void usesCurrentDateByDefault() {
+        dsl.setColumns("AGain");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -17,13 +16,14 @@ public class StartAndEndDateAcceptanceTest {
                 $$TODAY$$ price VLS 120
                 """);
 
-        dsl.verifyGainIsPositive("trading")
-                .verifyEndDateIsToday();
+        dsl.verifyAccountGainIsPositive("trading", "TOTAL");
+        dsl.verifyEndDateIsToday();
     }
 
     @Test
     void endDateForReturnsCalculationCanBeProvided() {
         dsl.setEnd("2022-05-01");
+        dsl.setColumns("profit");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -40,6 +40,8 @@ public class StartAndEndDateAcceptanceTest {
     @Test
     void startDateForStatsCalculationCanBeProvided() {
         dsl.setStartDate("2021-03-01");
+        dsl.setColumns("again");
+        dsl.setDeltas();
 
         dsl.runCalculateReturns("""
                 account trading
