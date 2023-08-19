@@ -110,4 +110,23 @@ public class PeriodicXirrDeltaAcceptanceTest {
 
         dsl.verifyXirrPeriodic("trading:VLS", "2021", "20");
     }
+
+    @Test
+    void calculatesXirrForPeriodWithNoInterval() {
+        dsl.setColumns("xirr");
+        dsl.setDeltas();
+        dsl.setEnd("2022-01-01");
+        dsl.setGroupingDisabled();
+
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                           
+                2021-01-01 deposit and buy 10 VLS for 10
+                2021-12-31 dividend 2 from VLS
+                2021-12-31 price VLS 1 GBP
+                """);
+
+        dsl.verifyXirrPeriodic("trading", "TOTAL", "20");
+    }
 }

@@ -31,7 +31,7 @@ public class PeriodXirrCalculator implements Calculator {
 
     @Override
     public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
-        var cashflows = periodCashflowCollector.getCashflows(params.entity(), params.startDate());
+        var cashFlows = periodCashflowCollector.getCashflows(params.entity(), params.startDate());
         var endValue = cashCalculator.calculate(params)
                 .combine(holdingsValueCalculator.calculate(params), BigDecimal::add, UserErrors::join);
         var newKey = new DateEntity(params.endDate(), params.entity());
@@ -40,14 +40,16 @@ public class PeriodXirrCalculator implements Calculator {
             return endValue;
         }
 
-
-        var prevKey = new DateEntity(params.startDate().minusDays(1), params.entity());
+        var prevKey = new DateEntity(getEndDateOfPerviousPeriod(params.startDate()), params.entity());
         var previous = previousValues.getOrDefault(prevKey, Result.success(BigDecimal.ZERO));
         if (previous.hasError()) {
             return previous;
         }
-        var result = cashflowsXirrCalculator.calculateXirr(params.startDate(), previous.value(), params.endDate(), cashflows, endValue.value());
-        return result;
+        return cashflowsXirrCalculator.calculateXirr(params.startDate(), previous.value(), params.endDate(), cashFlows, endValue.value());
+    }
+
+    private LocalDate getEndDateOfPerviousPeriod(LocalDate date) {
+        return date.equals(LocalDate.MIN) ? LocalDate.MIN : date.minusDays(1);
     }
 
     record DateEntity(LocalDate date, Entity entity){}
