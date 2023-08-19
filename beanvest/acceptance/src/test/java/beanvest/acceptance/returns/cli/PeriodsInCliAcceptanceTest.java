@@ -128,9 +128,8 @@ public class PeriodsInCliAcceptanceTest {
     }
 
     @Test
-    @Disabled("rework v2")
     void calculatesDeltasWithSomeStartingDate() {
-        dsl.setStartDate("2020-01-01");
+        dsl.setStartDate("2021-01-01");
         dsl.setEnd("2022-01-01");
         dsl.setYearly();
         dsl.setGroupingDisabled();
@@ -152,7 +151,6 @@ public class PeriodsInCliAcceptanceTest {
     }
 
     @Test
-    @Disabled("rework v2: value calc not implemented yet")
     void printsTableJustFineIfThereIsNoDataAvailableForSomeOfThePeriods() {
         dsl.setEnd("2021-01-01");
         dsl.setYearly();
@@ -166,6 +164,7 @@ public class PeriodsInCliAcceptanceTest {
                 2019-06-01 deposit 10
                 ---
                 account openedLater
+                
                 currency GBP
 
                 2020-06-01 deposit 10
@@ -173,7 +172,7 @@ public class PeriodsInCliAcceptanceTest {
 
         dsl.verifyOutput("""
                               ╷ 2020  ╷ 2019  ╷
-                account       │ Val   │ Val   │
+                Account       │ Value │ Value │
                 openedEarlier │    10 │    10 │
                 openedLater   │    10 │     … │""");
     }

@@ -41,20 +41,5 @@ public class CliHoldingsStatsAcceptanceTest {
                 fidelityIsa:APPL      0      0      0     -4  114.3      3     10      1      10    -20     30
                 fidelityIsa:GBP      90     -1      7     -1      …      0      0      0      12    -69     81""");
     }
-
-    @Test
-    @Disabled
-    void testbug() {
-        dsl.setGroupingDisabled();
-        dsl.setColumns("rgain,fees");
-        dsl.setReportHoldings();
-
-        dsl.runCalculateReturns("""
-         
-                """);
-
-        dsl.verifyOutput("""
-                """);
-    }
 }
 
