@@ -50,6 +50,9 @@ public class EndOfPeriodTracker {
     }
 
     public void finishPeriodsUpToEndDate() {
+        if (currentPeriod == null) {
+            throw new RuntimeException("no transactions processed?");
+        }
         if (currentPeriod.interval() == NONE) {
             var finishedOne = false;
             if (currentPeriod.startDate().equals(LocalDate.MIN)) {

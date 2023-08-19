@@ -186,8 +186,8 @@ public class ReturnsDsl {
         assertThat(cliRunResult.exitCode()).isEqualTo(0);
     }
 
-    public void setAccountFilter(String accountBeginsWith) {
-        cliOptions.account = accountBeginsWith;
+    public void setAccountFilter(String regexp) {
+        cliOptions.account = regexp;
     }
 
     public void setYearly() {

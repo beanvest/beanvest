@@ -22,7 +22,7 @@ public class PredicateFactory {
     private static Predicate<Entry> createAccountFilterPredicate(String accountFilter) {
         return entry -> {
             if (entry instanceof AccountOperation op) {
-                return op.account().matches(accountFilter);
+                return op.account2().stringId().matches(accountFilter);
             }
             return true;
         };

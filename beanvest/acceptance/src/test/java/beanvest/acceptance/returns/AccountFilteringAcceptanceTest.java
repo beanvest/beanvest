@@ -1,20 +1,18 @@
 package beanvest.acceptance.returns;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class AccountFilteringAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void filterAccounts() {
-        dsl.setEnd("2023-01-01");
         dsl.setAccountFilter("tra.*");
+        dsl.setColumns("deps");
 
         dsl.runCalculateReturns("""
                 account saving
-                currency GBP
+                currency GBPgit 
                                 
                 2021-01-01 deposit 100
                 ---
@@ -36,7 +34,6 @@ public class AccountFilteringAcceptanceTest {
 
     @Test
     void totalReturnsAreForOnlyMatchingAccounts() {
-        dsl.setEnd("2023-01-01");
         dsl.setAccountFilter("tra.*");
 
         dsl.runCalculateReturns("""
