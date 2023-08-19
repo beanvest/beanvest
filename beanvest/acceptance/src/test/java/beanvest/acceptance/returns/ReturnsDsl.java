@@ -60,6 +60,8 @@ public class ReturnsDsl {
     public static final String PROFIT = "Profit";
     public static final String DEPOSITS_PLUS_WITHDRAWALS = "DW";
     public static final String PERIOD_DEPOSITS_PLUS_WITHDRAWALS = "pDW";
+    public static final String ACCOUNT_GAIN = "AGain";
+    public static final String ACCOUNT_GAIN_PERIODIC = "pAGain";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -329,6 +331,11 @@ public class ReturnsDsl {
                 .outputIs(processedExpectedOutput);
     }
 
+    public ReturnsDsl verifyAccountGain(String account, String period, String amount) {
+        verifyStat(account, period, amount, ACCOUNT_GAIN);
+        return this;
+    }
+
     public ReturnsDsl verifyProfit(String account, String period, String amount) {
         verifyStat(account, period, amount, PROFIT);
         return this;
@@ -454,7 +461,7 @@ public class ReturnsDsl {
         verifyStatDelta(account, period, expectedAmount, PERIOD_DEPOSITS_PLUS_WITHDRAWALS);
     }
     public void verifyAccountGainDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, r -> null);
+        verifyStatDelta(account, period, expectedAmount, ACCOUNT_GAIN_PERIODIC);
     }
 
     public void verifyDepositsDelta(String account, String period, String expectedAmount) {
@@ -490,17 +497,8 @@ public class ReturnsDsl {
     }
 
     private void verifyStatDelta(String account, String period, String expectedAmount, String statId) {
-        var result = getAccountResults(account, period).get().stats().get(statId).value();
+        var result = getStat(account, period, statId).value();
         assertThat(result)
-                .usingComparator(BigDecimal::compareTo)
-                .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
-    }
-
-    @Deprecated //use verifyStatDelta instead
-    private void verifyStatDelta(String account, String period, String expectedAmount, Function<StatsV2, Optional<BigDecimal>> statExtractor) {
-        var result = getAccountResults(account, period).get();
-        var actual = statExtractor.apply(result).get();
-        assertThat(actual)
                 .usingComparator(BigDecimal::compareTo)
                 .isCloseTo(new BigDecimal(expectedAmount), Offset.offset(new BigDecimal(DEFAULT_OFFSET)));
     }
@@ -518,6 +516,18 @@ public class ReturnsDsl {
 
 
     private void verifyStat(String account, String period, String expectedAmount, String columnId) {
+        var result = getStat(account, period, columnId).value();
+
+        var expected = new BigDecimal(expectedAmount);
+        var slack = Offset.offset(new BigDecimal(DEFAULT_OFFSET));
+
+        assertThat(result)
+                .usingComparator(BigDecimal::compareTo)
+                .as("Stat `%s` for `%s` in period `%s`".formatted(columnId, account, period))
+                .isCloseTo(expected, slack);
+    }
+
+    private Result<BigDecimal, UserErrors> getStat(String account, String period, String columnId) {
         var accountResults = getAccountResults(account, period);
         if (accountResults.isEmpty()) {
             throw new RuntimeException("account `%s` has no stats for period `%s`. Only following accounts have stats in that period: %s"
@@ -529,16 +539,7 @@ public class ReturnsDsl {
         }
         var result1 = stats
                 .get(columnId);
-
-        var result = result1.value();
-
-        var expected = new BigDecimal(expectedAmount);
-        var slack = Offset.offset(new BigDecimal(DEFAULT_OFFSET));
-
-        assertThat(result)
-                .usingComparator(BigDecimal::compareTo)
-                .as("Stat `%s` for `%s` in period `%s`".formatted(columnId, account, period))
-                .isCloseTo(expected, slack);
+        return result1;
     }
 
     @Deprecated //use verifyColumnStat instead

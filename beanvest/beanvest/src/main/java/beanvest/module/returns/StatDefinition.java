@@ -23,6 +23,8 @@ public enum StatDefinition {
     REALIZED_GAIN_PERIOD("pRGain", "realized gain per period", PeriodRealizedGainCalculator.class, StatType.PERIODIC),
     UNREALIZED_GAIN("UGain", "unrealized gain", UnrealizedGainCalculator.class, StatType.CUMULATIVE),
     UNREALIZED_GAIN_PERIOD("pUGain", "unrealized gain per period", PeriodUnrealizedGainCalculator.class, StatType.PERIODIC),
+    ACCOUNT_GAIN("AGain", "unrealized gain + realized gain + interest + dividends - fees", AccountGainCalculator.class, StatType.CUMULATIVE),
+    ACCOUNT_GAIN_PERIOD("pAGain", "unrealized gain + realized gain + interest + dividends - fees per period", PeriodAccountGainCalculator.class, StatType.PERIODIC),
     DIVIDENDS("Div", "dividends cumulative", DividendCalculator.class, StatType.CUMULATIVE),
     DIVIDENDS_PERIOD("pDiv", "dividends per period", PeriodDividendCalculator.class, StatType.PERIODIC),
     PROFIT("Profit", "value - cost", ProfitCalculator.class, StatType.CUMULATIVE),

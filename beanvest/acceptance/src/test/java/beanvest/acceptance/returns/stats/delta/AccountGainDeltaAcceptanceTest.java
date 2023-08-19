@@ -4,7 +4,6 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class AccountGainDeltaAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -12,6 +11,8 @@ public class AccountGainDeltaAcceptanceTest {
     void accountGainDeltaAfterOpeningOfTheAccount() {
         dsl.setEnd("2021-03-01");
         dsl.setMonthly();
+        dsl.setDeltas();
+        dsl.setColumns("again");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -29,6 +30,8 @@ public class AccountGainDeltaAcceptanceTest {
     void accountGainIncludesValueGainInConsecutivePeriods() {
         dsl.setEnd("2021-03-01");
         dsl.setMonthly();
+        dsl.setColumns("again");
+        dsl.setDeltas();
 
         dsl.runCalculateReturns("""
                 account trading
@@ -48,6 +51,8 @@ public class AccountGainDeltaAcceptanceTest {
     void accountGainIncludesInterest() {
         dsl.setEnd("2021-03-01");
         dsl.setMonthly();
+        dsl.setColumns("again");
+        dsl.setDeltas();
 
         dsl.runCalculateReturns("""
                 account trading
@@ -66,8 +71,9 @@ public class AccountGainDeltaAcceptanceTest {
     @Test
     void accountGainIncludesFees() {
         dsl.setEnd("2021-03-01");
-        dsl.setDeltas();
         dsl.setMonthly();
+        dsl.setColumns("again");
+        dsl.setDeltas();
 
         dsl.runCalculateReturns("""
                 account trading
@@ -78,8 +84,8 @@ public class AccountGainDeltaAcceptanceTest {
                 """
         );
 
-        dsl.verifyProfit("trading", "21m01", "0");
-        dsl.verifyProfit("trading", "21m02", "-2");
+        dsl.verifyAccountGainDelta("trading", "21m01", "0");
+        dsl.verifyAccountGainDelta("trading", "21m02", "-2");
     }
 
     @Test
@@ -87,6 +93,7 @@ public class AccountGainDeltaAcceptanceTest {
         dsl.setEnd("2021-02-01");
         dsl.setDeltas();
         dsl.setMonthly();
+        dsl.setColumns("again");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -98,6 +105,6 @@ public class AccountGainDeltaAcceptanceTest {
                 """
         );
 
-        dsl.verifyProfit("trading", "21m01", "2");
+        dsl.verifyAccountGainDelta("trading", "21m01", "2");
     }
 }

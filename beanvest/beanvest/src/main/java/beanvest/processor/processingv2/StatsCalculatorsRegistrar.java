@@ -47,5 +47,13 @@ public class StatsCalculatorsRegistrar {
         registry.registerFactory(DepositsPlusWithdrawalsCalculator.class, reg -> new DepositsPlusWithdrawalsCalculator(reg.get(DepositsCalculator.class),
                 reg.get(WithdrawalCalculator.class)));
         registry.registerFactory(PeriodDepositsPlusWithdrawalsCalculator.class, reg -> new PeriodDepositsPlusWithdrawalsCalculator(reg.get(DepositsPlusWithdrawalsCalculator.class)));
+        registry.registerFactory(AccountGainCalculator.class, reg -> new AccountGainCalculator(
+                reg.get(UnrealizedGainCalculator.class),
+                reg.get(InterestCalculator.class),
+                reg.get(DividendCalculator.class),
+                reg.get(RealizedGainCalculator.class),
+                reg.get(PlatformFeeCalculator.class)
+        ));
+        registry.registerFactory(PeriodAccountGainCalculator.class, reg -> new PeriodAccountGainCalculator(reg.get(AccountGainCalculator.class)));
     }
 }

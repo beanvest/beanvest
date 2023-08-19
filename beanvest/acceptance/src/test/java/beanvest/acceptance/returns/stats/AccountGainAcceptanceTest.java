@@ -4,13 +4,13 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class AccountGainAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void returnsAreCalculatedForMultipleSecurities() {
         dsl.setEnd("2021-01-21");
+        dsl.setColumns("again");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -24,13 +24,13 @@ public class AccountGainAcceptanceTest {
                 """
         );
 
-        dsl.verifyProfit("trading", "TOTAL", "300");
+        dsl.verifyAccountGain("trading", "TOTAL", "300");
     }
-
 
     @Test
     void returnIsCalculatedUpToClosingDateOfTheAccount() {
         dsl.setEnd("2021-03-03");
+        dsl.setColumns("again");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -40,7 +40,7 @@ public class AccountGainAcceptanceTest {
                 2021-03-02 close
                 """);
 
-        dsl.verifyProfit("trading", "TOTAL", "100")
+        dsl.verifyAccountGain("trading", "TOTAL", "100")
                 .verifyClosingDate("trading", "2021-03-02");
     }
 
@@ -48,7 +48,7 @@ public class AccountGainAcceptanceTest {
     void shouldCalculateGainHoldings() {
         dsl.setEnd("2021-01-21");
         dsl.setReportHoldings();
-
+        dsl.setColumns("again");
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
@@ -60,6 +60,6 @@ public class AccountGainAcceptanceTest {
                 """
         );
 
-        dsl.verifyProfit("trading:VLS", "TOTAL", "15");
+        dsl.verifyAccountGain("trading:VLS", "TOTAL", "15");
     }
 }

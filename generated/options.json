@@ -41,6 +41,10 @@
       "fullName": "Unrealized gain"
     },
     {
+      "id": "again",
+      "fullName": "Account gain"
+    },
+    {
       "id": "xirr",
       "fullName": "Annualized return"
     },

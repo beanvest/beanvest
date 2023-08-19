@@ -19,6 +19,7 @@ public enum ColumnCliArg {
 
     rgain(REALIZED_GAIN, REALIZED_GAIN_PERIOD, "Realized gain"),
     ugain(UNREALIZED_GAIN, UNREALIZED_GAIN_PERIOD, "Unrealized gain"),
+    again(ACCOUNT_GAIN, ACCOUNT_GAIN_PERIOD, "Account gain"),
 
     xirr(XIRR, XIRR_PERIOD, "Annualized return"),
 
