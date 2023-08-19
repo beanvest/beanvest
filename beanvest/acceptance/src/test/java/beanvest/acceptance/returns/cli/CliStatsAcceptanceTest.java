@@ -66,7 +66,6 @@ public class CliStatsAcceptanceTest {
     }
 
     @Test
-    @Disabled("rework v2")
     void calculatesInterestYearlyDelta() {
         dsl.setEnd("2023-01-01");
         dsl.setDeltas();
@@ -86,9 +85,9 @@ public class CliStatsAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""         
-                        ╷ 2022    ╷ 2021    ╷
-                Account │ pProfit │ pProfit │
-                trading │       9 │       7 │""");
+                        ╷ 2022   ╷ 2021   ╷
+                Account │ pAGain │ pAGain │
+                trading │      9 │      7 │""");
     }
 }
 
