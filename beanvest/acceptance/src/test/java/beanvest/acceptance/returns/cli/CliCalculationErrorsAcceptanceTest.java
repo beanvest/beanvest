@@ -103,7 +103,6 @@ public class CliCalculationErrorsAcceptanceTest {
     }
 
     @Test
-    @Disabled("needs to be reimplemented")
     void calculatesCashStatsJustFineWithoutPricesNeededForValueStats() {
         dsl.setEnd("2021-03-15");
         dsl.setColumns("deps");
@@ -117,7 +116,7 @@ public class CliCalculationErrorsAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""
-                account  deps
+                Account  Deps
                 trading  1,000""");
         dsl.verifyNoWarningsShown();
     }
