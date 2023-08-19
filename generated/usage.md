@@ -2,19 +2,19 @@
 
 - Print various stats for all accounts and groups on each level of the accounts for whole period
   ```bash
-  beanvest returns sample --end=2023-07-01 --columns=Deps,Wths,Div,Intr,Fees,Val,Cost,Profit
+  beanvest returns sample --end=2023-07-01 --columns=Deps,Wths,Div,Intr,Fees,Value,Cost,Profit,rgain,ugain
   ```
   ```
-  Account              Deps    Wths   Div    Intr   Fees   Value   Cost     Profit
-  .*                   25,420   -140      0    352      0  26,970  -25,287   1,682
-  saving:.*             6,420   -140      0    352      0   6,632   -6,287     344
-  saving:regularSaver   3,000      0      0    162      0   3,162   -3,000     162
-  saving:savings        3,420   -140      0    190      0   3,470   -3,287     183
-  trading              19,000      0      0      0      0  20,338  -19,000   1,338
+  Account              Deps    Wths   Div    Intr   Fees   Value   Cost     Profit  RGain  UGain
+  .*                   25,420   -140      0    352      0  26,970  -25,287   1,682      0  1,338
+  saving:.*             6,420   -140      0    352      0   6,632   -6,287     344      0      0
+  saving:regularSaver   3,000      0      0    162      0   3,162   -3,000     162      0      0
+  saving:savings        3,420   -140      0    190      0   3,470   -3,287     183      0      0
+  trading              19,000      0      0      0      0  20,338  -19,000   1,338      0  1,338
   ```
 - Print cash stats on holdings, accounts and groups
   ```bash
-  beanvest returns sample --end=2023-07-01 --columns=Deps,Wths,Val,Cost,Profit --report-holdings
+  beanvest returns sample --end=2023-07-01 --columns=Deps,Wths,Value,Cost,Profit --report-holdings
   ```
   ```
   Account                  Deps    Wths   Value   Cost     Profit

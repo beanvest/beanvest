@@ -1,41 +1,11 @@
 package beanvest.processor.processingv2;
 
 import beanvest.processor.pricebook.LatestPricesBook;
-import beanvest.processor.processingv2.processor.AccountOpenDatesCollector;
-import beanvest.processor.processingv2.processor.CashCalculator;
-import beanvest.processor.processingv2.processor.CashflowCollector;
-import beanvest.processor.processingv2.processor.CostMovedAtSaleCalculator;
-import beanvest.processor.processingv2.processor.HoldingsCostCalculator;
-import beanvest.processor.processingv2.processor.NetCostCalculator;
-import beanvest.processor.processingv2.processor.DepositsCalculator;
-import beanvest.processor.processingv2.processor.DividendCalculator;
-import beanvest.processor.processingv2.processor.EarnedCalculator;
-import beanvest.processor.processingv2.processor.FeesCalculator;
-import beanvest.processor.processingv2.processor.HoldingsCollector;
-import beanvest.processor.processingv2.processor.InterestCalculator;
-import beanvest.processor.processingv2.processor.ProfitCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodCashCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodCashflowCollector;
-import beanvest.processor.processingv2.processor.periodic.PeriodDepositCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodDividendCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodFeeCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodInterestCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodRealizedGainCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodUnrealizedGainCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodValueCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodWithdrawalCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodXirrCalculator;
-import beanvest.processor.processingv2.processor.PlatformFeeCalculator;
-import beanvest.processor.processingv2.processor.RealizedGainCalculator;
-import beanvest.processor.processingv2.processor.SpentCalculator;
-import beanvest.processor.processingv2.processor.TransactionFeeCalculator;
-import beanvest.processor.processingv2.processor.UnrealizedGainCalculator;
-import beanvest.processor.processingv2.processor.HoldingsValueCalculator;
-import beanvest.processor.processingv2.processor.WithdrawalCalculator;
-import beanvest.processor.processingv2.processor.XirrCalculator;
+import beanvest.processor.processingv2.processor.*;
+import beanvest.processor.processingv2.processor.periodic.*;
 
 public class StatsCalculatorsRegistrar {
-    public static ServiceRegistry registerDefaultCalculatorsFactories(ServiceRegistry registry) {
+    public static void registerDefaultCalculatorsFactories(ServiceRegistry registry) {
         registry.registerFactory(AccountOpenDatesCollector.class, reg -> new AccountOpenDatesCollector());
         registry.registerFactory(PlatformFeeCalculator.class, reg -> new PlatformFeeCalculator());
         registry.registerFactory(TransactionFeeCalculator.class, reg -> new TransactionFeeCalculator());
@@ -74,7 +44,8 @@ public class StatsCalculatorsRegistrar {
         registry.registerFactory(NetCostCalculator.class, reg -> new NetCostCalculator(reg.get(HoldingsCostCalculator.class)));
         registry.registerFactory(ProfitCalculator.class, reg -> new ProfitCalculator(reg.get(NetCostCalculator.class),
                 reg.get(ValueCalculator.class)));
-
-        return registry;
+        registry.registerFactory(DepositsPlusWithdrawalsCalculator.class, reg -> new DepositsPlusWithdrawalsCalculator(reg.get(DepositsCalculator.class),
+                reg.get(WithdrawalCalculator.class)));
+        registry.registerFactory(PeriodDepositsPlusWithdrawalsCalculator.class, reg -> new PeriodDepositsPlusWithdrawalsCalculator(reg.get(DepositsPlusWithdrawalsCalculator.class)));
     }
 }

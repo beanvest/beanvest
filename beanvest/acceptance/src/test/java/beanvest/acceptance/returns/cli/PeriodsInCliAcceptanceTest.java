@@ -156,7 +156,7 @@ public class PeriodsInCliAcceptanceTest {
     void printsTableJustFineIfThereIsNoDataAvailableForSomeOfThePeriods() {
         dsl.setEnd("2021-01-01");
         dsl.setYearly();
-        dsl.setColumns("val");
+        dsl.setColumns("value");
         dsl.setGroupingDisabled();
 
         dsl.runCalculateReturns("""

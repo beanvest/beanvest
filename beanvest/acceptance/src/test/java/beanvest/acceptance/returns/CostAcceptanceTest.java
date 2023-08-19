@@ -168,4 +168,21 @@ public class CostAcceptanceTest {
         dsl.verifyCost("leveraged:isa", "TOTAL", "-100");
         dsl.verifyCost("leveraged:loan", "TOTAL", "100");
     }
+
+    @Test
+    void costOfCashWhenGoingBelowZero() {
+        dsl.setColumns("cost,value");
+        dsl.setGroupingEnabled();
+
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-01 deposit 5
+                2021-01-02 fee 10
+                """);
+
+        dsl.verifyCost("trading", "TOTAL", "-5");
+        dsl.verifyValue("trading", "TOTAL", "-5");
+    }
 }

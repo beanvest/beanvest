@@ -41,6 +41,41 @@ public class DepositsAndWithdrawalsAcceptanceTest {
     }
 
     @Test
+    void calculatesDepositsAndWithdrawals() {
+        dsl.setColumns("DW");
+        dsl.setReportHoldings();
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-02 deposit 100
+                2022-06-05 withdraw 20
+                """);
+
+        dsl.verifyDepositsPlusWithdrawals("trading", "TOTAL", "80");
+        dsl.verifyDepositsPlusWithdrawals("trading:GBP", "TOTAL", "80");
+    }
+
+    @Test
+    void calculatesDepositsAndWithdrawalsPeriodically() {
+        dsl.setColumns("DW");
+        dsl.setDeltas();
+        dsl.setYearly();
+        dsl.setReportHoldings();
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-02 deposit 100
+                2022-06-05 deposit 10
+                2022-06-05 withdraw 20
+                """);
+
+        dsl.verifyDepositsPlusWithdrawalsDelta("trading", "2021", "100");
+        dsl.verifyDepositsPlusWithdrawalsDelta("trading:GBP", "2022", "-10");
+    }
+
+    @Test
     void holdingsHaveNoDepositsOrWithdrawals() {
         dsl.setColumns("Wths,Deps");
         dsl.runCalculateReturns("""

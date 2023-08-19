@@ -12,11 +12,11 @@ public class GenerateSampleJournalMain {
     public static void main(String[] args) {
         var outputDirPath = Path.of(System.getProperty("sample.dir"));
         if (!Files.exists(outputDirPath)) {
-            throw new IllegalArgumentException("Path does not exist: " + args[0]);
+            throw new IllegalArgumentException("Path does not exist: " + outputDirPath);
         }
 
         if (!Files.isDirectory(outputDirPath)) {
-            throw new IllegalArgumentException("Path is not a directory: " + args[0]);
+            throw new IllegalArgumentException("Path is not a directory: " + outputDirPath);
         }
 
         var journalGenerator = new JournalSamplesGenerator();

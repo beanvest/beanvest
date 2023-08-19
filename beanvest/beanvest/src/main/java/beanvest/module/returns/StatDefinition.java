@@ -1,27 +1,8 @@
 package beanvest.module.returns;
 
 import beanvest.processor.processingv2.ValueCalculator;
-import beanvest.processor.processingv2.processor.NetCostCalculator;
-import beanvest.processor.processingv2.processor.ProfitCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodUnrealizedGainCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodValueCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodXirrCalculator;
-import beanvest.processor.processingv2.processor.UnrealizedGainCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodInterestCalculator;
-import beanvest.processor.processingv2.processor.CashCalculator;
-import beanvest.processor.processingv2.processor.DepositsCalculator;
-import beanvest.processor.processingv2.processor.DividendCalculator;
-import beanvest.processor.processingv2.processor.FeesCalculator;
-import beanvest.processor.processingv2.processor.InterestCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodCashCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodDepositCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodFeeCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodRealizedGainCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodWithdrawalCalculator;
-import beanvest.processor.processingv2.processor.periodic.PeriodDividendCalculator;
-import beanvest.processor.processingv2.processor.RealizedGainCalculator;
-import beanvest.processor.processingv2.processor.WithdrawalCalculator;
-import beanvest.processor.processingv2.processor.XirrCalculator;
+import beanvest.processor.processingv2.processor.*;
+import beanvest.processor.processingv2.processor.periodic.*;
 
 public enum StatDefinition {
     OPENED("Opened", "opening date", null, StatType.ACCOUNT),
@@ -30,6 +11,8 @@ public enum StatDefinition {
     DEPOSITS_PERIOD("pDeps", "deposits per period", PeriodDepositCalculator.class, StatType.PERIODIC),
     WITHDRAWALS("Wths", "withdrawals", WithdrawalCalculator.class, StatType.CUMULATIVE),
     WITHDRAWALS_PERIOD("pWths", "withdrawals per period", PeriodWithdrawalCalculator.class, StatType.PERIODIC),
+    DEPOSITS_AND_WITHDRAWALS("DW", "deposits plus withdrawals", DepositsPlusWithdrawalsCalculator.class, StatType.CUMULATIVE),
+    DEPOSITS_AND_WITHDRAWALS_PERIOD("pDW", "deposits plus withdrawals", PeriodDepositsPlusWithdrawalsCalculator.class, StatType.CUMULATIVE),
     INTEREST("Intr", "interest", InterestCalculator.class, StatType.CUMULATIVE),
     INTEREST_PERIOD("pIntr", "interest per period", PeriodInterestCalculator.class, StatType.PERIODIC),
     FEES("Fees", "platform and transaction fees", FeesCalculator.class, StatType.CUMULATIVE),

@@ -49,7 +49,7 @@ public class DividendsAcceptanceTest {
 
     @Test
     void dividendsAddValue() {
-        dsl.setColumns("Val");
+        dsl.setColumns("value");
         dsl.setReportHoldings();
         dsl.setEnd("2023-01-01");
         dsl.runCalculateReturns("""

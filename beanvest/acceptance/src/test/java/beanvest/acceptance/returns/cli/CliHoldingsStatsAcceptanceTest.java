@@ -3,6 +3,7 @@ package beanvest.acceptance.returns.cli;
 import beanvest.acceptance.returns.ReturnsDsl;
 import beanvest.lib.testing.WorkInProgress;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class CliHoldingsStatsAcceptanceTest {
@@ -17,7 +18,7 @@ public class CliHoldingsStatsAcceptanceTest {
     void shouldCalculateUnrealizedGainForEachHolding() {
         dsl.setEnd("2022-01-01");
         dsl.setGroupingDisabled();
-        dsl.setColumns("deps,wths,intr,fees,xirr,rgain,ugain,div,profit,cost,val");
+        dsl.setColumns("deps,wths,intr,fees,xirr,rgain,ugain,div,profit,cost,value");
         dsl.setReportHoldings();
 
         dsl.runCalculateReturns("""
@@ -39,6 +40,21 @@ public class CliHoldingsStatsAcceptanceTest {
                 fidelityIsa          90     -1      7     -5   24.4      3     10      1      22    -89    111
                 fidelityIsa:APPL      0      0      0     -4  114.3      3     10      1      10    -20     30
                 fidelityIsa:GBP      90     -1      7     -1      …      0      0      0      12    -69     81""");
+    }
+
+    @Test
+    @Disabled
+    void testbug() {
+        dsl.setGroupingDisabled();
+        dsl.setColumns("rgain,fees");
+        dsl.setReportHoldings();
+
+        dsl.runCalculateReturns("""
+         
+                """);
+
+        dsl.verifyOutput("""
+                """);
     }
 }
 

@@ -17,7 +17,9 @@
     "Fees",
     "Value",
     "Cost",
-    "Profit"
+    "Profit",
+    "RGain",
+    "UGain"
   ],
   "accountDtos": [
     {
@@ -39,11 +41,17 @@
             "Deps": {
               "value": 25420
             },
+            "RGain": {
+              "value": 0
+            },
             "Value": {
               "value": 26969.8144
             },
             "Profit": {
               "value": 1682.448274194766605135598989433775723097753600
+            },
+            "UGain": {
+              "value": 1338.1344
             },
             "Fees": {
               "value": 0
@@ -77,11 +85,17 @@
             "Deps": {
               "value": 6420
             },
+            "RGain": {
+              "value": 0
+            },
             "Value": {
               "value": 6631.68
             },
             "Profit": {
               "value": 344.313874194766605135598989433775723097753600
+            },
+            "UGain": {
+              "value": 0
             },
             "Fees": {
               "value": 0
@@ -115,11 +129,17 @@
             "Deps": {
               "value": 3000
             },
+            "RGain": {
+              "value": 0
+            },
             "Value": {
               "value": 3161.68
             },
             "Profit": {
               "value": 161.68
+            },
+            "UGain": {
+              "value": 0
             },
             "Fees": {
               "value": 0
@@ -153,11 +173,17 @@
             "Deps": {
               "value": 3420
             },
+            "RGain": {
+              "value": 0
+            },
             "Value": {
               "value": 3470
             },
             "Profit": {
               "value": 182.633874194766605135598989433775723097753600
+            },
+            "UGain": {
+              "value": 0
             },
             "Fees": {
               "value": 0
@@ -191,10 +217,16 @@
             "Deps": {
               "value": 19000
             },
+            "RGain": {
+              "value": 0
+            },
             "Value": {
               "value": 20338.1344
             },
             "Profit": {
+              "value": 1338.1344
+            },
+            "UGain": {
               "value": 1338.1344
             },
             "Fees": {

@@ -58,6 +58,8 @@ public class ReturnsDsl {
     public static final String PERIOD_UNREALIZED_GAINS = "pUGain";
     public static final String NET_COST = "Cost";
     public static final String PROFIT = "Profit";
+    public static final String DEPOSITS_PLUS_WITHDRAWALS = "DW";
+    public static final String PERIOD_DEPOSITS_PLUS_WITHDRAWALS = "pDW";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -336,6 +338,10 @@ public class ReturnsDsl {
         verifyStat(account, period, amount, NET_COST);
     }
 
+    public void verifyDepositsPlusWithdrawals(String account, String period, String amount) {
+        verifyStat(account, period, amount, DEPOSITS_PLUS_WITHDRAWALS);
+    }
+
     public void verifyXirrCumulative(String account, String period, String amount) {
         verifyValueStat(account, period, amount, r -> {
             var result = r.stats().get(CUMULATIVE_XIRR);
@@ -444,7 +450,9 @@ public class ReturnsDsl {
         verifyStatDelta(account, period, expected, PERIOD_CASH);
     }
 
-
+    public void verifyDepositsPlusWithdrawalsDelta(String account, String period, String expectedAmount) {
+        verifyStatDelta(account, period, expectedAmount, PERIOD_DEPOSITS_PLUS_WITHDRAWALS);
+    }
     public void verifyAccountGainDelta(String account, String period, String expectedAmount) {
         verifyStatDelta(account, period, expectedAmount, r -> null);
     }

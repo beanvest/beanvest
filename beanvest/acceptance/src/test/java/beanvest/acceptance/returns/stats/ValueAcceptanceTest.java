@@ -9,7 +9,7 @@ public class ValueAcceptanceTest {
     @Test
     void calculatesAccountValue() {
         dsl.setEnd("2023-01-01");
-        dsl.setColumns("val");
+        dsl.setColumns("value");
         dsl.setYearly();
         dsl.runCalculateReturns("""
                 account trading
@@ -28,7 +28,7 @@ public class ValueAcceptanceTest {
     @Test
     void calculatesCashValueFromDepositsAndWithdrawals() {
         dsl.setEnd("2023-01-01");
-        dsl.setColumns("val");
+        dsl.setColumns("value");
         dsl.setYearly();
         dsl.setReportHoldings();
         dsl.runCalculateReturns("""
@@ -46,7 +46,7 @@ public class ValueAcceptanceTest {
     @Test
     void calculatesCashValueFromBuysAndSells() {
         dsl.setEnd("2023-01-01");
-        dsl.setColumns("val");
+        dsl.setColumns("value");
         dsl.setYearly();
         dsl.setReportHoldings();
         dsl.runCalculateReturns("""
@@ -65,7 +65,7 @@ public class ValueAcceptanceTest {
     @Test
     void calculatesCashValueFromBuysAndSellsWithFeesAndRealizedGains() {
         dsl.setEnd("2023-01-01");
-        dsl.setColumns("val");
+        dsl.setColumns("value");
         dsl.setYearly();
         dsl.setReportHoldings();
         dsl.runCalculateReturns("""
@@ -84,7 +84,7 @@ public class ValueAcceptanceTest {
     @Test
     void calculatesCashValueFromInterest() {
         dsl.setEnd("2023-01-01");
-        dsl.setColumns("val");
+        dsl.setColumns("value");
         dsl.setYearly();
         dsl.setReportHoldings();
         dsl.runCalculateReturns("""
@@ -102,7 +102,7 @@ public class ValueAcceptanceTest {
     @Test
     void calculatesHoldingValue() {
         dsl.setReportHoldings();
-        dsl.setColumns("val");
+        dsl.setColumns("value");
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
         dsl.setGroupingDisabled();
@@ -123,7 +123,7 @@ public class ValueAcceptanceTest {
     @Test
     void calculatesHoldingValueOfMultipleAccounts() {
         dsl.setReportHoldings();
-        dsl.setColumns("val");
+        dsl.setColumns("value");
         dsl.setEnd("2022-01-01");
         dsl.setYearly();
         dsl.runCalculateReturns("""
@@ -149,7 +149,7 @@ public class ValueAcceptanceTest {
 
     @Test
     void cashWhenSellingIsAfterFee() {
-        dsl.setColumns("val");
+        dsl.setColumns("value");
         dsl.setReportHoldings();
 
         dsl.runCalculateReturns("""

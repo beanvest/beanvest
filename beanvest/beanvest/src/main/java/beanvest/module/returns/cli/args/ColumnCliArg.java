@@ -10,6 +10,7 @@ public enum ColumnCliArg {
 
     deps(DEPOSITS, DEPOSITS_PERIOD, "Deposits"),
     wths(WITHDRAWALS, WITHDRAWALS_PERIOD, "Withdrawals"),
+    dw(DEPOSITS_AND_WITHDRAWALS, DEPOSITS_AND_WITHDRAWALS_PERIOD, "Withdrawals"),
 
     intr(INTEREST, INTEREST_PERIOD, "Interest"),
     fees(FEES, FEES_PERIOD, "Fees"),
@@ -21,7 +22,7 @@ public enum ColumnCliArg {
 
     xirr(XIRR, XIRR_PERIOD, "Annualized return"),
 
-    val(VALUE, VALUE_PERIOD, "Value"),
+    value(VALUE, VALUE_PERIOD, "Value"),
     cost(NET_COST, NET_COST, "Cost"),
     profit(PROFIT, PROFIT_PERIOD, "Profit");
 

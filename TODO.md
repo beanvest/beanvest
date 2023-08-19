@@ -9,4 +9,4 @@
 - **BeancountUI**: journal UI through export to beancount format and display with fava
 
 ## Bugs
-- Cash going below 0 throws `Should not cross zero when updating holding without affecting the cost.`
+- Cost calculation for credit account vs regular account that went below zero might be weird

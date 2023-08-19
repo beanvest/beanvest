@@ -17,6 +17,10 @@
       "fullName": "Withdrawals"
     },
     {
+      "id": "dw",
+      "fullName": "Withdrawals"
+    },
+    {
       "id": "intr",
       "fullName": "Interest"
     },
@@ -41,7 +45,7 @@
       "fullName": "Annualized return"
     },
     {
-      "id": "val",
+      "id": "value",
       "fullName": "Value"
     },
     {

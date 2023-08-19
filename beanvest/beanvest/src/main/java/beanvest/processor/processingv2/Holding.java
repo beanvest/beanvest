@@ -117,9 +117,6 @@ public final class Holding {
     }
 
     public void updateWhileKeepingTheCost(BigDecimal d) {
-        if (willCrossZero(d)) {
-            throw new UnsupportedOperationException("Should not cross zero when updating holding without affecting the cost.");
-        }
         amount = amount.add(d);
         updateAvgCost();
     }

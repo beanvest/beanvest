@@ -21,7 +21,7 @@ public class CliAcceptanceTest {
 
     @Test
     void calculatesStatsOnWholeJournalByDefault() {
-        dsl.setColumns("val");
+        dsl.setColumns("value");
         dsl.setGroupingDisabled();
 
         dsl.runCalculateReturns(
@@ -58,7 +58,7 @@ public class CliAcceptanceTest {
     void statsAreCalculatedForAllAccounts() {
         dsl.setEnd("2023-01-01");
         dsl.setGroupingDisabled();
-        dsl.setColumns("Val");
+        dsl.setColumns("value");
 
         dsl.runCalculateReturns("""
                 account isa
