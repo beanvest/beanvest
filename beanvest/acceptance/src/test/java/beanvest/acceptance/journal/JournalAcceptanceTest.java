@@ -159,7 +159,7 @@ public class JournalAcceptanceTest {
                           stats: dep: 30, wth: 0, int: 0, fee: 0, div: 0, rga: 0.00, csh: 30
                           holdings: 0.00 GBP []
                                                
-                        2022-02-04 balance 40
+                        2022-02-04 balance 40 GBP
                           stats: dep: 30, wth: 0, int: 0, fee: 0, div: 0, rga: 0.00, csh: 30
                           holdings: 0.00 GBP []
                                                     
@@ -167,7 +167,7 @@ public class JournalAcceptanceTest {
                 result.stdOut());
         assertThat(result.stdErr()).matches("""
                 (|.*)====> Ooops! Validation error:
-                Cash balance does not match. Expected: 40. Actual: 30
+                Balance does not match. Expected: 40 GBP. Actual: 30 GBP
                   @ /tmp/.*:6 2022-02-04 balance 40
                 """);
     }

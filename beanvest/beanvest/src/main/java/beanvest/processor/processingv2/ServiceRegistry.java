@@ -49,7 +49,7 @@ public class ServiceRegistry {
             getOrCreateByClassName(service.getName());
         }
     }
-    public List<Validator> instantiateValidator(Collection<Class<? extends Validator>> validators) {
+    public List<Validator> instantiateValidators(Collection<Class<? extends Validator>> validators) {
         var validatorList = new ArrayList<Validator>();
         for (var v : validators) {
             validatorList.add(getOrCreateByClassName(v.getName()));

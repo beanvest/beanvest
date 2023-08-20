@@ -4,6 +4,7 @@ import beanvest.processor.processingv2.validator.ValidatorError;
 import beanvest.journal.entry.Balance;
 import beanvest.journal.entry.Entry;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,19 +28,21 @@ public class BalanceValidator implements JournalValidator {
         return balanceEntries.stream()
                 .map(balance -> {
                     var account = accounts.get(balance.account());
-                    var heldAmount = balance.symbol()
-                            .map(symbol -> account.getHoldings().get(symbol).units())
-                            .orElse(account.getCash());
+                    var symbol = balance.symbol();
+                    BigDecimal heldAmount;
+                    if (symbol.equals("GBP")) {
+                        heldAmount = account.getCash();
+                    } else {
+                        heldAmount = account.getHoldings().get(symbol).units();
+                    }
 
                     if (heldAmount.compareTo(balance.units()) != 0) {
-                        var symbolString = balance.symbol().map(s -> " " + s).orElse("");
                         return new ValidatorError(
-                                String.format("%s does not match. Expected: %s%s. Actual: %s%s",
-                                        balance.symbol().map(c -> "Holding balance").orElse("Cash balance"),
+                                String.format("Balance does not match. Expected: %s %s. Actual: %s %s",
                                         balance.units().toPlainString(),
-                                        symbolString,
+                                        balance.symbol(),
                                         heldAmount,
-                                        symbolString
+                                        balance.symbol()
                                 ),
                                 balance.originalLine().toString());
                     } else {

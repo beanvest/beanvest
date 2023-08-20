@@ -4,7 +4,7 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import beanvest.lib.testing.DocumentsCurrentBehaviour;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-@Disabled("rework v2")
+
 public class BalanceAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -34,7 +34,7 @@ public class BalanceAcceptanceTest {
         dsl.verifyNonZeroExitCode();
         dsl.verifyReturnedAnError("""
                 ====> Ooops! Validation error:
-                Cash balance does not match. Expected: 2. Actual: 1
+                Balance does not match. Expected: 2 GBP. Actual: 1 GBP
                   @ /tmp/*.tmp:5 2021-01-01 balance 2 GBP
                 """);
     }
@@ -53,7 +53,7 @@ public class BalanceAcceptanceTest {
         dsl.verifyNonZeroExitCode();
         dsl.verifyReturnedAnError("""
                 ====> Ooops! Validation error:
-                Holding balance does not match. Expected: 1.1 X. Actual: 1 X
+                Balance does not match. Expected: 1.1 X. Actual: 1 X
                   @ /tmp/*.tmp:5 2021-01-01 balance 1.1 X
                 """);
     }
@@ -78,7 +78,6 @@ public class BalanceAcceptanceTest {
     }
 
     @Test
-    @DocumentsCurrentBehaviour(description = "consider doing the check at the end of the day")
     void orderOfBalanceInstructionWithinTheDayIsImportant() {
         dsl.setAllowNonZeroExitCodes();
 
@@ -92,7 +91,7 @@ public class BalanceAcceptanceTest {
                 """);
         dsl.verifyReturnedAnError("""
                 ====> Ooops! Validation error:
-                Cash balance does not match. Expected: 1. Actual: 0
+                Balance does not match. Expected: 1 GBP. Actual: 0 GBP
                   @ /tmp/*.tmp:4 2021-01-01 balance 1
                 """);
         dsl.verifyNonZeroExitCode();

@@ -8,6 +8,8 @@ import beanvest.processor.processingv2.processor.HoldingsCollector;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
 
 public class AccountCloseValidator implements Validator {
     private final HoldingsCollector holdingsCollector;
@@ -18,20 +20,22 @@ public class AccountCloseValidator implements Validator {
     }
 
     @Override
-    public void process(AccountOperation op) {
+    public void validate(AccountOperation op, Consumer<ValidatorError> errorConsumer) {
         if (op instanceof Close close) {
-            var holdings = holdingsCollector.getInstrumentHoldings(op.account2());
-            var cash = holdingsCollector.getCashHoldings(op.account2());
-            if (!holdings.isEmpty() || !cash.isEmpty()) {
-                errors.add(createValidationError(close, holdings, cash.get(0).amount()));
+            var holdings = holdingsCollector.getHoldingsAndCash(op.account2())
+                    .stream()
+                    .filter(h -> h.amount().compareTo(BigDecimal.ZERO) != 0)
+                    .toList();
+            if (!holdings.isEmpty()) {
+                errorConsumer.accept(createValidationError(close, holdings));
             }
         }
     }
 
-    private static ValidatorError createValidationError(Close close, List<Holding> holdings, BigDecimal cash) {
+    private static ValidatorError createValidationError(Close close, List<Holding> holdings) {
         return new ValidatorError(
-                "Account `%s` is not empty on %s and can't be closed. Inventory: %s and %s GBP cash."
-                        .formatted(close.account2().stringId(), close.date(), makeHoldingsPrintable(holdings), cash), close.originalLine().toString());
+                "Account `%s` is not empty on %s and can't be closed. Inventory: %s"
+                        .formatted(close.account2().stringId(), close.date(), makeHoldingsPrintable(holdings)), close.originalLine().toString());
     }
 
     private static List<String> makeHoldingsPrintable(List<Holding> holdings) {

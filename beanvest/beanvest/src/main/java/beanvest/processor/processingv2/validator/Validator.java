@@ -1,9 +1,13 @@
 package beanvest.processor.processingv2.validator;
 
-import beanvest.processor.processingv2.ProcessorV2;
+import beanvest.journal.entry.AccountOperation;
 
 import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
 
-public interface Validator extends ProcessorV2 {
+public interface Validator {
     List<ValidatorError> getErrors();
+
+    void validate(AccountOperation op, Consumer<ValidatorError> errorConsumer);
 }

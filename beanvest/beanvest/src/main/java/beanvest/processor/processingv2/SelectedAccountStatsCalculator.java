@@ -18,7 +18,6 @@ import beanvest.result.UserErrors;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class SelectedAccountStatsCalculator {
@@ -29,6 +28,7 @@ public class SelectedAccountStatsCalculator {
     private final LatestPricesBook priceBook;
     private final AccountsTracker accountsTracker;
     private final List<Validator> validators;
+    private final Set<ValidatorError> validatorErrors = new LinkedHashSet<>();
 
     public SelectedAccountStatsCalculator(ServiceRegistry serviceRegistry, LinkedHashMap<String, Class<?>> neededStats, AccountsTracker accountsTracker) {
         this.serviceRegistry = serviceRegistry;
@@ -39,7 +39,7 @@ public class SelectedAccountStatsCalculator {
         processors.add(accountsTracker);
 
         serviceRegistry.initialize(neededStats.values());
-        validators = serviceRegistry.instantiateValidator(List.of(BalanceValidator.class, AccountCloseValidator.class));
+        validators = serviceRegistry.instantiateValidators(List.of(BalanceValidator.class, AccountCloseValidator.class));
         accountOpenDatesCollector = serviceRegistry.get(AccountOpenDatesCollector.class);
         priceBook = serviceRegistry.get(LatestPricesBook.class);
     }
@@ -53,8 +53,12 @@ public class SelectedAccountStatsCalculator {
             for (ProcessorV2 processor : processors) {
                 processor.process(op);
             }
+            for (Validator validator : validators) {
+                validator.validate(op, validatorErrors::add);
+            }
         }
-        return validators.stream().flatMap(v -> v.getErrors().stream()).collect(Collectors.toSet());
+
+        return validatorErrors;
     }
 
     public Map<String, StatsV2> calculateStats(Period period, String targetCurrency) {

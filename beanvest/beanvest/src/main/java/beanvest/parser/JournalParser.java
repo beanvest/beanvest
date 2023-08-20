@@ -273,7 +273,7 @@ public class JournalParser {
         var matcher = PATTERN_BALANCE.matcher(remainder);
         if (matcher.matches()) {
             var symbolValue = matcher.group("symbol");
-            final Optional<String> symbol = symbolValue == null || symbolValue.isBlank() || symbolValue.equals(metadata.currency()) ? Optional.empty() : Optional.of(symbolValue);
+            final String symbol = symbolValue == null || symbolValue.isBlank() ? metadata.currency() : symbolValue;
             return List.of(new Balance(date, getAccount(), new BigDecimal(matcher.group("units")), symbol, Optional.empty(), line));
         }
         return new ArrayList<>();
