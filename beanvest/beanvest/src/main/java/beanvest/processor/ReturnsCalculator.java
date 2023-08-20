@@ -11,14 +11,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static beanvest.processor.processingv2.PeriodInclusion.EXCLUDE_UNFINISHED;
+import static beanvest.processor.processingv2.UnfinishedPeriodInclusion.EXCLUDE;
 
 public class ReturnsCalculator {
     private final JournalParser journalParser;
     private final JournalReportGenerator statsCalculator = new JournalReportGenerator();
 
-    public ReturnsCalculator(
-                                JournalParser journalParser) {
+    public ReturnsCalculator(JournalParser journalParser) {
         this.journalParser = journalParser;
     }
 
@@ -32,7 +31,7 @@ public class ReturnsCalculator {
 
         var statsToCalculate = convertToCalculatorMap(params.selectedColumns());
         return statsCalculator.calculateStats(
-                accountsTracker, journal, params.accountFilter(), periodSpec, EXCLUDE_UNFINISHED, statsToCalculate);
+                accountsTracker, journal, params.accountFilter(), periodSpec, EXCLUDE, statsToCalculate);
     }
 
     private static LinkedHashMap<String, Class<?>> convertToCalculatorMap(List<StatDefinition> selectedColumns) {

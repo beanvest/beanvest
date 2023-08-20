@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 import java.util.function.Consumer;
 
-import static beanvest.processor.processingv2.PeriodInclusion.INCLUDE_UNFINISHED;
+import static beanvest.processor.processingv2.UnfinishedPeriodInclusion.INCLUDE;
 import static beanvest.processor.time.PeriodInterval.NONE;
 
 public class EndOfPeriodTracker {
@@ -20,10 +20,10 @@ public class EndOfPeriodTracker {
     private Period currentPeriod;
 
 
-    public EndOfPeriodTracker(PeriodSpec periodSpec, PeriodInclusion periodInclusion, Consumer<Period> finishedPeriodConsumer) {
+    public EndOfPeriodTracker(PeriodSpec periodSpec, UnfinishedPeriodInclusion unfinishedPeriodInclusion, Consumer<Period> finishedPeriodConsumer) {
         this.periodSpec = periodSpec;
         this.finishedPeriodConsumer = finishedPeriodConsumer;
-        if (periodInclusion == INCLUDE_UNFINISHED) {
+        if (unfinishedPeriodInclusion == INCLUDE) {
             end = periodSpec.end();
         } else if (periodSpec.interval() == NONE) {
             end = periodSpec.start().equals(LocalDate.MIN) ? LocalDate.MIN : periodSpec.start().minusDays(1);

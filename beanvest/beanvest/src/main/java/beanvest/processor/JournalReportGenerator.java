@@ -23,24 +23,23 @@ public class JournalReportGenerator {
             Journal journal,
             String accountFilter,
             PeriodSpec periodSpec,
-            PeriodInclusion periodInclusion,
+            UnfinishedPeriodInclusion unfinishedPeriodInclusion,
             LinkedHashMap<String, Class<?>> statsToCalculate) {
 
         var journalProcessor2 = new StatsCollectingJournalProcessor(accountsResolver1, statsToCalculate);
-        var endOfPeriodTracker = new EndOfPeriodTracker(periodSpec, periodInclusion,
+        var endOfPeriodTracker = new EndOfPeriodTracker(periodSpec, unfinishedPeriodInclusion,
                 period -> finishPeriod(period, periodSpec.start(), journalProcessor2));
 
         var predicate = predicateFactory.buildPredicate(accountFilter, periodSpec.end());
 
-        for (Entry entry : journal.sortedEntries()) {
-            if (!predicate.test(entry)) {
-                continue;
-            }
-            endOfPeriodTracker.process(entry);
-            var validationErrors = journalProcessor2.process(entry);
+        for (var entry : journal.sortedEntries()) {
+            if (predicate.test(entry)) {
+                endOfPeriodTracker.process(entry);
+                var validationErrors = journalProcessor2.process(entry);
 
-            if (!validationErrors.isEmpty()) {
-                return Result.failure(new ArrayList<>(validationErrors));
+                if (!validationErrors.isEmpty()) {
+                    return Result.failure(new ArrayList<>(validationErrors));
+                }
             }
         }
         endOfPeriodTracker.finishPeriodsUpToEndDate();

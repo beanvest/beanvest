@@ -24,13 +24,15 @@ public class SelectedAccountStatsCalculator {
     private final CalculatorRegistry calculatorRegistry;
     private final Map<String, Class<?>> neededStats;
     private final Set<ProcessorV2> processors;
-    private final AccountOpenDatesCollector accountOpenDatesCollector;
     private final LatestPricesBook priceBook;
     private final AccountsTracker accountsTracker;
     private final List<Validator> validators;
     private final Set<ValidatorError> validatorErrors = new LinkedHashSet<>();
 
-    public SelectedAccountStatsCalculator(CalculatorRegistry calculatorRegistry, LinkedHashMap<String, Class<?>> neededStats, AccountsTracker accountsTracker) {
+    public SelectedAccountStatsCalculator(
+            CalculatorRegistry calculatorRegistry,
+            LinkedHashMap<String, Class<?>> neededStats,
+            AccountsTracker accountsTracker) {
         this.calculatorRegistry = calculatorRegistry;
         this.neededStats = neededStats;
         this.accountsTracker = accountsTracker;
@@ -40,7 +42,6 @@ public class SelectedAccountStatsCalculator {
 
         calculatorRegistry.initialize(neededStats.values());
         validators = calculatorRegistry.instantiateValidators(List.of(BalanceValidator.class, AccountCloseValidator.class));
-        accountOpenDatesCollector = calculatorRegistry.get(AccountOpenDatesCollector.class);
         priceBook = calculatorRegistry.get(LatestPricesBook.class);
     }
 
@@ -56,8 +57,10 @@ public class SelectedAccountStatsCalculator {
             for (Validator validator : validators) {
                 validator.validate(op, validatorErrors::add);
             }
-        }
 
+        } else {
+            throw new UnsupportedOperationException("whats that, then? " + entry.getClass());
+        }
         return validatorErrors;
     }
 
@@ -75,14 +78,5 @@ public class SelectedAccountStatsCalculator {
             result.put(account.stringId(), new StatsV2(stats));
         }
         return result;
-    }
-
-    public AccountMetadata getMetadata(Entity account) {
-        var firstActivity = accountOpenDatesCollector.getFirstActivity(account);
-        return new AccountMetadata(
-                firstActivity.orElseThrow(() -> new IllegalStateException(
-                        "Every account should have first activity at this point but `%s` have not. ".formatted(account))),
-                accountOpenDatesCollector.getClosingDate(account)
-        );
     }
 }

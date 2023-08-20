@@ -15,8 +15,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static beanvest.processor.processingv2.PeriodInclusion.EXCLUDE_UNFINISHED;
-import static beanvest.processor.processingv2.PeriodInclusion.INCLUDE_UNFINISHED;
+import static beanvest.processor.processingv2.UnfinishedPeriodInclusion.EXCLUDE;
+import static beanvest.processor.processingv2.UnfinishedPeriodInclusion.INCLUDE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EndOfPeriodTrackerTest {
@@ -25,7 +25,7 @@ class EndOfPeriodTrackerTest {
     void shouldReportUnfinishedPeriods() {
         var finishedPeriods = new ArrayList<Period>();
         var spec = getSpec();
-        var endOfPeriodTracker = new EndOfPeriodTracker(spec, INCLUDE_UNFINISHED, finishedPeriods::add);
+        var endOfPeriodTracker = new EndOfPeriodTracker(spec, INCLUDE, finishedPeriods::add);
         endOfPeriodTracker.process(createEntry("2022-01-01"));
         endOfPeriodTracker.finishPeriodsUpToEndDate();
 
@@ -36,7 +36,7 @@ class EndOfPeriodTrackerTest {
     void shouldExcludeUnfinishedPeriods() {
         var finishedPeriods = new ArrayList<Period>();
         var spec = getSpec();
-        var endOfPeriodTracker = new EndOfPeriodTracker(spec, EXCLUDE_UNFINISHED, finishedPeriods::add);
+        var endOfPeriodTracker = new EndOfPeriodTracker(spec, EXCLUDE, finishedPeriods::add);
         endOfPeriodTracker.process(createEntry("2022-01-01"));
         endOfPeriodTracker.finishPeriodsUpToEndDate();
 
