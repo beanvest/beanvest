@@ -3,7 +3,6 @@ package beanvest.acceptance.returns.instructions;
 import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-@Disabled("rework v2")
 public class PricesAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -12,6 +11,7 @@ public class PricesAcceptanceTest {
         dsl.setEnd("2021-03-09");
         dsl.setAllowNonZeroExitCodes();
         dsl.setCliOutput();
+        dsl.setColumns("value");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -29,6 +29,7 @@ public class PricesAcceptanceTest {
         dsl.setEnd("2021-03-09");
         dsl.setAllowNonZeroExitCodes();
         dsl.setCliOutput();
+        dsl.setColumns("value");
 
         dsl.runCalculateReturns("""
                 account trading
