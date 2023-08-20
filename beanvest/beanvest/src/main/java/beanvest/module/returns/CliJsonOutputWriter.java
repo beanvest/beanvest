@@ -3,7 +3,7 @@ package beanvest.module.returns;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
-import beanvest.processor.validation.ValidatorError;
+import beanvest.processor.processingv2.validator.ValidatorError;
 import com.google.gson.Gson;
 
 import java.io.PrintStream;
@@ -25,7 +25,7 @@ public class CliJsonOutputWriter implements CliOutputWriter {
 
     @Override
     public void outputResult(List<StatDefinition> selectedColumns, PortfolioStatsDto2 portfolioStats, CollectionMode collectionMode) {
-        errorMessagesExtractor.extractErrorsMessages(portfolioStats)
+        portfolioStats.userErrors()
                 .forEach(stdErr::println);
         stdOut.println(GSON.toJson(portfolioStats));
     }
@@ -33,7 +33,7 @@ public class CliJsonOutputWriter implements CliOutputWriter {
     @Override
     public void outputInputErrors(List<ValidatorError> errors) {
         if (errors.size() > 0) {
-            stdErr.println("====> Ooops! Validation " + (errors.size() > 1 ? "errors:" : "error:"));
+            stdErr.println("====> Ooops! Validation " + (errors.size() > 1 ? "userErrors:" : "error:"));
             errors.forEach(err -> stdErr.println(err.message()));
         }
     }

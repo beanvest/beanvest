@@ -4,7 +4,7 @@ package beanvest.module.journal;
 import beanvest.journal.CashStats;
 import beanvest.processor.deprecated.JournalEntryProcessor;
 import beanvest.parser.JournalParser;
-import beanvest.processor.validation.ValidatorError;
+import beanvest.processor.processingv2.validator.ValidatorError;
 import beanvest.result.Result;
 import beanvest.processor.deprecated.AccountState;
 import beanvest.journal.Holdings;

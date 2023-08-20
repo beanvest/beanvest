@@ -26,7 +26,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "TOTAL": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -140
@@ -55,7 +54,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "TOTAL": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -140
@@ -84,7 +82,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "TOTAL": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -113,7 +110,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "TOTAL": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -142,7 +138,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "TOTAL": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -140
@@ -171,7 +166,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "TOTAL": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -140
@@ -200,7 +194,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "TOTAL": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -229,7 +222,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "TOTAL": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -258,7 +250,6 @@
       "openingDate": "2022-01-03",
       "periodStats": {
         "TOTAL": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -282,5 +273,6 @@
         }
       }
     }
-  ]
+  ],
+  "userErrors": []
 }

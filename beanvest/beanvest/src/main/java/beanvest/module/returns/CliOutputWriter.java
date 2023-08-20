@@ -3,7 +3,7 @@ package beanvest.module.returns;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
-import beanvest.processor.validation.ValidatorError;
+import beanvest.processor.processingv2.validator.ValidatorError;
 
 import java.util.List;
 

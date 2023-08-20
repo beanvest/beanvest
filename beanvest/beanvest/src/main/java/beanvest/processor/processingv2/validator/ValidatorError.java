@@ -1,4 +1,4 @@
-package beanvest.processor.validation;
+package beanvest.processor.processingv2.validator;
 
 public record ValidatorError(String msg, String journalLine) {
     public String message()

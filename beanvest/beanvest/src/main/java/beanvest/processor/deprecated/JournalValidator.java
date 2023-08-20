@@ -1,7 +1,7 @@
 package beanvest.processor.deprecated;
 
 import beanvest.journal.entry.Entry;
-import beanvest.processor.validation.ValidatorError;
+import beanvest.processor.processingv2.validator.ValidatorError;
 
 import java.util.List;
 import java.util.Map;

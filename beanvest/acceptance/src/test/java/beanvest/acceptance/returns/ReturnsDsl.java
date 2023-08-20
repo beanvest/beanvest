@@ -219,13 +219,13 @@ public class ReturnsDsl {
     }
 
 
-    public void verifyResultErrorShown(String account, String period, String error) {
-        // TODO figure out general errors eg PRICE NEEDED?
-//        var accountReturns = getAccountPeriodReturns(account, period);
-//        assertThat(accountReturns)
-//                .as(account + "@" + period + " was expected to have no stats")
-//                .isEmpty();
-//        assertThat(accountReturns.getError().getIds()).contains(UserErrorId.valueOf(error));
+    public void verifyStatError(String account, String period, String column, String expectedError) {
+        var stat = getStat(account, period, column);
+        assertThat(stat.hasError())
+                .as(account + "@" + period + " was expected to have no stats")
+                .isTrue();
+        var statErrors = stat.getErrorAsList().stream().flatMap(e -> e.errors.stream()).map(e -> e.error.toString()).toList();
+        assertThat(statErrors).contains(expectedError);
     }
 
     public void verifyAccountOpeningDate(String account, String openingDate) {
@@ -367,7 +367,7 @@ public class ReturnsDsl {
     }
 
     public void verifyXirrNotPresent(String account, String period) {
-        var xirr = getAccountResults(account, period).get().stats().get("xirr");
+        var xirr = getStat(account, period, CUMULATIVE_XIRR);
         assertThat(xirr.hasResult())
                 .as(() -> "Expected no result but got one: " + xirr.value())
                 .isFalse();
@@ -564,8 +564,8 @@ public class ReturnsDsl {
     }
 
     public void verifyXirrError(String account, String period, String error) {
-        var result = getAccountPeriodReturns(account, period).get();
-        assertThat(result.stats().get("xirr").error().getEnums())
+        var result = getStat(account, period, CUMULATIVE_XIRR);
+        assertThat(result.error().getEnums())
                 .isEqualTo(List.of(ErrorEnum.valueOf(error)));
     }
 

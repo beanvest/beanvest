@@ -7,26 +7,28 @@ import beanvest.journal.entry.Price;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processingv2.dto.StatsV2;
 import beanvest.processor.processingv2.processor.AccountOpenDatesCollector;
+import beanvest.processor.processingv2.validator.AccountCloseValidator;
+import beanvest.processor.processingv2.validator.BalanceValidator;
+import beanvest.processor.processingv2.validator.Validator;
 import beanvest.processor.time.Period;
-import beanvest.processor.validation.ValidatorError;
+import beanvest.processor.processingv2.validator.ValidatorError;
 import beanvest.result.Result;
 import beanvest.result.UserErrors;
 
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class SelectedAccountStatsCalculator {
-
-    private final LinkedHashSet<ValidatorError> validationErrors = new LinkedHashSet<>();
-
     private final ServiceRegistry serviceRegistry;
     private final Map<String, Class<?>> neededStats;
     private final Set<ProcessorV2> processors;
     private final AccountOpenDatesCollector accountOpenDatesCollector;
     private final LatestPricesBook priceBook;
     private final AccountsTracker accountsTracker;
+    private final List<Validator> validators;
 
     public SelectedAccountStatsCalculator(ServiceRegistry serviceRegistry, LinkedHashMap<String, Class<?>> neededStats, AccountsTracker accountsTracker) {
         this.serviceRegistry = serviceRegistry;
@@ -36,22 +38,23 @@ public class SelectedAccountStatsCalculator {
         processors = this.serviceRegistry.getProcessors();
         processors.add(accountsTracker);
 
-        serviceRegistry.instantiateServices(neededStats.values());
+        serviceRegistry.initialize(neededStats.values());
+        validators = serviceRegistry.instantiateValidator(List.of(BalanceValidator.class, AccountCloseValidator.class));
         accountOpenDatesCollector = serviceRegistry.get(AccountOpenDatesCollector.class);
         priceBook = serviceRegistry.get(LatestPricesBook.class);
     }
 
-    public LinkedHashSet<ValidatorError> process(Entry entry) {
+    public Set<ValidatorError> process(Entry entry) {
         if (entry instanceof Price p) {
             priceBook.process(p);
+
         } else if (entry instanceof AccountOperation op) {
-            accountsTracker.process(op); //T
+            accountsTracker.process(op);
             for (ProcessorV2 processor : processors) {
                 processor.process(op);
             }
         }
-
-        return new LinkedHashSet<>();
+        return validators.stream().flatMap(v -> v.getErrors().stream()).collect(Collectors.toSet());
     }
 
     public Map<String, StatsV2> calculateStats(Period period, String targetCurrency) {
@@ -62,11 +65,10 @@ public class SelectedAccountStatsCalculator {
             for (var neededStat : neededStats.entrySet()) {
                 var id = neededStat.getKey();
                 var calculator = serviceRegistry.getCollector(neededStat.getValue());
-
                 var stat = calculator.calculate(new CalculationParams(account, period.startDate(), period.endDate(), targetCurrency));
                 stats.put(id, stat);
             }
-            result.put(account.stringId(), new StatsV2(List.of(), stats, getMetadata(account)));
+            result.put(account.stringId(), new StatsV2(stats, getMetadata(account)));
         }
         return result;
     }

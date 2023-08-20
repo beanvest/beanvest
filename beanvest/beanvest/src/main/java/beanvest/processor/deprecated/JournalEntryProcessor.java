@@ -1,6 +1,6 @@
 package beanvest.processor.deprecated;
 
-import beanvest.processor.validation.ValidatorError;
+import beanvest.processor.processingv2.validator.ValidatorError;
 import beanvest.result.Result;
 import beanvest.journal.CashFlowCollector;
 import beanvest.journal.Journal;

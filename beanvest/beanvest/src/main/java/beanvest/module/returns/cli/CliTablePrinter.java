@@ -9,8 +9,6 @@ import beanvest.module.returns.cli.columns.ReportColumnsDefinition;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
-import beanvest.result.Result;
-import beanvest.result.UserErrors;
 
 import java.io.IOException;
 import java.io.PrintStream;

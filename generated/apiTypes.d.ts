@@ -7,6 +7,7 @@ export class PortfolioStatsDto2 {
     periods: string[];
     stats: string[];
     accountDtos: AccountDto2[];
+    userErrors: string[];
 }
 
 export class OptionsDto {
@@ -27,7 +28,6 @@ export class ColumnDto {
 }
 
 export class StatsV2 {
-    errors: string[];
     stats: { [index: string]: Result<number, UserErrors> };
     metadata: AccountMetadata;
 }

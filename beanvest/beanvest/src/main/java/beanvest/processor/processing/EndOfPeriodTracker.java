@@ -1,7 +1,7 @@
 package beanvest.processor.processing;
 
-import beanvest.journal.entry.Price;
 import beanvest.journal.entry.Entry;
+import beanvest.journal.entry.Price;
 import beanvest.processor.processingv2.PeriodInclusion;
 import beanvest.processor.processingv2.PeriodSpec;
 import beanvest.processor.time.Period;

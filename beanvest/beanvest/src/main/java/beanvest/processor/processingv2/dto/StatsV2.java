@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.Map;
 
 public record StatsV2(
-        Collection<String> errors,
         Map<String, Result<BigDecimal, UserErrors>> stats,
         AccountMetadata metadata
 ) {

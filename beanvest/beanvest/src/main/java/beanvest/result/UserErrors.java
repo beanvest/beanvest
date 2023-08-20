@@ -59,7 +59,7 @@ public class UserErrors {
     @Override
     public String toString() {
         return "UserErrors{" +
-               "errors=" + errors +
+               "userErrors=" + errors +
                '}';
     }
 }

@@ -2,16 +2,11 @@ package beanvest.test.module.returns.cli;
 
 import beanvest.module.returns.cli.CliTablePrinter;
 import beanvest.processor.CollectionMode;
-import beanvest.processor.dto.AccountDto;
 import beanvest.processor.processingv2.AccountMetadata;
-import beanvest.processor.processingv2.PeriodSpec;
 import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import beanvest.processor.processingv2.dto.StatsV2;
-import beanvest.processor.time.Period;
-import beanvest.processor.time.PeriodInterval;
 import beanvest.result.Result;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -41,7 +36,7 @@ class CliPrinterTest {
                                 "2022", StatsV2Builder.builder()
                                         .setXirr("-0.021")
                                         .build())
-                )));
+                )), List.of());
 
         var selectedColumns = List.of("Opened,Xirr".split(","));
 
@@ -84,9 +79,7 @@ class CliPrinterTest {
             if (xirr != null) {
                 stringResultMap.put("Xirr", Result.success(new BigDecimal(xirr)));
             }
-            return new StatsV2(List.of(),
-                    stringResultMap,
-                    new AccountMetadata(LocalDate.parse("2019-01-01"), Optional.empty()));
+            return new StatsV2(stringResultMap, new AccountMetadata(LocalDate.parse("2019-01-01"), Optional.empty()));
         }
     }
 }

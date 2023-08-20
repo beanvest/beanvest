@@ -1,9 +1,8 @@
 package beanvest.processor.processingv2;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import beanvest.processor.processingv2.validator.Validator;
+
+import java.util.*;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -13,7 +12,7 @@ public class ServiceRegistry {
     private final Map<String, Object> instances = new HashMap<>();
     private final Set<ProcessorV2> processors = new HashSet<>();
 
-    public <T> void registerFactory(Class<T> builtClass, Function<ServiceRegistry, T> factory) {
+    public <T> void register(Class<T> builtClass, Function<ServiceRegistry, T> factory) {
         factories.put(builtClass.getName(), (Function<ServiceRegistry, Object>) factory);
     }
     public Calculator getCollector(Class<?> requestedClass) {
@@ -45,9 +44,16 @@ public class ServiceRegistry {
         return processors;
     }
 
-    public void instantiateServices(Collection<Class<?>> services) {
+    public void initialize(Collection<Class<?>> services) {
         for (Class<?> service : services) {
             getOrCreateByClassName(service.getName());
         }
+    }
+    public List<Validator> instantiateValidator(Collection<Class<? extends Validator>> validators) {
+        var validatorList = new ArrayList<Validator>();
+        for (var v : validators) {
+            validatorList.add(getOrCreateByClassName(v.getName()));
+        }
+        return validatorList;
     }
 }

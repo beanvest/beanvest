@@ -24,7 +24,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "22q4": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -80
@@ -38,7 +37,6 @@
           }
         },
         "22q3": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -60
@@ -52,7 +50,6 @@
           }
         },
         "23q2": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -120
@@ -66,7 +63,6 @@
           }
         },
         "22q2": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -40
@@ -80,7 +76,6 @@
           }
         },
         "23q1": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -100
@@ -94,7 +89,6 @@
           }
         },
         "22q1": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -20
@@ -114,7 +108,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "22q4": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -80
@@ -128,7 +121,6 @@
           }
         },
         "22q3": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -60
@@ -142,7 +134,6 @@
           }
         },
         "23q2": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -120
@@ -156,7 +147,6 @@
           }
         },
         "22q2": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -40
@@ -170,7 +160,6 @@
           }
         },
         "23q1": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -100
@@ -184,7 +173,6 @@
           }
         },
         "22q1": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -20
@@ -204,7 +192,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "22q4": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -218,7 +205,6 @@
           }
         },
         "22q3": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -232,7 +218,6 @@
           }
         },
         "23q2": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -246,7 +231,6 @@
           }
         },
         "22q2": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -260,7 +244,6 @@
           }
         },
         "23q1": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -274,7 +257,6 @@
           }
         },
         "22q1": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -294,7 +276,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "22q4": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -80
@@ -308,7 +289,6 @@
           }
         },
         "22q3": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -60
@@ -322,7 +302,6 @@
           }
         },
         "23q2": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -120
@@ -336,7 +315,6 @@
           }
         },
         "22q2": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -40
@@ -350,7 +328,6 @@
           }
         },
         "23q1": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -100
@@ -364,7 +341,6 @@
           }
         },
         "22q1": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": -20
@@ -384,7 +360,6 @@
       "openingDate": "2022-01-01",
       "periodStats": {
         "22q4": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -398,7 +373,6 @@
           }
         },
         "22q3": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -412,7 +386,6 @@
           }
         },
         "23q2": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -426,7 +399,6 @@
           }
         },
         "22q2": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -440,7 +412,6 @@
           }
         },
         "23q1": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -454,7 +425,6 @@
           }
         },
         "22q1": {
-          "errors": [],
           "stats": {
             "Wths": {
               "value": 0
@@ -469,5 +439,6 @@
         }
       }
     }
-  ]
+  ],
+  "userErrors": []
 }

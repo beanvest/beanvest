@@ -4,19 +4,17 @@ import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import beanvest.processor.processingv2.dto.StatsV2;
 import beanvest.processor.time.Period;
+import beanvest.result.UserErrors;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.*;
 
 public class AccountStatsGatherer2 { //TODO move to calculators
     Map<String, Map<String, StatsV2>> stats = new HashMap<>();
     List<Period> periods = new ArrayList<>();
     Set<String> processedPeriodTitles = new HashSet<>();
     Set<String> accounts = new HashSet<>();
+    LinkedHashSet<String> userErrors = new LinkedHashSet<>();
 
     public void collectPeriodStats(Period period, Map<String, StatsV2> accountStatsMap) {
         if (processedPeriodTitles.contains(period.title())) {
@@ -24,11 +22,19 @@ public class AccountStatsGatherer2 { //TODO move to calculators
         }
         periods.add(period);
         processedPeriodTitles.add(period.title());
-        accountStatsMap.forEach((account, stats) -> {
+        for (var entry : accountStatsMap.entrySet()) {
+            String account = entry.getKey();
+            StatsV2 value = entry.getValue();
             accounts.add(account);
+
             var accountStats = this.stats.computeIfAbsent(account, acc -> new HashMap<>());
-            accountStats.put(period.title(), stats);
-        });
+            for (var statResult : value.stats().values()) {
+                for (UserErrors err : statResult.getErrorAsList()) {
+                    userErrors.add(err.toString());
+                }
+            }
+            accountStats.put(period.title(), value);
+        }
     }
 
     private List<AccountDto2> getStats(Map<String, AccountMetadata> metadata) {
@@ -39,7 +45,9 @@ public class AccountStatsGatherer2 { //TODO move to calculators
 
             for (var period : periods) {
                 var isOpenYet = !accountMetadata.firstActivity().isAfter(period.endDate());
-                var isClosedAlready = accountMetadata.closingDate().map(date -> date.isBefore(period.startDate())).orElse(false);
+                var isClosedAlready = accountMetadata.closingDate()
+                        .map(date -> date.isBefore(period.startDate()))
+                        .orElse(false);
                 if (isOpenYet && !isClosedAlready) {
                     var stats = this.stats.get(account).get(period.title());
                     statsByPeriod.put(period.title(), stats);
@@ -64,6 +72,7 @@ public class AccountStatsGatherer2 { //TODO move to calculators
                 getAccountsSorted(),
                 getTimePointsSorted().stream().map(Period::title).toList(),
                 statsNames,
-                getStats(metadata));
+                getStats(metadata),
+                userErrors.stream().toList());
     }
 }
