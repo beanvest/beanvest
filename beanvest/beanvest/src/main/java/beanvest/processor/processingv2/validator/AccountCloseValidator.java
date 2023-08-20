@@ -1,5 +1,6 @@
 package beanvest.processor.processingv2.validator;
 
+import beanvest.journal.Value;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Close;
 import beanvest.processor.processingv2.Holding;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class AccountCloseValidator implements Validator {
     private final HoldingsCollector holdingsCollector;
@@ -34,12 +36,15 @@ public class AccountCloseValidator implements Validator {
 
     private static ValidatorError createValidationError(Close close, List<Holding> holdings) {
         return new ValidatorError(
-                "Account `%s` is not empty on %s and can't be closed. Inventory: %s"
+                "Account `%s` is not empty on %s and can't be closed. Holdings: %s."
                         .formatted(close.account2().stringId(), close.date(), makeHoldingsPrintable(holdings)), close.originalLine().toString());
     }
 
-    private static List<String> makeHoldingsPrintable(List<Holding> holdings) {
-        return holdings.stream().map(Holding::toString).toList();
+    private static String makeHoldingsPrintable(List<Holding> holdings) {
+        return holdings.stream()
+                .map(Holding::asValue)
+                .map(Value::toString)
+                .collect(Collectors.joining(", "));
     }
 
     @Override

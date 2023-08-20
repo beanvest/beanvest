@@ -5,7 +5,6 @@ import beanvest.lib.testing.DocumentsCurrentBehaviour;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class ClosingAccountsAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -22,7 +21,7 @@ public class ClosingAccountsAcceptanceTest {
 
         dsl.verifyReturnedAnError("""
                 ====> Ooops! Validation error:
-                Account `trading` is not empty on 2021-01-01 and can't be closed. Inventory: [] and 1 GBP cash.
+                Account `trading` is not empty on 2021-01-01 and can't be closed. Holdings: 1 GBP.
                   @ /tmp/*.tmp:5 2021-01-01 close
                 """);
         dsl.verifyDidNotPrintStackTrace();
@@ -41,7 +40,7 @@ public class ClosingAccountsAcceptanceTest {
 
         dsl.verifyReturnedAnError("""
                 ====> Ooops! Validation error:
-                Account `trading` is not empty on 2021-01-01 and can't be closed. Inventory: [1 VSTX] and 0 GBP cash.
+                Account `trading` is not empty on 2021-01-01 and can't be closed. Holdings: 1 VSTX.
                   @ /tmp/*.tmp:5 2021-01-01 close
                 """);
         dsl.verifyDidNotPrintStackTrace();
@@ -83,7 +82,7 @@ public class ClosingAccountsAcceptanceTest {
                 """);
         dsl.verifyReturnedAnError("""
                 ====> Ooops! Validation error:
-                Account `trading` is not empty on 2021-01-02 and can't be closed. Inventory: [] and 2 GBP cash.
+                Account `trading` is not empty on 2021-01-02 and can't be closed. Holdings: 2 GBP.
                   @ /tmp/*.tmp:5 2021-01-02 close
                 """);
         dsl.verifyNonZeroExitCode();

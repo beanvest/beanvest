@@ -108,6 +108,7 @@ public final class Holding {
         return Objects.hash(symbol, amount, totalCost);
     }
 
+
     @Override
     public String toString() {
         return "Holding[" +
