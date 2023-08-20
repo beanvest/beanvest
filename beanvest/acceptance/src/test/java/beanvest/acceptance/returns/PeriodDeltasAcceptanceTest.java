@@ -1,15 +1,15 @@
 package beanvest.acceptance.returns;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class PeriodDeltasAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void yearlyPeriodsContainOnlyDataFromThatPeriod() {
         dsl.setYearly();
+        dsl.setColumns("deps");
+        dsl.setDeltas();
 
         dsl.runCalculateReturns("""
                 account savings
@@ -26,7 +26,9 @@ public class PeriodDeltasAcceptanceTest {
     @Test
     void firstRequestedPeriodHasOnlyDataFromItsPeriod() {
         dsl.setYearly();
+        dsl.setColumns("deps");
         dsl.setStartDate("2021-01-01");
+        dsl.setDeltas();
 
         dsl.runCalculateReturns("""
                 account savings
@@ -43,6 +45,8 @@ public class PeriodDeltasAcceptanceTest {
     void doesNotReportEarlierPeriodsThanStartDate() {
         dsl.setYearly();
         dsl.setStartDate("2021-01-01");
+        dsl.setColumns("deps");
+        dsl.setDeltas();
 
         dsl.runCalculateReturns("""
                 account savings
@@ -58,6 +62,8 @@ public class PeriodDeltasAcceptanceTest {
     @Test
     void quarterlyPeriodsContainOnlyDataFromThatPeriod() {
         dsl.setQuarterly();
+        dsl.setColumns("deps");
+        dsl.setDeltas();
 
         dsl.runCalculateReturns("""
                 account savings
@@ -75,6 +81,8 @@ public class PeriodDeltasAcceptanceTest {
     @Test
     void monthlyPeriodsContainOnlyDataFromThatPeriod() {
         dsl.setMonthly();
+        dsl.setColumns("deps");
+        dsl.setDeltas();
 
         dsl.runCalculateReturns("""
                 account savings
