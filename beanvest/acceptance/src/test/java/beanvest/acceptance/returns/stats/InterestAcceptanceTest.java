@@ -26,8 +26,9 @@ public class InterestAcceptanceTest {
     }
 
     @Test
-    @Disabled("required Result in CashStat")
     void holdingsCantGenerateInterest() {
+        dsl.setColumns("Intr");
+        dsl.setReportHoldings();
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
