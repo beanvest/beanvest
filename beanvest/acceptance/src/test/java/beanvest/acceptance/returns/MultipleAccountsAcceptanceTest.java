@@ -1,15 +1,14 @@
 package beanvest.acceptance.returns;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class MultipleAccountsAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void calculatesGainsSeparatelyForEachAccount() {
         dsl.setEnd("2023-01-01");
+        dsl.setColumns("again,xirr");
 
         dsl.runCalculateReturns("""
                 account pension
@@ -25,17 +24,17 @@ public class MultipleAccountsAcceptanceTest {
                 2023-01-01 price MSFT 1000 GBP
                 """);
 
-        dsl.verifyProfit("pension", "TOTAL", "500")
+        dsl.verifyAccountGain("pension", "TOTAL", "500")
                 .verifyXirrCumulative("pension", "TOTAL", "18.9");
-        dsl.verifyProfit("isa", "TOTAL", "500")
+        dsl.verifyAccountGain("isa", "TOTAL", "500")
                 .verifyXirrCumulative("isa", "TOTAL", "18.9");
     }
-
 
     @Test
     void calculatesCombinedReturns() {
         dsl.setEnd("2023-01-01");
         dsl.setGroupingEnabled();
+        dsl.setColumns("again,xirr");
 
         dsl.runCalculateReturns("""
                 account pension
@@ -52,7 +51,7 @@ public class MultipleAccountsAcceptanceTest {
                 2023-01-01 price TSLA 150 GBP
                 """);
 
-        dsl.verifyProfit(".*", "TOTAL", "60")
+        dsl.verifyAccountGain(".*", "TOTAL", "60")
                 .verifyXirrCumulative(".*", "TOTAL", "6.78");
     }
 
@@ -60,6 +59,7 @@ public class MultipleAccountsAcceptanceTest {
     void calculatesCombinedReturnsWithOneOfTheAccountsClosed() {
         dsl.setEnd("2023-01-01");
         dsl.setGroupingEnabled();
+        dsl.setColumns("again,xirr");
 
         dsl.runCalculateReturns("""
                 account pension
@@ -77,6 +77,6 @@ public class MultipleAccountsAcceptanceTest {
                 2023-01-01 price MSFT 102 GBP
                 """);
 
-        dsl.verifyProfit(".*", "TOTAL", "3");
+        dsl.verifyAccountGain(".*", "TOTAL", "3");
     }
 }
