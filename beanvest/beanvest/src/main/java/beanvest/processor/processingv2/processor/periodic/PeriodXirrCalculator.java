@@ -1,13 +1,13 @@
 package beanvest.processor.processingv2.processor.periodic;
 
-import beanvest.processor.processingv2.CashflowsXirrCalculator;
+import beanvest.processor.processingv2.processor.CashflowsXirrCalculator;
 import beanvest.processor.processingv2.CalculationParams;
 import beanvest.processor.processingv2.Calculator;
 import beanvest.journal.entity.Entity;
 import beanvest.processor.processingv2.processor.CashCalculator;
 import beanvest.processor.processingv2.processor.HoldingsValueCalculator;
 import beanvest.result.Result;
-import beanvest.result.UserErrors;
+import beanvest.result.StatErrors;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,7 +20,7 @@ public class PeriodXirrCalculator implements Calculator {
     private final PeriodCashflowCollector periodCashflowCollector;
     private final HoldingsValueCalculator holdingsValueCalculator;
     private final CashCalculator cashCalculator;
-    private final Map<DateEntity, Result<BigDecimal, UserErrors>> previousValues = new HashMap<>();
+    private final Map<DateEntity, Result<BigDecimal, StatErrors>> previousValues = new HashMap<>();
 
     public PeriodXirrCalculator(PeriodCashflowCollector periodCashflowCollector, HoldingsValueCalculator holdingsValueCalculator, CashCalculator cashCalculator) {
         this.holdingsValueCalculator = holdingsValueCalculator;
@@ -30,10 +30,10 @@ public class PeriodXirrCalculator implements Calculator {
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
+    public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
         var cashFlows = periodCashflowCollector.getCashflows(params.entity(), params.startDate());
         var endValue = cashCalculator.calculate(params)
-                .combine(holdingsValueCalculator.calculate(params), BigDecimal::add, UserErrors::join);
+                .combine(holdingsValueCalculator.calculate(params), BigDecimal::add, StatErrors::join);
         var newKey = new DateEntity(params.endDate(), params.entity());
         previousValues.put(newKey, endValue);
         if (endValue.hasError()) {

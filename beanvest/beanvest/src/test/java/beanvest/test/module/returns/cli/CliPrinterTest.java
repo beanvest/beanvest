@@ -3,10 +3,11 @@ package beanvest.test.module.returns.cli;
 import beanvest.module.returns.cli.CliTablePrinter;
 import beanvest.module.returns.cli.args.AccountMetaColumn;
 import beanvest.processor.CollectionMode;
-import beanvest.processor.processingv2.dto.AccountDto2;
-import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
-import beanvest.processor.processingv2.dto.StatsV2;
+import beanvest.processor.dto.AccountDto2;
+import beanvest.processor.dto.PortfolioStatsDto2;
+import beanvest.processor.dto.StatsV2;
 import beanvest.result.Result;
+import beanvest.result.StatErrors;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -68,7 +69,7 @@ class CliPrinterTest {
         }
 
         public StatsV2 build() {
-            Map<String, Result<BigDecimal, beanvest.result.UserErrors>> stringResultMap = new java.util.HashMap<>();
+            Map<String, Result<BigDecimal, StatErrors>> stringResultMap = new java.util.HashMap<>();
             if (xirr != null) {
                 stringResultMap.put("Xirr", Result.success(new BigDecimal(xirr)));
             }

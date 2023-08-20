@@ -1,7 +1,7 @@
 package beanvest.journal;
 
-import beanvest.processor.dto.ValueStatsDto;
-import beanvest.result.UserErrors;
+import beanvest.processor.deprecated.dto.ValueStatsDto;
+import beanvest.result.StatErrors;
 import beanvest.result.Result;
 
 import java.math.BigDecimal;
@@ -21,55 +21,55 @@ public class Stats {
         this.errors = errors;
     }
 
-    public Result<BigDecimal, UserErrors> unrealizedGain() {
+    public Result<BigDecimal, StatErrors> unrealizedGain() {
         return valueBasedStats.unrealizedGains();
     }
 
-    public Result<BigDecimal, UserErrors> xirr() {
+    public Result<BigDecimal, StatErrors> xirr() {
         return valueBasedStats.xirr();
     }
 
-    public Result<BigDecimal, UserErrors> getAccountGain() {
+    public Result<BigDecimal, StatErrors> getAccountGain() {
         return valueBasedStats.accountGain();
     }
 
-    public Result<BigDecimal, UserErrors> holdingsValue() {
+    public Result<BigDecimal, StatErrors> holdingsValue() {
         return valueBasedStats.holdingsValue();
     }
 
-    public Result<BigDecimal, UserErrors> accountValue() {
+    public Result<BigDecimal, StatErrors> accountValue() {
         return valueBasedStats.accountValue();
     }
 
-    public Result<BigDecimal, UserErrors> xirrValue() {
+    public Result<BigDecimal, StatErrors> xirrValue() {
         return valueBasedStats.xirr();
     }
 
-    public Result<BigDecimal, UserErrors> deposits() {
+    public Result<BigDecimal, StatErrors> deposits() {
         return cashStats.deposits();
     }
 
-    public Result<BigDecimal, UserErrors> withdrawals() {
+    public Result<BigDecimal, StatErrors> withdrawals() {
         return cashStats.withdrawals();
     }
 
-    public Result<BigDecimal, UserErrors> dividends() {
+    public Result<BigDecimal, StatErrors> dividends() {
         return cashStats.dividends();
     }
 
-    public Result<BigDecimal, UserErrors> interest() {
+    public Result<BigDecimal, StatErrors> interest() {
         return cashStats.interest();
     }
 
-    public Result<BigDecimal, UserErrors> fees() {
+    public Result<BigDecimal, StatErrors> fees() {
         return cashStats.fees();
     }
 
-    public Result<BigDecimal, UserErrors> realizedGains() {
+    public Result<BigDecimal, StatErrors> realizedGains() {
         return cashStats.realizedGain();
     }
 
-    public Result<BigDecimal, UserErrors> cash() {
+    public Result<BigDecimal, StatErrors> cash() {
         return cashStats.cash();
     }
 
@@ -77,7 +77,7 @@ public class Stats {
         return errors;
     }
 
-    public Result<BigDecimal, UserErrors> xirrp() {
+    public Result<BigDecimal, StatErrors> xirrp() {
         return valueBasedStats.xirrp();
     }
 }

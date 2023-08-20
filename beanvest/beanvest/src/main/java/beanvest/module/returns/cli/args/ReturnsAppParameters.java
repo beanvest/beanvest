@@ -1,6 +1,7 @@
 package beanvest.module.returns.cli.args;
 
-import beanvest.module.returns.StatDefinition;
+import beanvest.processor.ReturnsParameters;
+import beanvest.processor.StatDefinition;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.processingv2.EntitiesToInclude;
 import beanvest.processor.time.PeriodInterval;

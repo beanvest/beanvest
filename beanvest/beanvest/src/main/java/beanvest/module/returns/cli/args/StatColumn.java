@@ -1,6 +1,6 @@
 package beanvest.module.returns.cli.args;
 
-import beanvest.module.returns.StatDefinition;
+import beanvest.processor.StatDefinition;
 import beanvest.module.returns.cli.columns.CliColumnValueFormatter;
 
 public record StatColumn(StatDefinition cumulativeStat, StatDefinition periodicStat,

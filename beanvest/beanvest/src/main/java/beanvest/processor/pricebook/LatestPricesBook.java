@@ -1,8 +1,8 @@
 package beanvest.processor.pricebook;
 
 import beanvest.result.Result;
-import beanvest.result.ErrorFactory;
-import beanvest.result.UserErrors;
+import beanvest.result.StatErrorFactory;
+import beanvest.result.StatErrors;
 import beanvest.journal.Value;
 import beanvest.journal.entry.Price;
 
@@ -23,11 +23,11 @@ public class LatestPricesBook {
         prices.put(currencyPair, price);
     }
 
-    public Result<Value, UserErrors> getPrice(LocalDate date, String symbol, String currency) {
+    public Result<Value, StatErrors> getPrice(LocalDate date, String symbol, String currency) {
         var currencyPair = getCurrencyPair(symbol, currency);
         var latestPrice = this.prices.get(currencyPair);
         if (latestPrice == null) {
-            return Result.failure(ErrorFactory.priceNotFound(symbol, currency, date, Optional.empty()));
+            return Result.failure(StatErrorFactory.priceNotFound(symbol, currency, date, Optional.empty()));
         }
 
         if (latestPrice.date().isAfter(date)) {
@@ -36,13 +36,13 @@ public class LatestPricesBook {
 
         var daysSinceLastPrice = DAYS.between(latestPrice.date(), date);
         if (daysSinceLastPrice > 7) {
-            return Result.failure(ErrorFactory.priceNotFound(symbol, currency, date, Optional.of(latestPrice)));
+            return Result.failure(StatErrorFactory.priceNotFound(symbol, currency, date, Optional.of(latestPrice)));
         }
 
         return Result.success(latestPrice.price());
     }
 
-    public Result<Value, UserErrors> convert(LocalDate date, String targetCurrency, Value value) {
+    public Result<Value, StatErrors> convert(LocalDate date, String targetCurrency, Value value) {
         return convertRecursively(date, targetCurrency, value, 0);
     }
 
@@ -54,9 +54,9 @@ public class LatestPricesBook {
         return new CurrencyPair(pricedSymbol, priceCurrency);
     }
 
-    private Result<Value, UserErrors> convertRecursively(LocalDate date, String targetCurrency, Value value, int depth) {
+    private Result<Value, StatErrors> convertRecursively(LocalDate date, String targetCurrency, Value value, int depth) {
         if (depth > DEPTH_LIMIT) {
-            return Result.failure(ErrorFactory.priceSearchDepthExhaused());
+            return Result.failure(StatErrorFactory.priceSearchDepthExhaused());
         }
 
         if (value.amount().compareTo(BigDecimal.ZERO) == 0) {

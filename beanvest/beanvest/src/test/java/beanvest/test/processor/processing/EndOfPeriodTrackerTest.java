@@ -8,7 +8,7 @@ import beanvest.processor.processingv2.PeriodSpec;
 import beanvest.journal.entity.Account2;
 import beanvest.processor.time.Period;
 import beanvest.processor.time.PeriodInterval;
-import beanvest.processor.processing.EndOfPeriodTracker;
+import beanvest.processor.processingv2.EndOfPeriodTracker;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

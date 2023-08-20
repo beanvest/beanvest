@@ -1,8 +1,8 @@
 package beanvest.module.returns.cli.columns;
 
-import beanvest.processor.processingv2.dto.AccountDto2;
-import beanvest.result.ErrorEnum;
-import beanvest.result.UserErrors;
+import beanvest.processor.dto.AccountDto2;
+import beanvest.result.StatErrorEnum;
+import beanvest.result.StatErrors;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -15,29 +15,23 @@ public class ValueFormatter {
     }
 
     public static String closedDate(AccountDto2 acc) {
-        return acc.closingDate().map(LocalDate::toString).orElse(ValueFormatter.formatError(ErrorEnum.NO_DATA_YET));
+        return acc.closingDate().map(LocalDate::toString).orElse(ValueFormatter.formatError(StatErrorEnum.NO_DATA_YET));
     }
     public static String openedDate(AccountDto2 acc) {
         return acc.openingDate().toString();
     }
 
-    public static String formatError(ErrorEnum error) {
+    public static String formatError(StatErrorEnum error) {
         return switch (error) {
             case ACCOUNT_NOT_OPEN_YET,
-                    NO_DATA_YET,
-                    DELTA_NOT_AVAILABLE_NO_VALUE_STATS,
-                    DELTA_NOT_AVAILABLE -> "…";
-            case DISABLED_FOR_ACCOUNT_TYPE -> "-";
+                    NO_DATA_YET -> "…";
             case XIRR_CALCULATION_FAILURE -> "cf";
-            case XIRR_PERIOD_TOO_SHORT -> "pts";
             case PRICE_NEEDED -> "PN";
             case VALIDATION_ERROR -> "VE";
-            case CALCULATION_DISABLED ->
-                    throw new RuntimeException("that should only happen if relevant columns are not displayed");
         };
     }
 
-    public static String formatError(UserErrors err) {
+    public static String formatError(StatErrors err) {
         return formatError(err.errors.get(0).error());
     }
 

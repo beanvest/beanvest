@@ -1,7 +1,7 @@
 package beanvest.scripts.tsgen;
 
 import beanvest.options.OptionsCliCommand;
-import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
+import beanvest.processor.dto.PortfolioStatsDto2;
 import cz.habarta.typescript.generator.*;
 import org.jetbrains.annotations.NotNull;
 

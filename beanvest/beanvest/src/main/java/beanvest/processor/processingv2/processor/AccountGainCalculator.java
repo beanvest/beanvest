@@ -2,9 +2,8 @@ package beanvest.processor.processingv2.processor;
 
 import beanvest.processor.processingv2.CalculationParams;
 import beanvest.processor.processingv2.Calculator;
-import beanvest.processor.processingv2.Holding;
 import beanvest.result.Result;
-import beanvest.result.UserErrors;
+import beanvest.result.StatErrors;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -32,13 +31,13 @@ public class AccountGainCalculator implements Calculator {
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
+    public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
         return Result.combine(List.of(
                 unrealizedGainCalculator.calculate(params),
                 interestCalculator.calculate(params),
                 dividendCalculator.calculate(params),
                 realizedGainCalculator.calculate(params),
                 platformFeeCalculator.calculate(params)
-        ), BigDecimal::add, UserErrors::join);
+        ), BigDecimal::add, StatErrors::join);
     }
 }

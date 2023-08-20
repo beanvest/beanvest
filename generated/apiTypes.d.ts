@@ -28,7 +28,7 @@ export class ColumnDto {
 }
 
 export class StatsV2 {
-    stats: { [index: string]: Result<number, UserErrors> };
+    stats: { [index: string]: Result<number, StatErrors> };
 }
 
 export class Result<VALUE, ERROR> {
@@ -36,15 +36,15 @@ export class Result<VALUE, ERROR> {
     error: ERROR;
 }
 
-export class UserErrors {
-    errors: UserError[];
+export class StatErrors {
+    errors: StatError[];
 }
 
-export class UserError {
-    error: ErrorEnum;
+export class StatError {
+    error: StatErrorEnum;
     maybeMessage?: string;
 }
 
 export type PeriodInterval = "NONE" | "YEAR" | "QUARTER" | "MONTH";
 
-export type ErrorEnum = "DISABLED_FOR_ACCOUNT_TYPE" | "PRICE_NEEDED" | "ACCOUNT_NOT_OPEN_YET" | "XIRR_CALCULATION_FAILURE" | "XIRR_PERIOD_TOO_SHORT" | "VALIDATION_ERROR" | "NO_DATA_YET" | "DELTA_NOT_AVAILABLE" | "DELTA_NOT_AVAILABLE_NO_VALUE_STATS" | "CALCULATION_DISABLED";
+export type StatErrorEnum = "PRICE_NEEDED" | "ACCOUNT_NOT_OPEN_YET" | "XIRR_CALCULATION_FAILURE" | "VALIDATION_ERROR" | "NO_DATA_YET";

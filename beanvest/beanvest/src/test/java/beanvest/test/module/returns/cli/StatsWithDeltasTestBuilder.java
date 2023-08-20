@@ -1,8 +1,8 @@
 package beanvest.test.module.returns.cli;
 
 import beanvest.result.Result;
-import beanvest.processor.dto.StatsWithDeltasDto;
-import beanvest.processor.dto.ValueStatDto;
+import beanvest.processor.deprecated.dto.StatsWithDeltasDto;
+import beanvest.processor.deprecated.dto.ValueStatDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

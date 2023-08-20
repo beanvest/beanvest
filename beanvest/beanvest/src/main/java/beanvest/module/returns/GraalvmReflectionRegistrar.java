@@ -1,18 +1,17 @@
 package beanvest.module.returns;
 
 import beanvest.options.OptionsCliCommand;
-import beanvest.processor.dto.AccountDto;
-import beanvest.processor.dto.AccountPeriodDto;
-import beanvest.processor.dto.PortfolioStatsDto;
-import beanvest.processor.dto.StatsWithDeltasDto;
-import beanvest.processor.dto.ValueStatDto;
-import beanvest.processor.processingv2.dto.AccountDto2;
+import beanvest.processor.deprecated.dto.AccountPeriodDto;
+import beanvest.processor.deprecated.dto.PortfolioStatsDto;
+import beanvest.processor.deprecated.dto.StatsWithDeltasDto;
+import beanvest.processor.deprecated.dto.ValueStatDto;
+import beanvest.processor.dto.AccountDto2;
 import beanvest.processor.time.Period;
 import beanvest.processor.time.PeriodInterval;
-import beanvest.result.ErrorEnum;
+import beanvest.result.StatErrorEnum;
 import beanvest.result.Result;
-import beanvest.result.UserError;
-import beanvest.result.UserErrors;
+import beanvest.result.StatError;
+import beanvest.result.StatErrors;
 import org.graalvm.nativeimage.hosted.Feature;
 import org.graalvm.nativeimage.hosted.RuntimeReflection;
 
@@ -33,9 +32,9 @@ public class GraalvmReflectionRegistrar implements Feature {
                 StatsWithDeltasDto.class,
                 ValueStatDto.class,
                 Result.class,
-                UserError.class,
-                UserErrors.class,
-                ErrorEnum.class,
+                StatError.class,
+                StatErrors.class,
+                StatErrorEnum.class,
                 Optional.class,
                 Period.class,
                 PeriodInterval.class,

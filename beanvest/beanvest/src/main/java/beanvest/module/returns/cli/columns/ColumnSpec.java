@@ -1,8 +1,8 @@
 package beanvest.module.returns.cli.columns;
 
-import beanvest.module.returns.StatDefinition;
-import beanvest.processor.processingv2.dto.AccountDto2;
-import beanvest.result.ErrorEnum;
+import beanvest.processor.StatDefinition;
+import beanvest.processor.dto.AccountDto2;
+import beanvest.result.StatErrorEnum;
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.ColumnPadding;
 
@@ -21,6 +21,6 @@ public record ColumnSpec(StatDefinition statsDefinition) {
                                         formatter::format,
                                         ValueFormatter::formatError
                                 ))
-                        .orElseGet(() -> ValueFormatter.formatError(ErrorEnum.ACCOUNT_NOT_OPEN_YET)));
+                        .orElseGet(() -> ValueFormatter.formatError(StatErrorEnum.ACCOUNT_NOT_OPEN_YET)));
     }
 }

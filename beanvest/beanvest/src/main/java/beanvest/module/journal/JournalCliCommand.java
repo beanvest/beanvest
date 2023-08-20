@@ -10,7 +10,7 @@ import beanvest.processor.deprecated.AccountState;
 import beanvest.journal.Holdings;
 import beanvest.journal.Journal;
 import beanvest.processor.deprecated.JournalState;
-import beanvest.result.UserErrors;
+import beanvest.result.StatErrors;
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Price;
 import beanvest.SubCommand;
@@ -109,7 +109,7 @@ public class JournalCliCommand implements SubCommand {
         errors.forEach(e -> stdOut.println(e.message()));
     }
 
-    private void printSummary(PrintStream stdOut, JournalState journalState, AccountState baseStats, Holdings holdings, Result<BigDecimal, UserErrors> valuationResult) {
+    private void printSummary(PrintStream stdOut, JournalState journalState, AccountState baseStats, Holdings holdings, Result<BigDecimal, StatErrors> valuationResult) {
         var currentStats = journalState.accountState();
         var difference = subtract(currentStats.getCashStats(), baseStats.getCashStats());
         stdOut.format("  stats: %s%n",

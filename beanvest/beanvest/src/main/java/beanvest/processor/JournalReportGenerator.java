@@ -2,21 +2,21 @@ package beanvest.processor;
 
 import beanvest.journal.Journal;
 import beanvest.journal.entry.Entry;
-import beanvest.processor.processing.EndOfPeriodTracker;
+import beanvest.processor.processingv2.EndOfPeriodTracker;
 import beanvest.processor.processingv2.*;
-import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
+import beanvest.processor.dto.PortfolioStatsDto2;
 import beanvest.processor.processingv2.validator.ValidatorError;
 import beanvest.processor.time.Period;
 import beanvest.result.Result;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 public class JournalReportGenerator {
-    private final AccountStatsGatherer2 accountStatsGatherer = new AccountStatsGatherer2();
+    private final AccountStatsGatherer accountStatsGatherer = new AccountStatsGatherer();
     private final PredicateFactory predicateFactory = new PredicateFactory();
-    private PeriodSpec periodSpec;
 
     public Result<PortfolioStatsDto2, List<ValidatorError>> calculateStats(
             AccountsTracker accountsResolver1,
@@ -26,9 +26,9 @@ public class JournalReportGenerator {
             PeriodInclusion periodInclusion,
             LinkedHashMap<String, Class<?>> statsToCalculate) {
 
-        this.periodSpec = periodSpec;
-        var journalProcessor2 = new StatsCollectingJournalProcessor2(accountsResolver1, statsToCalculate);
-        var endOfPeriodTracker = new EndOfPeriodTracker(this.periodSpec, periodInclusion, period -> finishPeriod(period, journalProcessor2));
+        var journalProcessor2 = new StatsCollectingJournalProcessor(accountsResolver1, statsToCalculate);
+        var endOfPeriodTracker = new EndOfPeriodTracker(periodSpec, periodInclusion,
+                period -> finishPeriod(period, periodSpec.start(), journalProcessor2));
 
         var predicate = predicateFactory.buildPredicate(accountFilter, periodSpec.end());
 
@@ -45,15 +45,14 @@ public class JournalReportGenerator {
         }
         endOfPeriodTracker.finishPeriodsUpToEndDate();
 
-        var stats = accountStatsGatherer.getPortfolioStats(
+        return Result.success(accountStatsGatherer.getPortfolioStats(
                 journalProcessor2.getMetadata(),
-                new ArrayList<>(statsToCalculate.keySet()));
-        return Result.success(stats);
+                new ArrayList<>(statsToCalculate.keySet())));
     }
 
-    private void finishPeriod(Period period, StatsCollectingJournalProcessor2 statsCollectingJournalProcessor) {
+    private void finishPeriod(Period period, LocalDate start, StatsCollectingJournalProcessor statsCollectingJournalProcessor) {
         var periodStats = statsCollectingJournalProcessor.getPeriodStats(period);
-        if (!period.endDate().isBefore(periodSpec.start())) {
+        if (!period.endDate().isBefore(start)) {
             accountStatsGatherer.collectPeriodStats(period, periodStats);
         }
     }

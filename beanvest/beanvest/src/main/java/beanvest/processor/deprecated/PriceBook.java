@@ -3,8 +3,8 @@ package beanvest.processor.deprecated;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.result.Result;
 import beanvest.journal.Holdings;
-import beanvest.result.ErrorFactory;
-import beanvest.result.UserErrors;
+import beanvest.result.StatErrorFactory;
+import beanvest.result.StatErrors;
 import beanvest.journal.Value;
 import beanvest.journal.entry.Price;
 
@@ -38,7 +38,7 @@ public class PriceBook {
         this.prices.forEach((key, value) -> value.sort(Comparator.comparing(Price::date)));
     }
 
-    public Result<Value, UserErrors> getPrice(LocalDate date, String symbol, String currency) {
+    public Result<Value, StatErrors> getPrice(LocalDate date, String symbol, String currency) {
         var currencyPair = getCurrencyPair(symbol, currency);
         var prices = this.prices.getOrDefault(currencyPair, new ArrayList<>());
         AtomicReference<Price> last = new AtomicReference<>();
@@ -46,21 +46,21 @@ public class PriceBook {
         var lastPrice = last.get();
 
         if (lastPrice == null) {
-            return Result.failure(ErrorFactory.priceNotFound(symbol, currency, date, Optional.empty()));
+            return Result.failure(StatErrorFactory.priceNotFound(symbol, currency, date, Optional.empty()));
         }
 
         var daysSinceLastPrice = DAYS.between(lastPrice.date(), date);
         if (daysSinceLastPrice > 7) {
-            return Result.failure(ErrorFactory.priceNotFound(symbol, currency, date, Optional.of(lastPrice)));
+            return Result.failure(StatErrorFactory.priceNotFound(symbol, currency, date, Optional.of(lastPrice)));
         }
 
         return Result.success(lastPrice.price());
     }
 
-    public Result<BigDecimal, UserErrors> calculateValue(Holdings holdings, LocalDate date, String targetCurrency) {
+    public Result<BigDecimal, StatErrors> calculateValue(Holdings holdings, LocalDate date, String targetCurrency) {
         var value = BigDecimal.ZERO;
 
-        var errors = new UserErrors(List.of());
+        var errors = new StatErrors(List.of());
         for (var holding : holdings.asList()) {
             var conversionResult = convert(date, targetCurrency, holding);
             if (conversionResult.hasError()) {
@@ -73,7 +73,7 @@ public class PriceBook {
         return errors.isEmpty() ? Result.success(value) : Result.failure(errors);
     }
 
-    public Result<Value, UserErrors> convert(LocalDate date, String targetCurrency, Value value) {
+    public Result<Value, StatErrors> convert(LocalDate date, String targetCurrency, Value value) {
         return convertInternal(date, targetCurrency, value, 0);
     }
 
@@ -85,9 +85,9 @@ public class PriceBook {
         return new CurrencyPair(pricedSymbol, priceCurrency);
     }
 
-    private Result<Value, UserErrors> convertInternal(LocalDate date, String targetCurrency, Value value, int depth) {
+    private Result<Value, StatErrors> convertInternal(LocalDate date, String targetCurrency, Value value, int depth) {
         if (depth > DEPTH_LIMIT) {
-            return Result.failure(ErrorFactory.priceSearchDepthExhaused());
+            return Result.failure(StatErrorFactory.priceSearchDepthExhaused());
         }
         if (targetCurrency.equals(value.symbol())) {
             return Result.success(value);

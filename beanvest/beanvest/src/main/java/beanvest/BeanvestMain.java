@@ -4,7 +4,7 @@ import beanvest.lib.apprunner.main.BaseMain;
 import beanvest.module.export.ExportCliCommand;
 import beanvest.module.importer.ImportCliCommand;
 import beanvest.module.journal.JournalCliCommand;
-import beanvest.module.returns.ReturnsCliCommand;
+import beanvest.module.returns.cli.ReturnsCliCommand;
 import beanvest.module.returns.cli.args.CliColumnValue;
 import beanvest.module.returns.cli.args.ColumnCliArgConverter;
 import beanvest.options.OptionsCliCommand;

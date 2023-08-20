@@ -2,7 +2,7 @@ package beanvest.processor.processingv2.processor;
 
 import beanvest.journal.entity.Entity;
 import beanvest.result.Result;
-import beanvest.result.UserErrors;
+import beanvest.result.StatErrors;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class SimpleBalanceTracker {
         balances.put(account2, newBalance);
     }
 
-    public Result<BigDecimal, UserErrors> calculate(Entity account) {
+    public Result<BigDecimal, StatErrors> calculate(Entity account) {
         var result = BigDecimal.ZERO;
         for (Entity accountWithBalance : balances.keySet()) {
             if (account.contains(accountWithBalance)) {

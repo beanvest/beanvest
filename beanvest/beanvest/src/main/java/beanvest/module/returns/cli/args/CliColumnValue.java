@@ -2,7 +2,7 @@ package beanvest.module.returns.cli.args;
 
 import beanvest.module.returns.cli.columns.ValueFormatter;
 
-import static beanvest.module.returns.StatDefinition.*;
+import static beanvest.processor.StatDefinition.*;
 
 public enum CliColumnValue {
     opened(new AccountMetaColumn("Opened", "Opening date", ValueFormatter::openedDate)),

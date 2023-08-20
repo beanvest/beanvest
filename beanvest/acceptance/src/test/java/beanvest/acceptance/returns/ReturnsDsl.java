@@ -7,13 +7,13 @@ import beanvest.lib.apprunner.CliExecutionResult;
 import beanvest.lib.testing.TestFiles;
 import beanvest.lib.testing.asserts.AssertCliExecutionResult;
 import beanvest.lib.util.gson.GsonFactory;
-import beanvest.processor.dto.ValueStatDto;
-import beanvest.processor.processingv2.dto.StatsV2;
-import beanvest.processor.processingv2.dto.AccountDto2;
-import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
-import beanvest.result.ErrorEnum;
+import beanvest.processor.deprecated.dto.ValueStatDto;
+import beanvest.processor.dto.StatsV2;
+import beanvest.processor.dto.AccountDto2;
+import beanvest.processor.dto.PortfolioStatsDto2;
+import beanvest.result.StatErrorEnum;
 import beanvest.result.Result;
-import beanvest.result.UserErrors;
+import beanvest.result.StatErrors;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.assertj.core.data.Offset;
@@ -528,7 +528,7 @@ public class ReturnsDsl {
                 .isCloseTo(expected, slack);
     }
 
-    private Result<BigDecimal, UserErrors> getStat(String account, String period, String columnId) {
+    private Result<BigDecimal, StatErrors> getStat(String account, String period, String columnId) {
         var accountResults = getAccountResults(account, period);
         if (accountResults.isEmpty()) {
             throw new RuntimeException("account `%s` has no stats for period `%s`. Only following accounts have stats in that period: %s"
@@ -566,7 +566,7 @@ public class ReturnsDsl {
     public void verifyXirrError(String account, String period, String error) {
         var result = getStat(account, period, CUMULATIVE_XIRR);
         assertThat(result.error().getEnums())
-                .isEqualTo(List.of(ErrorEnum.valueOf(error)));
+                .isEqualTo(List.of(StatErrorEnum.valueOf(error)));
     }
 
     public void storeJournal(String file, String content) {
@@ -593,7 +593,7 @@ public class ReturnsDsl {
     public void verifyCashError(String account, String period, String error) {
         var result = getAccountPeriodReturns(account, period).get();
         assertThat(result.stats().get(CUMUALTIVE_CASH).error().getEnums())
-                .isEqualTo(List.of(ErrorEnum.valueOf(error)));
+                .isEqualTo(List.of(StatErrorEnum.valueOf(error)));
     }
 
     public void verifyInterestError(String s, String total, String s1) {

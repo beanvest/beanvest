@@ -3,7 +3,7 @@ package beanvest.processor.processingv2;
 import beanvest.processor.processingv2.processor.CashCalculator;
 import beanvest.processor.processingv2.processor.HoldingsValueCalculator;
 import beanvest.result.Result;
-import beanvest.result.UserErrors;
+import beanvest.result.StatErrors;
 
 import java.math.BigDecimal;
 
@@ -17,10 +17,10 @@ public class ValueCalculator implements Calculator {
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
+    public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
         var holdingsValue = holdingsValueCalculator.calculate(params);
         var cashValue = cashCalculator.calculate(params);
         return holdingsValue
-                .combine(cashValue, BigDecimal::add, UserErrors::join);
+                .combine(cashValue, BigDecimal::add, StatErrors::join);
     }
 }

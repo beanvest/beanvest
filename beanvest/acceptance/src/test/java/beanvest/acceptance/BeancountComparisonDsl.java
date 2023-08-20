@@ -3,7 +3,7 @@ package beanvest.acceptance;
 import beanvest.lib.apprunner.AppRunner;
 import beanvest.lib.testing.TestFiles;
 import beanvest.lib.util.gson.GsonFactory;
-import beanvest.processor.dto.PortfolioStatsDto;
+import beanvest.processor.deprecated.dto.PortfolioStatsDto;
 
 import com.opencsv.exceptions.CsvException;
 

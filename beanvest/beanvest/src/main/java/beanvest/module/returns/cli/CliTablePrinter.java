@@ -3,14 +3,14 @@ package beanvest.module.returns.cli;
 import beanvest.lib.clitable.Column;
 import beanvest.lib.clitable.ColumnPadding;
 import beanvest.lib.clitable.TableWriter;
-import beanvest.module.returns.StatDefinition;
+import beanvest.processor.StatDefinition;
 import beanvest.module.returns.cli.args.AccountMetaColumn;
 import beanvest.module.returns.cli.columns.CliColumnValueFormatter;
 import beanvest.module.returns.cli.columns.ColumnSpec;
 import beanvest.module.returns.cli.columns.ValueFormatter;
 import beanvest.processor.CollectionMode;
-import beanvest.processor.processingv2.dto.AccountDto2;
-import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
+import beanvest.processor.dto.AccountDto2;
+import beanvest.processor.dto.PortfolioStatsDto2;
 
 import java.io.IOException;
 import java.io.PrintStream;

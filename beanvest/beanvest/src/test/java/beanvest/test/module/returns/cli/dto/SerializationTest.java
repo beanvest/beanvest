@@ -1,14 +1,14 @@
 package beanvest.test.module.returns.cli.dto;
 
-import beanvest.module.returns.CliJsonOutputWriter;
-import beanvest.processor.dto.AccountDto;
-import beanvest.processor.dto.PortfolioStatsDto;
-import beanvest.processor.dto.StatsWithDeltasDto;
-import beanvest.processor.dto.ValueStatDto;
+import beanvest.module.returns.cli.CliJsonOutputWriter;
+import beanvest.processor.deprecated.dto.AccountDto;
+import beanvest.processor.deprecated.dto.PortfolioStatsDto;
+import beanvest.processor.deprecated.dto.StatsWithDeltasDto;
+import beanvest.processor.deprecated.dto.ValueStatDto;
 import beanvest.processor.processingv2.PeriodSpec;
 import beanvest.processor.time.Period;
 import beanvest.processor.time.PeriodInterval;
-import beanvest.result.ErrorFactory;
+import beanvest.result.StatErrorFactory;
 import beanvest.result.Result;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +36,7 @@ public class SerializationTest {
                         VALUE_STAT_DTO,
                         VALUE_STAT_DTO,
                         VALUE_STAT_DTO,
-                        new ValueStatDto(Result.failure(ErrorFactory.accountNotOpenYet()), Optional.of(BigDecimal.ZERO)),
+                        new ValueStatDto(Result.failure(StatErrorFactory.accountNotOpenYet()), Optional.of(BigDecimal.ZERO)),
                         VALUE_STAT_DTO,
                         VALUE_STAT_DTO,
                         VALUE_STAT_DTO,

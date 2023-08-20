@@ -1,7 +1,7 @@
 package beanvest.test.processor.pricebook;
 
-import beanvest.result.ErrorEnum;
-import beanvest.result.UserErrors;
+import beanvest.result.StatErrorEnum;
+import beanvest.result.StatErrors;
 import beanvest.journal.Value;
 import beanvest.journal.entry.Price;
 import beanvest.processor.pricebook.LatestPricesBook;
@@ -58,8 +58,8 @@ class LatestPricesBookTest {
                 .usingRecursiveComparison().isEqualTo(Value.of("5.1 PLN"));
 
         var result = priceBook.getPrice(LocalDate.parse("2021-01-10"), "GBP", "PLN");
-        assertThat(result.error()).isInstanceOf(UserErrors.class);
-        assertThat(result.error().getEnums()).isEqualTo(List.of(ErrorEnum.PRICE_NEEDED));
+        assertThat(result.error()).isInstanceOf(StatErrors.class);
+        assertThat(result.error().getEnums()).isEqualTo(List.of(StatErrorEnum.PRICE_NEEDED));
     }
 
     private static Price price(String dateString, String currency, String valueString) {

@@ -1,6 +1,6 @@
 package beanvest.module.returns.cli.args;
 
-import beanvest.module.returns.StatDefinition;
+import beanvest.processor.StatDefinition;
 import beanvest.processor.time.PeriodInterval;
 import picocli.CommandLine;
 

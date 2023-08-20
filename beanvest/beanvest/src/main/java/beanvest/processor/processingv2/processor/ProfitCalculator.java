@@ -4,7 +4,7 @@ import beanvest.processor.processingv2.CalculationParams;
 import beanvest.processor.processingv2.Calculator;
 import beanvest.processor.processingv2.ValueCalculator;
 import beanvest.result.Result;
-import beanvest.result.UserErrors;
+import beanvest.result.StatErrors;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,12 +20,12 @@ public class ProfitCalculator implements Calculator {
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
+    public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
         var value = valueCalculator.calculate(params);
         var cost = netCostCalculator.calculate(params);
         return Result.combine(
                 List.of(value, cost),
                 BigDecimal::add,
-                UserErrors::join);
+                StatErrors::join);
     }
 }

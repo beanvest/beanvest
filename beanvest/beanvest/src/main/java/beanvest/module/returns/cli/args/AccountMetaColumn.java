@@ -1,6 +1,6 @@
 package beanvest.module.returns.cli.args;
 
-import beanvest.processor.processingv2.dto.AccountDto2;
+import beanvest.processor.dto.AccountDto2;
 
 import java.util.function.Function;
 

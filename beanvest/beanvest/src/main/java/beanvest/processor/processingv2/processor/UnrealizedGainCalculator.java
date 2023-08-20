@@ -4,7 +4,7 @@ import beanvest.processor.processingv2.Holding;
 import beanvest.processor.processingv2.CalculationParams;
 import beanvest.processor.processingv2.Calculator;
 import beanvest.result.Result;
-import beanvest.result.UserErrors;
+import beanvest.result.StatErrors;
 
 import java.math.BigDecimal;
 
@@ -18,7 +18,7 @@ public class UnrealizedGainCalculator implements Calculator {
     }
 
     @Override
-    public Result<BigDecimal, UserErrors> calculate(CalculationParams params) {
+    public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
         var calculate = holdingsValueCalculator.calculate(new CalculationParams(params.entity(), params.startDate(), params.endDate(), params.targetCurrency()));
         if (calculate.hasError()) {
             return calculate;
