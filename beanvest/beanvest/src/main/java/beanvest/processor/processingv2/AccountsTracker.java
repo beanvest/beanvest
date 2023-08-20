@@ -11,29 +11,25 @@ import java.util.Set;
 
 public class AccountsTracker implements ProcessorV2 {
     private final Set<Entity> entities = new HashSet<>();
-    private final boolean includeInvestments;
-    private final boolean includeGroups;
-    private final boolean includeAccounts;
+    private final EntitiesToInclude entitiesToInclude;
 
     public AccountsTracker(EntitiesToInclude entitiesToInclude) {
-        this.includeInvestments = entitiesToInclude.holdings();
-        this.includeAccounts = entitiesToInclude.accounts();
-        this.includeGroups = entitiesToInclude.groups();
+        this.entitiesToInclude = entitiesToInclude;
     }
 
     @Override
     public void process(AccountOperation op) {
-        if (includeInvestments) {
+        if (entitiesToInclude.holdings()) {
             if (op instanceof HoldingOperation h) {
                 entities.add(h.accountHolding());
             } else {
                 entities.add(op.account2().cashHolding());
             }
         }
-        if (includeAccounts) {
+        if (entitiesToInclude.accounts()) {
             entities.add(op.account2());
         }
-        if (includeGroups) {
+        if (entitiesToInclude.groups()) {
             entities.addAll(op.account2().groups());
         }
     }
