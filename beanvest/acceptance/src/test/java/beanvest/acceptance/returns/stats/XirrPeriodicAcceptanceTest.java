@@ -4,7 +4,6 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("rework v2")
 public class XirrPeriodicAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
@@ -13,6 +12,8 @@ public class XirrPeriodicAcceptanceTest {
         dsl.setStartDate("2020-01-01");
         dsl.setEnd("2022-01-01");
         dsl.setYearly();
+        dsl.setDeltas();
+        dsl.setColumns("xirr");
 
         dsl.runCalculateReturns("""
                 account savings
@@ -34,6 +35,8 @@ public class XirrPeriodicAcceptanceTest {
         dsl.setYearly();
         dsl.setGroupingDisabled();
         dsl.setReportHoldings();
+        dsl.setDeltas();
+        dsl.setColumns("xirr");
 
         dsl.runCalculateReturns("""
                 account savings
@@ -55,6 +58,8 @@ public class XirrPeriodicAcceptanceTest {
         dsl.setYearly();
         dsl.setGroupingDisabled();
         dsl.setReportHoldings();
+        dsl.setDeltas();
+        dsl.setColumns("xirr");
 
         dsl.runCalculateReturns("""
                 account savings
@@ -72,11 +77,12 @@ public class XirrPeriodicAcceptanceTest {
     }
 
     @Test
-    @Disabled
     void shouldCalculatePeriodicXirrForEachHolding() {
         dsl.setReportHoldings();
         dsl.setEnd("2024-01-01");
         dsl.setYearly();
+        dsl.setColumns("xirr");
+        dsl.setDeltas();
 
         dsl.runCalculateReturns("""
                 account pension
@@ -90,11 +96,11 @@ public class XirrPeriodicAcceptanceTest {
                 2023-12-31 price APPL 600 GBP
                 """);
 
-        dsl.verifyXirrCumulative("pension", "2022", "15");
-        dsl.verifyXirrCumulative("pension:MSFT", "2022", "10");
-        dsl.verifyXirrCumulative("pension:APPL", "2022", "20");
-        dsl.verifyXirrCumulative("pension", "2023", "0");
-        dsl.verifyXirrCumulative("pension:MSFT", "2023", "0");
-        dsl.verifyXirrCumulative("pension:APPL", "2023", "0");
+        dsl.verifyXirrPeriodic("pension", "2022", "15");
+        dsl.verifyXirrPeriodic("pension:MSFT", "2022", "10");
+        dsl.verifyXirrPeriodic("pension:APPL", "2022", "20");
+        dsl.verifyXirrPeriodic("pension", "2023", "0");
+        dsl.verifyXirrPeriodic("pension:MSFT", "2023", "0");
+        dsl.verifyXirrPeriodic("pension:APPL", "2023", "0");
     }
 }

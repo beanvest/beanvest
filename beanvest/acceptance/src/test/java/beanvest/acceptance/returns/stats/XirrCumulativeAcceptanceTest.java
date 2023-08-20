@@ -1,7 +1,6 @@
 package beanvest.acceptance.returns.stats;
 
 import beanvest.acceptance.returns.ReturnsDsl;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class XirrCumulativeAcceptanceTest {
@@ -219,7 +218,6 @@ public class XirrCumulativeAcceptanceTest {
     }
 
     @Test
-    @Disabled("TODO")
     void shouldCalculateXirrForEachHolding() {
         dsl.setReportHoldings();
         dsl.setEnd("2023-01-01");
