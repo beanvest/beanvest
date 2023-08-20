@@ -9,10 +9,11 @@ export class Filters {
 	private readonly _columns: ColumnDtoById;
 	public legalOptions: OptionsDto;
 
-	private startDate: string | null = null;
-	private endDate: string | null = null;
+	public startDate: string | null = null;
+	public endDate: string | null = null;
+	public cumulative: boolean;
 	private readonly selectedColumns: string[];
-	private interval: string;
+	private interval: PeriodInterval;
 	private deltas: boolean;
 
 	public static createEmpty() {
@@ -23,6 +24,7 @@ export class Filters {
 	}
 
 	private constructor(options: OptionsDto) {
+		this.cumulative = false;
 		this.selectedColumns = [];
 		this._columns = options.columns.reduce(function (map, obj) {
 			map[obj.id] = obj;
@@ -65,7 +67,11 @@ export class Filters {
 		this.interval = interval;
 	}
 
-	getInterval(): string {
+	getInterval(): PeriodInterval {
 		return this.interval;
+	}
+
+	getSelectedColumnsIds() {
+		return this.selectedColumns;
 	}
 }
