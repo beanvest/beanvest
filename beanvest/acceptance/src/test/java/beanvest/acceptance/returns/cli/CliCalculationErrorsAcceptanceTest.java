@@ -48,7 +48,6 @@ public class CliCalculationErrorsAcceptanceTest {
     }
 
     @Test
-    @Disabled("rework v2: warnings are missing")
     void showsWarningIfHoldingHasNoPricesAtAll() {
         dsl.setEnd("2022-02-01");
         dsl.setColumns("ugain");
@@ -63,7 +62,6 @@ public class CliCalculationErrorsAcceptanceTest {
     }
 
     @Test
-    @Disabled("rework v2: warnings are missing")
     void showsWarningIfLastKnownPriceIsTooOld() {
         dsl.setEnd("2022-02-01");
         dsl.setColumns("ugain");
