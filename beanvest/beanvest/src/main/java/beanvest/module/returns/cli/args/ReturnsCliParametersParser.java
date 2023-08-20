@@ -1,17 +1,14 @@
 package beanvest.module.returns.cli.args;
 
-import beanvest.module.returns.ReturnsAppParameters;
+import beanvest.module.returns.StatDefinition;
 import beanvest.processor.CollectionMode;
+import beanvest.processor.processingv2.EntitiesToInclude;
 import beanvest.processor.time.PeriodInterval;
 import picocli.CommandLine;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class ReturnsCliParametersParser {
 
@@ -29,11 +26,28 @@ public class ReturnsCliParametersParser {
         var period = parseResult.matchedOptionValue("--interval", PeriodInterval.NONE);
         var grouping = parseResult.matchedOptionValue("--groups", AccountGroupingCliArg.DEFAULT).mappedValue;
         var onlyDeltas = parseResult.matchedOptionValue("--delta", false);
-        var selectedColumns = Arrays.stream(parseResult.matchedOptionValue("--columns", new ColumnCliArg[0])).map(c -> onlyDeltas ? c.periodicColumn : c.column).collect(Collectors.toList());
+        var selectedColumns = getCollect(parseResult, onlyDeltas);
+
+        var entitiesToInclude = new EntitiesToInclude(grouping.includesGroups(), grouping.includesAccounts(), reportInvestments);
 
         var collectionMode = onlyDeltas ? CollectionMode.DELTA : CollectionMode.CUMULATIVE;
-        return new ReturnsAppParameters(journalsPaths, endDate, startDate, accountFilter, reportCurrency, selectedColumns,
-                jsonFormat, period, grouping, collectionMode, "TOTAL", reportInvestments);
+        return new ReturnsAppParameters(journalsPaths, endDate, startDate, accountFilter, reportCurrency, selectedColumns.statColumns, selectedColumns.accountMetadataColumns,
+                jsonFormat, period,  collectionMode, "TOTAL", entitiesToInclude);
+    }
+
+    private SelectedColumns getCollect(CommandLine.ParseResult parseResult, Boolean onlyDeltas) {
+        var statColumns = new ArrayList<StatDefinition>();
+        var metaColumns = new ArrayList<AccountMetaColumn>();
+        for (CliColumnValue cliColumnValue : parseResult.matchedOptionValue("--columns", new CliColumnValue[0])) {
+            if (cliColumnValue.cliColumn instanceof StatColumn c) {
+                statColumns.add(onlyDeltas ? c.periodicStat() : c.cumulativeStat());
+            } else if (cliColumnValue.cliColumn instanceof AccountMetaColumn c) {
+                metaColumns.add(c);
+            } else {
+                throw new IllegalArgumentException("Unsupported column type: " + cliColumnValue.cliColumn.getClass().getName());
+            }
+        }
+        return new SelectedColumns(statColumns, metaColumns);
     }
 
     private static LocalDate getEndDate(CommandLine.ParseResult parseResult, LocalDate today) {
@@ -43,4 +57,7 @@ public class ReturnsCliParametersParser {
         }
         return LocalDate.parse(text);
     }
+
+    record SelectedColumns(List<StatDefinition> statColumns, List<AccountMetaColumn> accountMetadataColumns)
+    {}
 }

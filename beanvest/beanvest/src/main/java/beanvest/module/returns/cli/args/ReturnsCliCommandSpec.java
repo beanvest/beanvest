@@ -38,7 +38,7 @@ public class ReturnsCliCommandSpec {
                     .build())
             .addOption(CommandLine.Model.OptionSpec.builder("--columns", "-c")
                     .type(String.class)
-                    .auxiliaryTypes(ColumnCliArg[].class)
+                    .auxiliaryTypes(CliColumnValue[].class)
                     .description("Comma-separated column selection. Eg 'rgain,xirr'. Available columns: "
                             + Arrays.stream(StatDefinition.values())
                             .map(c -> "\n  * \"" + c.header.toLowerCase(Locale.ROOT) + "\" - " + c.name)

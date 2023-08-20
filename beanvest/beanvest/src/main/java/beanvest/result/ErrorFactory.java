@@ -11,7 +11,7 @@ public class ErrorFactory {
     }
 
     public static UserErrors xirrNoTransactions() {
-        return new UserErrors(ErrorEnum.XIRR_NO_TRANSACTIONS);
+        return new UserErrors(ErrorEnum.NO_DATA_YET);
     }
 
     public static UserErrors accountNotOpenYet() {

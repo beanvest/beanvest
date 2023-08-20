@@ -1,7 +1,8 @@
-package beanvest.module.returns;
+package beanvest.module.returns.cli.args;
 
+import beanvest.module.returns.StatDefinition;
 import beanvest.processor.CollectionMode;
-import beanvest.processor.processingv2.Grouping;
+import beanvest.processor.processingv2.EntitiesToInclude;
 import beanvest.processor.time.PeriodInterval;
 
 import java.nio.file.Path;
@@ -17,10 +18,10 @@ public record ReturnsAppParameters(
         String accountFilter,
         Optional<String> reportCurrency,
         List<StatDefinition> selectedColumns,
+        List<AccountMetaColumn> accountMetadataColumns,
         Boolean jsonFormat,
         PeriodInterval period,
-        Grouping grouping,
         CollectionMode collectionMode,
         String total,
-        Boolean reportInvestments) {
+        EntitiesToInclude entitiesToInclude) implements ReturnsParameters {
 }

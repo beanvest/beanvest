@@ -1,11 +1,13 @@
 package beanvest.module.returns.cli;
 
 import beanvest.lib.clitable.Column;
+import beanvest.lib.clitable.ColumnPadding;
 import beanvest.lib.clitable.TableWriter;
 import beanvest.module.returns.StatDefinition;
+import beanvest.module.returns.cli.args.AccountMetaColumn;
+import beanvest.module.returns.cli.columns.CliColumnValueFormatter;
 import beanvest.module.returns.cli.columns.ColumnSpec;
-import beanvest.module.returns.cli.columns.ColumnValueFormatter;
-import beanvest.module.returns.cli.columns.ReportColumnsDefinition;
+import beanvest.module.returns.cli.columns.ValueFormatter;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
@@ -13,23 +15,30 @@ import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class CliTablePrinter {
-    public static final Map<String, Function<BigDecimal, String>> CUSTOM_FORMATTERS = Map.of(
-            StatDefinition.XIRR.header, ColumnValueFormatter::actuallyFormatXirr,
-            StatDefinition.XIRR_PERIOD.header, ColumnValueFormatter::actuallyFormatXirr
+    public static final Map<String, CliColumnValueFormatter> CUSTOM_FORMATTERS = Map.of(
+            StatDefinition.XIRR.header, ValueFormatter::xirr,
+            StatDefinition.XIRR_PERIOD.header, ValueFormatter::xirr
     );
     private final TableWriter tableWriter = new TableWriter().setMinColumnWidth(5);
 
-    public void printCliOutput(PortfolioStatsDto2 stats, PrintStream output, List<String> selectedColumns, CollectionMode collectionMode) {
+    public void printCliOutput(
+            List<AccountMetaColumn> accountMetadataColumns,
+            PortfolioStatsDto2 stats,
+            PrintStream output,
+            List<String> selectedColumns,
+            CollectionMode collectionMode) {
         var periods = new ArrayList<>(stats.periods());
         Collections.reverse(periods);
 
-        var columns = createColumns(selectedColumns, collectionMode, periods);
+
+        List<Column<AccountDto2>> columns = new ArrayList<>();
+        columns.add(new Column<>("Account", ColumnPadding.LEFT, AccountDto2::account));
+        columns.addAll(createAccountMetaColumns(accountMetadataColumns));
+        columns.addAll(createStatsColumns(selectedColumns, collectionMode, periods));
 
         var writer = new StringWriter();
         try {
@@ -40,7 +49,13 @@ public class CliTablePrinter {
         output.print(writer);
     }
 
-    private List<Column<AccountDto2>> createColumns(List<String> selectedColumns, CollectionMode collectionMode, List<String> periods) {
+    private List<Column<AccountDto2>> createAccountMetaColumns(List<AccountMetaColumn> accountMetadataColumns) {
+        return accountMetadataColumns.stream()
+                .map(col -> new Column<>(col.shortName(), ColumnPadding.RIGHT, col.extractor()))
+                .toList();
+    }
+
+    private List<Column<AccountDto2>> createStatsColumns(List<String> selectedColumns, CollectionMode collectionMode, List<String> periods) {
         var statsByName = Arrays.stream(StatDefinition.values())
                 .collect(Collectors.toMap(s -> s.header, s -> s));
 
@@ -48,8 +63,6 @@ public class CliTablePrinter {
                 .collect(Collectors.groupingBy(s -> statsByName.get(s).type == StatDefinition.StatType.ACCOUNT));
 
         var columns = new ArrayList<Column<AccountDto2>>();
-        columns.add(ReportColumnsDefinition.COLUMNS_ACCOUNT.get(ReportColumnsDefinition.ACCOUNT_COLUMN));
-        columns.addAll(createAccountColumns(mapByIsAccountColumn.getOrDefault(true, List.of())));
         columns.addAll(createNonAccountColumns(collectionMode, periods, mapByIsAccountColumn.getOrDefault(false, List.of())));
         return columns;
     }
@@ -67,14 +80,6 @@ public class CliTablePrinter {
         }
     }
 
-    private ArrayList<Column<AccountDto2>> createAccountColumns(List<String> columnNames) {
-        var columns2 = new ArrayList<Column<AccountDto2>>();
-        for (String stat : columnNames) {
-            columns2.add(ReportColumnsDefinition.COLUMNS_ACCOUNT.get(stat));
-        }
-        return columns2;
-    }
-
     private List<Column<AccountDto2>> createPeriodicColumns(List<String> selectedColumns, String period, Optional<String> group, CollectionMode collectionMode) {
         var statsByName = Arrays.stream(StatDefinition.values())
                 .collect(Collectors.toMap(s -> s.header, s -> s));
@@ -88,8 +93,7 @@ public class CliTablePrinter {
                 .toList();
     }
 
-    private Function<BigDecimal, String> getFormatter(ColumnSpec spec) {
-        return CUSTOM_FORMATTERS.getOrDefault(spec.statsDefinition().header, (s) -> ColumnValueFormatter.formatMoney(false, s));
+    private CliColumnValueFormatter getFormatter(ColumnSpec spec) {
+        return CUSTOM_FORMATTERS.getOrDefault(spec.statsDefinition().header, ValueFormatter::money);
     }
-
 }

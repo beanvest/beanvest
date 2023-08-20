@@ -3,7 +3,7 @@ package beanvest.options;
 
 import beanvest.SubCommand;
 import beanvest.lib.util.gson.GsonFactory;
-import beanvest.module.returns.cli.args.ColumnCliArg;
+import beanvest.module.returns.cli.args.CliColumnValue;
 import beanvest.processor.time.PeriodInterval;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
@@ -21,8 +21,8 @@ public class OptionsCliCommand implements SubCommand {
     private static final Logger LOGGER = getLogger(OptionsCliCommand.class.getName());
 
     public int run(CommandLine.ParseResult subcommand, PrintStream stdOut, PrintStream stdErr) {
-        var list = Stream.of(ColumnCliArg.values())
-                .map(columnCliArg -> new ColumnDto(columnCliArg.name(), columnCliArg.fullName))
+        var list = Stream.of(CliColumnValue.values())
+                .map(columnCliArg -> new ColumnDto(columnCliArg.name(), columnCliArg.cliColumn.description()))
                 .toList();
         var json = getGson().toJson(new OptionsDto(list, List.of(PeriodInterval.values())));
         stdOut.println(json);

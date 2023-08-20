@@ -15,10 +15,10 @@ public class AccountsTracker implements ProcessorV2 {
     private final boolean includeGroups;
     private final boolean includeAccounts;
 
-    public AccountsTracker(Grouping grouping, boolean includeInvestments) {
-        this.includeInvestments = includeInvestments;
-        this.includeAccounts = grouping.includesAccounts();
-        this.includeGroups = grouping.includesGroups();
+    public AccountsTracker(EntitiesToInclude entitiesToInclude) {
+        this.includeInvestments = entitiesToInclude.holdings();
+        this.includeAccounts = entitiesToInclude.accounts();
+        this.includeGroups = entitiesToInclude.groups();
     }
 
     @Override

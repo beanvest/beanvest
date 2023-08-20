@@ -1,5 +1,6 @@
 package beanvest.module.returns;
 
+import beanvest.module.returns.cli.args.AccountMetaColumn;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
@@ -14,18 +15,20 @@ public class CliTableOutputWriter implements CliOutputWriter {
     private final PrintStream stdOut;
     private final PrintStream stdErr;
     private final CliTablePrinter cliTablePrinter;
+    private final List<AccountMetaColumn> accountMetadataColumns;
 
-    public CliTableOutputWriter(PrintStream stdOut, PrintStream stdErr, CliTablePrinter cliTablePrinter) {
+    public CliTableOutputWriter(PrintStream stdOut, PrintStream stdErr, CliTablePrinter cliTablePrinter, List<AccountMetaColumn> accountMetadataColumns) {
         this.stdOut = stdOut;
         this.stdErr = stdErr;
         this.cliTablePrinter = cliTablePrinter;
+        this.accountMetadataColumns = accountMetadataColumns;
     }
 
     @Override
     public void outputResult(List<StatDefinition> selectedColumns, PortfolioStatsDto2 portfolioStats, CollectionMode collectionMode) {
         portfolioStats.userErrors().forEach(stdErr::println);
         var columnsStringIds = selectedColumns.stream().map(s -> s.header).collect(Collectors.toList());
-        this.cliTablePrinter.printCliOutput(portfolioStats, stdOut, columnsStringIds, collectionMode);
+        this.cliTablePrinter.printCliOutput(accountMetadataColumns, portfolioStats, stdOut, columnsStringIds, collectionMode);
     }
 
     @Override

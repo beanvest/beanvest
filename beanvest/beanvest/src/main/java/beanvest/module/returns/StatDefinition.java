@@ -5,8 +5,6 @@ import beanvest.processor.processingv2.processor.*;
 import beanvest.processor.processingv2.processor.periodic.*;
 
 public enum StatDefinition {
-    OPENED("Opened", "opening date", null, StatType.ACCOUNT),
-    CLOSED("Closed", "closing date", null, StatType.ACCOUNT),
     DEPOSITS("Deps", "deposits", DepositsCalculator.class, StatType.CUMULATIVE),
     DEPOSITS_PERIOD("pDeps", "deposits per period", PeriodDepositCalculator.class, StatType.PERIODIC),
     WITHDRAWALS("Wths", "withdrawals", WithdrawalCalculator.class, StatType.CUMULATIVE),

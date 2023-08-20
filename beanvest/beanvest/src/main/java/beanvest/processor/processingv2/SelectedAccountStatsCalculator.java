@@ -72,7 +72,7 @@ public class SelectedAccountStatsCalculator {
                 var stat = calculator.calculate(new CalculationParams(account, period.startDate(), period.endDate(), targetCurrency));
                 stats.put(id, stat);
             }
-            result.put(account.stringId(), new StatsV2(stats, getMetadata(account)));
+            result.put(account.stringId(), new StatsV2(stats));
         }
         return result;
     }

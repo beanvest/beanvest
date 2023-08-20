@@ -1,19 +1,17 @@
 package beanvest.module.returns;
 
+import beanvest.module.returns.cli.args.ReturnsAppParameters;
+import beanvest.module.returns.cli.args.ReturnsParameters;
 import beanvest.parser.JournalParser;
-import beanvest.processor.CollectionMode;
 import beanvest.processor.JournalNotFoundException;
 import beanvest.processor.JournalReportGenerator;
-import beanvest.processor.processingv2.Grouping;
-import beanvest.processor.processingv2.PeriodSpec;
 import beanvest.processor.processingv2.AccountsTracker;
-import beanvest.processor.time.PeriodInterval;
+import beanvest.processor.processingv2.PeriodSpec;
+import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
+import beanvest.processor.processingv2.validator.ValidatorError;
 
-import java.nio.file.Path;
-import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static beanvest.processor.processingv2.PeriodInclusion.EXCLUDE_UNFINISHED;
@@ -29,39 +27,35 @@ public class ReturnsCalculatorApp {
         this.journalParser = journalParser;
     }
 
-    public Result run(List<Path> journalsPaths,
-                      List<StatDefinition> selectedColumns,
-                      LocalDate endDate,
-                      String accountFilter,
-                      Grouping grouping,
-                      LocalDate startDate,
-                      PeriodInterval interval,
-                      CollectionMode statsMode,
-                      boolean reportInvestments) {
+    public Result run(ReturnsAppParameters params) {
         boolean isSuccessful = true;
         try {
-            var journal = journalParser.parse(journalsPaths);
-            if (journal.getEntries().isEmpty()) {
-                throw new RuntimeException("Oops! No entries found.");
-            }
-            var periodSpec = new PeriodSpec(startDate, endDate, interval);
-            var accountsTracker = new AccountsTracker(grouping, reportInvestments);
-
-            var statsToCalculate = convertToCalculatorMap(selectedColumns);
-            var statsResult2 = statsCalculator.calculateStats(
-                    accountsTracker, journal, accountFilter, periodSpec, EXCLUDE_UNFINISHED, statsToCalculate);
+            var statsResult2 = calculateStatistics(params);
 
             if (statsResult2.hasError()) {
                 outputWriter.outputInputErrors(statsResult2.error());
                 isSuccessful = false;
             } else {
-                outputWriter.outputResult(selectedColumns, statsResult2.value(), statsMode);
+                outputWriter.outputResult(params.selectedColumns(), statsResult2.value(), params.collectionMode());
             }
         } catch (JournalNotFoundException e) {
             outputWriter.outputException(e);
             isSuccessful = false;
         }
         return isSuccessful ? Result.OK : Result.ERROR;
+    }
+
+    private beanvest.result.Result<PortfolioStatsDto2, List<ValidatorError>> calculateStatistics(ReturnsParameters params) {
+        var accountsTracker = new AccountsTracker(params.entitiesToInclude());
+        var journal = journalParser.parse(params.journalsPaths());
+        if (journal.getEntries().isEmpty()) {
+            throw new RuntimeException("Oops! No entries found.");
+        }
+        var periodSpec = new PeriodSpec(params.startDate(), params.endDate(), params.period());
+
+        var statsToCalculate = convertToCalculatorMap(params.selectedColumns());
+        return statsCalculator.calculateStats(
+                accountsTracker, journal, params.accountFilter(), periodSpec, EXCLUDE_UNFINISHED, statsToCalculate);
     }
 
     private static LinkedHashMap<String, Class<?>> convertToCalculatorMap(List<StatDefinition> selectedColumns) {

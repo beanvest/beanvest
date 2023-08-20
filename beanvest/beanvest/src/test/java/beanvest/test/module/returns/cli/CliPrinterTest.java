@@ -1,8 +1,8 @@
 package beanvest.test.module.returns.cli;
 
 import beanvest.module.returns.cli.CliTablePrinter;
+import beanvest.module.returns.cli.args.AccountMetaColumn;
 import beanvest.processor.CollectionMode;
-import beanvest.processor.processingv2.AccountMetadata;
 import beanvest.processor.processingv2.dto.AccountDto2;
 import beanvest.processor.processingv2.dto.PortfolioStatsDto2;
 import beanvest.processor.processingv2.dto.StatsV2;
@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static beanvest.module.returns.cli.args.CliColumnValue.opened;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CliPrinterTest {
@@ -25,7 +26,7 @@ class CliPrinterTest {
     void sampleCliOutput() {
         var cliPrinter = new CliTablePrinter();
         var res = new PortfolioStatsDto2(List.of("Trading:Serious"), List.of("2021", "2022"),
-                List.of("Xirr"),
+                List.of("Xirr,Opened"),
                 List.of(new AccountDto2("Trading:Serious",
                         LocalDate.parse("2020-01-01"),
                         Optional.empty(),
@@ -38,11 +39,12 @@ class CliPrinterTest {
                                         .build())
                 )), List.of());
 
-        var selectedColumns = List.of("Opened,Xirr".split(","));
+        var selectedColumns = List.of("Xirr");
 
         var outputStream = new ByteArrayOutputStream();
         var printStream = new PrintStream(outputStream, true, StandardCharsets.UTF_8);
-        cliPrinter.printCliOutput(res, printStream, selectedColumns, CollectionMode.CUMULATIVE);
+        cliPrinter.printCliOutput(List.of((AccountMetaColumn) opened.cliColumn), res, printStream, selectedColumns,
+                CollectionMode.CUMULATIVE);
         printStream.flush();
 
         var s = outputStream.toString();
@@ -54,16 +56,10 @@ class CliPrinterTest {
     }
 
     private static class StatsV2Builder {
-        private String accountGain;
         private String xirr;
 
         public static StatsV2Builder builder() {
             return new StatsV2Builder();
-        }
-
-        public StatsV2Builder setAccountGain(String accountGain) {
-            this.accountGain = accountGain;
-            return this;
         }
 
         public StatsV2Builder setXirr(String xirr) {
@@ -73,13 +69,10 @@ class CliPrinterTest {
 
         public StatsV2 build() {
             Map<String, Result<BigDecimal, beanvest.result.UserErrors>> stringResultMap = new java.util.HashMap<>();
-            if (accountGain != null) {
-                stringResultMap.put("AGain", Result.success(new BigDecimal(accountGain)));
-            }
             if (xirr != null) {
                 stringResultMap.put("Xirr", Result.success(new BigDecimal(xirr)));
             }
-            return new StatsV2(stringResultMap, new AccountMetadata(LocalDate.parse("2019-01-01"), Optional.empty()));
+            return new StatsV2(stringResultMap);
         }
     }
 }

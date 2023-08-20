@@ -2,6 +2,7 @@ package beanvest.module.returns;
 
 import beanvest.SubCommand;
 import beanvest.module.returns.cli.CliTablePrinter;
+import beanvest.module.returns.cli.args.ReturnsAppParameters;
 import beanvest.module.returns.cli.args.ReturnsCliCommandSpec;
 import beanvest.module.returns.cli.args.ReturnsCliParametersParser;
 import beanvest.parser.JournalParser;
@@ -28,16 +29,10 @@ public class ReturnsCliCommand implements SubCommand {
         var cliTablePrinter = new CliTablePrinter();
         var cliOutputWriter = params.jsonFormat()
                 ? new CliJsonOutputWriter(stdOut, stdErr)
-                : new CliTableOutputWriter(stdOut, stdErr, cliTablePrinter);
+                : new CliTableOutputWriter(stdOut, stdErr, cliTablePrinter, params.accountMetadataColumns());
         var journalParser = new JournalParser();
         var returnsCalculator = new ReturnsCalculatorApp(cliOutputWriter, journalParser);
 
-        return returnsCalculator.run(
-                params.journalsPaths(),
-                params.selectedColumns(), params.endDate(),
-                params.accountFilter(),
-                params.grouping(), params.startDate(),
-                params.period(), params.collectionMode(), params.reportInvestments()
-        );
+        return returnsCalculator.run(params);
     }
 }
