@@ -22,7 +22,7 @@
 
 <div>
     {#if report}
-        <table>
+        <table class="table table-bordered">
             <tr>
                 <td/>
                 {#each report.periods as period}
@@ -55,11 +55,11 @@
 </div>
 
 <style>
-    table td {
-        padding: 5px;
-    }
-
     td.value {
         text-align: right;
+    }
+    td, th {
+        border-left: 1px solid lightgray;
+        padding: 0 0.4em;
     }
 </style>
