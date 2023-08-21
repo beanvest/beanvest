@@ -1,7 +1,7 @@
 <script lang="ts">
     import {onMount} from 'svelte';
-    import {fetchOptions} from '$lib/beanvest/api.ts';
-    import {Filters} from '$lib/beanvest/filters.ts';
+    import {fetchOptions} from '$lib/beanvest/api';
+    import {Filters} from '$lib/beanvest/filters';
     import {buildQuery} from "$lib/beanvest/query";
 
     let filters: Filters;

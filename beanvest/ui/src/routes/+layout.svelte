@@ -19,14 +19,17 @@
 				<a href="/" class="nav-link text-white" aria-current="page"> Home </a>
 			</li>
 			<li>
-				<a href="/accounts" class="nav-link text-white"> Dashboard </a>
+				<a href="/filters" class="nav-link text-white"> Filters </a>
+			</li>
+			<li>
+				<a href="/reports" class="nav-link text-white"> Reports </a>
 			</li>
 		</ul>
 	</div>
 
 	<div class="b-example-divider b-example-vr" />
 
-	<div class="d-flex w-100 p-3 bg-body-tertiary" style="width: 500px;">
+	<div class="w-100 p-3 bg-body-tertiary" style="width: 500px;">
 		<slot />
 	</div>
 </main>
