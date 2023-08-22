@@ -7,7 +7,7 @@
     let report: PortfolioStatsDto2;
     $: report = null;
 
-    async function fetchReport(num: int) {
+    async function fetchReport(num: number) {
         const response = await fetch(apiURL.replace("%s", num.toString()));
 
         report = await response.json();
