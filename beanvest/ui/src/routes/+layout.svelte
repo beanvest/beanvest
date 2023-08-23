@@ -24,6 +24,9 @@
 			<li>
 				<a href="/reports" class="nav-link text-white"> Reports </a>
 			</li>
+			<li>
+				<a href="/charts" class="nav-link text-white"> Charts </a>
+			</li>
 		</ul>
 	</div>
 

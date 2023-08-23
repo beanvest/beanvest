@@ -1,9 +1,10 @@
 <script lang="ts">
     import {onMount} from 'svelte';
     import {PortfolioStatsDto2} from '$lib/imported/apiTypes.d.ts';
+    import Chart from "./Chart.svelte";
 
     const apiURL = 'http://localhost:5173/sample%s.json';
-    export let sampleNumber = 1;
+    export let sampleNumber = 3;
     let report: PortfolioStatsDto2;
     $: report = null;
 
@@ -22,6 +23,7 @@
 
 <div>
     {#if report}
+        <Chart report="{report}"/>
         <table class="table table-bordered">
             <tr>
                 <td/>
