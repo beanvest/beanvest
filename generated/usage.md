@@ -41,3 +41,16 @@
   saving:savings      │  3,240   -120 │  2,700   -100 │  2,160    -80 │  1,620    -60 │ 1,080    -40 │   540    -20 │
   trading             │ 18,000      0 │ 15,000      0 │ 12,000      0 │  9,000      0 │ 6,000      0 │ 3,000      0 │
   ```
+- Print changes in deposits and withdrawals for accounts and groups for each quarter
+  ```bash
+  beanvest returns sample --end=2023-07-01 --columns deps,wths --interval=quarter --delta
+  ```
+  ```
+                      ╷ 23q2         ╷ 23q1         ╷ 22q4         ╷ 22q3         ╷ 22q2         ╷ 22q1         ╷
+  Account             │ pDeps  pWths │ pDeps  pWths │ pDeps  pWths │ pDeps  pWths │ pDeps  pWths │ pDeps  pWths │
+  .*                  │ 3,540    -20 │ 3,540    -20 │ 4,290    -20 │ 4,290    -20 │ 4,290    -20 │ 4,290    -20 │
+  saving:.*           │   540    -20 │   540    -20 │ 1,290    -20 │ 1,290    -20 │ 1,290    -20 │ 1,290    -20 │
+  saving:regularSaver │     0      0 │     0      0 │   750      0 │   750      0 │   750      0 │   750      0 │
+  saving:savings      │   540    -20 │   540    -20 │   540    -20 │   540    -20 │   540    -20 │   540    -20 │
+  trading             │ 3,000      0 │ 3,000      0 │ 3,000      0 │ 3,000      0 │ 3,000      0 │ 3,000      0 │
+  ```

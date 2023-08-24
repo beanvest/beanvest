@@ -1,0 +1,379 @@
+{
+  "accounts": {
+    ".*": {
+      "name": "",
+      "id": "G/.*",
+      "level": 0,
+      "type": "GROUP"
+    },
+    "saving:.*": {
+      "name": "saving",
+      "id": "G/saving:.*",
+      "level": 1,
+      "type": "GROUP"
+    },
+    "saving:regularSaver": {
+      "name": "regularSaver",
+      "id": "A/saving:regularSaver",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
+    "saving:savings": {
+      "name": "savings",
+      "id": "A/saving:savings",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
+    "trading": {
+      "name": "trading",
+      "id": "A/trading",
+      "level": 0,
+      "type": "ACCOUNT"
+    }
+  },
+  "periods": [
+    "22q1",
+    "22q2",
+    "22q3",
+    "22q4",
+    "23q1",
+    "23q2"
+  ],
+  "stats": [
+    "pDeps",
+    "pWths"
+  ],
+  "accountDtos": [
+    {
+      "account": ".*",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "22q4": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 4290
+            }
+          }
+        },
+        "22q3": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 4290
+            }
+          }
+        },
+        "23q2": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 3540
+            }
+          }
+        },
+        "22q2": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 4290
+            }
+          }
+        },
+        "23q1": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 3540
+            }
+          }
+        },
+        "22q1": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 4290
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:.*",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "22q4": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 1290
+            }
+          }
+        },
+        "22q3": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 1290
+            }
+          }
+        },
+        "23q2": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 540
+            }
+          }
+        },
+        "22q2": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 1290
+            }
+          }
+        },
+        "23q1": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 540
+            }
+          }
+        },
+        "22q1": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 1290
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:regularSaver",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "22q4": {
+          "stats": {
+            "pWths": {
+              "value": 0
+            },
+            "pDeps": {
+              "value": 750
+            }
+          }
+        },
+        "22q3": {
+          "stats": {
+            "pWths": {
+              "value": 0
+            },
+            "pDeps": {
+              "value": 750
+            }
+          }
+        },
+        "23q2": {
+          "stats": {
+            "pWths": {
+              "value": 0
+            },
+            "pDeps": {
+              "value": 0
+            }
+          }
+        },
+        "22q2": {
+          "stats": {
+            "pWths": {
+              "value": 0
+            },
+            "pDeps": {
+              "value": 750
+            }
+          }
+        },
+        "23q1": {
+          "stats": {
+            "pWths": {
+              "value": 0
+            },
+            "pDeps": {
+              "value": 0
+            }
+          }
+        },
+        "22q1": {
+          "stats": {
+            "pWths": {
+              "value": 0
+            },
+            "pDeps": {
+              "value": 750
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:savings",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "22q4": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 540
+            }
+          }
+        },
+        "22q3": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 540
+            }
+          }
+        },
+        "23q2": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 540
+            }
+          }
+        },
+        "22q2": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 540
+            }
+          }
+        },
+        "23q1": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 540
+            }
+          }
+        },
+        "22q1": {
+          "stats": {
+            "pWths": {
+              "value": -20
+            },
+            "pDeps": {
+              "value": 540
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "trading",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "22q4": {
+          "stats": {
+            "pWths": {
+              "value": 0
+            },
+            "pDeps": {
+              "value": 3000
+            }
+          }
+        },
+        "22q3": {
+          "stats": {
+            "pWths": {
+              "value": 0
+            },
+            "pDeps": {
+              "value": 3000
+            }
+          }
+        },
+        "23q2": {
+          "stats": {
+            "pWths": {
+              "value": 0
+            },
+            "pDeps": {
+              "value": 3000
+            }
+          }
+        },
+        "22q2": {
+          "stats": {
+            "pWths": {
+              "value": 0
+            },
+            "pDeps": {
+              "value": 3000
+            }
+          }
+        },
+        "23q1": {
+          "stats": {
+            "pWths": {
+              "value": 0
+            },
+            "pDeps": {
+              "value": 3000
+            }
+          }
+        },
+        "22q1": {
+          "stats": {
+            "pWths": {
+              "value": 0
+            },
+            "pDeps": {
+              "value": 3000
+            }
+          }
+        }
+      }
+    }
+  ],
+  "userErrors": []
+}
