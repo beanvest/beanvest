@@ -3,9 +3,7 @@ package beanvest.test.module.returns.cli;
 import beanvest.module.returns.cli.CliTablePrinter;
 import beanvest.module.returns.cli.args.AccountMetaColumn;
 import beanvest.processor.CollectionMode;
-import beanvest.processor.dto.AccountDto2;
-import beanvest.processor.dto.PortfolioStatsDto2;
-import beanvest.processor.dto.StatsV2;
+import beanvest.processor.dto.*;
 import beanvest.result.Result;
 import beanvest.result.StatErrors;
 import org.junit.jupiter.api.Test;
@@ -26,7 +24,7 @@ class CliPrinterTest {
     @Test
     void sampleCliOutput() {
         var cliPrinter = new CliTablePrinter();
-        var res = new PortfolioStatsDto2(List.of("Trading:Serious"), List.of("2021", "2022"),
+        var res = new PortfolioStatsDto2(Map.of("Trading:Serious", new AccountDetailsDto("Serious", "A/Trading:Serious", 1, EntityType.ACCOUNT)), List.of("2021", "2022"),
                 List.of("Xirr,Opened"),
                 List.of(new AccountDto2("Trading:Serious",
                         LocalDate.parse("2020-01-01"),

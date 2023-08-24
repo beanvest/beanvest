@@ -33,7 +33,12 @@ public record AccountInstrumentHolding(Account2 account2, String holding) implem
 
     @Override
     public String stringId() {
-        return account2.stringId() + ":" + holding;
+        return "H/" + id();
+    }
+
+    @Override
+    public String id() {
+        return account2.id() + ":" + holding;
     }
 
     @Override
@@ -44,6 +49,11 @@ public record AccountInstrumentHolding(Account2 account2, String holding) implem
     @Override
     public boolean isCashHolding() {
         return false;
+    }
+
+    @Override
+    public String name() {
+        return holding;
     }
 
     @Override

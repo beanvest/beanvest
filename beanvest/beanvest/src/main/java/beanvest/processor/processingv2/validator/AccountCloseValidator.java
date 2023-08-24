@@ -37,7 +37,7 @@ public class AccountCloseValidator implements Validator {
     private static ValidatorError createValidationError(Close close, List<Holding> holdings) {
         return new ValidatorError(
                 "Account `%s` is not empty on %s and can't be closed. Holdings: %s."
-                        .formatted(close.account2().stringId(), close.date(), makeHoldingsPrintable(holdings)), close.originalLine().toString());
+                        .formatted(close.account2().id(), close.date(), makeHoldingsPrintable(holdings)), close.originalLine().toString());
     }
 
     private static String makeHoldingsPrintable(List<Holding> holdings) {

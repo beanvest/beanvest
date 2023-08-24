@@ -22,6 +22,11 @@ public record Group(List<String> parts) implements Entity {
 
     @Override
     public String stringId() {
+        return "G/" + id();
+    }
+
+    @Override
+    public String id() {
         var groupString = actualStringId();
         return groupString.isEmpty() ? ".*" : groupString + ":.*";
     }
@@ -34,6 +39,11 @@ public record Group(List<String> parts) implements Entity {
     @Override
     public boolean isCashHolding() {
         return false;
+    }
+
+    @Override
+    public String name() {
+        return String.join(".", parts);
     }
 
     String actualStringId() {
@@ -86,5 +96,9 @@ public record Group(List<String> parts) implements Entity {
     public String toString()
     {
         return "G/" + stringId();
+    }
+
+    public int levels() {
+        return parts.size();
     }
 }

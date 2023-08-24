@@ -1,11 +1,36 @@
 {
-  "accounts": [
-    ".*",
-    "saving:.*",
-    "saving:regularSaver",
-    "saving:savings",
-    "trading"
-  ],
+  "accounts": {
+    ".*": {
+      "name": "",
+      "id": "G/.*",
+      "level": 0,
+      "type": "GROUP"
+    },
+    "saving:.*": {
+      "name": "saving",
+      "id": "G/saving:.*",
+      "level": 1,
+      "type": "GROUP"
+    },
+    "saving:regularSaver": {
+      "name": "regularSaver",
+      "id": "A/saving:regularSaver",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
+    "saving:savings": {
+      "name": "savings",
+      "id": "A/saving:savings",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
+    "trading": {
+      "name": "trading",
+      "id": "A/trading",
+      "level": 0,
+      "type": "ACCOUNT"
+    }
+  },
   "periods": [
     "TOTAL"
   ],

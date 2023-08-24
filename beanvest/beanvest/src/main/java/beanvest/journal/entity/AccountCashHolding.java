@@ -37,7 +37,12 @@ public record AccountCashHolding(Account2 account2, String holding) implements E
 
     @Override
     public String stringId() {
-        return account2.stringId() + ":" + holding;
+        return "C/" + id();
+    }
+
+    @Override
+    public String id() {
+        return account2.id() + ":" + holding;
     }
 
     @Override
@@ -48,6 +53,11 @@ public record AccountCashHolding(Account2 account2, String holding) implements E
     @Override
     public boolean isCashHolding() {
         return true;
+    }
+
+    @Override
+    public String name() {
+        return holding;
     }
 
     @Override

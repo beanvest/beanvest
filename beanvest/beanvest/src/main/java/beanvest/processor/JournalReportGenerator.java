@@ -15,8 +15,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class JournalReportGenerator {
-    private final AccountStatsGatherer accountStatsGatherer = new AccountStatsGatherer();
+    private AccountStatsGatherer accountStatsGatherer;
     private final PredicateFactory predicateFactory = new PredicateFactory();
+
+    public JournalReportGenerator() {
+    }
 
     public Result<PortfolioStatsDto2, List<ValidatorError>> calculateStats(
             AccountsTracker accountsResolver1,
@@ -25,7 +28,7 @@ public class JournalReportGenerator {
             PeriodSpec periodSpec,
             UnfinishedPeriodInclusion unfinishedPeriodInclusion,
             LinkedHashMap<String, Class<?>> statsToCalculate) {
-
+        accountStatsGatherer = new AccountStatsGatherer(accountsResolver1);
         var journalProcessor2 = new StatsCollectingJournalProcessor(accountsResolver1, statsToCalculate);
         var endOfPeriodTracker = new EndOfPeriodTracker(periodSpec, unfinishedPeriodInclusion,
                 period -> finishPeriod(period, periodSpec.start(), journalProcessor2));

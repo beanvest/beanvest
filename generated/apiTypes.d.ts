@@ -3,7 +3,7 @@
 // Generated using typescript-generator version 3.2.1263
 
 export class PortfolioStatsDto2 {
-    accounts: string[];
+    accounts: { [index: string]: AccountDetailsDto };
     periods: string[];
     stats: string[];
     accountDtos: AccountDto2[];
@@ -13,6 +13,13 @@ export class PortfolioStatsDto2 {
 export class OptionsDto {
     columns: ColumnDto[];
     intervals: PeriodInterval[];
+}
+
+export class AccountDetailsDto {
+    name: string;
+    id: string;
+    level: number;
+    type: EntityType;
 }
 
 export class AccountDto2 {
@@ -46,5 +53,7 @@ export class StatError {
 }
 
 export type PeriodInterval = "NONE" | "YEAR" | "QUARTER" | "MONTH";
+
+export type EntityType = "GROUP" | "ACCOUNT" | "HOLDING";
 
 export type StatErrorEnum = "PRICE_NEEDED" | "ACCOUNT_NOT_OPEN_YET" | "XIRR_CALCULATION_FAILURE" | "VALIDATION_ERROR" | "NO_DATA_YET";

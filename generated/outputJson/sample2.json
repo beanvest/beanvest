@@ -1,15 +1,60 @@
 {
-  "accounts": [
-    ".*",
-    "saving:.*",
-    "saving:regularSaver",
-    "saving:regularSaver:GBP",
-    "saving:savings",
-    "saving:savings:GBP",
-    "trading",
-    "trading:GBP",
-    "trading:SPX"
-  ],
+  "accounts": {
+    ".*": {
+      "name": "",
+      "id": "G/.*",
+      "level": 0,
+      "type": "GROUP"
+    },
+    "saving:.*": {
+      "name": "saving",
+      "id": "G/saving:.*",
+      "level": 1,
+      "type": "GROUP"
+    },
+    "saving:regularSaver": {
+      "name": "regularSaver",
+      "id": "A/saving:regularSaver",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
+    "saving:regularSaver:GBP": {
+      "name": "GBP",
+      "id": "C/saving:regularSaver:GBP",
+      "level": 1,
+      "type": "HOLDING"
+    },
+    "saving:savings": {
+      "name": "savings",
+      "id": "A/saving:savings",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
+    "saving:savings:GBP": {
+      "name": "GBP",
+      "id": "C/saving:savings:GBP",
+      "level": 1,
+      "type": "HOLDING"
+    },
+    "trading": {
+      "name": "trading",
+      "id": "A/trading",
+      "level": 0,
+      "type": "ACCOUNT"
+    },
+    "trading:GBP": {
+      "name": "GBP",
+      "id": "C/trading:GBP",
+      "level": 0,
+      "type": "HOLDING"
+    },
+    "trading:SPX": {
+      "name": "SPX",
+      "id": "H/trading:SPX",
+      "level": 0,
+      "type": "HOLDING"
+    }
+  },
   "periods": [
     "TOTAL"
   ],

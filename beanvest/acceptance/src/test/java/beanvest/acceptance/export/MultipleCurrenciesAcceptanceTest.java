@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-@Disabled("rework v2: relies on string account ids")
+@Disabled("rework v2: relies on string name ids")
 
 public class MultipleCurrenciesAcceptanceTest {
     protected AppRunner runner = AppRunnerFactory.createRunner(BeanvestMain.class, "export");
@@ -18,7 +18,7 @@ public class MultipleCurrenciesAcceptanceTest {
     @Test
     void otherCurrencyInTransactions() {
         var path = TestFiles.writeToTempFile("""
-                account Assets:Shares
+                name Assets:Shares
                 currency EUR
                                 
                 2022-02-02 deposit 22
@@ -56,7 +56,7 @@ public class MultipleCurrenciesAcceptanceTest {
     @Test
     void otherCurrencyInWithdrawals() {
         var path = TestFiles.writeToTempFile("""
-                account savings
+                name savings
                 currency EUR
                                 
                 2022-02-02 deposit 20
@@ -82,7 +82,7 @@ public class MultipleCurrenciesAcceptanceTest {
     @Test
     void otherCurrencyInFees() {
         var path = TestFiles.writeToTempFile("""
-                account savings
+                name savings
                 currency EUR
                                 
                 2022-02-02 deposit 20
@@ -108,7 +108,7 @@ public class MultipleCurrenciesAcceptanceTest {
     @Test
     void otherCurrencyInInterest() {
         var path = TestFiles.writeToTempFile("""
-                account savings
+                name savings
                 currency EUR
                                 
                 2022-02-02 deposit 20

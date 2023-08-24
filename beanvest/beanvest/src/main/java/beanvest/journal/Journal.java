@@ -65,14 +65,14 @@ public class Journal {
 
     public Journal filterByAccount(String accountFilter) {
         var filteredAccounts = accounts.values().stream()
-                .filter(a -> a.account().stringId().matches(accountFilter))
+                .filter(a -> a.account().id().matches(accountFilter))
                 .collect(Collectors.toSet());
         var filteredAccountsNames = filteredAccounts.stream()
-                .map(s -> s.account().stringId())
+                .map(s -> s.account().id())
                 .collect(Collectors.toSet());
         var filteredEntries = this.getEntries().stream().filter(entry -> {
             if (entry instanceof AccountOperation opp) {
-                return filteredAccountsNames.contains(opp.account2().stringId());
+                return filteredAccountsNames.contains(opp.account2().id());
             } else {
                 return true;
             }
@@ -81,7 +81,12 @@ public class Journal {
     }
 
     public LocalDate getStartDate() {
-        return getEntries().stream().filter(s -> s instanceof AccountOperation).map(s -> (AccountOperation) s).findFirst().get().date();
+        return getEntries().stream()
+                .filter(s -> s instanceof AccountOperation)
+                .map(s -> (AccountOperation) s)
+                .findFirst()
+                .get()
+                .date();
     }
 
     public PriceBook getPriceBook() {
