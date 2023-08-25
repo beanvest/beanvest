@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DuplicatedTransactionsAcceptanceTest {
+public class ImportDuplicatedTransactionsAcceptanceTest {
     protected AppRunner runner = AppRunnerFactory.createRunner(BeanvestMain.class, "import");
     @Test
     void preferIncomeExpenseIfDuplicatedTransaction() {

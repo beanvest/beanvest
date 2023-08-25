@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Disabled("broken by rework v2, needs reevaluation")
-public class UnrealizedGainsAcceptanceTest {
+public class ExportUnrealizedGainsAcceptanceTest {
     protected AppRunner runner = AppRunnerFactory.createRunner(BeanvestMain.class, "export");
 
     @Test

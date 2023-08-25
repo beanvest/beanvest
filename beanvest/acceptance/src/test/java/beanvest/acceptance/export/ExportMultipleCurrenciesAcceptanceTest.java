@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 @Disabled("rework v2: relies on string name ids")
 
-public class MultipleCurrenciesAcceptanceTest {
+public class ExportMultipleCurrenciesAcceptanceTest {
     protected AppRunner runner = AppRunnerFactory.createRunner(BeanvestMain.class, "export");
 
     @Test

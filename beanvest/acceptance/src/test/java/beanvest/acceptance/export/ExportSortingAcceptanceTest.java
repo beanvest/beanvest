@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Disabled("rework v2: relies on string account ids")
-public class SortingAcceptanceTest {
+public class ExportSortingAcceptanceTest {
     protected AppRunner runner = AppRunnerFactory.createRunner(BeanvestMain.class, "export");
 
     @Test
