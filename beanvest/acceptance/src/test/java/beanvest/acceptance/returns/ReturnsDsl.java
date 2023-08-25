@@ -195,11 +195,12 @@ public class ReturnsDsl {
     }
 
     public void verifyHasStats(String trading, String period) {
-        assertThat(getAccountPeriodReturns(trading, period)).isNotEmpty();
+        var accountPeriodReturns = getAccountPeriodReturns(trading, period);
+        assertThat(accountPeriodReturns).isNotEmpty();
     }
 
-    public void verifyHasStats(String trading) {
-        verifyHasStats(trading, TOTAL);
+    public void verifyHasStats(String account) {
+        assertThat(getResultDto().accounts().keySet()).contains(account);
     }
 
     public void verifyHasNoStats(String trading, String period) {
@@ -208,10 +209,7 @@ public class ReturnsDsl {
     }
 
     public void verifyHasNoStats(String account) {
-        var accountFound = getResultDto().accountDtos().stream().anyMatch(s -> s.account().equals(account));
-        assertThat(accountFound)
-                .as("account `" + account + "` should not be in the results")
-                .isFalse();
+        assertThat(getResultDto().accounts().keySet()).doesNotContain(account);
     }
 
     public void setColumns(String... columns) {

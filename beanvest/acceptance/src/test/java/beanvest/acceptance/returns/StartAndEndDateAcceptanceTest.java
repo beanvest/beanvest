@@ -1,5 +1,6 @@
 package beanvest.acceptance.returns;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class StartAndEndDateAcceptanceTest {
@@ -100,5 +101,53 @@ public class StartAndEndDateAcceptanceTest {
 
         dsl.verifyHasStats("investing");
         dsl.verifyHasNoStats("trading");
+    }
+
+    @Test
+    @Disabled("not reimplemented yet")
+    void accountsClosedBeforeStartDateAreNotVisibleWhenQueryingDeltas() {
+        dsl.setStartDate("2022-01-01");
+        dsl.setDeltas();
+
+        dsl.runCalculateReturns("""
+                account alreadyClosed
+                currency GBP
+                                
+                2021-01-01 deposit 100
+                2021-02-01 withdraw 100
+                2021-02-03 close
+                ---
+                account opened
+                currency GBP
+                                
+                2022-02-02 deposit 100
+                ---
+                """);
+
+        dsl.verifyHasStats("opened");
+        dsl.verifyHasNoStats("alreadyClosed");
+    }
+
+    @Test
+    void accountsClosedBeforeStartDateAreNotVisibleWhenQueryingCumulativeStats() {
+        dsl.setStartDate("2022-01-01");
+
+        dsl.runCalculateReturns("""
+                account alreadyClosed
+                currency GBP
+                                
+                2021-01-01 deposit 100
+                2021-02-01 withdraw 100
+                2021-02-03 close
+                ---
+                account opened
+                currency GBP
+                                
+                2022-02-02 deposit 100
+                ---
+                """);
+
+        dsl.verifyHasStats("opened");
+        dsl.verifyHasStats("alreadyClosed");
     }
 }
