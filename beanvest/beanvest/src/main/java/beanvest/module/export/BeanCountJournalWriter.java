@@ -130,7 +130,7 @@ public class BeanCountJournalWriter {
     }
 
     private String getCashAccount(AccountOperation op) {
-        return accountPrefix + op.account() + (useCashSubAccounts ? ":Cash" : "");
+        return accountPrefix + op.account2().id() + (useCashSubAccounts ? ":Cash" : "");
     }
 
     private static BigDecimal formatString(BigDecimal amount) {
@@ -156,7 +156,7 @@ public class BeanCountJournalWriter {
 
         while (remaining.compareTo(BigDecimal.ZERO) > 0) {
             BigDecimal lotPrice = null;
-            if (lots.size() == 0) {
+            if (lots.isEmpty()) {
                 throw new RuntimeException("No lots to reduce by remaining " + remaining + " while processing sell from line: " + op.toJournalLine());
             }
             try {
@@ -178,7 +178,7 @@ public class BeanCountJournalWriter {
             remaining = remaining.subtract(lotAmount);
         }
 
-        var stringBuffer = new StringBuffer();
+        var stringBuffer = new StringBuilder();
         stringBuffer.append(String.format("%s txn \"sell%s\"%n", op.date().toString(), getTitleSuffix(op)));
         stringBuffer.append(String.format("  %s  %s%n", getCashAccount(op), op.totalPrice()));
         var totalPriceWithFee = op.totalPrice().add(op.fee());
@@ -186,7 +186,7 @@ public class BeanCountJournalWriter {
         for (Lot lot : lotsToSell) {
             var priceCurrency = op.totalPrice().symbol();
             stringBuffer.append(String.format("  %s  %s %s {%s %s} @ %s %s%n",
-                    accountPrefix + op.account2() + ":" + op.holdingSymbol(),
+                    accountPrefix + op.account2().id() + ":" + op.holdingSymbol(),
                     lot.units().negate(),
                     op.value().symbol(),
                     lot.price(),
@@ -202,10 +202,12 @@ public class BeanCountJournalWriter {
                     op.fee(),
                     op.totalPrice().symbol()));
         }
-        stringBuffer.append("  " + gainsAccount + "\n");
+        stringBuffer.append("  ")
+                .append(gainsAccount)
+                .append("\n");
 
-        if (lotsBySymbol.get(op.holdingSymbol()).size() == 0 && lastTransactionOfHolding.get(op.holdingSymbol()) == op) {
-            stringBuffer.append(String.format("%n%s close %s:%s%n", op.date(), accountPrefix + op.account2(), op.holdingSymbol()));
+        if (lotsBySymbol.get(op.holdingSymbol()).isEmpty() && lastTransactionOfHolding.get(op.holdingSymbol()) == op) {
+            stringBuffer.append(String.format("%n%s close %s:%s%n", op.date(), accountPrefix + op.account2().id(), op.holdingSymbol()));
         }
         return stringBuffer.toString();
     }
@@ -237,7 +239,7 @@ public class BeanCountJournalWriter {
                 getTitleSuffix(op),
                 getCashAccount(op),
                 op.totalPrice().negate(),
-                accountPrefix + op.account2() + ":" + op.holdingSymbol(),
+                accountPrefix + op.account2().id() + ":" + op.holdingSymbol(),
                 op.value(),
                 lot,
                 op.totalPrice().symbol(),
@@ -255,7 +257,7 @@ public class BeanCountJournalWriter {
 
     private void openHoldingsAccountIfNeeded(Buy op, StringBuilder stringBuilder, Account2 account) {
         if (!openHoldingsAccounts.contains(op.holdingSymbol())) {
-            stringBuilder.append(String.format("%s open %s:%s%n%n", op.date(), accountPrefix + account.stringId(), op.holdingSymbol()));
+            stringBuilder.append(String.format("%s open %s:%s%n%n", op.date(), accountPrefix + account.id(), op.holdingSymbol()));
             openHoldingsAccounts.add(op.holdingSymbol());
         }
     }

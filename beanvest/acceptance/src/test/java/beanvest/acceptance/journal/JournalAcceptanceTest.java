@@ -154,15 +154,15 @@ public class JournalAcceptanceTest {
                         2022-02-02 deposit 10 GBP
                           stats: dep: 10, wth: 0, int: 0, fee: 0, div: 0, rga: 0.00, csh: 10
                           holdings: 0.00 GBP []
-                                               
+
                         2022-02-03 deposit 20 GBP
                           stats: dep: 30, wth: 0, int: 0, fee: 0, div: 0, rga: 0.00, csh: 30
                           holdings: 0.00 GBP []
-                                               
+
                         2022-02-04 balance 40 GBP
                           stats: dep: 30, wth: 0, int: 0, fee: 0, div: 0, rga: 0.00, csh: 30
                           holdings: 0.00 GBP []
-                                                    
+
                         """,
                 result.stdOut());
         assertThat(result.stdErr()).matches("""

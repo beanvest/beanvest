@@ -25,7 +25,7 @@ public class EmptyAccountClosingValidator implements JournalValidator {
         if (closeEntry == null) {
             return List.of();
         }
-        var account = accounts.get(closeEntry.account2());
+        var account = accounts.get(closeEntry.account2().stringId());
         var cash = account.getCash();
         var hasCash = cash.compareTo(BigDecimal.ZERO) != 0;
         var holdings1 = account.getHoldings();
