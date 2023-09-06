@@ -16,7 +16,7 @@ public record ColumnSpec(StatDefinition statsDefinition) {
                 ColumnPadding.RIGHT,
                 accountPeriodStats -> Optional.ofNullable(accountPeriodStats.periodStats().get(period))
                         .map(stats -> stats.stats()
-                                .get(statsDefinition.header)
+                                .get(statsDefinition.shortName)
                                 .fold(
                                         formatter::format,
                                         ValueFormatter::formatError

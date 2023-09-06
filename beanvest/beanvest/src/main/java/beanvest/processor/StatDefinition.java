@@ -10,7 +10,7 @@ public enum StatDefinition {
     WITHDRAWALS("Wths", "withdrawals", WithdrawalCalculator.class, StatType.CUMULATIVE),
     WITHDRAWALS_PERIOD("pWths", "withdrawals per period", PeriodWithdrawalCalculator.class, StatType.PERIODIC),
     DEPOSITS_AND_WITHDRAWALS("DW", "deposits plus withdrawals", DepositsPlusWithdrawalsCalculator.class, StatType.CUMULATIVE),
-    DEPOSITS_AND_WITHDRAWALS_PERIOD("pDW", "deposits plus withdrawals", PeriodDepositsPlusWithdrawalsCalculator.class, StatType.CUMULATIVE),
+    DEPOSITS_AND_WITHDRAWALS_PERIOD("pDW", "deposits plus withdrawals", PeriodDepositsPlusWithdrawalsCalculator.class, StatType.PERIODIC),
     INTEREST("Intr", "interest", InterestCalculator.class, StatType.CUMULATIVE),
     INTEREST_PERIOD("pIntr", "interest per period", PeriodInterestCalculator.class, StatType.PERIODIC),
     FEES("Fees", "platform and transaction fees", FeesCalculator.class, StatType.CUMULATIVE),
@@ -33,14 +33,14 @@ public enum StatDefinition {
     VALUE("Value", "cash + market value of the holdings", ValueCalculator.class, StatType.CUMULATIVE),
     VALUE_PERIOD("pValue", "cash + market value of the holdings", PeriodValueCalculator.class, StatType.PERIODIC);
 
-    public final String header;
-    public final String name;
+    public final String shortName;
+    public final String description;
     public final Class<?> calculator;
     public final StatType type;
 
     StatDefinition(String shortName, String description, Class<?> calculator, StatType type) {
-        this.header = shortName;
-        this.name = description;
+        this.shortName = shortName;
+        this.description = description;
         this.calculator = calculator;
         this.type = type;
     }

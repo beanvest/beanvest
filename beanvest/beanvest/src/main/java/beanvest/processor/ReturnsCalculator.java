@@ -39,7 +39,7 @@ public class ReturnsCalculator {
     private static LinkedHashMap<String, Class<?>> convertToCalculatorMap(List<StatDefinition> selectedColumns) {
         return selectedColumns.stream()
                 .collect(Collectors.toMap(
-                        (c) -> c.header,
+                        (c) -> c.shortName,
                         c -> c.calculator,
                         (aClass, aClass2) -> null,
                         LinkedHashMap::new));

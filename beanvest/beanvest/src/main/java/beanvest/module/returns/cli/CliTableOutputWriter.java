@@ -27,7 +27,7 @@ public class CliTableOutputWriter implements CliOutputWriter {
     @Override
     public void outputResult(List<StatDefinition> selectedColumns, PortfolioStatsDto2 portfolioStats, CollectionMode collectionMode) {
         portfolioStats.userErrors().forEach(stdErr::println);
-        var columnsStringIds = selectedColumns.stream().map(s -> s.header).collect(Collectors.toList());
+        var columnsStringIds = selectedColumns.stream().map(s -> s.shortName).collect(Collectors.toList());
         this.cliTablePrinter.printCliOutput(accountMetadataColumns, portfolioStats, stdOut, columnsStringIds, collectionMode);
     }
 

@@ -7,6 +7,6 @@ public record StatColumn(StatDefinition cumulativeStat, StatDefinition periodicS
                          String description, CliColumnValueFormatter formatter) implements CliColumn {
     @Override
     public String shortName() {
-        return cumulativeStat.header;
+        return cumulativeStat.shortName;
     }
 }

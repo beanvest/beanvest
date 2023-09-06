@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 
 public class CliTablePrinter {
     public static final Map<String, CliColumnValueFormatter> CUSTOM_FORMATTERS = Map.of(
-            StatDefinition.XIRR.header, ValueFormatter::xirr,
-            StatDefinition.XIRR_PERIOD.header, ValueFormatter::xirr
+            StatDefinition.XIRR.shortName, ValueFormatter::xirr,
+            StatDefinition.XIRR_PERIOD.shortName, ValueFormatter::xirr
     );
     private final TableWriter tableWriter = new TableWriter().setMinColumnWidth(5);
 
@@ -57,7 +57,7 @@ public class CliTablePrinter {
 
     private List<Column<AccountDto2>> createStatsColumns(List<String> selectedColumns, CollectionMode collectionMode, List<String> periods) {
         var statsByName = Arrays.stream(StatDefinition.values())
-                .collect(Collectors.toMap(s -> s.header, s -> s));
+                .collect(Collectors.toMap(s -> s.shortName, s -> s));
 
         var mapByIsAccountColumn = selectedColumns.stream()
                 .collect(Collectors.groupingBy(s -> statsByName.get(s).type == StatDefinition.StatType.ACCOUNT));
@@ -82,18 +82,18 @@ public class CliTablePrinter {
 
     private List<Column<AccountDto2>> createPeriodicColumns(List<String> selectedColumns, String period, Optional<String> group, CollectionMode collectionMode) {
         var statsByName = Arrays.stream(StatDefinition.values())
-                .collect(Collectors.toMap(s -> s.header, s -> s));
+                .collect(Collectors.toMap(s -> s.shortName, s -> s));
 
         return selectedColumns
                 .stream()
                 .map(statsByName::get)
                 .filter(Objects::nonNull)
                 .map(ColumnSpec::new)
-                .map(spec -> spec.toColumn(group, period, spec.statsDefinition().header, getFormatter(spec)))
+                .map(spec -> spec.toColumn(group, period, spec.statsDefinition().shortName, getFormatter(spec)))
                 .toList();
     }
 
     private CliColumnValueFormatter getFormatter(ColumnSpec spec) {
-        return CUSTOM_FORMATTERS.getOrDefault(spec.statsDefinition().header, ValueFormatter::money);
+        return CUSTOM_FORMATTERS.getOrDefault(spec.statsDefinition().shortName, ValueFormatter::money);
     }
 }

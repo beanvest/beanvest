@@ -41,7 +41,7 @@ public class ReturnsCliCommandSpec {
                     .auxiliaryTypes(CliColumnValue[].class)
                     .description("Comma-separated column selection. Eg 'rgain,xirr'. Available columns: "
                             + Arrays.stream(StatDefinition.values())
-                            .map(c -> "\n  * \"" + c.header.toLowerCase(Locale.ROOT) + "\" - " + c.name)
+                            .map(c -> "\n  * \"" + c.shortName.toLowerCase(Locale.ROOT) + "\" - " + c.description)
                             .collect(Collectors.joining(", ")))
                     .build())
             .addOption(CommandLine.Model.OptionSpec.builder("--account", "-a")
