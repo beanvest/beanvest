@@ -56,7 +56,6 @@ public class OpenAndCloseDatesAcceptanceTest {
     }
 
     @Test
-    @Disabled("opening and closing of positions not implemented yet")
     void shouldReturnOpeningAndClosingDatesOfHoldings() {
         dsl.setColumns("Opened,Closed");
         dsl.setReportHoldings();

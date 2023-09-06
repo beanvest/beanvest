@@ -1,5 +1,6 @@
 package beanvest.journal.entry;
 
+import beanvest.journal.entity.AccountInstrumentHolding;
 import beanvest.parser.SourceLine;
 import beanvest.journal.Value;
 import beanvest.journal.entity.Account2;
@@ -42,4 +43,5 @@ public record Buy(LocalDate date, Account2 account2, Value value, Value totalPri
     public BigDecimal getRawAmountMoved() {
         return totalPrice.amount();
     }
+
 }
