@@ -1,6 +1,5 @@
 package beanvest.processor;
 
-import beanvest.processor.StatDefinition;
 import beanvest.processor.processingv2.EntitiesToInclude;
 import beanvest.processor.time.PeriodInterval;
 

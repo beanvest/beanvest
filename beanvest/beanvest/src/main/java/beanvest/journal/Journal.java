@@ -1,18 +1,13 @@
 package beanvest.journal;
 
+import beanvest.journal.entity.Account2;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Entry;
 import beanvest.journal.entry.Price;
 import beanvest.processor.deprecated.PriceBook;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Journal {
@@ -65,14 +60,14 @@ public class Journal {
 
     public Journal filterByAccount(String accountFilter) {
         var filteredAccounts = accounts.values().stream()
-                .filter(a -> a.account().id().matches(accountFilter))
+                .filter(a -> a.account().path().matches(accountFilter))
                 .collect(Collectors.toSet());
         var filteredAccountsNames = filteredAccounts.stream()
-                .map(s -> s.account().id())
+                .map(s -> s.account().path())
                 .collect(Collectors.toSet());
         var filteredEntries = this.getEntries().stream().filter(entry -> {
             if (entry instanceof AccountOperation opp) {
-                return filteredAccountsNames.contains(opp.account2().id());
+                return filteredAccountsNames.contains(opp.account2().path());
             } else {
                 return true;
             }
@@ -106,4 +101,11 @@ public class Journal {
         return sortedEntries;
     }
 
+    public Set<Account2> getAccountsClosedBefore(LocalDate localDate) {
+        return accounts.values().stream()
+                .filter(a -> a.closingDate().isPresent())
+                .filter(a -> a.closingDate().get().isBefore(localDate))
+                .map(AccountDetails::account)
+                .collect(Collectors.toSet());
+    }
 }

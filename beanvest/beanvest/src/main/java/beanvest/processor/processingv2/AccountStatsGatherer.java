@@ -13,17 +13,19 @@ import java.util.stream.Collectors;
 
 public class AccountStatsGatherer {
     private final AccountsTracker accountsTracker;
+    private final Set<Entity> closedEarly;
     Map<String, Map<String, StatsV2>> stats = new HashMap<>();
     List<Period> periods = new ArrayList<>();
     Set<String> processedPeriodTitles = new HashSet<>();
     Set<String> accounts = new HashSet<>();
     LinkedHashSet<String> userErrors = new LinkedHashSet<>();
 
-    public AccountStatsGatherer(AccountsTracker accountsTracker) {
+    public AccountStatsGatherer(AccountsTracker accountsTracker, Set<Entity> closedEarly) {
         this.accountsTracker = accountsTracker;
+        this.closedEarly = closedEarly;
     }
 
-    public void collectPeriodStats(Period period, Map<String, StatsV2> accountStatsMap) {
+    public void collectPeriodStats(Period period, Map<Entity, StatsV2> accountStatsMap) {
         if (processedPeriodTitles.contains(period.title())) {
             throw new IllegalArgumentException("Received another period with same title: " + period.title());
         }
@@ -31,11 +33,11 @@ public class AccountStatsGatherer {
         processedPeriodTitles.add(period.title());
 
         for (var entry : accountStatsMap.entrySet()) {
-            String account = entry.getKey();
+            Entity account = entry.getKey();
             StatsV2 value = entry.getValue();
-            accounts.add(account);
+            accounts.add(account.path());
 
-            var accountStats = this.stats.computeIfAbsent(account, acc -> new HashMap<>());
+            var accountStats = this.stats.computeIfAbsent(account.stringId(), acc -> new HashMap<>());
             for (var statResult : value.stats().values()) {
                 for (StatErrors err : statResult.getErrorAsList()) {
                     userErrors.add(err.toString());

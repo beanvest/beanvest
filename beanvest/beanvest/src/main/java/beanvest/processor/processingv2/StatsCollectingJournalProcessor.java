@@ -41,7 +41,7 @@ public class StatsCollectingJournalProcessor {
         return statsCalculator.process(entry);
     }
 
-    public Map<String, StatsV2> getPeriodStats(Period period) {
+    public Map<Entity, StatsV2> getPeriodStats(Period period) {
         return statsCalculator.calculateStats(period, "GBP");
     }
 

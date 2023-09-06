@@ -9,7 +9,6 @@ import beanvest.processor.processingv2.processor.HoldingsCollector;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -37,7 +36,7 @@ public class AccountCloseValidator implements Validator {
     private static ValidatorError createValidationError(Close close, List<Holding> holdings) {
         return new ValidatorError(
                 "Account `%s` is not empty on %s and can't be closed. Holdings: %s."
-                        .formatted(close.account2().id(), close.date(), makeHoldingsPrintable(holdings)), close.originalLine().toString());
+                        .formatted(close.account2().path(), close.date(), makeHoldingsPrintable(holdings)), close.originalLine().toString());
     }
 
     private static String makeHoldingsPrintable(List<Holding> holdings) {

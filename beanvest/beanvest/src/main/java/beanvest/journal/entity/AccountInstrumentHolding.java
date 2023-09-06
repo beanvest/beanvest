@@ -33,12 +33,12 @@ public record AccountInstrumentHolding(Account2 account2, String holding) implem
 
     @Override
     public String stringId() {
-        return "H/" + id();
+        return "H/" + path();
     }
 
     @Override
-    public String id() {
-        return account2.id() + ":" + holding;
+    public String path() {
+        return account2.path() + ":" + holding;
     }
 
     @Override

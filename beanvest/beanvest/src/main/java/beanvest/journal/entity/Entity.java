@@ -22,7 +22,7 @@ public sealed interface Entity permits Account2, AccountCashHolding, AccountInst
     List<Group> groups();
 
     String stringId();
-    String id();
+    String path();
 
     boolean isHolding();
 

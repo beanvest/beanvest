@@ -16,6 +16,7 @@ import static beanvest.processor.processingv2.UnfinishedPeriodInclusion.EXCLUDE;
 public class ReturnsCalculator {
     private final JournalParser journalParser;
     private final JournalReportGenerator statsCalculator = new JournalReportGenerator();
+    private final IgnoredAccountChecker ignoredAccountChecker = new IgnoredAccountChecker();
 
     public ReturnsCalculator(JournalParser journalParser) {
         this.journalParser = journalParser;
@@ -30,11 +31,17 @@ public class ReturnsCalculator {
         var periodSpec = new PeriodSpec(params.startDate(), params.endDate(), params.period());
 
         var statsToCalculate = convertToCalculatorMap(params.selectedColumns());
+        var accountsClosedEarlier = ignoredAccountChecker.determineIgnoredAccounts(params, journal);
         return statsCalculator.calculateStats(
-                accountsTracker, journal, params.accountFilter(), periodSpec, EXCLUDE, statsToCalculate);
+                accountsTracker, journal, params.accountFilter(), periodSpec, EXCLUDE, statsToCalculate, accountsClosedEarlier);
     }
 
     private static LinkedHashMap<String, Class<?>> convertToCalculatorMap(List<StatDefinition> selectedColumns) {
-        return selectedColumns.stream().collect(Collectors.toMap((c) -> c.header, c -> c.calculator, (aClass, aClass2) -> null, LinkedHashMap::new));
+        return selectedColumns.stream()
+                .collect(Collectors.toMap(
+                        (c) -> c.header,
+                        c -> c.calculator,
+                        (aClass, aClass2) -> null,
+                        LinkedHashMap::new));
     }
 }

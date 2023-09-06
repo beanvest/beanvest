@@ -37,12 +37,12 @@ public record AccountCashHolding(Account2 account2, String holding) implements E
 
     @Override
     public String stringId() {
-        return "C/" + id();
+        return "C/" + path();
     }
 
     @Override
-    public String id() {
-        return account2.id() + ":" + holding;
+    public String path() {
+        return account2.path() + ":" + holding;
     }
 
     @Override

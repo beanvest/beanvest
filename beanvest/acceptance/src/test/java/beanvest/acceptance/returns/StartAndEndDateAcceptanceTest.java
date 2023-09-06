@@ -104,9 +104,9 @@ public class StartAndEndDateAcceptanceTest {
     }
 
     @Test
-    @Disabled("not reimplemented yet")
     void accountsClosedBeforeStartDateAreNotVisibleWhenQueryingDeltas() {
         dsl.setStartDate("2022-01-01");
+        dsl.setColumns("deps");
         dsl.setDeltas();
 
         dsl.runCalculateReturns("""
@@ -131,6 +131,7 @@ public class StartAndEndDateAcceptanceTest {
     @Test
     void accountsClosedBeforeStartDateAreNotVisibleWhenQueryingCumulativeStats() {
         dsl.setStartDate("2022-01-01");
+        dsl.setColumns("deps");
 
         dsl.runCalculateReturns("""
                 account alreadyClosed

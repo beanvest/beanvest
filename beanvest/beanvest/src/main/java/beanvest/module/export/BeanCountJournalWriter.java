@@ -130,7 +130,7 @@ public class BeanCountJournalWriter {
     }
 
     private String getCashAccount(AccountOperation op) {
-        return accountPrefix + op.account2().id() + (useCashSubAccounts ? ":Cash" : "");
+        return accountPrefix + op.account2().path() + (useCashSubAccounts ? ":Cash" : "");
     }
 
     private static BigDecimal formatString(BigDecimal amount) {
@@ -186,7 +186,7 @@ public class BeanCountJournalWriter {
         for (Lot lot : lotsToSell) {
             var priceCurrency = op.totalPrice().symbol();
             stringBuffer.append(String.format("  %s  %s %s {%s %s} @ %s %s%n",
-                    accountPrefix + op.account2().id() + ":" + op.holdingSymbol(),
+                    accountPrefix + op.account2().path() + ":" + op.holdingSymbol(),
                     lot.units().negate(),
                     op.value().symbol(),
                     lot.price(),
@@ -207,7 +207,7 @@ public class BeanCountJournalWriter {
                 .append("\n");
 
         if (lotsBySymbol.get(op.holdingSymbol()).isEmpty() && lastTransactionOfHolding.get(op.holdingSymbol()) == op) {
-            stringBuffer.append(String.format("%n%s close %s:%s%n", op.date(), accountPrefix + op.account2().id(), op.holdingSymbol()));
+            stringBuffer.append(String.format("%n%s close %s:%s%n", op.date(), accountPrefix + op.account2().path(), op.holdingSymbol()));
         }
         return stringBuffer.toString();
     }
@@ -239,7 +239,7 @@ public class BeanCountJournalWriter {
                 getTitleSuffix(op),
                 getCashAccount(op),
                 op.totalPrice().negate(),
-                accountPrefix + op.account2().id() + ":" + op.holdingSymbol(),
+                accountPrefix + op.account2().path() + ":" + op.holdingSymbol(),
                 op.value(),
                 lot,
                 op.totalPrice().symbol(),
@@ -257,7 +257,7 @@ public class BeanCountJournalWriter {
 
     private void openHoldingsAccountIfNeeded(Buy op, StringBuilder stringBuilder, Account2 account) {
         if (!openHoldingsAccounts.contains(op.holdingSymbol())) {
-            stringBuilder.append(String.format("%s open %s:%s%n%n", op.date(), accountPrefix + account.id(), op.holdingSymbol()));
+            stringBuilder.append(String.format("%s open %s:%s%n%n", op.date(), accountPrefix + account.path(), op.holdingSymbol()));
             openHoldingsAccounts.add(op.holdingSymbol());
         }
     }

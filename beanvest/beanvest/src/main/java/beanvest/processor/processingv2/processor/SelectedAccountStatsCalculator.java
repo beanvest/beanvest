@@ -64,8 +64,8 @@ public class SelectedAccountStatsCalculator {
         return validatorErrors;
     }
 
-    public Map<String, StatsV2> calculateStats(Period period, String targetCurrency) {
-        Map<String, StatsV2> result = new HashMap<>();
+    public Map<Entity, StatsV2> calculateStats(Period period, String targetCurrency) {
+        Map<Entity, StatsV2> result = new HashMap<>();
         var entities = accountsTracker.getEntities();
         for (var account : entities) {
             Map<String, Result<BigDecimal, StatErrors>> stats = new HashMap<>();
@@ -75,7 +75,7 @@ public class SelectedAccountStatsCalculator {
                 var stat = calculator.calculate(new CalculationParams(account, period.startDate(), period.endDate(), targetCurrency));
                 stats.put(id, stat);
             }
-            result.put(account.stringId(), new StatsV2(stats));
+            result.put(account, new StatsV2(stats));
         }
         return result;
     }

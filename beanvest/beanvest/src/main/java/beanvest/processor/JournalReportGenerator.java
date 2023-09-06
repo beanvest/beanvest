@@ -1,7 +1,9 @@
 package beanvest.processor;
 
 import beanvest.journal.Journal;
-import beanvest.journal.entry.Entry;
+import beanvest.journal.entity.Account2;
+import beanvest.journal.entity.Entity;
+import beanvest.journal.entry.AccountOperation;
 import beanvest.processor.processingv2.EndOfPeriodTracker;
 import beanvest.processor.processingv2.*;
 import beanvest.processor.dto.PortfolioStatsDto2;
@@ -13,6 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 public class JournalReportGenerator {
     private AccountStatsGatherer accountStatsGatherer;
@@ -27,13 +30,13 @@ public class JournalReportGenerator {
             String accountFilter,
             PeriodSpec periodSpec,
             UnfinishedPeriodInclusion unfinishedPeriodInclusion,
-            LinkedHashMap<String, Class<?>> statsToCalculate) {
-        accountStatsGatherer = new AccountStatsGatherer(accountsResolver1);
+            LinkedHashMap<String, Class<?>> statsToCalculate, Set<Entity> accountsClosedEarlier) {
+        accountStatsGatherer = new AccountStatsGatherer(accountsResolver1, accountsClosedEarlier);
         var journalProcessor2 = new StatsCollectingJournalProcessor(accountsResolver1, statsToCalculate);
         var endOfPeriodTracker = new EndOfPeriodTracker(periodSpec, unfinishedPeriodInclusion,
                 period -> finishPeriod(period, periodSpec.start(), journalProcessor2));
 
-        var predicate = predicateFactory.buildPredicate(accountFilter, periodSpec.end());
+        var predicate = predicateFactory.buildPredicate(accountFilter, periodSpec.end(), accountsClosedEarlier);
 
         for (var entry : journal.sortedEntries()) {
             if (predicate.test(entry)) {

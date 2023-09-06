@@ -22,11 +22,11 @@ public record Group(List<String> parts) implements Entity {
 
     @Override
     public String stringId() {
-        return "G/" + id();
+        return "G/" + path();
     }
 
     @Override
-    public String id() {
+    public String path() {
         var groupString = actualStringId();
         return groupString.isEmpty() ? ".*" : groupString + ":.*";
     }
