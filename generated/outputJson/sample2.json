@@ -18,6 +18,18 @@
       "level": 1,
       "type": "ACCOUNT"
     },
+    "saving:regularSaver2": {
+      "name": "regularSaver2",
+      "id": "A/saving:regularSaver2",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
+    "saving:regularSaver2:GBP": {
+      "name": "GBP",
+      "id": "C/saving:regularSaver2:GBP",
+      "level": 1,
+      "type": "HOLDING"
+    },
     "saving:regularSaver:GBP": {
       "name": "GBP",
       "id": "C/saving:regularSaver:GBP",
@@ -36,22 +48,46 @@
       "level": 1,
       "type": "HOLDING"
     },
-    "trading": {
+    "trading:.*": {
       "name": "trading",
-      "id": "A/trading",
-      "level": 0,
+      "id": "G/trading:.*",
+      "level": 1,
+      "type": "GROUP"
+    },
+    "trading:index": {
+      "name": "index",
+      "id": "A/trading:index",
+      "level": 1,
       "type": "ACCOUNT"
     },
-    "trading:GBP": {
+    "trading:index:GBP": {
       "name": "GBP",
-      "id": "C/trading:GBP",
-      "level": 0,
+      "id": "C/trading:index:GBP",
+      "level": 1,
       "type": "HOLDING"
     },
-    "trading:SPX": {
+    "trading:index:SPX": {
       "name": "SPX",
-      "id": "H/trading:SPX",
-      "level": 0,
+      "id": "H/trading:index:SPX",
+      "level": 1,
+      "type": "HOLDING"
+    },
+    "trading:risky": {
+      "name": "risky",
+      "id": "A/trading:risky",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
+    "trading:risky:GBP": {
+      "name": "GBP",
+      "id": "C/trading:risky:GBP",
+      "level": 1,
+      "type": "HOLDING"
+    },
+    "trading:risky:RSK": {
+      "name": "RSK",
+      "id": "H/trading:risky:RSK",
+      "level": 1,
       "type": "HOLDING"
     }
   },
@@ -73,19 +109,19 @@
         "TOTAL": {
           "stats": {
             "Wths": {
-              "value": -140
+              "value": -3223.17
             },
             "Deps": {
-              "value": 25420
+              "value": 55259
             },
             "Value": {
-              "value": 26969.8144
+              "value": 55262.3493
             },
             "Profit": {
-              "value": 1682.448274194766605135598989433775723097753600
+              "value": 3135.983174194766605135598989433775723097753600
             },
             "Cost": {
-              "value": -25287.366125805233394864401010566224276902246400
+              "value": -52126.366125805233394864401010566224276902246400
             }
           }
         }
@@ -98,19 +134,19 @@
         "TOTAL": {
           "stats": {
             "Wths": {
-              "value": -140
+              "value": -3223.17
             },
             "Deps": {
-              "value": 6420
+              "value": 11670
             },
             "Value": {
-              "value": 6631.68
+              "value": 8812.88
             },
             "Profit": {
-              "value": 344.313874194766605135598989433775723097753600
+              "value": 275.513874194766605135598989433775723097753600
             },
             "Cost": {
-              "value": -6287.366125805233394864401010566224276902246400
+              "value": -8537.366125805233394864401010566224276902246400
             }
           }
         }
@@ -123,19 +159,69 @@
         "TOTAL": {
           "stats": {
             "Wths": {
-              "value": 0
+              "value": -3083.17
             },
             "Deps": {
               "value": 3000
             },
             "Value": {
-              "value": 3161.68
+              "value": 0
             },
             "Profit": {
-              "value": 161.68
+              "value": 0.000000
             },
             "Cost": {
-              "value": -3000
+              "value": 0.000000
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:regularSaver2",
+      "openingDate": "2022-05-01",
+      "periodStats": {
+        "TOTAL": {
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 5250
+            },
+            "Value": {
+              "value": 5342.88
+            },
+            "Profit": {
+              "value": 92.88
+            },
+            "Cost": {
+              "value": -5250
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:regularSaver2:GBP",
+      "openingDate": "2022-05-01",
+      "periodStats": {
+        "TOTAL": {
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 5250
+            },
+            "Value": {
+              "value": 5342.88
+            },
+            "Profit": {
+              "value": 92.88
+            },
+            "Cost": {
+              "value": -5250
             }
           }
         }
@@ -148,19 +234,19 @@
         "TOTAL": {
           "stats": {
             "Wths": {
-              "value": 0
+              "value": -3083.17
             },
             "Deps": {
               "value": 3000
             },
             "Value": {
-              "value": 3161.68
+              "value": 0
             },
             "Profit": {
-              "value": 161.68
+              "value": 0.000000
             },
             "Cost": {
-              "value": -3000
+              "value": 0.000000
             }
           }
         }
@@ -217,7 +303,7 @@
       }
     },
     {
-      "account": "trading",
+      "account": "trading:.*",
       "openingDate": "2022-01-01",
       "periodStats": {
         "TOTAL": {
@@ -226,23 +312,23 @@
               "value": 0
             },
             "Deps": {
-              "value": 19000
+              "value": 43589
             },
             "Value": {
-              "value": 20338.1344
+              "value": 46449.4693
             },
             "Profit": {
-              "value": 1338.1344
+              "value": 2860.4693
             },
             "Cost": {
-              "value": -19000
+              "value": -43589
             }
           }
         }
       }
     },
     {
-      "account": "trading:GBP",
+      "account": "trading:index",
       "openingDate": "2022-01-01",
       "periodStats": {
         "TOTAL": {
@@ -251,23 +337,48 @@
               "value": 0
             },
             "Deps": {
-              "value": 19000
+              "value": 34089
             },
             "Value": {
-              "value": 1000
+              "value": 36392.1672
             },
             "Profit": {
-              "value": 0
+              "value": 2303.1672
             },
             "Cost": {
-              "value": -1000
+              "value": -34089
             }
           }
         }
       }
     },
     {
-      "account": "trading:SPX",
+      "account": "trading:index:GBP",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "TOTAL": {
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 34089
+            },
+            "Value": {
+              "value": 1767
+            },
+            "Profit": {
+              "value": 0
+            },
+            "Cost": {
+              "value": -1767
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "trading:index:SPX",
       "openingDate": "2022-01-03",
       "periodStats": {
         "TOTAL": {
@@ -279,13 +390,88 @@
               "value": 0
             },
             "Value": {
-              "value": 19338.1344
+              "value": 34625.1672
             },
             "Profit": {
-              "value": 1338.1344
+              "value": 2303.1672
             },
             "Cost": {
-              "value": -18000
+              "value": -32322
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "trading:risky",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "TOTAL": {
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 9500
+            },
+            "Value": {
+              "value": 10057.3021
+            },
+            "Profit": {
+              "value": 557.3021
+            },
+            "Cost": {
+              "value": -9500
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "trading:risky:GBP",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "TOTAL": {
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 9500
+            },
+            "Value": {
+              "value": 500
+            },
+            "Profit": {
+              "value": 0
+            },
+            "Cost": {
+              "value": -500
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "trading:risky:RSK",
+      "openingDate": "2022-01-03",
+      "periodStats": {
+        "TOTAL": {
+          "stats": {
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 0
+            },
+            "Value": {
+              "value": 9557.3021
+            },
+            "Profit": {
+              "value": 557.3021
+            },
+            "Cost": {
+              "value": -9000
             }
           }
         }

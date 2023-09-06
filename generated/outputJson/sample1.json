@@ -18,16 +18,34 @@
       "level": 1,
       "type": "ACCOUNT"
     },
+    "saving:regularSaver2": {
+      "name": "regularSaver2",
+      "id": "A/saving:regularSaver2",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
     "saving:savings": {
       "name": "savings",
       "id": "A/saving:savings",
       "level": 1,
       "type": "ACCOUNT"
     },
-    "trading": {
+    "trading:.*": {
       "name": "trading",
-      "id": "A/trading",
-      "level": 0,
+      "id": "G/trading:.*",
+      "level": 1,
+      "type": "GROUP"
+    },
+    "trading:index": {
+      "name": "index",
+      "id": "A/trading:index",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
+    "trading:risky": {
+      "name": "risky",
+      "id": "A/trading:risky",
+      "level": 1,
       "type": "ACCOUNT"
     }
   },
@@ -57,31 +75,31 @@
               "value": 0
             },
             "Wths": {
-              "value": -140
+              "value": -3223.17
             },
             "Intr": {
-              "value": 351.68
+              "value": 366.05
             },
             "Deps": {
-              "value": 25420
+              "value": 55259
             },
             "RGain": {
               "value": 0
             },
             "Value": {
-              "value": 26969.8144
+              "value": 55262.3493
             },
             "Profit": {
-              "value": 1682.448274194766605135598989433775723097753600
+              "value": 3135.983174194766605135598989433775723097753600
             },
             "UGain": {
-              "value": 1338.1344
+              "value": 2860.4693
             },
             "Fees": {
               "value": 0
             },
             "Cost": {
-              "value": -25287.366125805233394864401010566224276902246400
+              "value": -52126.366125805233394864401010566224276902246400
             }
           }
         }
@@ -97,22 +115,22 @@
               "value": 0
             },
             "Wths": {
-              "value": -140
+              "value": -3223.17
             },
             "Intr": {
-              "value": 351.68
+              "value": 366.05
             },
             "Deps": {
-              "value": 6420
+              "value": 11670
             },
             "RGain": {
               "value": 0
             },
             "Value": {
-              "value": 6631.68
+              "value": 8812.88
             },
             "Profit": {
-              "value": 344.313874194766605135598989433775723097753600
+              "value": 275.513874194766605135598989433775723097753600
             },
             "UGain": {
               "value": 0
@@ -121,7 +139,7 @@
               "value": 0
             },
             "Cost": {
-              "value": -6287.366125805233394864401010566224276902246400
+              "value": -8537.366125805233394864401010566224276902246400
             }
           }
         }
@@ -137,10 +155,10 @@
               "value": 0
             },
             "Wths": {
-              "value": 0
+              "value": -3083.17
             },
             "Intr": {
-              "value": 161.68
+              "value": 83.17
             },
             "Deps": {
               "value": 3000
@@ -149,10 +167,10 @@
               "value": 0
             },
             "Value": {
-              "value": 3161.68
+              "value": 0
             },
             "Profit": {
-              "value": 161.68
+              "value": 0.000000
             },
             "UGain": {
               "value": 0
@@ -161,7 +179,47 @@
               "value": 0
             },
             "Cost": {
-              "value": -3000
+              "value": 0.000000
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:regularSaver2",
+      "openingDate": "2022-05-01",
+      "periodStats": {
+        "TOTAL": {
+          "stats": {
+            "Div": {
+              "value": 0
+            },
+            "Wths": {
+              "value": 0
+            },
+            "Intr": {
+              "value": 92.88
+            },
+            "Deps": {
+              "value": 5250
+            },
+            "RGain": {
+              "value": 0
+            },
+            "Value": {
+              "value": 5342.88
+            },
+            "Profit": {
+              "value": 92.88
+            },
+            "UGain": {
+              "value": 0
+            },
+            "Fees": {
+              "value": 0
+            },
+            "Cost": {
+              "value": -5250
             }
           }
         }
@@ -208,7 +266,7 @@
       }
     },
     {
-      "account": "trading",
+      "account": "trading:.*",
       "openingDate": "2022-01-01",
       "periodStats": {
         "TOTAL": {
@@ -223,25 +281,105 @@
               "value": 0
             },
             "Deps": {
-              "value": 19000
+              "value": 43589
             },
             "RGain": {
               "value": 0
             },
             "Value": {
-              "value": 20338.1344
+              "value": 46449.4693
             },
             "Profit": {
-              "value": 1338.1344
+              "value": 2860.4693
             },
             "UGain": {
-              "value": 1338.1344
+              "value": 2860.4693
             },
             "Fees": {
               "value": 0
             },
             "Cost": {
-              "value": -19000
+              "value": -43589
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "trading:index",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "TOTAL": {
+          "stats": {
+            "Div": {
+              "value": 0
+            },
+            "Wths": {
+              "value": 0
+            },
+            "Intr": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 34089
+            },
+            "RGain": {
+              "value": 0
+            },
+            "Value": {
+              "value": 36392.1672
+            },
+            "Profit": {
+              "value": 2303.1672
+            },
+            "UGain": {
+              "value": 2303.1672
+            },
+            "Fees": {
+              "value": 0
+            },
+            "Cost": {
+              "value": -34089
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "trading:risky",
+      "openingDate": "2022-01-01",
+      "periodStats": {
+        "TOTAL": {
+          "stats": {
+            "Div": {
+              "value": 0
+            },
+            "Wths": {
+              "value": 0
+            },
+            "Intr": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 9500
+            },
+            "RGain": {
+              "value": 0
+            },
+            "Value": {
+              "value": 10057.3021
+            },
+            "Profit": {
+              "value": 557.3021
+            },
+            "UGain": {
+              "value": 557.3021
+            },
+            "Fees": {
+              "value": 0
+            },
+            "Cost": {
+              "value": -9500
             }
           }
         }

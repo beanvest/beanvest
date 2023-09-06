@@ -1,56 +1,72 @@
 ## Usage examples
+Journals used to generate these reports are in `sample/` directory.
 
 - Print various stats for all accounts and groups on each level of the accounts for whole period
   ```bash
   beanvest returns sample --end=2023-07-01 --columns=Deps,Wths,Div,Intr,Fees,Value,Cost,Profit,rgain,ugain
   ```
   ```
-  Account              Deps    Wths   Div    Intr   Fees   Value   Cost     Profit  RGain  UGain
-  .*                   25,420   -140      0    352      0  26,970  -25,287   1,682      0  1,338
-  saving:.*             6,420   -140      0    352      0   6,632   -6,287     344      0      0
-  saving:regularSaver   3,000      0      0    162      0   3,162   -3,000     162      0      0
-  saving:savings        3,420   -140      0    190      0   3,470   -3,287     183      0      0
-  trading              19,000      0      0      0      0  20,338  -19,000   1,338      0  1,338
+  Account               Deps    Wths    Div    Intr   Fees   Value   Cost     Profit  RGain  UGain
+  .*                    55,259  -3,223      0    366      0  55,262  -52,126   3,136      0  2,860
+  saving:.*             11,670  -3,223      0    366      0   8,813   -8,537     276      0      0
+  saving:regularSaver    3,000  -3,083      0     83      0       0        0       0      0      0
+  saving:regularSaver2   5,250       0      0     93      0   5,343   -5,250      93      0      0
+  saving:savings         3,420    -140      0    190      0   3,470   -3,287     183      0      0
+  trading:.*            43,589       0      0      0      0  46,449  -43,589   2,860      0  2,860
+  trading:index         34,089       0      0      0      0  36,392  -34,089   2,303      0  2,303
+  trading:risky          9,500       0      0      0      0  10,057   -9,500     557      0    557
   ```
 - Print cash stats on holdings, accounts and groups
   ```bash
   beanvest returns sample --end=2023-07-01 --columns=Deps,Wths,Value,Cost,Profit --report-holdings
   ```
   ```
-  Account                  Deps    Wths   Value   Cost     Profit
-  .*                       25,420   -140  26,970  -25,287   1,682
-  saving:.*                 6,420   -140   6,632   -6,287     344
-  saving:regularSaver       3,000      0   3,162   -3,000     162
-  saving:regularSaver:GBP   3,000      0   3,162   -3,000     162
-  saving:savings            3,420   -140   3,470   -3,287     183
-  saving:savings:GBP        3,420   -140   3,470   -3,287     183
-  trading                  19,000      0  20,338  -19,000   1,338
-  trading:GBP              19,000      0   1,000   -1,000       0
-  trading:SPX                   0      0  19,338  -18,000   1,338
+  Account                   Deps    Wths    Value   Cost     Profit
+  .*                        55,259  -3,223  55,262  -52,126   3,136
+  saving:.*                 11,670  -3,223   8,813   -8,537     276
+  saving:regularSaver        3,000  -3,083       0        0       0
+  saving:regularSaver2       5,250       0   5,343   -5,250      93
+  saving:regularSaver2:GBP   5,250       0   5,343   -5,250      93
+  saving:regularSaver:GBP    3,000  -3,083       0        0       0
+  saving:savings             3,420    -140   3,470   -3,287     183
+  saving:savings:GBP         3,420    -140   3,470   -3,287     183
+  trading:.*                43,589       0  46,449  -43,589   2,860
+  trading:index             34,089       0  36,392  -34,089   2,303
+  trading:index:GBP         34,089       0   1,767   -1,767       0
+  trading:index:SPX              0       0  34,625  -32,322   2,303
+  trading:risky              9,500       0  10,057   -9,500     557
+  trading:risky:GBP          9,500       0     500     -500       0
+  trading:risky:RSK              0       0   9,557   -9,000     557
   ```
 - Print cumulative deposits and withdrawals for accounts and groups for each quarter
   ```bash
   beanvest returns sample --end=2023-07-01 --columns deps,wths --interval=quarter
   ```
   ```
-                      ╷ 23q2          ╷ 23q1          ╷ 22q4          ╷ 22q3          ╷ 22q2         ╷ 22q1         ╷
-  Account             │ Deps    Wths  │ Deps    Wths  │ Deps    Wths  │ Deps    Wths  │ Deps   Wths  │ Deps   Wths  │
-  .*                  │ 24,240   -120 │ 20,700   -100 │ 17,160    -80 │ 12,870    -60 │ 8,580    -40 │ 4,290    -20 │
-  saving:.*           │  6,240   -120 │  5,700   -100 │  5,160    -80 │  3,870    -60 │ 2,580    -40 │ 1,290    -20 │
-  saving:regularSaver │  3,000      0 │  3,000      0 │  3,000      0 │  2,250      0 │ 1,500      0 │   750      0 │
-  saving:savings      │  3,240   -120 │  2,700   -100 │  2,160    -80 │  1,620    -60 │ 1,080    -40 │   540    -20 │
-  trading             │ 18,000      0 │ 15,000      0 │ 12,000      0 │  9,000      0 │ 6,000      0 │ 3,000      0 │
+                       ╷ 23q2           ╷ 23q1           ╷ 22q4          ╷ 22q3          ╷ 22q2          ╷ 22q1         ╷
+  Account              │ Deps    Wths   │ Deps    Wths   │ Deps    Wths  │ Deps    Wths  │ Deps    Wths  │ Deps   Wths  │
+  .*                   │ 52,462  -3,203 │ 44,122  -3,183 │ 32,743    -80 │ 24,596    -60 │ 16,313    -40 │ 8,194    -20 │
+  saving:.*            │ 11,140  -3,203 │  9,550  -3,183 │  7,960    -80 │  5,620    -60 │  3,280    -40 │ 1,290    -20 │
+  saving:regularSaver  │  3,000  -3,083 │  3,000  -3,083 │  3,000      0 │  2,250      0 │  1,500      0 │   750      0 │
+  saving:regularSaver2 │  4,900       0 │  3,850       0 │  2,800      0 │  1,750      0 │    700      0 │     …      … │
+  saving:savings       │  3,240    -120 │  2,700    -100 │  2,160    -80 │  1,620    -60 │  1,080    -40 │   540    -20 │
+  trading:.*           │ 41,322       0 │ 34,572       0 │ 24,783      0 │ 18,976      0 │ 13,033      0 │ 6,904      0 │
+  trading:index        │ 32,322       0 │ 27,072       0 │ 18,783      0 │ 14,476      0 │ 10,033      0 │ 5,404      0 │
+  trading:risky        │  9,000       0 │  7,500       0 │  6,000      0 │  4,500      0 │  3,000      0 │ 1,500      0 │
   ```
-- Print changes in deposits and withdrawals for accounts and groups for each quarter
+- Print changes in deposits+withdrawals in each period for accounts and groups quarterly
   ```bash
-  beanvest returns sample --end=2023-07-01 --columns deps,wths --interval=quarter --delta
+  beanvest returns sample --end=2023-07-01 --columns dw --interval=quarter --delta
   ```
   ```
-                      ╷ 23q2         ╷ 23q1         ╷ 22q4         ╷ 22q3         ╷ 22q2         ╷ 22q1         ╷
-  Account             │ pDeps  pWths │ pDeps  pWths │ pDeps  pWths │ pDeps  pWths │ pDeps  pWths │ pDeps  pWths │
-  .*                  │ 3,540    -20 │ 3,540    -20 │ 4,290    -20 │ 4,290    -20 │ 4,290    -20 │ 4,290    -20 │
-  saving:.*           │   540    -20 │   540    -20 │ 1,290    -20 │ 1,290    -20 │ 1,290    -20 │ 1,290    -20 │
-  saving:regularSaver │     0      0 │     0      0 │   750      0 │   750      0 │   750      0 │   750      0 │
-  saving:savings      │   540    -20 │   540    -20 │   540    -20 │   540    -20 │   540    -20 │   540    -20 │
-  trading             │ 3,000      0 │ 3,000      0 │ 3,000      0 │ 3,000      0 │ 3,000      0 │ 3,000      0 │
+                       ╷ 23q2  ╷ 23q1   ╷ 22q4  ╷ 22q3  ╷ 22q2  ╷ 22q1  ╷
+  Account              │ pDW   │ pDW    │ pDW   │ pDW   │ pDW   │ pDW   │
+  .*                   │ 8,320 │  8,276 │ 8,127 │ 8,263 │ 8,099 │ 8,174 │
+  saving:.*            │ 1,570 │ -1,513 │ 2,320 │ 2,320 │ 1,970 │ 1,270 │
+  saving:regularSaver  │     0 │ -3,083 │   750 │   750 │   750 │   750 │
+  saving:regularSaver2 │ 1,050 │  1,050 │ 1,050 │ 1,050 │   700 │     … │
+  saving:savings       │   520 │    520 │   520 │   520 │   520 │   520 │
+  trading:.*           │ 6,750 │  9,789 │ 5,807 │ 5,943 │ 6,129 │ 6,904 │
+  trading:index        │ 5,250 │  8,289 │ 4,307 │ 4,443 │ 4,629 │ 5,404 │
+  trading:risky        │ 1,500 │  1,500 │ 1,500 │ 1,500 │ 1,500 │ 1,500 │
   ```

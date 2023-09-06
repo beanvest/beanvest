@@ -4,8 +4,7 @@ import beanvest.scripts.usagegen.generatesamplejournal.CompleteJournal;
 
 import java.time.LocalDate;
 
-public interface JournalGenerator {
-    void generate(LocalDate current);
+public interface JournalGenerator extends Generator {
 
     CompleteJournal getJournal();
 }

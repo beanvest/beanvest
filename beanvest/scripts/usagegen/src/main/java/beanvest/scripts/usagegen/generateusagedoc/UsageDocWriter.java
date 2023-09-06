@@ -20,7 +20,8 @@ public class UsageDocWriter {
 
     public void writeDoc(List<ExampleWithOutput> examples) throws IOException {
         var stringBuffer = new StringBuffer();
-        stringBuffer.append("## Usage examples\n\n");
+        stringBuffer.append("## Usage examples\n");
+        stringBuffer.append("Journals used to generate these reports are in `sample/` directory.\n\n");
         examples.forEach(example -> stringBuffer
                 .append("""
                         - %s

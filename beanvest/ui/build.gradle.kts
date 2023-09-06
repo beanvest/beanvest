@@ -25,6 +25,8 @@ tasks.register("uiDev") {
     dependsOn("uiInstallDeps")
     doLast {
         exec {
+            // does not clean up the forked process when interrupted
+            // https://github.com/gradle/gradle/issues/7603
             commandLine("$npm", "run", "dev")
         }
     }

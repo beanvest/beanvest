@@ -22,8 +22,8 @@ public class GenerateUsageDocMain {
                     "returns $samplesDir$ --end=2023-07-01 --columns deps,wths --interval=quarter",
                     "Print cumulative deposits and withdrawals for accounts and groups for each quarter"),
             new Example(
-                    "returns $samplesDir$ --end=2023-07-01 --columns deps,wths --interval=quarter --delta",
-                    "Print changes in deposits and withdrawals for accounts and groups for each quarter")
+                    "returns $samplesDir$ --end=2023-07-01 --columns dw --interval=quarter --delta",
+                    "Print changes in deposits+withdrawals in each period for accounts and groups quarterly")
     );
 
     public static void main(String[] args) throws IOException {

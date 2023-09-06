@@ -2,6 +2,9 @@ package beanvest.scripts.usagegen.generatesamplejournal.generator.account;
 
 import beanvest.scripts.usagegen.generatesamplejournal.CompleteJournal;
 import beanvest.scripts.usagegen.generatesamplejournal.CoveredPeriod;
+import beanvest.scripts.usagegen.generatesamplejournal.generator.DisposableCashGenerator;
+import beanvest.scripts.usagegen.generatesamplejournal.generator.DisposableCashGenerator.CashGrab;
+import beanvest.scripts.usagegen.generatesamplejournal.generator.DisposableCashGenerator.FractionalCashGrab;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.JournalGenerator;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.JournalWriter;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.PriceBook;
@@ -19,16 +22,18 @@ public class TradingJournalGenerator implements JournalGenerator {
     private final PriceBook priceBook;
     private static final String CASH = "cash";
     private final HashMap<String, BigDecimal> holdings = new HashMap<>();
+    private final DisposableCashGenerator disposableCash;
     private final JournalWriter journal;
-    private final BigDecimal monthlyInvestment;
+    private final CashGrab monthlyInvestment;
     private final String holdingName;
 
-    public TradingJournalGenerator(CoveredPeriod coveredPeriod, String monthlyInvestment, String holdingName, PriceBook priceBook, JournalWriter journalWriter) {
+    public TradingJournalGenerator(DisposableCashGenerator disposableCash, CoveredPeriod coveredPeriod, CashGrab monthlyInvestment, String holdingName, PriceBook priceBook, JournalWriter journalWriter) {
+        this.disposableCash = disposableCash;
         journal = journalWriter;
         this.start = coveredPeriod.start();
         this.end = coveredPeriod.end();
         this.priceBook = priceBook;
-        this.monthlyInvestment = new BigDecimal(monthlyInvestment);
+        this.monthlyInvestment = monthlyInvestment;
         this.holdingName = holdingName;
     }
 
@@ -39,21 +44,29 @@ public class TradingJournalGenerator implements JournalGenerator {
         }
 
         if (current.getDayOfMonth() == 1) {
-            var holding = holdings.computeIfAbsent(CASH, k -> BigDecimal.ZERO);
-            holdings.put(CASH, holding.add(monthlyInvestment));
-            journal.addDeposit(current, monthlyInvestment.toPlainString());
+            deposit(current);
         }
 
         if (current.getDayOfMonth() == 3) {
-            var cashHolding = holdings.get(CASH);
-            var numberOfUnits = cashHolding.divide(priceBook.getPrice(holdingName), SCALE, RoundingMode.HALF_UP);
-            var holding = holdings.computeIfAbsent(holdingName, k -> BigDecimal.ZERO);
-            holdings.put(holdingName, holding.add(numberOfUnits));
-
-            holdings.put(CASH, BigDecimal.ZERO);
-
-            journal.addBuy(current, numberOfUnits, holdingName, cashHolding);
+            buy(current);
         }
+    }
+
+    private void buy(LocalDate current) {
+        var cashHolding = holdings.get(CASH);
+        var numberOfUnits = cashHolding.divide(priceBook.getPrice(holdingName), SCALE, RoundingMode.HALF_UP);
+        var holding = holdings.computeIfAbsent(holdingName, k -> BigDecimal.ZERO);
+        holdings.put(holdingName, holding.add(numberOfUnits));
+        holdings.put(CASH, BigDecimal.ZERO);
+
+        journal.addBuy(current, numberOfUnits, holdingName, cashHolding);
+    }
+
+    private void deposit(LocalDate current) {
+        var holding = holdings.computeIfAbsent(CASH, k -> BigDecimal.ZERO);
+        var newDeposit = new BigDecimal(disposableCash.getSome(monthlyInvestment));
+        holdings.put(CASH, holding.add(newDeposit));
+        journal.addDeposit(current, newDeposit.toPlainString());
     }
 
     @Override

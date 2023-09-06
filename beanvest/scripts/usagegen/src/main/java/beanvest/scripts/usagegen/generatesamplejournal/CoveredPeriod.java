@@ -1,11 +1,12 @@
 package beanvest.scripts.usagegen.generatesamplejournal;
 
 import java.time.LocalDate;
+import java.time.temporal.TemporalAmount;
 import java.util.function.Consumer;
 
 public record CoveredPeriod(LocalDate start, LocalDate end) {
     public boolean covers(LocalDate date) {
-        return !start.isBefore(date) && !end.isAfter(date);
+        return !date.isBefore(start) && !date.isAfter(end);
     }
 
     public void forEachDay(Consumer<LocalDate> dayConsumer) {
