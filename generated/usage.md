@@ -70,3 +70,12 @@ Journals used to generate these reports are in `sample/` directory.
   trading:index        │ 5,250 │  8,289 │ 4,307 │ 4,443 │ 4,629 │ 5,404 │
   trading:risky        │ 1,500 │  1,500 │ 1,500 │ 1,500 │ 1,500 │ 1,500 │
   ```
+- Print dividends of trading:risky quarterly
+  ```bash
+  beanvest returns sample --end=2023-07-01 --columns div --interval=quarter --delta --account=trading:risky --groups=no
+  ```
+  ```
+                ╷ 23q2  ╷ 23q1  ╷ 22q4  ╷ 22q3  ╷ 22q2  ╷ 22q1  ╷
+  Account       │ pDiv  │ pDiv  │ pDiv  │ pDiv  │ pDiv  │ pDiv  │
+  trading:risky │    69 │     0 │    63 │     0 │    17 │     0 │
+  ```
