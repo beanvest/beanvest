@@ -11,7 +11,8 @@ import beanvest.scripts.usagegen.generatesamplejournal.generator.PriceBook;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.time.Month;
+import java.util.List;
 
 public class TradingJournalGenerator implements JournalGenerator {
 
@@ -19,13 +20,14 @@ public class TradingJournalGenerator implements JournalGenerator {
     private final LocalDate start;
     private final LocalDate end;
     private final PriceBook priceBook;
-    private static final String CASH = "cash";
-    private final HashMap<String, BigDecimal> holdings = new HashMap<>();
     private final DisposableCashGenerator disposableCash;
     private final JournalWriter journal;
     private final CashGrab monthlyInvestment;
     private final String holdingName;
     private final BigDecimal transactionFee;
+
+    private BigDecimal cash = BigDecimal.ZERO;
+    private BigDecimal holdingUnits = BigDecimal.ZERO;
 
     public TradingJournalGenerator(DisposableCashGenerator disposableCash, CoveredPeriod coveredPeriod, CashGrab monthlyInvestment, String holdingName, PriceBook priceBook, JournalWriter journalWriter, BigDecimal transactionFee) {
         this.transactionFee = transactionFee;
@@ -54,19 +56,17 @@ public class TradingJournalGenerator implements JournalGenerator {
     }
 
     private void buy(LocalDate current) {
-        var cashHolding = holdings.get(CASH).subtract(transactionFee);
+        var cashHolding = cash.subtract(transactionFee);
         var numberOfUnits = cashHolding.divide(priceBook.getPrice(holdingName), SCALE, RoundingMode.HALF_UP);
-        var holding = holdings.computeIfAbsent(holdingName, k -> BigDecimal.ZERO);
-        holdings.put(holdingName, holding.add(numberOfUnits));
-        holdings.put(CASH, BigDecimal.ZERO);
+        holdingUnits = holdingUnits.add(numberOfUnits);
+        cash = BigDecimal.ZERO;
 
         journal.addBuy(current, numberOfUnits, holdingName, cashHolding, transactionFee);
     }
 
     private void deposit(LocalDate current) {
-        var holding = holdings.computeIfAbsent(CASH, k -> BigDecimal.ZERO);
         var newDeposit = new BigDecimal(disposableCash.getSome(monthlyInvestment));
-        holdings.put(CASH, holding.add(newDeposit));
+        cash = cash.add(newDeposit);
         journal.addDeposit(current, newDeposit.toPlainString());
     }
 
