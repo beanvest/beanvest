@@ -43,6 +43,8 @@ public class RandomPriceGen implements JournalGenerator, PriceGenerator {
         updateTargetPriceIfNeeded(current);
         if (current.getDayOfMonth() == 28) {
             var price = calculatePriceForDate(current);
+            lastPrice = price.doubleValue();
+            lastPriceDate = currentDate;
             journalWriter.addPrice(current, symbol, price.toPlainString());
         }
         currentDate = current;
@@ -64,14 +66,16 @@ public class RandomPriceGen implements JournalGenerator, PriceGenerator {
             var daysPassed = Period.between(lastPriceDate, current).getDays();
             freshPrice = lastPrice + dailyDiff * daysPassed;
         }
-        lastPrice = freshPrice;
-        lastPriceDate = currentDate;
         return BigDecimal.valueOf(freshPrice).setScale(2, RoundingMode.HALF_UP);
     }
 
     private void setTargetPrice(LocalDate current) {
         targetPriceDate = current.plusMonths(1);
-        targetPrice = Math.max(0, random.nextDouble(lastPrice * nextPriceMin, lastPrice * nextPriceMax));
+        System.out.println();
+        double origin = lastPrice * nextPriceMin;
+        double bound = lastPrice * nextPriceMax;
+        targetPrice = Math.max(0, random.nextDouble(origin, bound));
+        System.out.println("selected " + targetPrice + " from ("+origin+"," + bound +")");
     }
 
     @Override

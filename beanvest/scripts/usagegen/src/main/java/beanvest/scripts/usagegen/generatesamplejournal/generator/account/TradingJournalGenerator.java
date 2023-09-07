@@ -17,27 +17,30 @@ import java.util.List;
 public class TradingJournalGenerator implements JournalGenerator {
 
     public static final int SCALE = 2;
+    public static final List<Month> DIVIDEND_MONTHS = List.of(Month.APRIL, Month.OCTOBER);
     private final LocalDate start;
     private final LocalDate end;
     private final PriceBook priceBook;
     private final DisposableCashGenerator disposableCash;
     private final JournalWriter journal;
     private final CashGrab monthlyInvestment;
-    private final String holdingName;
+    private final String holdingSymbol;
     private final BigDecimal transactionFee;
+    private final double dividend;
 
     private BigDecimal cash = BigDecimal.ZERO;
     private BigDecimal holdingUnits = BigDecimal.ZERO;
 
-    public TradingJournalGenerator(DisposableCashGenerator disposableCash, CoveredPeriod coveredPeriod, CashGrab monthlyInvestment, String holdingName, PriceBook priceBook, JournalWriter journalWriter, BigDecimal transactionFee) {
+    public TradingJournalGenerator(DisposableCashGenerator disposableCash, CoveredPeriod coveredPeriod, CashGrab monthlyInvestment, String holdingSymbol, PriceBook priceBook, JournalWriter journalWriter, BigDecimal transactionFee, double dividend) {
         this.transactionFee = transactionFee;
+        this.dividend = dividend;
         this.disposableCash = disposableCash;
         journal = journalWriter;
         this.start = coveredPeriod.start();
         this.end = coveredPeriod.end();
         this.priceBook = priceBook;
         this.monthlyInvestment = monthlyInvestment;
-        this.holdingName = holdingName;
+        this.holdingSymbol = holdingSymbol;
     }
 
     @Override
@@ -53,15 +56,31 @@ public class TradingJournalGenerator implements JournalGenerator {
         if (current.getDayOfMonth() == 3) {
             buy(current);
         }
+
+        if (current.getDayOfMonth() == 15 && DIVIDEND_MONTHS.contains(current.getMonth())) {
+            receiveDividend(current);
+        }
+    }
+
+    private void receiveDividend(LocalDate current) {
+        if (dividend == 0 || holdingUnits.compareTo(BigDecimal.ZERO) == 0) {
+            return;
+        }
+        var currentValue = holdingUnits.multiply(priceBook.getPrice(holdingSymbol));
+        var newDividend = currentValue
+                .multiply(new BigDecimal(dividend/DIVIDEND_MONTHS.size()))
+                .setScale(SCALE, RoundingMode.HALF_UP);
+
+        journal.addDividend(current, newDividend.toPlainString(), holdingSymbol);
     }
 
     private void buy(LocalDate current) {
-        var cashHolding = cash.subtract(transactionFee);
-        var numberOfUnits = cashHolding.divide(priceBook.getPrice(holdingName), SCALE, RoundingMode.HALF_UP);
+        var cashHolding = cash;
+        var numberOfUnits = cashHolding.divide(priceBook.getPrice(holdingSymbol), SCALE, RoundingMode.HALF_UP);
         holdingUnits = holdingUnits.add(numberOfUnits);
         cash = BigDecimal.ZERO;
 
-        journal.addBuy(current, numberOfUnits, holdingName, cashHolding, transactionFee);
+        journal.addBuy(current, numberOfUnits, holdingSymbol, cashHolding, transactionFee);
     }
 
     private void deposit(LocalDate current) {
