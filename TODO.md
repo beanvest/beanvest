@@ -3,8 +3,7 @@
 - **ProperParser**: scrap current regexp-based parser and use some decent parser generator (Antlr?)
 - **Server**: add `beanvest ui` running a webserver with `/options` and `/report`. Load journals once.
 - **UI**: new custom UI displaying cumulative and periodic reports
-- **MutlipleCurrencies**: add currency conversion to the reports (eg `--currency=GBP`)
-- **StockSamples**: generate sample journals with stock buys and sells with changing prices
+- **MultipleCurrencies**: add currency conversion to the reports (eg `--currency=GBP`)
 - **LongSamples**: generate sample journals covering longer periods (eg 20 years)
 - **BeancountUI**: journal UI through export to beancount format and display with fava
 - **ClosedAccountsSubgroup** aggregate closed accounts in each group instead of hiding them
