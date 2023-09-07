@@ -45,8 +45,8 @@ public class JournalGeneratorFactory {
         var params2 = RegularSaverParams.of("0.03", "350", 18);
         var regularSaverGenerator2 = new RegularSaverJournalGenerator(disposableCash, coveredPeriod.start().plusMonths(4), params2, createAccountWriter("saving:regularSaver2", "GBP"));
 
-        var tradingGenerator = new TradingJournalGenerator(disposableCash, coveredPeriod, new FixedCashGrab(500), "RSK", priceBook, createAccountWriter("trading:risky", "GBP"));
-        var tradingGenerator2 = new TradingJournalGenerator(disposableCash, coveredPeriod, new FractionalCashGrab(1.0f), "SPX", priceBook, createAccountWriter("trading:index", "GBP"));
+        var tradingGenerator = new TradingJournalGenerator(disposableCash, coveredPeriod, new FixedCashGrab(500), "RSK", priceBook, createAccountWriter("trading:risky", "GBP"), new BigDecimal("1.5"));
+        var tradingGenerator2 = new TradingJournalGenerator(disposableCash, coveredPeriod, new FractionalCashGrab(1.0f), "SPX", priceBook, createAccountWriter("trading:index", "GBP"), BigDecimal.ZERO);
 
         return List.of(
                 disposableCash,

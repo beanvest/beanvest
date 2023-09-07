@@ -17,8 +17,7 @@ public class IgnoredAccountChecker {
             return Set.of();
 
         } else {
-            Set<Entity> result = new HashSet<>();
-            result.addAll(journal.getAccountsClosedBefore(params.startDate()));
+            Set<Entity> result = new HashSet<>(journal.getAccountsClosedBefore(params.startDate()));
             return result;
         }
     }

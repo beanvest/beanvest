@@ -7,14 +7,14 @@ Journals used to generate these reports are in `sample/` directory.
   ```
   ```
   Account               Deps    Wths    Div    Intr   Fees   Value   Cost     Profit  RGain  UGain
-  .*                    55,259  -3,223      0    366      0  55,262  -52,126   3,136      0  2,860
+  .*                    55,259  -3,223      0    366    -27  55,260  -52,126   3,133      0  2,858
   saving:.*             11,670  -3,223      0    366      0   8,813   -8,537     276      0      0
   saving:regularSaver    3,000  -3,083      0     83      0       0        0       0      0      0
   saving:regularSaver2   5,250       0      0     93      0   5,343   -5,250      93      0      0
   saving:savings         3,420    -140      0    190      0   3,470   -3,287     183      0      0
-  trading:.*            43,589       0      0      0      0  46,449  -43,589   2,860      0  2,860
+  trading:.*            43,589       0      0      0    -27  46,447  -43,589   2,858      0  2,858
   trading:index         34,089       0      0      0      0  36,392  -34,089   2,303      0  2,303
-  trading:risky          9,500       0      0      0      0  10,057   -9,500     557      0    557
+  trading:risky          9,500       0      0      0    -27  10,055   -9,500     555      0    555
   ```
 - Print cash stats on holdings, accounts and groups
   ```bash
@@ -22,7 +22,7 @@ Journals used to generate these reports are in `sample/` directory.
   ```
   ```
   Account                   Deps    Wths    Value   Cost     Profit
-  .*                        55,259  -3,223  55,262  -52,126   3,136
+  .*                        55,259  -3,223  55,260  -52,126   3,133
   saving:.*                 11,670  -3,223   8,813   -8,537     276
   saving:regularSaver        3,000  -3,083       0        0       0
   saving:regularSaver2       5,250       0   5,343   -5,250      93
@@ -30,13 +30,13 @@ Journals used to generate these reports are in `sample/` directory.
   saving:regularSaver:GBP    3,000  -3,083       0        0       0
   saving:savings             3,420    -140   3,470   -3,287     183
   saving:savings:GBP         3,420    -140   3,470   -3,287     183
-  trading:.*                43,589       0  46,449  -43,589   2,860
+  trading:.*                43,589       0  46,447  -43,589   2,858
   trading:index             34,089       0  36,392  -34,089   2,303
   trading:index:GBP         34,089       0   1,767   -1,767       0
   trading:index:SPX              0       0  34,625  -32,322   2,303
-  trading:risky              9,500       0  10,057   -9,500     557
-  trading:risky:GBP          9,500       0     500     -500       0
-  trading:risky:RSK              0       0   9,557   -9,000     557
+  trading:risky              9,500       0  10,055   -9,500     555
+  trading:risky:GBP          9,500       0     527     -527      -0
+  trading:risky:RSK              0       0   9,528   -8,973     555
   ```
 - Print cumulative deposits and withdrawals for accounts and groups for each quarter
   ```bash

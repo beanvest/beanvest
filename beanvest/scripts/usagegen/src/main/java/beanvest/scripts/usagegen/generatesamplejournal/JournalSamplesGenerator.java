@@ -3,17 +3,14 @@ package beanvest.scripts.usagegen.generatesamplejournal;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.Generator;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.JournalGenerator;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.JournalGeneratorFactory;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class JournalSamplesGenerator {
-    private final JournalGeneratorFactory genFactory = new JournalGeneratorFactory();
 
-    public Set<CompleteJournal> generateJournals(CoveredPeriod coveredPeriod) {
-        var generators = genFactory.getJournalGenerators(coveredPeriod);
+    public Set<CompleteJournal> generateJournals(CoveredPeriod coveredPeriod, List<Generator> generators) {
 
         var current = coveredPeriod.start();
         while (!current.isAfter(coveredPeriod.end())) {

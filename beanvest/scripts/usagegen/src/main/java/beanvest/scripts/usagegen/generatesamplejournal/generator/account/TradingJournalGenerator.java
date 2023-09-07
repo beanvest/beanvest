@@ -4,7 +4,6 @@ import beanvest.scripts.usagegen.generatesamplejournal.CompleteJournal;
 import beanvest.scripts.usagegen.generatesamplejournal.CoveredPeriod;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.DisposableCashGenerator;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.DisposableCashGenerator.CashGrab;
-import beanvest.scripts.usagegen.generatesamplejournal.generator.DisposableCashGenerator.FractionalCashGrab;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.JournalGenerator;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.JournalWriter;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.PriceBook;
@@ -26,8 +25,10 @@ public class TradingJournalGenerator implements JournalGenerator {
     private final JournalWriter journal;
     private final CashGrab monthlyInvestment;
     private final String holdingName;
+    private final BigDecimal transactionFee;
 
-    public TradingJournalGenerator(DisposableCashGenerator disposableCash, CoveredPeriod coveredPeriod, CashGrab monthlyInvestment, String holdingName, PriceBook priceBook, JournalWriter journalWriter) {
+    public TradingJournalGenerator(DisposableCashGenerator disposableCash, CoveredPeriod coveredPeriod, CashGrab monthlyInvestment, String holdingName, PriceBook priceBook, JournalWriter journalWriter, BigDecimal transactionFee) {
+        this.transactionFee = transactionFee;
         this.disposableCash = disposableCash;
         journal = journalWriter;
         this.start = coveredPeriod.start();
@@ -53,13 +54,13 @@ public class TradingJournalGenerator implements JournalGenerator {
     }
 
     private void buy(LocalDate current) {
-        var cashHolding = holdings.get(CASH);
+        var cashHolding = holdings.get(CASH).subtract(transactionFee);
         var numberOfUnits = cashHolding.divide(priceBook.getPrice(holdingName), SCALE, RoundingMode.HALF_UP);
         var holding = holdings.computeIfAbsent(holdingName, k -> BigDecimal.ZERO);
         holdings.put(holdingName, holding.add(numberOfUnits));
         holdings.put(CASH, BigDecimal.ZERO);
 
-        journal.addBuy(current, numberOfUnits, holdingName, cashHolding);
+        journal.addBuy(current, numberOfUnits, holdingName, cashHolding, transactionFee);
     }
 
     private void deposit(LocalDate current) {

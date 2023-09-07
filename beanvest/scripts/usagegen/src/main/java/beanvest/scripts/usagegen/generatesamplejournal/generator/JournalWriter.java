@@ -41,8 +41,9 @@ public class JournalWriter {
         entries.add(new JournalEntry(current, "deposit " + amount));
     }
 
-    public void addBuy(LocalDate current, BigDecimal numberOfUnits, String holdingName, BigDecimal cashHolding) {
-        entries.add(new JournalEntry(current, "buy %s %s for %s".formatted(numberOfUnits, holdingName, cashHolding)));
+    public void addBuy(LocalDate current, BigDecimal numberOfUnits, String holdingName, BigDecimal cashHolding, BigDecimal transactionFee) {
+        var feeClause = transactionFee.compareTo(BigDecimal.ZERO) == 0 ? "" : " with fee " + transactionFee.toPlainString();
+        entries.add(new JournalEntry(current, "buy %s %s for %s%s".formatted(numberOfUnits, holdingName, cashHolding, feeClause)));
     }
 
     public void addInterest(LocalDate current, String amount) {
