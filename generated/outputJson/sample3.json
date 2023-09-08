@@ -24,12 +24,6 @@
       "level": 1,
       "type": "ACCOUNT"
     },
-    "saving:savings": {
-      "name": "savings",
-      "id": "A/saving:savings",
-      "level": 1,
-      "type": "ACCOUNT"
-    },
     "trading:.*": {
       "name": "trading",
       "id": "G/trading:.*",
@@ -50,79 +44,48 @@
     }
   },
   "periods": [
-    "22q1",
-    "22q2",
-    "22q3",
-    "22q4",
-    "23q1",
-    "23q2"
+    "TOTAL"
   ],
   "stats": [
     "Deps",
-    "Wths"
+    "Wths",
+    "Div",
+    "Intr",
+    "Fees",
+    "Value",
+    "RGain",
+    "UGain"
   ],
   "accountDtos": [
     {
       "account": ".*",
-      "openingDate": "2022-01-01",
+      "openingDate": "2019-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
+            "Div": {
+              "value": 1108.41
+            },
             "Wths": {
-              "value": -80
+              "value": -13351.49
+            },
+            "Intr": {
+              "value": 451.49
             },
             "Deps": {
-              "value": 32743
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
-            "Wths": {
-              "value": -60
+              "value": 154127
             },
-            "Deps": {
-              "value": 24596
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "Wths": {
-              "value": -3203.17
+            "RGain": {
+              "value": 0
             },
-            "Deps": {
-              "value": 52462
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "Wths": {
-              "value": -40
+            "Value": {
+              "value": 167308.0059
             },
-            "Deps": {
-              "value": 16313
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "Wths": {
-              "value": -3183.17
+            "UGain": {
+              "value": 24972.5959
             },
-            "Deps": {
-              "value": 44122
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "Wths": {
-              "value": -20
-            },
-            "Deps": {
-              "value": 8194
+            "Fees": {
+              "value": -81.0
             }
           }
         }
@@ -130,65 +93,33 @@
     },
     {
       "account": "saving:.*",
-      "openingDate": "2022-01-01",
+      "openingDate": "2020-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
+            "Div": {
+              "value": 0
+            },
             "Wths": {
-              "value": -80
+              "value": -13351.49
+            },
+            "Intr": {
+              "value": 451.49
             },
             "Deps": {
-              "value": 7960
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
-            "Wths": {
-              "value": -60
+              "value": 12900
             },
-            "Deps": {
-              "value": 5620
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "Wths": {
-              "value": -3203.17
+            "RGain": {
+              "value": 0
             },
-            "Deps": {
-              "value": 11140
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "Wths": {
-              "value": -40
+            "Value": {
+              "value": 0
             },
-            "Deps": {
-              "value": 3280
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "Wths": {
-              "value": -3183.17
+            "UGain": {
+              "value": 0
             },
-            "Deps": {
-              "value": 9550
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "Wths": {
-              "value": -20
-            },
-            "Deps": {
-              "value": 1290
+            "Fees": {
+              "value": 0
             }
           }
         }
@@ -196,65 +127,33 @@
     },
     {
       "account": "saving:regularSaver",
-      "openingDate": "2022-01-01",
+      "openingDate": "2020-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
-            "Wths": {
+            "Div": {
               "value": 0
             },
-            "Deps": {
-              "value": 3000
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
             "Wths": {
+              "value": -4683.89
+            },
+            "Intr": {
+              "value": 183.89
+            },
+            "Deps": {
+              "value": 4500
+            },
+            "RGain": {
               "value": 0
             },
-            "Deps": {
-              "value": 2250
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "Wths": {
-              "value": -3083.17
-            },
-            "Deps": {
-              "value": 3000
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "Wths": {
+            "Value": {
               "value": 0
             },
-            "Deps": {
-              "value": 1500
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "Wths": {
-              "value": -3083.17
-            },
-            "Deps": {
-              "value": 3000
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "Wths": {
+            "UGain": {
               "value": 0
             },
-            "Deps": {
-              "value": 750
+            "Fees": {
+              "value": 0
             }
           }
         }
@@ -262,121 +161,33 @@
     },
     {
       "account": "saving:regularSaver2",
-      "openingDate": "2022-05-01",
+      "openingDate": "2021-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
-            "Wths": {
+            "Div": {
               "value": 0
             },
-            "Deps": {
-              "value": 2800
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
             "Wths": {
+              "value": -8667.60
+            },
+            "Intr": {
+              "value": 267.60
+            },
+            "Deps": {
+              "value": 8400
+            },
+            "RGain": {
               "value": 0
             },
-            "Deps": {
-              "value": 1750
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "Wths": {
+            "Value": {
               "value": 0
             },
-            "Deps": {
-              "value": 4900
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "Wths": {
+            "UGain": {
               "value": 0
             },
-            "Deps": {
-              "value": 700
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "Wths": {
+            "Fees": {
               "value": 0
-            },
-            "Deps": {
-              "value": 3850
-            }
-          }
-        }
-      }
-    },
-    {
-      "account": "saving:savings",
-      "openingDate": "2022-01-01",
-      "periodStats": {
-        "22q4": {
-          "stats": {
-            "Wths": {
-              "value": -80
-            },
-            "Deps": {
-              "value": 2160
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
-            "Wths": {
-              "value": -60
-            },
-            "Deps": {
-              "value": 1620
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "Wths": {
-              "value": -120
-            },
-            "Deps": {
-              "value": 3240
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "Wths": {
-              "value": -40
-            },
-            "Deps": {
-              "value": 1080
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "Wths": {
-              "value": -100
-            },
-            "Deps": {
-              "value": 2700
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "Wths": {
-              "value": -20
-            },
-            "Deps": {
-              "value": 540
             }
           }
         }
@@ -384,65 +195,33 @@
     },
     {
       "account": "trading:.*",
-      "openingDate": "2022-01-01",
+      "openingDate": "2019-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
+            "Div": {
+              "value": 1108.41
+            },
             "Wths": {
               "value": 0
             },
-            "Deps": {
-              "value": 24783
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
-            "Wths": {
+            "Intr": {
               "value": 0
             },
             "Deps": {
-              "value": 18976
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "Wths": {
+              "value": 141227
+            },
+            "RGain": {
               "value": 0
             },
-            "Deps": {
-              "value": 41322
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "Wths": {
-              "value": 0
+            "Value": {
+              "value": 167308.0059
             },
-            "Deps": {
-              "value": 13033
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "Wths": {
-              "value": 0
+            "UGain": {
+              "value": 24972.5959
             },
-            "Deps": {
-              "value": 34572
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "Wths": {
-              "value": 0
-            },
-            "Deps": {
-              "value": 6904
+            "Fees": {
+              "value": -81.0
             }
           }
         }
@@ -450,65 +229,33 @@
     },
     {
       "account": "trading:index",
-      "openingDate": "2022-01-01",
+      "openingDate": "2019-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
+            "Div": {
+              "value": 0
+            },
             "Wths": {
               "value": 0
             },
-            "Deps": {
-              "value": 18783
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
-            "Wths": {
+            "Intr": {
               "value": 0
             },
             "Deps": {
-              "value": 14476
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "Wths": {
+              "value": 113727
+            },
+            "RGain": {
               "value": 0
             },
-            "Deps": {
-              "value": 32322
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "Wths": {
-              "value": 0
+            "Value": {
+              "value": 139869.6115
             },
-            "Deps": {
-              "value": 10033
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "Wths": {
-              "value": 0
+            "UGain": {
+              "value": 26142.6115
             },
-            "Deps": {
-              "value": 27072
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "Wths": {
+            "Fees": {
               "value": 0
-            },
-            "Deps": {
-              "value": 5404
             }
           }
         }
@@ -516,65 +263,33 @@
     },
     {
       "account": "trading:risky",
-      "openingDate": "2022-01-01",
+      "openingDate": "2019-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
+            "Div": {
+              "value": 1108.41
+            },
             "Wths": {
               "value": 0
             },
-            "Deps": {
-              "value": 6000
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
-            "Wths": {
+            "Intr": {
               "value": 0
             },
             "Deps": {
-              "value": 4500
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "Wths": {
+              "value": 27500
+            },
+            "RGain": {
               "value": 0
             },
-            "Deps": {
-              "value": 9000
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "Wths": {
-              "value": 0
+            "Value": {
+              "value": 27438.3944
             },
-            "Deps": {
-              "value": 3000
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "Wths": {
-              "value": 0
+            "UGain": {
+              "value": -1170.0156
             },
-            "Deps": {
-              "value": 7500
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "Wths": {
-              "value": 0
-            },
-            "Deps": {
-              "value": 1500
+            "Fees": {
+              "value": -81.0
             }
           }
         }

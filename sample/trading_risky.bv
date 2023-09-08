@@ -1,56 +1,134 @@
 account trading:risky
 currency GBP
 
+2019-01-01 deposit 500
+2019-01-03 buy 4.55 RSK for 500 with fee 1.5
+2019-02-01 deposit 500
+2019-02-03 buy 4.96 RSK for 500 with fee 1.5
+2019-03-01 deposit 500
+2019-03-03 buy 4.93 RSK for 500 with fee 1.5
+2019-04-01 deposit 500
+2019-04-03 buy 5.21 RSK for 500 with fee 1.5
+2019-04-15 dividend 17.18 from RSK
+2019-05-01 deposit 500
+2019-05-03 buy 4.97 RSK for 500 with fee 1.5
+2019-06-01 deposit 500
+2019-06-03 buy 4.11 RSK for 500 with fee 1.5
+2019-07-01 deposit 500
+2019-07-03 buy 5.38 RSK for 500 with fee 1.5
+2019-08-01 deposit 500
+2019-08-03 buy 4.21 RSK for 500 with fee 1.5
+2019-09-01 deposit 500
+2019-09-03 buy 4.20 RSK for 500 with fee 1.5
+2019-10-01 deposit 500
+2019-10-03 buy 4.18 RSK for 500 with fee 1.5
+2019-10-15 dividend 63.29 from RSK
+2019-11-01 deposit 500
+2019-11-03 buy 4.13 RSK for 500 with fee 1.5
+2019-12-01 deposit 500
+2019-12-03 buy 4.55 RSK for 500 with fee 1.5
+2020-01-01 deposit 500
+2020-01-03 buy 4.61 RSK for 500 with fee 1.5
+2020-02-01 deposit 500
+2020-02-03 buy 4.66 RSK for 500 with fee 1.5
+2020-03-01 deposit 500
+2020-03-03 buy 4.51 RSK for 500 with fee 1.5
+2020-04-01 deposit 500
+2020-04-03 buy 4.81 RSK for 500 with fee 1.5
+2020-04-15 dividend 69.35 from RSK
+2020-05-01 deposit 500
+2020-05-03 buy 4.38 RSK for 500 with fee 1.5
+2020-06-01 deposit 500
+2020-06-03 buy 4.42 RSK for 500 with fee 1.5
+2020-07-01 deposit 500
+2020-07-03 buy 4.72 RSK for 500 with fee 1.5
+2020-08-01 deposit 500
+2020-08-03 buy 4.62 RSK for 500 with fee 1.5
+2020-09-01 deposit 500
+2020-09-03 buy 4.77 RSK for 500 with fee 1.5
+2020-10-01 deposit 500
+2020-10-03 buy 4.48 RSK for 500 with fee 1.5
+2020-10-15 dividend 117.27 from RSK
+2020-11-01 deposit 500
+2020-11-03 buy 4.40 RSK for 500 with fee 1.5
+2020-12-01 deposit 500
+2020-12-03 buy 4.79 RSK for 500 with fee 1.5
+2021-01-01 deposit 500
+2021-01-03 buy 4.57 RSK for 500 with fee 1.5
+2021-02-01 deposit 500
+2021-02-03 buy 4.46 RSK for 500 with fee 1.5
+2021-03-01 deposit 500
+2021-03-03 buy 4.68 RSK for 500 with fee 1.5
+2021-04-01 deposit 500
+2021-04-03 buy 4.58 RSK for 500 with fee 1.5
+2021-04-15 dividend 140.53 from RSK
+2021-05-01 deposit 500
+2021-05-03 buy 4.50 RSK for 500 with fee 1.5
+2021-06-01 deposit 500
+2021-06-03 buy 4.07 RSK for 500 with fee 1.5
+2021-07-01 deposit 500
+2021-07-03 buy 5.81 RSK for 500 with fee 1.5
+2021-08-01 deposit 500
+2021-08-03 buy 4.25 RSK for 500 with fee 1.5
+2021-09-01 deposit 500
+2021-09-03 buy 5.85 RSK for 500 with fee 1.5
+2021-10-01 deposit 500
+2021-10-03 buy 5.86 RSK for 500 with fee 1.5
+2021-10-15 dividend 69.77 from RSK
+2021-11-01 deposit 500
+2021-11-03 buy 5.78 RSK for 500 with fee 1.5
+2021-12-01 deposit 500
+2021-12-03 buy 5.63 RSK for 500 with fee 1.5
 2022-01-01 deposit 500
-2022-01-03 buy 4.55 RSK for 500 with fee 1.5
+2022-01-03 buy 5.63 RSK for 500 with fee 1.5
 2022-02-01 deposit 500
-2022-02-03 buy 4.96 RSK for 500 with fee 1.5
+2022-02-03 buy 5.00 RSK for 500 with fee 1.5
 2022-03-01 deposit 500
-2022-03-03 buy 4.93 RSK for 500 with fee 1.5
+2022-03-03 buy 4.51 RSK for 500 with fee 1.5
 2022-04-01 deposit 500
-2022-04-03 buy 5.21 RSK for 500 with fee 1.5
-2022-04-15 dividend 17.18 from RSK
+2022-04-03 buy 5.28 RSK for 500 with fee 1.5
+2022-04-15 dividend 178.31 from RSK
 2022-05-01 deposit 500
-2022-05-03 buy 4.97 RSK for 500 with fee 1.5
+2022-05-03 buy 5.09 RSK for 500 with fee 1.5
 2022-06-01 deposit 500
-2022-06-03 buy 4.11 RSK for 500 with fee 1.5
+2022-06-03 buy 5.33 RSK for 500 with fee 1.5
 2022-07-01 deposit 500
-2022-07-03 buy 5.38 RSK for 500 with fee 1.5
+2022-07-03 buy 5.10 RSK for 500 with fee 1.5
 2022-08-01 deposit 500
-2022-08-03 buy 4.21 RSK for 500 with fee 1.5
+2022-08-03 buy 5.32 RSK for 500 with fee 1.5
 2022-09-01 deposit 500
-2022-09-03 buy 4.20 RSK for 500 with fee 1.5
+2022-09-03 buy 4.73 RSK for 500 with fee 1.5
 2022-10-01 deposit 500
-2022-10-03 buy 4.18 RSK for 500 with fee 1.5
-2022-10-15 dividend 63.29 from RSK
+2022-10-03 buy 5.44 RSK for 500 with fee 1.5
+2022-10-15 dividend 226.35 from RSK
 2022-11-01 deposit 500
-2022-11-03 buy 4.13 RSK for 500 with fee 1.5
+2022-11-03 buy 5.01 RSK for 500 with fee 1.5
 2022-12-01 deposit 500
-2022-12-03 buy 4.55 RSK for 500 with fee 1.5
+2022-12-03 buy 4.96 RSK for 500 with fee 1.5
 2023-01-01 deposit 500
-2023-01-03 buy 4.61 RSK for 500 with fee 1.5
+2023-01-03 buy 5.37 RSK for 500 with fee 1.5
 2023-02-01 deposit 500
-2023-02-03 buy 4.66 RSK for 500 with fee 1.5
+2023-02-03 buy 4.99 RSK for 500 with fee 1.5
 2023-03-01 deposit 500
-2023-03-03 buy 4.51 RSK for 500 with fee 1.5
+2023-03-03 buy 4.85 RSK for 500 with fee 1.5
 2023-04-01 deposit 500
-2023-04-03 buy 4.81 RSK for 500 with fee 1.5
-2023-04-15 dividend 69.35 from RSK
+2023-04-03 buy 5.24 RSK for 500 with fee 1.5
+2023-04-15 dividend 226.36 from RSK
 2023-05-01 deposit 500
-2023-05-03 buy 4.38 RSK for 500 with fee 1.5
+2023-05-03 buy 5.13 RSK for 500 with fee 1.5
 2023-06-01 deposit 500
-2023-06-03 buy 4.42 RSK for 500 with fee 1.5
+2023-06-03 buy 5.09 RSK for 500 with fee 1.5
 2023-07-01 deposit 500
-2023-07-03 buy 4.72 RSK for 500 with fee 1.5
+2023-07-03 buy 5.16 RSK for 500 with fee 1.5
 2023-08-01 deposit 500
-2023-08-03 buy 4.62 RSK for 500 with fee 1.5
+2023-08-03 buy 5.12 RSK for 500 with fee 1.5
 2023-09-01 deposit 500
-2023-09-03 buy 4.77 RSK for 500 with fee 1.5
+2023-09-03 buy 5.09 RSK for 500 with fee 1.5
 2023-10-01 deposit 500
-2023-10-03 buy 4.48 RSK for 500 with fee 1.5
-2023-10-15 dividend 117.27 from RSK
+2023-10-03 buy 4.85 RSK for 500 with fee 1.5
+2023-10-15 dividend 314.36 from RSK
 2023-11-01 deposit 500
-2023-11-03 buy 4.40 RSK for 500 with fee 1.5
+2023-11-03 buy 4.99 RSK for 500 with fee 1.5
 2023-12-01 deposit 500
-2023-12-03 buy 4.79 RSK for 500 with fee 1.5
+2023-12-03 buy 5.04 RSK for 500 with fee 1.5
 2024-01-01 deposit 500

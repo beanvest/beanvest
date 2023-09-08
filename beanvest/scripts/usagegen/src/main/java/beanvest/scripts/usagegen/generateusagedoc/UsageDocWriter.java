@@ -34,7 +34,7 @@ public class UsageDocWriter {
                         """
                         .formatted(
                                 example.example().description(),
-                                example.example().command().replace("$samplesDir$", samplesDir.toString()),
+                                example.example().command().replace("$samplesDir$", samplesDir.toString() + "/"),
                                 indent(example.commandOutput(), 2))));
         Files.writeString(outputFile, stringBuffer);
     }

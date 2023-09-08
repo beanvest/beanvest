@@ -6,7 +6,6 @@ import beanvest.scripts.usagegen.generatesamplejournal.generator.DisposableCashG
 import beanvest.scripts.usagegen.generatesamplejournal.generator.DisposableCashGenerator.FractionalCashGrab;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.account.RegularSaverJournalGenerator;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.account.RegularSaverParams;
-import beanvest.scripts.usagegen.generatesamplejournal.generator.account.SavingsAccountGenerator;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.account.TradingJournalGenerator;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.price.ConstantPriceGen;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.price.LinearPriceGen;
@@ -35,15 +34,13 @@ public class JournalGeneratorFactory {
 
     private List<Generator> getAccountGenerators(CoveredPeriod coveredPeriod, PriceBook priceBook) {
 
-        var savingsGenerators = new SavingsAccountGenerator(coveredPeriod, createAccountWriter("saving:savings", "GBP"));
-
         var disposableCash = new DisposableCashGenerator(new Random(1));
 
-        var params1 = RegularSaverParams.of("0.05", "250", 12);
-        var regularSaverGenerator = new RegularSaverJournalGenerator(disposableCash, coveredPeriod.start(), params1, createAccountWriter("saving:regularSaver", "GBP"));
+        var params1 = RegularSaverParams.of("0.05", "250", 18);
+        var regularSaverGenerator = new RegularSaverJournalGenerator(disposableCash, coveredPeriod.start().plusMonths(12), params1, createAccountWriter("saving:regularSaver", "GBP"));
 
-        var params2 = RegularSaverParams.of("0.03", "350", 18);
-        var regularSaverGenerator2 = new RegularSaverJournalGenerator(disposableCash, coveredPeriod.start().plusMonths(4), params2, createAccountWriter("saving:regularSaver2", "GBP"));
+        var params2 = RegularSaverParams.of("0.03", "350", 24);
+        var regularSaverGenerator2 = new RegularSaverJournalGenerator(disposableCash, coveredPeriod.start().plusMonths(24), params2, createAccountWriter("saving:regularSaver2", "GBP"));
 
         var tradingGenerator = new TradingJournalGenerator(disposableCash, coveredPeriod, new FixedCashGrab(500), "RSK", priceBook, createAccountWriter("trading:risky", "GBP"), new BigDecimal("1.5"), 0.02);
         var tradingGenerator2 = new TradingJournalGenerator(disposableCash, coveredPeriod, new FractionalCashGrab(1.0f), "SPX", priceBook, createAccountWriter("trading:index", "GBP"), BigDecimal.ZERO, 0);
@@ -53,13 +50,12 @@ public class JournalGeneratorFactory {
                 regularSaverGenerator,
                 regularSaverGenerator2,
                 tradingGenerator,
-                tradingGenerator2,
-                savingsGenerators);
+                tradingGenerator2);
     }
 
     private List<PriceGenerator> getPriceGenerators(CoveredPeriod coveredPeriod) {
         var pln = new ConstantPriceGen(Map.of("PLN", new BigDecimal("0.21")), createPriceWriter("prices_pln"));
-        var spx = new LinearPriceGen("SPX", coveredPeriod, "110", "132", createPriceWriter("prices_spx"));
+        var spx = new LinearPriceGen("SPX", coveredPeriod, "93", "152", createPriceWriter("prices_spx"));
         var rsk = new RandomPriceGen("RSK", 110, 0.4, createPriceWriter("prices_rsk"));
 
         return List.of(

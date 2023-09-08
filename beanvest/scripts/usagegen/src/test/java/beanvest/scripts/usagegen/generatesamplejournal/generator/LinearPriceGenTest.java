@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class LinearPriceGenTest {
 
     @Test
-    void shouldMovePriceLinearilyAndWriteUpdatesAtTheEndOfEachMonth() {
+    void shouldMovePriceLinearlyAndWriteUpdatesAtTheEndOfEachMonth() {
         var period = new CoveredPeriod(LocalDate.parse("2023-01-01"), LocalDate.parse("2023-02-28"));
         JournalWriter writer = JournalWriter.createPriceWriter("prices_spx");
         LinearPriceGen gen = new LinearPriceGen("SPX", period, "100", "200", writer);
@@ -28,7 +28,7 @@ class LinearPriceGenTest {
     }
 
     @Test
-    void shouldMovePriceLinearilyAndWriteUpdatesAtTheEndOfEachMonthEvenEndingOnSomeOtherDay() {
+    void shouldMovePriceLinearlyAndWriteUpdatesAtTheEndOfEachMonthEvenEndingOnSomeOtherDay() {
         var period = new CoveredPeriod(LocalDate.parse("2023-01-01"), LocalDate.parse("2023-04-15"));
         JournalWriter writer = JournalWriter.createPriceWriter("prices_spx");
         LinearPriceGen gen = new LinearPriceGen("SPX", period, "100", "150", writer);

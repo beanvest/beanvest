@@ -1,81 +1,97 @@
 ## Usage examples
 Journals used to generate these reports are in `sample/` directory.
 
-- Print various stats for all accounts and groups on each level of the accounts for whole period
+- Print gains and returns of each year
   ```bash
-  beanvest returns sample --end=2023-07-01 --columns=Deps,Wths,Div,Intr,Fees,Value,Cost,Profit,rgain,ugain
+  beanvest returns sample/ --end=2023-07-01 --columns again,xirr --interval=year --startDate=2019-01-01 --delta
   ```
   ```
-  Account               Deps    Wths    Div    Intr   Fees   Value   Cost     Profit  RGain  UGain
-  .*                    55,259  -3,223    150    366    -27  54,969  -52,272   2,696      0  2,417
-  saving:.*             11,670  -3,223      0    366      0   8,813   -8,537     276      0      0
-  saving:regularSaver    3,000  -3,083      0     83      0       0        0       0      0      0
-  saving:regularSaver2   5,250       0      0     93      0   5,343   -5,250      93      0      0
-  saving:savings         3,420    -140      0    190      0   3,470   -3,287     183      0      0
-  trading:.*            43,589       0    150      0    -27  46,156  -43,735   2,421      0  2,417
-  trading:index         34,089       0      0      0      0  36,392  -34,089   2,303      0  2,303
-  trading:risky          9,500       0    150      0    -27   9,764   -9,646     117      0    114
+                       ╷ 2022          ╷ 2021          ╷ 2020          ╷ 2019          ╷
+  Account              │ pAGain  pXirr │ pAGain  pXirr │ pAGain  pXirr │ pAGain  pXirr │
+  .*                   │  9,065    7.5 │  5,614    6.7 │  4,415    9.0 │  1,827   11.2 │
+  saving:.*            │    199    3.0 │    170    4.0 │     83    5.2 │      …      … │
+  saving:regularSaver  │      0      … │    101    5.2 │     83    5.2 │      …      … │
+  saving:regularSaver2 │    199    3.0 │     69    3.0 │      …      … │      …      … │
+  trading:.*           │  8,866    7.8 │  5,444    6.8 │  4,332    9.1 │  1,827   11.2 │
+  trading:index        │  8,550    9.2 │  6,466   10.1 │  4,227   11.1 │  1,584   12.1 │
+  trading:risky        │    316    1.5 │ -1,021   -6.5 │    105    1.1 │    243    7.6 │
+  ```
+- Print cumulative gains and total return of trading accounts after each year
+  ```bash
+  beanvest returns sample/ --end=2023-07-01 --columns again,xirr --interval=year --startDate=2019-01-01
+  ```
+  ```
+                       ╷ 2022          ╷ 2021          ╷ 2020         ╷ 2019         ╷
+  Account              │ AGain   Xirr  │ AGain   Xirr  │ AGain  Xirr  │ AGain  Xirr  │
+  .*                   │ 20,920    7.8 │ 11,856    8.0 │ 6,242    9.6 │ 1,827   11.2 │
+  saving:.*            │    451    3.7 │    253    4.4 │    83    5.2 │     …      … │
+  saving:regularSaver  │    184    5.2 │    184    5.2 │    83    5.2 │     …      … │
+  saving:regularSaver2 │    268    3.0 │     69    3.0 │     …      … │     …      … │
+  trading:.*           │ 20,469    8.0 │ 11,603    8.2 │ 6,159    9.7 │ 1,827   11.2 │
+  trading:index        │ 20,826   10.0 │ 12,276   10.7 │ 5,811   11.4 │ 1,584   12.1 │
+  trading:risky        │   -357   -0.7 │   -673   -2.5 │   348    2.8 │   243    7.6 │
+  ```
+- Print various stats for all accounts and groups on each level of the accounts
+  ```bash
+  beanvest returns sample/ --end=2023-07-01 --columns Deps,Wths,Div,Intr,Fees,Value,rgain,ugain
+  ```
+  ```
+  Account               Deps     Wths     Div    Intr   Fees   Value    RGain  UGain
+  .*                    154,127  -13,351  1,108    451    -81  167,308      0  24,973
+  saving:.*              12,900  -13,351      0    451      0        0      0       0
+  saving:regularSaver     4,500   -4,684      0    184      0        0      0       0
+  saving:regularSaver2    8,400   -8,668      0    268      0        0      0       0
+  trading:.*            141,227        0  1,108      0    -81  167,308      0  24,973
+  trading:index         113,727        0      0      0      0  139,870      0  26,143
+  trading:risky          27,500        0  1,108      0    -81   27,438      0  -1,170
   ```
 - Print cash stats on holdings, accounts and groups
   ```bash
-  beanvest returns sample --end=2023-07-01 --columns=Deps,Wths,Value,Cost,Profit --report-holdings
+  beanvest returns sample/ --end=2023-07-01 --columns Deps,Wths,Value,again,xirr --report-holdings
   ```
   ```
-  Account                   Deps    Wths    Value   Cost     Profit
-  .*                        55,259  -3,223  54,969  -52,272   2,696
-  saving:.*                 11,670  -3,223   8,813   -8,537     276
-  saving:regularSaver        3,000  -3,083       0        0       0
-  saving:regularSaver2       5,250       0   5,343   -5,250      93
-  saving:regularSaver2:GBP   5,250       0   5,343   -5,250      93
-  saving:regularSaver:GBP    3,000  -3,083       0        0       0
-  saving:savings             3,420    -140   3,470   -3,287     183
-  saving:savings:GBP         3,420    -140   3,470   -3,287     183
-  trading:.*                43,589       0  46,156  -43,735   2,421
-  trading:index             34,089       0  36,392  -34,089   2,303
-  trading:index:GBP         34,089       0   1,767   -1,767       0
-  trading:index:SPX              0       0  34,625  -32,322   2,303
-  trading:risky              9,500       0   9,764   -9,646     117
-  trading:risky:GBP          9,500       0     650     -646       4
-  trading:risky:RSK              0       0   9,114   -9,000     114
+  Account                   Deps     Wths     Value    AGain   Xirr
+  .*                        154,127  -13,351  167,308  26,532    7.7
+  saving:.*                  12,900  -13,351        0     451    3.7
+  saving:regularSaver         4,500   -4,684        0     184    5.2
+  saving:regularSaver2        8,400   -8,668        0     268    3.0
+  saving:regularSaver2:GBP    8,400   -8,668        0     268      …
+  saving:regularSaver:GBP     4,500   -4,684        0     184      …
+  trading:.*                141,227        0  167,308  26,081    7.9
+  trading:index             113,727        0  139,870  26,143    9.7
+  trading:index:GBP         113,727        0    2,068       0      …
+  trading:index:SPX               0        0  137,802  26,143    9.8
+  trading:risky              27,500        0   27,438     -62   -0.1
+  trading:risky:GBP          27,500        0    1,608       0      …
+  trading:risky:RSK               0        0   25,830     -62   -0.1
   ```
-- Print cumulative deposits and withdrawals for accounts and groups for each quarter
+- Print value of the accounts and total gains quarterly
   ```bash
-  beanvest returns sample --end=2023-07-01 --columns deps,wths --interval=quarter
+  beanvest returns sample/ --end=2023-07-01 --columns value,again --interval=quarter --startDate=2022-07-01
   ```
   ```
-                       ╷ 23q2           ╷ 23q1           ╷ 22q4          ╷ 22q3          ╷ 22q2          ╷ 22q1         ╷
-  Account              │ Deps    Wths   │ Deps    Wths   │ Deps    Wths  │ Deps    Wths  │ Deps    Wths  │ Deps   Wths  │
-  .*                   │ 52,462  -3,203 │ 44,122  -3,183 │ 32,743    -80 │ 24,596    -60 │ 16,313    -40 │ 8,194    -20 │
-  saving:.*            │ 11,140  -3,203 │  9,550  -3,183 │  7,960    -80 │  5,620    -60 │  3,280    -40 │ 1,290    -20 │
-  saving:regularSaver  │  3,000  -3,083 │  3,000  -3,083 │  3,000      0 │  2,250      0 │  1,500      0 │   750      0 │
-  saving:regularSaver2 │  4,900       0 │  3,850       0 │  2,800      0 │  1,750      0 │    700      0 │     …      … │
-  saving:savings       │  3,240    -120 │  2,700    -100 │  2,160    -80 │  1,620    -60 │  1,080    -40 │   540    -20 │
-  trading:.*           │ 41,322       0 │ 34,572       0 │ 24,783      0 │ 18,976      0 │ 13,033      0 │ 6,904      0 │
-  trading:index        │ 32,322       0 │ 27,072       0 │ 18,783      0 │ 14,476      0 │ 10,033      0 │ 5,404      0 │
-  trading:risky        │  9,000       0 │  7,500       0 │  6,000      0 │  4,500      0 │  3,000      0 │ 1,500      0 │
+                       ╷ 23q2            ╷ 23q1            ╷ 22q4            ╷ 22q3            ╷
+  Account              │ Value    AGain  │ Value    AGain  │ Value    AGain  │ Value    AGain  │
+  .*                   │ 164,740  26,532 │ 154,269  23,664 │ 143,828  20,920 │ 133,602  18,367 │
+  saving:.*            │       0     451 │       0     451 │   8,668     451 │   7,556     389 │
+  saving:regularSaver  │       0     184 │       0     184 │       0     184 │       0     184 │
+  saving:regularSaver2 │       0     268 │       0     268 │   8,668     268 │   7,556     206 │
+  trading:.*           │ 164,740  26,081 │ 154,269  23,213 │ 135,161  20,469 │ 126,047  17,978 │
+  trading:index        │ 137,802  26,143 │ 128,944  23,388 │ 111,518  20,826 │ 104,097  18,528 │
+  trading:risky        │  26,938     -62 │  25,325    -175 │  23,643    -357 │  21,950    -550 │
   ```
-- Print changes in deposits+withdrawals in each period for accounts and groups quarterly
+- Print monthly net deposits (deposits-withdrawals)
   ```bash
-  beanvest returns sample --end=2023-07-01 --columns dw --interval=quarter --delta
+  beanvest returns sample/ --end=2023-07-01 --columns dw --interval=month --startDate=2023-01-01 --delta
   ```
   ```
-                       ╷ 23q2  ╷ 23q1   ╷ 22q4  ╷ 22q3  ╷ 22q2  ╷ 22q1  ╷
-  Account              │ pDW   │ pDW    │ pDW   │ pDW   │ pDW   │ pDW   │
-  .*                   │ 8,320 │  8,276 │ 8,127 │ 8,263 │ 8,099 │ 8,174 │
-  saving:.*            │ 1,570 │ -1,513 │ 2,320 │ 2,320 │ 1,970 │ 1,270 │
-  saving:regularSaver  │     0 │ -3,083 │   750 │   750 │   750 │   750 │
-  saving:regularSaver2 │ 1,050 │  1,050 │ 1,050 │ 1,050 │   700 │     … │
-  saving:savings       │   520 │    520 │   520 │   520 │   520 │   520 │
-  trading:.*           │ 6,750 │  9,789 │ 5,807 │ 5,943 │ 6,129 │ 6,904 │
-  trading:index        │ 5,250 │  8,289 │ 4,307 │ 4,443 │ 4,629 │ 5,404 │
-  trading:risky        │ 1,500 │  1,500 │ 1,500 │ 1,500 │ 1,500 │ 1,500 │
-  ```
-- Print dividends of trading:risky quarterly
-  ```bash
-  beanvest returns sample --end=2023-07-01 --columns div --interval=quarter --delta --account=trading:risky --groups=no
-  ```
-  ```
-                ╷ 23q2  ╷ 23q1  ╷ 22q4  ╷ 22q3  ╷ 22q2  ╷ 22q1  ╷
-  Account       │ pDiv  │ pDiv  │ pDiv  │ pDiv  │ pDiv  │ pDiv  │
-  trading:risky │    69 │     0 │    63 │     0 │    17 │     0 │
+                       ╷ 23m06 ╷ 23m05 ╷ 23m04 ╷ 23m03 ╷ 23m02 ╷ 23m01  ╷
+  Account              │ pDW   │ pDW   │ pDW   │ pDW   │ pDW   │ pDW    │
+  .*                   │ 2,509 │ 2,560 │ 2,534 │ 2,517 │ 2,588 │  2,591 │
+  saving:.*            │     0 │     0 │     0 │     0 │     0 │ -8,668 │
+  saving:regularSaver  │     0 │     0 │     0 │     0 │     0 │      0 │
+  saving:regularSaver2 │     0 │     0 │     0 │     0 │     0 │ -8,668 │
+  trading:.*           │ 2,509 │ 2,560 │ 2,534 │ 2,517 │ 2,588 │ 11,259 │
+  trading:index        │ 2,009 │ 2,060 │ 2,034 │ 2,017 │ 2,088 │ 10,759 │
+  trading:risky        │   500 │   500 │   500 │   500 │   500 │    500 │
   ```

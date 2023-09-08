@@ -26,7 +26,7 @@ public class GenerateSampleJournalMain {
         var journalFilesWriter = new JournalFilesWriter();
         var journalGeneratorFactory = new JournalGeneratorFactory();
 
-        var coveredPeriod = new CoveredPeriod(LocalDate.parse("2022-01-01"), LocalDate.parse("2024-01-01"));
+        var coveredPeriod = new CoveredPeriod(LocalDate.parse("2019-01-01"), LocalDate.parse("2024-01-01"));
         var generators = journalGeneratorFactory.getJournalGenerators(coveredPeriod);
         var journalFiles = journalGenerator.generateJournals(coveredPeriod, generators);
         journalFilesWriter.writeToFiles(outputDirPath, journalFiles);

@@ -44,57 +44,57 @@
     }
   },
   "periods": [
-    "2019",
-    "2020",
-    "2021",
-    "2022"
+    "22q3",
+    "22q4",
+    "23q1",
+    "23q2"
   ],
   "stats": [
-    "AGain",
-    "Xirr"
+    "Value",
+    "AGain"
   ],
   "accountDtos": [
     {
       "account": ".*",
       "openingDate": "2019-01-01",
       "periodStats": {
-        "2019": {
-          "stats": {
-            "AGain": {
-              "value": 1827.2496
-            },
-            "Xirr": {
-              "value": 0.11222199929784886
-            }
-          }
-        },
-        "2022": {
+        "22q4": {
           "stats": {
             "AGain": {
               "value": 20920.2101
             },
-            "Xirr": {
-              "value": 0.07800872929332048
+            "Value": {
+              "value": 143828.3201
             }
           }
         },
-        "2021": {
+        "22q3": {
           "stats": {
             "AGain": {
-              "value": 11855.6163
+              "value": 18367.0299
             },
-            "Xirr": {
-              "value": 0.08004463470826792
+            "Value": {
+              "value": 133602.1399
             }
           }
         },
-        "2020": {
+        "23q2": {
           "stats": {
             "AGain": {
-              "value": 6241.9349
+              "value": 26532.4959
             },
-            "Xirr": {
-              "value": 0.09582325658467321
+            "Value": {
+              "value": 164740.0059
+            }
+          }
+        },
+        "23q1": {
+          "stats": {
+            "AGain": {
+              "value": 23664.3294
+            },
+            "Value": {
+              "value": 154268.8394
             }
           }
         }
@@ -104,33 +104,43 @@
       "account": "saving:.*",
       "openingDate": "2020-01-01",
       "periodStats": {
-        "2022": {
+        "22q4": {
           "stats": {
             "AGain": {
               "value": 451.49
             },
-            "Xirr": {
-              "value": 0.03676610008042318
+            "Value": {
+              "value": 8667.60
             }
           }
         },
-        "2021": {
+        "22q3": {
           "stats": {
             "AGain": {
-              "value": 252.77
+              "value": 389.43
             },
-            "Xirr": {
-              "value": 0.043572513602095776
+            "Value": {
+              "value": 7555.54
             }
           }
         },
-        "2020": {
+        "23q2": {
           "stats": {
             "AGain": {
-              "value": 83.17
+              "value": 451.49
             },
-            "Xirr": {
-              "value": 0.05158791517355252
+            "Value": {
+              "value": 0
+            }
+          }
+        },
+        "23q1": {
+          "stats": {
+            "AGain": {
+              "value": 451.49
+            },
+            "Value": {
+              "value": 0
             }
           }
         }
@@ -140,33 +150,43 @@
       "account": "saving:regularSaver",
       "openingDate": "2020-01-01",
       "periodStats": {
-        "2022": {
+        "22q4": {
           "stats": {
             "AGain": {
               "value": 183.89
             },
-            "Xirr": {
-              "value": 0.051681882942650116
+            "Value": {
+              "value": 0
             }
           }
         },
-        "2021": {
+        "22q3": {
           "stats": {
             "AGain": {
               "value": 183.89
             },
-            "Xirr": {
-              "value": 0.051681882942650116
+            "Value": {
+              "value": 0
             }
           }
         },
-        "2020": {
+        "23q2": {
           "stats": {
             "AGain": {
-              "value": 83.17
+              "value": 183.89
             },
-            "Xirr": {
-              "value": 0.05158791517355252
+            "Value": {
+              "value": 0
+            }
+          }
+        },
+        "23q1": {
+          "stats": {
+            "AGain": {
+              "value": 183.89
+            },
+            "Value": {
+              "value": 0
             }
           }
         }
@@ -176,23 +196,43 @@
       "account": "saving:regularSaver2",
       "openingDate": "2021-01-01",
       "periodStats": {
-        "2022": {
+        "22q4": {
           "stats": {
             "AGain": {
               "value": 267.60
             },
-            "Xirr": {
-              "value": 0.03043258406216247
+            "Value": {
+              "value": 8667.60
             }
           }
         },
-        "2021": {
+        "22q3": {
           "stats": {
             "AGain": {
-              "value": 68.88
+              "value": 205.54
             },
-            "Xirr": {
-              "value": 0.030448560406689786
+            "Value": {
+              "value": 7555.54
+            }
+          }
+        },
+        "23q2": {
+          "stats": {
+            "AGain": {
+              "value": 267.60
+            },
+            "Value": {
+              "value": 0
+            }
+          }
+        },
+        "23q1": {
+          "stats": {
+            "AGain": {
+              "value": 267.60
+            },
+            "Value": {
+              "value": 0
             }
           }
         }
@@ -202,43 +242,43 @@
       "account": "trading:.*",
       "openingDate": "2019-01-01",
       "periodStats": {
-        "2019": {
-          "stats": {
-            "AGain": {
-              "value": 1827.2496
-            },
-            "Xirr": {
-              "value": 0.11222199929784886
-            }
-          }
-        },
-        "2022": {
+        "22q4": {
           "stats": {
             "AGain": {
               "value": 20468.7201
             },
-            "Xirr": {
-              "value": 0.07994601993554766
+            "Value": {
+              "value": 135160.7201
             }
           }
         },
-        "2021": {
+        "22q3": {
           "stats": {
             "AGain": {
-              "value": 11602.8463
+              "value": 17977.5999
             },
-            "Xirr": {
-              "value": 0.08150094671479785
+            "Value": {
+              "value": 126046.5999
             }
           }
         },
-        "2020": {
+        "23q2": {
           "stats": {
             "AGain": {
-              "value": 6158.7649
+              "value": 26081.0059
             },
-            "Xirr": {
-              "value": 0.09691076850350713
+            "Value": {
+              "value": 164740.0059
+            }
+          }
+        },
+        "23q1": {
+          "stats": {
+            "AGain": {
+              "value": 23212.8394
+            },
+            "Value": {
+              "value": 154268.8394
             }
           }
         }
@@ -248,43 +288,43 @@
       "account": "trading:index",
       "openingDate": "2019-01-01",
       "periodStats": {
-        "2019": {
-          "stats": {
-            "AGain": {
-              "value": 1584.0932
-            },
-            "Xirr": {
-              "value": 0.12117870890931523
-            }
-          }
-        },
-        "2022": {
+        "22q4": {
           "stats": {
             "AGain": {
               "value": 20826.1312
             },
-            "Xirr": {
-              "value": 0.1004982623965404
+            "Value": {
+              "value": 111518.1312
             }
           }
         },
-        "2021": {
+        "22q3": {
           "stats": {
             "AGain": {
-              "value": 12276.2820
+              "value": 18527.7543
             },
-            "Xirr": {
-              "value": 0.10682136978971607
+            "Value": {
+              "value": 104096.7543
             }
           }
         },
-        "2020": {
+        "23q2": {
           "stats": {
             "AGain": {
-              "value": 5810.7709
+              "value": 26142.6115
             },
-            "Xirr": {
-              "value": 0.1139802561326586
+            "Value": {
+              "value": 137801.6115
+            }
+          }
+        },
+        "23q1": {
+          "stats": {
+            "AGain": {
+              "value": 23387.6534
+            },
+            "Value": {
+              "value": 128943.6534
             }
           }
         }
@@ -294,43 +334,43 @@
       "account": "trading:risky",
       "openingDate": "2019-01-01",
       "periodStats": {
-        "2019": {
-          "stats": {
-            "AGain": {
-              "value": 243.1564
-            },
-            "Xirr": {
-              "value": 0.07574212516705155
-            }
-          }
-        },
-        "2022": {
+        "22q4": {
           "stats": {
             "AGain": {
               "value": -357.4111
             },
-            "Xirr": {
-              "value": -0.007338815259785665
+            "Value": {
+              "value": 23642.5889
             }
           }
         },
-        "2021": {
+        "22q3": {
           "stats": {
             "AGain": {
-              "value": -673.4357
+              "value": -550.1544
             },
-            "Xirr": {
-              "value": -0.024569523316728355
+            "Value": {
+              "value": 21949.8456
             }
           }
         },
-        "2020": {
+        "23q2": {
           "stats": {
             "AGain": {
-              "value": 347.9940
+              "value": -61.6056
             },
-            "Xirr": {
-              "value": 0.02767305460227803
+            "Value": {
+              "value": 26938.3944
+            }
+          }
+        },
+        "23q1": {
+          "stats": {
+            "AGain": {
+              "value": -174.8140
+            },
+            "Value": {
+              "value": 25325.1860
             }
           }
         }

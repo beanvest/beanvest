@@ -24,11 +24,17 @@
       "level": 1,
       "type": "ACCOUNT"
     },
-    "saving:savings": {
-      "name": "savings",
-      "id": "A/saving:savings",
+    "saving:regularSaver2:GBP": {
+      "name": "GBP",
+      "id": "C/saving:regularSaver2:GBP",
       "level": 1,
-      "type": "ACCOUNT"
+      "type": "HOLDING"
+    },
+    "saving:regularSaver:GBP": {
+      "name": "GBP",
+      "id": "C/saving:regularSaver:GBP",
+      "level": 1,
+      "type": "HOLDING"
     },
     "trading:.*": {
       "name": "trading",
@@ -42,68 +48,68 @@
       "level": 1,
       "type": "ACCOUNT"
     },
+    "trading:index:GBP": {
+      "name": "GBP",
+      "id": "C/trading:index:GBP",
+      "level": 1,
+      "type": "HOLDING"
+    },
+    "trading:index:SPX": {
+      "name": "SPX",
+      "id": "H/trading:index:SPX",
+      "level": 1,
+      "type": "HOLDING"
+    },
     "trading:risky": {
       "name": "risky",
       "id": "A/trading:risky",
       "level": 1,
       "type": "ACCOUNT"
+    },
+    "trading:risky:GBP": {
+      "name": "GBP",
+      "id": "C/trading:risky:GBP",
+      "level": 1,
+      "type": "HOLDING"
+    },
+    "trading:risky:RSK": {
+      "name": "RSK",
+      "id": "H/trading:risky:RSK",
+      "level": 1,
+      "type": "HOLDING"
     }
   },
   "periods": [
-    "22q1",
-    "22q2",
-    "22q3",
-    "22q4",
-    "23q1",
-    "23q2"
+    "TOTAL"
   ],
   "stats": [
-    "pDW"
+    "Deps",
+    "Wths",
+    "Value",
+    "AGain",
+    "Xirr"
   ],
   "accountDtos": [
     {
       "account": ".*",
-      "openingDate": "2022-01-01",
+      "openingDate": "2019-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 8127
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
-            "pDW": {
-              "value": 8263
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "pDW": {
-              "value": 8320.00
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "pDW": {
-              "value": 8099
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "pDW": {
-              "value": 8275.83
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "pDW": {
-              "value": 8174
+            "Wths": {
+              "value": -13351.49
+            },
+            "Deps": {
+              "value": 154127
+            },
+            "AGain": {
+              "value": 26532.4959
+            },
+            "Value": {
+              "value": 167308.0059
+            },
+            "Xirr": {
+              "value": 0.07742416628023491
             }
           }
         }
@@ -111,47 +117,24 @@
     },
     {
       "account": "saving:.*",
-      "openingDate": "2022-01-01",
+      "openingDate": "2020-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 2320
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
-            "pDW": {
-              "value": 2320
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "pDW": {
-              "value": 1570.00
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "pDW": {
-              "value": 1970
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "pDW": {
-              "value": -1513.17
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "pDW": {
-              "value": 1270
+            "Wths": {
+              "value": -13351.49
+            },
+            "Deps": {
+              "value": 12900
+            },
+            "AGain": {
+              "value": 451.49
+            },
+            "Value": {
+              "value": 0
+            },
+            "Xirr": {
+              "value": 0.036697837801937416
             }
           }
         }
@@ -159,47 +142,24 @@
     },
     {
       "account": "saving:regularSaver",
-      "openingDate": "2022-01-01",
+      "openingDate": "2020-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 750
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
-            "pDW": {
-              "value": 750
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "pDW": {
-              "value": 0.00
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "pDW": {
-              "value": 750
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "pDW": {
-              "value": -3083.17
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "pDW": {
-              "value": 750
+            "Wths": {
+              "value": -4683.89
+            },
+            "Deps": {
+              "value": 4500
+            },
+            "AGain": {
+              "value": 183.89
+            },
+            "Value": {
+              "value": 0
+            },
+            "Xirr": {
+              "value": 0.051681882942650116
             }
           }
         }
@@ -207,88 +167,86 @@
     },
     {
       "account": "saving:regularSaver2",
-      "openingDate": "2022-05-01",
+      "openingDate": "2021-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 1050
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
-            "pDW": {
-              "value": 1050
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "pDW": {
-              "value": 1050
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "pDW": {
-              "value": 700
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "pDW": {
-              "value": 1050
+            "Wths": {
+              "value": -8667.60
+            },
+            "Deps": {
+              "value": 8400
+            },
+            "AGain": {
+              "value": 267.60
+            },
+            "Value": {
+              "value": 0
+            },
+            "Xirr": {
+              "value": 0.030352274885775833
             }
           }
         }
       }
     },
     {
-      "account": "saving:savings",
-      "openingDate": "2022-01-01",
+      "account": "saving:regularSaver2:GBP",
+      "openingDate": "2021-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 520
+            "Wths": {
+              "value": -8667.60
+            },
+            "Deps": {
+              "value": 8400
+            },
+            "AGain": {
+              "value": 267.60
+            },
+            "Value": {
+              "value": 0
+            },
+            "Xirr": {
+              "error": {
+                "errors": [
+                  {
+                    "error": "NO_DATA_YET"
+                  }
+                ]
+              }
             }
           }
-        },
-        "22q3": {
+        }
+      }
+    },
+    {
+      "account": "saving:regularSaver:GBP",
+      "openingDate": "2020-01-01",
+      "periodStats": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 520
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "pDW": {
-              "value": 520
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "pDW": {
-              "value": 520
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "pDW": {
-              "value": 520
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "pDW": {
-              "value": 520
+            "Wths": {
+              "value": -4683.89
+            },
+            "Deps": {
+              "value": 4500
+            },
+            "AGain": {
+              "value": 183.89
+            },
+            "Value": {
+              "value": 0
+            },
+            "Xirr": {
+              "error": {
+                "errors": [
+                  {
+                    "error": "NO_DATA_YET"
+                  }
+                ]
+              }
             }
           }
         }
@@ -296,47 +254,24 @@
     },
     {
       "account": "trading:.*",
-      "openingDate": "2022-01-01",
+      "openingDate": "2019-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 5807
-            }
-          }
-        },
-        "22q3": {
-          "stats": {
-            "pDW": {
-              "value": 5943
-            }
-          }
-        },
-        "23q2": {
-          "stats": {
-            "pDW": {
-              "value": 6750
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "pDW": {
-              "value": 6129
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "pDW": {
-              "value": 9789
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "pDW": {
-              "value": 6904
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 141227
+            },
+            "AGain": {
+              "value": 26081.0059
+            },
+            "Value": {
+              "value": 167308.0059
+            },
+            "Xirr": {
+              "value": 0.07894852716308386
             }
           }
         }
@@ -344,47 +279,80 @@
     },
     {
       "account": "trading:index",
-      "openingDate": "2022-01-01",
+      "openingDate": "2019-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 4307
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 113727
+            },
+            "AGain": {
+              "value": 26142.6115
+            },
+            "Value": {
+              "value": 139869.6115
+            },
+            "Xirr": {
+              "value": 0.09742583886303503
             }
           }
-        },
-        "22q3": {
+        }
+      }
+    },
+    {
+      "account": "trading:index:GBP",
+      "openingDate": "2019-01-01",
+      "periodStats": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 4443
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 113727
+            },
+            "AGain": {
+              "value": 0
+            },
+            "Value": {
+              "value": 2068
+            },
+            "Xirr": {
+              "error": {
+                "errors": [
+                  {
+                    "error": "NO_DATA_YET"
+                  }
+                ]
+              }
             }
           }
-        },
-        "23q2": {
+        }
+      }
+    },
+    {
+      "account": "trading:index:SPX",
+      "openingDate": "2019-01-03",
+      "periodStats": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 5250
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "pDW": {
-              "value": 4629
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "pDW": {
-              "value": 8289
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "pDW": {
-              "value": 5404
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 0
+            },
+            "AGain": {
+              "value": 26142.6115
+            },
+            "Value": {
+              "value": 137801.6115
+            },
+            "Xirr": {
+              "value": 0.0976644686521142
             }
           }
         }
@@ -392,52 +360,87 @@
     },
     {
       "account": "trading:risky",
-      "openingDate": "2022-01-01",
+      "openingDate": "2019-01-01",
       "periodStats": {
-        "22q4": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 1500
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 27500
+            },
+            "AGain": {
+              "value": -61.6056
+            },
+            "Value": {
+              "value": 27438.3944
+            },
+            "Xirr": {
+              "value": -0.0009971775713586578
             }
           }
-        },
-        "22q3": {
+        }
+      }
+    },
+    {
+      "account": "trading:risky:GBP",
+      "openingDate": "2019-01-01",
+      "periodStats": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 1500
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 27500
+            },
+            "AGain": {
+              "value": 0
+            },
+            "Value": {
+              "value": 1608.41
+            },
+            "Xirr": {
+              "error": {
+                "errors": [
+                  {
+                    "error": "NO_DATA_YET"
+                  }
+                ]
+              }
             }
           }
-        },
-        "23q2": {
+        }
+      }
+    },
+    {
+      "account": "trading:risky:RSK",
+      "openingDate": "2019-01-03",
+      "periodStats": {
+        "TOTAL": {
           "stats": {
-            "pDW": {
-              "value": 1500
-            }
-          }
-        },
-        "22q2": {
-          "stats": {
-            "pDW": {
-              "value": 1500
-            }
-          }
-        },
-        "23q1": {
-          "stats": {
-            "pDW": {
-              "value": 1500
-            }
-          }
-        },
-        "22q1": {
-          "stats": {
-            "pDW": {
-              "value": 1500
+            "Wths": {
+              "value": 0
+            },
+            "Deps": {
+              "value": 0
+            },
+            "AGain": {
+              "value": -61.6056
+            },
+            "Value": {
+              "value": 25829.9844
+            },
+            "Xirr": {
+              "value": -0.001027967746240617
             }
           }
         }
       }
     }
   ],
-  "userErrors": []
+  "userErrors": [
+    "StatErrors{errors\u003d[UserError[error\u003dNO_DATA_YET, maybeMessage\u003dOptional.empty]]}"
+  ]
 }

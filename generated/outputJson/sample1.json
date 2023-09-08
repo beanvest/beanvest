@@ -24,12 +24,6 @@
       "level": 1,
       "type": "ACCOUNT"
     },
-    "saving:savings": {
-      "name": "savings",
-      "id": "A/saving:savings",
-      "level": 1,
-      "type": "ACCOUNT"
-    },
     "trading:.*": {
       "name": "trading",
       "id": "G/trading:.*",
@@ -50,56 +44,57 @@
     }
   },
   "periods": [
-    "TOTAL"
+    "2019",
+    "2020",
+    "2021",
+    "2022"
   ],
   "stats": [
-    "Deps",
-    "Wths",
-    "Div",
-    "Intr",
-    "Fees",
-    "Value",
-    "Cost",
-    "Profit",
-    "RGain",
-    "UGain"
+    "pAGain",
+    "pXirr"
   ],
   "accountDtos": [
     {
       "account": ".*",
-      "openingDate": "2022-01-01",
+      "openingDate": "2019-01-01",
       "periodStats": {
-        "TOTAL": {
+        "2019": {
           "stats": {
-            "Div": {
-              "value": 149.82
+            "pXirr": {
+              "value": 0.11222199929784886
             },
-            "Wths": {
-              "value": -3223.17
+            "pAGain": {
+              "value": 1827.2496
+            }
+          }
+        },
+        "2022": {
+          "stats": {
+            "pXirr": {
+              "value": 0.07538624603149678
             },
-            "Intr": {
-              "value": 366.05
+            "pAGain": {
+              "value": 9064.5938
+            }
+          }
+        },
+        "2021": {
+          "stats": {
+            "pXirr": {
+              "value": 0.06680042128583503
             },
-            "Deps": {
-              "value": 55259
+            "pAGain": {
+              "value": 5613.6814
+            }
+          }
+        },
+        "2020": {
+          "stats": {
+            "pXirr": {
+              "value": 0.09008698423810253
             },
-            "RGain": {
-              "value": 0
-            },
-            "Value": {
-              "value": 54968.6719
-            },
-            "Profit": {
-              "value": 2696.172296126000079799837699159878619117382435687073341745634669917314827568577581432000000000
-            },
-            "UGain": {
-              "value": 2416.9719
-            },
-            "Fees": {
-              "value": -27.0
-            },
-            "Cost": {
-              "value": -52272.499603873999920200162300840121380882617564312926658254365330082685172431422418568000000000
+            "pAGain": {
+              "value": 4414.6853
             }
           }
         }
@@ -107,39 +102,35 @@
     },
     {
       "account": "saving:.*",
-      "openingDate": "2022-01-01",
+      "openingDate": "2020-01-01",
       "periodStats": {
-        "TOTAL": {
+        "2022": {
           "stats": {
-            "Div": {
-              "value": 0
+            "pXirr": {
+              "value": 0.030482394194420045
             },
-            "Wths": {
-              "value": -3223.17
+            "pAGain": {
+              "value": 198.72
+            }
+          }
+        },
+        "2021": {
+          "stats": {
+            "pXirr": {
+              "value": 0.040468801188464354
             },
-            "Intr": {
-              "value": 366.05
+            "pAGain": {
+              "value": 169.60
+            }
+          }
+        },
+        "2020": {
+          "stats": {
+            "pXirr": {
+              "value": 0.05158791517355252
             },
-            "Deps": {
-              "value": 11670
-            },
-            "RGain": {
-              "value": 0
-            },
-            "Value": {
-              "value": 8812.88
-            },
-            "Profit": {
-              "value": 275.513874194766605135598989433775723097753600
-            },
-            "UGain": {
-              "value": 0
-            },
-            "Fees": {
-              "value": 0
-            },
-            "Cost": {
-              "value": -8537.366125805233394864401010566224276902246400
+            "pAGain": {
+              "value": 83.17
             }
           }
         }
@@ -147,39 +138,41 @@
     },
     {
       "account": "saving:regularSaver",
-      "openingDate": "2022-01-01",
+      "openingDate": "2020-01-01",
       "periodStats": {
-        "TOTAL": {
+        "2022": {
           "stats": {
-            "Div": {
-              "value": 0
+            "pXirr": {
+              "error": {
+                "errors": [
+                  {
+                    "error": "NO_DATA_YET"
+                  }
+                ]
+              }
             },
-            "Wths": {
-              "value": -3083.17
+            "pAGain": {
+              "value": 0.00
+            }
+          }
+        },
+        "2021": {
+          "stats": {
+            "pXirr": {
+              "value": 0.05199086764445693
             },
-            "Intr": {
+            "pAGain": {
+              "value": 100.72
+            }
+          }
+        },
+        "2020": {
+          "stats": {
+            "pXirr": {
+              "value": 0.05158791517355252
+            },
+            "pAGain": {
               "value": 83.17
-            },
-            "Deps": {
-              "value": 3000
-            },
-            "RGain": {
-              "value": 0
-            },
-            "Value": {
-              "value": 0
-            },
-            "Profit": {
-              "value": 0.000000
-            },
-            "UGain": {
-              "value": 0
-            },
-            "Fees": {
-              "value": 0
-            },
-            "Cost": {
-              "value": 0.000000
             }
           }
         }
@@ -187,79 +180,25 @@
     },
     {
       "account": "saving:regularSaver2",
-      "openingDate": "2022-05-01",
+      "openingDate": "2021-01-01",
       "periodStats": {
-        "TOTAL": {
+        "2022": {
           "stats": {
-            "Div": {
-              "value": 0
+            "pXirr": {
+              "value": 0.030482394194420045
             },
-            "Wths": {
-              "value": 0
-            },
-            "Intr": {
-              "value": 92.88
-            },
-            "Deps": {
-              "value": 5250
-            },
-            "RGain": {
-              "value": 0
-            },
-            "Value": {
-              "value": 5342.88
-            },
-            "Profit": {
-              "value": 92.88
-            },
-            "UGain": {
-              "value": 0
-            },
-            "Fees": {
-              "value": 0
-            },
-            "Cost": {
-              "value": -5250
+            "pAGain": {
+              "value": 198.72
             }
           }
-        }
-      }
-    },
-    {
-      "account": "saving:savings",
-      "openingDate": "2022-01-01",
-      "periodStats": {
-        "TOTAL": {
+        },
+        "2021": {
           "stats": {
-            "Div": {
-              "value": 0
+            "pXirr": {
+              "value": 0.030448560406689786
             },
-            "Wths": {
-              "value": -140
-            },
-            "Intr": {
-              "value": 190
-            },
-            "Deps": {
-              "value": 3420
-            },
-            "RGain": {
-              "value": 0
-            },
-            "Value": {
-              "value": 3470
-            },
-            "Profit": {
-              "value": 182.633874194766605135598989433775723097753600
-            },
-            "UGain": {
-              "value": 0
-            },
-            "Fees": {
-              "value": 0
-            },
-            "Cost": {
-              "value": -3287.366125805233394864401010566224276902246400
+            "pAGain": {
+              "value": 68.88
             }
           }
         }
@@ -267,39 +206,45 @@
     },
     {
       "account": "trading:.*",
-      "openingDate": "2022-01-01",
+      "openingDate": "2019-01-01",
       "periodStats": {
-        "TOTAL": {
+        "2019": {
           "stats": {
-            "Div": {
-              "value": 149.82
+            "pXirr": {
+              "value": 0.11222199929784886
             },
-            "Wths": {
-              "value": 0
+            "pAGain": {
+              "value": 1827.2496
+            }
+          }
+        },
+        "2022": {
+          "stats": {
+            "pXirr": {
+              "value": 0.07795384066330037
             },
-            "Intr": {
-              "value": 0
+            "pAGain": {
+              "value": 8865.8738
+            }
+          }
+        },
+        "2021": {
+          "stats": {
+            "pXirr": {
+              "value": 0.0681882032523646
             },
-            "Deps": {
-              "value": 43589
+            "pAGain": {
+              "value": 5444.0814
+            }
+          }
+        },
+        "2020": {
+          "stats": {
+            "pXirr": {
+              "value": 0.09138478284457709
             },
-            "RGain": {
-              "value": 0
-            },
-            "Value": {
-              "value": 46155.7919
-            },
-            "Profit": {
-              "value": 2420.658421931233474664238709726102896019628835687073341745634669917314827568577581432000000000
-            },
-            "UGain": {
-              "value": 2416.9719
-            },
-            "Fees": {
-              "value": -27.0
-            },
-            "Cost": {
-              "value": -43735.133478068766525335761290273897103980371164312926658254365330082685172431422418568000000000
+            "pAGain": {
+              "value": 4331.5153
             }
           }
         }
@@ -307,39 +252,45 @@
     },
     {
       "account": "trading:index",
-      "openingDate": "2022-01-01",
+      "openingDate": "2019-01-01",
       "periodStats": {
-        "TOTAL": {
+        "2019": {
           "stats": {
-            "Div": {
-              "value": 0
+            "pXirr": {
+              "value": 0.12117870890931523
             },
-            "Wths": {
-              "value": 0
+            "pAGain": {
+              "value": 1584.0932
+            }
+          }
+        },
+        "2022": {
+          "stats": {
+            "pXirr": {
+              "value": 0.0917141684967491
             },
-            "Intr": {
-              "value": 0
+            "pAGain": {
+              "value": 8549.8492
+            }
+          }
+        },
+        "2021": {
+          "stats": {
+            "pXirr": {
+              "value": 0.1006384863777325
             },
-            "Deps": {
-              "value": 34089
+            "pAGain": {
+              "value": 6465.5111
+            }
+          }
+        },
+        "2020": {
+          "stats": {
+            "pXirr": {
+              "value": 0.11147374103205406
             },
-            "RGain": {
-              "value": 0
-            },
-            "Value": {
-              "value": 36392.1672
-            },
-            "Profit": {
-              "value": 2303.1672
-            },
-            "UGain": {
-              "value": 2303.1672
-            },
-            "Fees": {
-              "value": 0
-            },
-            "Cost": {
-              "value": -34089
+            "pAGain": {
+              "value": 4226.6777
             }
           }
         }
@@ -347,44 +298,52 @@
     },
     {
       "account": "trading:risky",
-      "openingDate": "2022-01-01",
+      "openingDate": "2019-01-01",
       "periodStats": {
-        "TOTAL": {
+        "2019": {
           "stats": {
-            "Div": {
-              "value": 149.82
+            "pXirr": {
+              "value": 0.07574212516705155
             },
-            "Wths": {
-              "value": 0
+            "pAGain": {
+              "value": 243.1564
+            }
+          }
+        },
+        "2022": {
+          "stats": {
+            "pXirr": {
+              "value": 0.015402523283190517
             },
-            "Intr": {
-              "value": 0
+            "pAGain": {
+              "value": 316.0246
+            }
+          }
+        },
+        "2021": {
+          "stats": {
+            "pXirr": {
+              "value": -0.06549513499616906
             },
-            "Deps": {
-              "value": 9500
+            "pAGain": {
+              "value": -1021.4297
+            }
+          }
+        },
+        "2020": {
+          "stats": {
+            "pXirr": {
+              "value": 0.01105062682515746
             },
-            "RGain": {
-              "value": 0
-            },
-            "Value": {
-              "value": 9763.6247
-            },
-            "Profit": {
-              "value": 117.491221931233474664238709726102896019628835687073341745634669917314827568577581432000000000
-            },
-            "UGain": {
-              "value": 113.8047
-            },
-            "Fees": {
-              "value": -27.0
-            },
-            "Cost": {
-              "value": -9646.133478068766525335761290273897103980371164312926658254365330082685172431422418568000000000
+            "pAGain": {
+              "value": 104.8376
             }
           }
         }
       }
     }
   ],
-  "userErrors": []
+  "userErrors": [
+    "StatErrors{errors\u003d[UserError[error\u003dNO_DATA_YET, maybeMessage\u003dOptional.empty]]}"
+  ]
 }
