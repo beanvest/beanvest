@@ -2,6 +2,7 @@ package beanvest.processor.processingv2;
 
 import beanvest.journal.entity.Entity;
 import beanvest.journal.entry.AccountOperation;
+import beanvest.journal.entry.CashOperation;
 import beanvest.journal.entry.HoldingOperation;
 
 import java.util.Comparator;
@@ -22,15 +23,15 @@ public class AccountsTracker implements ProcessorV2 {
         if (entitiesToInclude.holdings()) {
             if (op instanceof HoldingOperation h) {
                 entities.add(h.accountHolding());
-            } else {
-                entities.add(op.account2().cashHolding());
+            } else if (op instanceof CashOperation c) {
+                entities.add(op.account().cashHolding(c.getCashCurrency()));
             }
         }
         if (entitiesToInclude.accounts()) {
-            entities.add(op.account2());
+            entities.add(op.account());
         }
         if (entitiesToInclude.groups()) {
-            entities.addAll(op.account2().groups());
+            entities.addAll(op.account().groups());
         }
     }
 

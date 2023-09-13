@@ -23,7 +23,7 @@ public class AccountCloseValidator implements Validator {
     @Override
     public void validate(AccountOperation op, Consumer<ValidatorError> errorConsumer) {
         if (op instanceof Close close) {
-            var holdings = holdingsCollector.getHoldingsAndCash(op.account2())
+            var holdings = holdingsCollector.getHoldingsAndCash(op.account())
                     .stream()
                     .filter(h -> h.amount().compareTo(BigDecimal.ZERO) != 0)
                     .toList();
@@ -36,7 +36,7 @@ public class AccountCloseValidator implements Validator {
     private static ValidatorError createValidationError(Close close, List<Holding> holdings) {
         return new ValidatorError(
                 "Account `%s` is not empty on %s and can't be closed. Holdings: %s."
-                        .formatted(close.account2().path(), close.date(), makeHoldingsPrintable(holdings)), close.originalLine().toString());
+                        .formatted(close.account().path(), close.date(), makeHoldingsPrintable(holdings)), close.originalLine().toString());
     }
 
     private static String makeHoldingsPrintable(List<Holding> holdings) {

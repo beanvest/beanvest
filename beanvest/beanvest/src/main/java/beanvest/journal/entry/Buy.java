@@ -1,6 +1,5 @@
 package beanvest.journal.entry;
 
-import beanvest.journal.entity.AccountInstrumentHolding;
 import beanvest.parser.SourceLine;
 import beanvest.journal.Value;
 import beanvest.journal.entity.Account2;
@@ -9,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record Buy(LocalDate date, Account2 account2, Value value, Value totalPrice,
+public record Buy(LocalDate date, Account2 account, Value value, Value totalPrice,
                   BigDecimal fee, Optional<String> comment,
                   SourceLine originalLine) implements Transaction, HoldingOperation {
     @Override

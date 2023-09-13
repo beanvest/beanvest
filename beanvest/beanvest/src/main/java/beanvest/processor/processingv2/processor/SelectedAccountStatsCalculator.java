@@ -28,11 +28,13 @@ public class SelectedAccountStatsCalculator {
     private final AccountsTracker accountsTracker;
     private final List<Validator> validators;
     private final Set<ValidatorError> validatorErrors = new LinkedHashSet<>();
+    private final CurrencyConverter currencyConverter;
 
     public SelectedAccountStatsCalculator(
             CalculatorRegistry calculatorRegistry,
             LinkedHashMap<String, Class<?>> neededStats,
-            AccountsTracker accountsTracker) {
+            AccountsTracker accountsTracker,
+            Optional<String> targetCurrency) {
         this.calculatorRegistry = calculatorRegistry;
         this.neededStats = neededStats;
         this.accountsTracker = accountsTracker;
@@ -43,6 +45,10 @@ public class SelectedAccountStatsCalculator {
         calculatorRegistry.initialize(neededStats.values());
         validators = calculatorRegistry.instantiateValidators(List.of(BalanceValidator.class, AccountCloseValidator.class));
         priceBook = calculatorRegistry.get(LatestPricesBook.class);
+
+        currencyConverter = targetCurrency.isPresent()
+                ? new CurrencyConverterImpl(targetCurrency.get(), priceBook)
+                : CurrencyConverter.NO_OP;
     }
 
     public Set<ValidatorError> process(Entry entry) {
@@ -50,12 +56,13 @@ public class SelectedAccountStatsCalculator {
             priceBook.process(p);
 
         } else if (entry instanceof AccountOperation op) {
-            accountsTracker.process(op);
+            var convertedOp = currencyConverter.convert(op);
+            accountsTracker.process(convertedOp);
             for (ProcessorV2 processor : processors) {
-                processor.process(op);
+                processor.process(convertedOp);
             }
             for (Validator validator : validators) {
-                validator.validate(op, validatorErrors::add);
+                validator.validate(convertedOp, validatorErrors::add);
             }
 
         } else {

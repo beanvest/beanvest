@@ -27,7 +27,7 @@ public class BalanceValidator implements JournalValidator {
 
         return balanceEntries.stream()
                 .map(balance -> {
-                    var account = accounts.get(balance.account2().stringId());
+                    var account = accounts.get(balance.account().stringId());
                     var symbol = balance.symbol();
                     BigDecimal heldAmount;
                     if (symbol.equals("GBP")) {

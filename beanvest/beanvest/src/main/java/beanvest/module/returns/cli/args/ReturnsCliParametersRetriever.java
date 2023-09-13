@@ -19,7 +19,7 @@ public class ReturnsCliParametersRetriever {
         var endDate = getEndDate(parseResult, today);
         var startDate = parseResult.matchedOptionValue("--startDate", LocalDate.MIN);
         var accountFilter = parseResult.matchedOptionValue("--account", ".*");
-        var reportCurrency = Optional.ofNullable(parseResult.matchedOptionValue("--currency", ""));
+        Optional<String> reportCurrency = Optional.ofNullable(parseResult.matchedOptionValue("--currency", null));
 
         var reportInvestments = parseResult.matchedOptionValue("--report-holdings", false);
         var jsonFormat = parseResult.matchedOptionValue("--json", false);

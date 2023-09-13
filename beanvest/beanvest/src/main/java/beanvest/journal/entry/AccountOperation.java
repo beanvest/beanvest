@@ -11,14 +11,14 @@ public sealed interface AccountOperation extends Entry permits Balance, CashOper
 
     //use Account objects instead
     @Deprecated()
-    default String account()
+    default String aNameWithGroupOrSomething()
     {
-        return account2().nameWithGroup();
+        return account().nameWithGroup();
     }
 
-    Account2 account2();
+    Account2 account();
     default Group group()
     {
-        return account2().group();
+        return account().group();
     }
 }

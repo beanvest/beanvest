@@ -1,29 +1,12 @@
-package beanvest.acceptance.returns;
+package beanvest.acceptance.returns.currencies;
 
+import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("not implemented yet")
-public class CurrenciesAcceptanceTest {
+@Disabled("well, its TODO")
+public class TodoAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
-
-    @Test
-    void cashStatsCanBeConverted() {
-        dsl.setCurrency("GBP");
-
-        dsl.runCalculateReturns("""
-                account trading
-                currency PLN
-                                
-                2021-01-01 deposit 50
-                
-                ---
-                2021-01-01 price PLN 0.20 GBP
-                2021-01-21 price PLN 0.20 GBP
-                """);
-
-        dsl.verifyDeposits("trading", "TOTAL", "10");
-    }
 
     @Test
     void depositsAreConvertedAtTheDateWhenTheyHappen() {

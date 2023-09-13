@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record Withdrawal(LocalDate date, Account2 account2, Value value,
+public record Withdrawal(LocalDate date, Account2 account, Value value,
                          Optional<String> comment, SourceLine originalLine) implements DepositOrWithdrawal, Transfer {
     @Override
     public String toJournalLine() {
@@ -30,5 +30,9 @@ public record Withdrawal(LocalDate date, Account2 account2, Value value,
     @Override
     public String getCashCurrency() {
         return value.symbol();
+    }
+
+    public Withdrawal withValue(Value value) {
+        return new Withdrawal(date, account, value, comment, originalLine);
     }
 }

@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record Balance(LocalDate date, Account2 account2, BigDecimal units, String symbol,
+public record Balance(LocalDate date, Account2 account, BigDecimal units, String symbol,
                       Optional<String> comment,
                       SourceLine originalLine) implements AccountOperation {
     @Override

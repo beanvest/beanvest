@@ -25,13 +25,13 @@ public class EmptyAccountClosingValidator implements JournalValidator {
         if (closeEntry == null) {
             return List.of();
         }
-        var account = accounts.get(closeEntry.account2().stringId());
+        var account = accounts.get(closeEntry.account().stringId());
         var cash = account.getCash();
         var hasCash = cash.compareTo(BigDecimal.ZERO) != 0;
         var holdings1 = account.getHoldings();
         if (!holdings1.isEmpty() || hasCash) {
             return List.of(
-                    new ValidatorError("Account `" + closeEntry.account2() + "` is not empty on "
+                    new ValidatorError("Account `" + closeEntry.account() + "` is not empty on "
                                        + dayops.get(0).date() + " and can't be closed. Inventory: " + holdings1.asList() + " and " + cash + " GBP cash", closeEntry.originalLine().toString()));
         } else {
             return List.of();

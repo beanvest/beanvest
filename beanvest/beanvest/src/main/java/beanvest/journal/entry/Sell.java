@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record Sell(LocalDate date, Account2 account2, Value value, Value totalPrice,
+public record Sell(LocalDate date, Account2 account, Value value, Value totalPrice,
                    BigDecimal fee, Optional<String> comment,
                    SourceLine originalLine) implements Transaction, HoldingOperation {
     @Override

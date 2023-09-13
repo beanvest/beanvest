@@ -33,7 +33,8 @@ public class ReturnsCalculator {
         var statsToCalculate = convertToCalculatorMap(params.selectedColumns());
         var accountsClosedEarlier = ignoredAccountChecker.determineIgnoredAccounts(params, journal);
         return statsCalculator.calculateStats(
-                accountsTracker, journal, params.accountFilter(), periodSpec, EXCLUDE, statsToCalculate, accountsClosedEarlier);
+                accountsTracker, journal, params.accountFilter(), periodSpec, EXCLUDE,
+                statsToCalculate, accountsClosedEarlier, params.targetCurrency());
     }
 
     private static LinkedHashMap<String, Class<?>> convertToCalculatorMap(List<StatDefinition> selectedColumns) {

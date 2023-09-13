@@ -6,6 +6,7 @@ import beanvest.processor.time.PeriodInterval;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface ReturnsParameters {
     List<Path> journalsPaths();
@@ -21,4 +22,6 @@ public interface ReturnsParameters {
     PeriodInterval period();
 
     EntitiesToInclude entitiesToInclude();
+
+    Optional<String> targetCurrency();
 }

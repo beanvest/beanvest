@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record Fee(LocalDate date, Account2 account2, Value value, Optional<String> holdingSymbol, Optional<String> comment,
+public record Fee(LocalDate date, Account2 account, Value value, Optional<String> holdingSymbol, Optional<String> comment,
                   SourceLine originalLine) implements Transfer {
     @Override
     public String toJournalLine() {

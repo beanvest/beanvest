@@ -26,8 +26,8 @@ public class AccountOpenDatesCollector implements ProcessorV2 {
     }
 
     private void processAccountActivity(AccountOperation op) {
-        storeFirstActivityIfNotStored(op, op.account2());
-        for (Group group : op.account2().groups()) {
+        storeFirstActivityIfNotStored(op, op.account());
+        for (Group group : op.account().groups()) {
             storeFirstActivityIfNotStored(op, group);
         }
         if (op instanceof CashOperation c) {
@@ -37,7 +37,7 @@ public class AccountOpenDatesCollector implements ProcessorV2 {
             storeFirstActivityIfNotStored(op, t.accountHolding());
         }
         if (op instanceof Close close) {
-            closingDate.put(op.account2(), close.date());
+            closingDate.put(op.account(), close.date());
         }
     }
 

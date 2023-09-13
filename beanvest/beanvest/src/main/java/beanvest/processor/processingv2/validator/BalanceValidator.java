@@ -1,6 +1,5 @@
 package beanvest.processor.processingv2.validator;
 
-import beanvest.journal.entity.AccountInstrumentHolding;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Balance;
 import beanvest.processor.processingv2.CalculationParams;
@@ -24,7 +23,7 @@ public class BalanceValidator implements Validator {
     @Override
     public void validate(AccountOperation op, Consumer<ValidatorError> errorConsumer) {
         if (op instanceof Balance balance) {
-            verifyCashBalance(balance, new CalculationParams(op.account2(), LocalDate.MIN, LocalDate.MAX, "GBP"), errorConsumer);
+            verifyCashBalance(balance, new CalculationParams(op.account(), LocalDate.MIN, LocalDate.MAX, "GBP"), errorConsumer);
         }
     }
 

@@ -62,7 +62,12 @@ public record Account2(Group group, String name) implements Entity {
         return "A/" + stringId();
     }
 
+    @Deprecated //that was always temporary
     public AccountCashHolding cashHolding() {
-        return new AccountCashHolding(this, "GBP");
+        return cashHolding("GBP");
+    }
+
+    public AccountCashHolding cashHolding(String cashCurrency) {
+        return new AccountCashHolding(this, cashCurrency);
     }
 }

@@ -112,7 +112,7 @@ public class CliAcceptanceTest {
                         2021-01-01 deposit 20
                         """
         );
-        dsl.storeJournal("myJournals/new/account2.bv",
+        dsl.storeJournal("myJournals/new/account.bv",
                 """
                         account acc2
                         currency GBP

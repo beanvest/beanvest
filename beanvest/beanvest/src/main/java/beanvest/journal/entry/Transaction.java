@@ -11,7 +11,7 @@ public sealed interface Transaction extends CashOperation, HoldingOperation, Has
 
     String holdingSymbol();
 
-    Account2 account2();
+    Account2 account();
 
     BigDecimal units();
 
@@ -22,6 +22,6 @@ public sealed interface Transaction extends CashOperation, HoldingOperation, Has
     BigDecimal fee();
 
     default AccountInstrumentHolding getInstrumentHolding() {
-        return new AccountInstrumentHolding(account2(), this.holdingSymbol());
+        return new AccountInstrumentHolding(account(), this.holdingSymbol());
     }
 }

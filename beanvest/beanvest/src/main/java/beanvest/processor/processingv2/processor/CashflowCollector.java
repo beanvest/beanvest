@@ -33,7 +33,7 @@ public class CashflowCollector implements ProcessorV2 {
                 cashflows.add(new CashFlow(d.date(), Value.of(d.getCashAmount().negate(), "XX")));
             }
         } else if (op instanceof DepositOrWithdrawal dw) {
-            var account = dw.account2();
+            var account = dw.account();
             var cashflows = accountOperations.getOrDefault(account, new ArrayList<>());
             accountOperations.put(account, cashflows);
             cashflows.add(new CashFlow(dw.date(), Value.of(dw.getRawAmountMoved(), "XX")));

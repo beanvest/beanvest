@@ -67,7 +67,7 @@ public class Journal {
                 .collect(Collectors.toSet());
         var filteredEntries = this.getEntries().stream().filter(entry -> {
             if (entry instanceof AccountOperation opp) {
-                return filteredAccountsNames.contains(opp.account2().path());
+                return filteredAccountsNames.contains(opp.account().path());
             } else {
                 return true;
             }

@@ -18,13 +18,16 @@ public class StatsCollectingJournalProcessor {
     private final AccountsTracker accountsResolver;
     private final AccountOpenDatesCollector accountOpenDatesCollector;
     private final SelectedAccountStatsCalculator statsCalculator;
+    private final LatestPricesBook latestPricesBook = new LatestPricesBook();
 
-    public StatsCollectingJournalProcessor(AccountsTracker accountsResolver1, LinkedHashMap<String, Class<?>> statsToCalculate) {
+    public StatsCollectingJournalProcessor(
+            AccountsTracker accountsResolver1,
+            LinkedHashMap<String, Class<?>> statsToCalculate,
+            Optional<String> targetCurrency) {
         var serviceRegistry = initRegistry(accountsResolver1);
-
         accountOpenDatesCollector = serviceRegistry.get(AccountOpenDatesCollector.class);
         accountsResolver = accountsResolver1;
-        statsCalculator = new SelectedAccountStatsCalculator(serviceRegistry, statsToCalculate, accountsResolver1);
+        statsCalculator = new SelectedAccountStatsCalculator(serviceRegistry, statsToCalculate, accountsResolver1, targetCurrency);
         serviceRegistry.initialize(List.of(BalanceValidator.class, AccountCloseValidator.class));
     }
 
@@ -32,7 +35,6 @@ public class StatsCollectingJournalProcessor {
         var serviceRegistry = new CalculatorRegistry();
         CalculatorRegistrar.registerDefaultCalculatorsFactories(serviceRegistry);
         serviceRegistry.register(AccountsTracker.class, reg -> accountsResolver1);
-        var latestPricesBook = new LatestPricesBook();
         serviceRegistry.register(LatestPricesBook.class, reg -> latestPricesBook);
         return serviceRegistry;
     }

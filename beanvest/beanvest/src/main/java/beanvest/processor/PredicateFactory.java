@@ -26,13 +26,13 @@ public class PredicateFactory {
     public static Predicate<Entry> createIgnoredAccountsPredicate(Set<Entity> accountsToIgnore) {
         //noinspection ConstantValue
         return (e) -> !(e instanceof AccountOperation)
-                || (e instanceof AccountOperation op && !accountsToIgnore.contains(op.account2()));
+                || (e instanceof AccountOperation op && !accountsToIgnore.contains(op.account()));
     }
 
     public static Predicate<Entry> createAccountFilterPredicate(String accountFilter) {
         return entry -> {
             if (entry instanceof AccountOperation op) {
-                return op.account2().path().matches(accountFilter);
+                return op.account().path().matches(accountFilter);
             }
             return true;
         };

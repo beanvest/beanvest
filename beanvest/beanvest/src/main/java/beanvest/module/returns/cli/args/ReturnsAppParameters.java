@@ -17,7 +17,7 @@ public record ReturnsAppParameters(
         LocalDate endDate,
         LocalDate startDate,
         String accountFilter,
-        Optional<String> reportCurrency,
+        Optional<String> targetCurrency,
         List<StatDefinition> selectedColumns,
         List<AccountMetaColumn> accountMetadataColumns,
         Boolean jsonFormat,

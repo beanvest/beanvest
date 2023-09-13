@@ -1,9 +1,8 @@
 package beanvest.processor;
 
 import beanvest.journal.Journal;
-import beanvest.journal.entity.Account2;
 import beanvest.journal.entity.Entity;
-import beanvest.journal.entry.AccountOperation;
+import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processingv2.EndOfPeriodTracker;
 import beanvest.processor.processingv2.*;
 import beanvest.processor.dto.PortfolioStatsDto2;
@@ -12,10 +11,7 @@ import beanvest.processor.time.Period;
 import beanvest.result.Result;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class JournalReportGenerator {
     private AccountStatsGatherer accountStatsGatherer;
@@ -25,14 +21,14 @@ public class JournalReportGenerator {
     }
 
     public Result<PortfolioStatsDto2, List<ValidatorError>> calculateStats(
-            AccountsTracker accountsResolver1,
+            AccountsTracker accountsResolver,
             Journal journal,
             String accountFilter,
             PeriodSpec periodSpec,
             UnfinishedPeriodInclusion unfinishedPeriodInclusion,
-            LinkedHashMap<String, Class<?>> statsToCalculate, Set<Entity> accountsClosedEarlier) {
-        accountStatsGatherer = new AccountStatsGatherer(accountsResolver1, accountsClosedEarlier);
-        var journalProcessor2 = new StatsCollectingJournalProcessor(accountsResolver1, statsToCalculate);
+            LinkedHashMap<String, Class<?>> statsToCalculate, Set<Entity> accountsClosedEarlier, Optional<String> targetCurrency) {
+        accountStatsGatherer = new AccountStatsGatherer(accountsResolver, accountsClosedEarlier);
+        var journalProcessor2 = new StatsCollectingJournalProcessor(accountsResolver, statsToCalculate, targetCurrency);
         var endOfPeriodTracker = new EndOfPeriodTracker(periodSpec, unfinishedPeriodInclusion,
                 period -> finishPeriod(period, periodSpec.start(), journalProcessor2));
 

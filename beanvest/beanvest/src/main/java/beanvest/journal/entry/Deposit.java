@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record Deposit(LocalDate date, Account2 account2, Value value,
+public record Deposit(LocalDate date, Account2 account, Value value,
                       Optional<String> comment, SourceLine originalLine) implements DepositOrWithdrawal, Transfer {
     @Override
     public String toJournalLine() {
@@ -29,5 +29,10 @@ public record Deposit(LocalDate date, Account2 account2, Value value,
     @Override
     public String getCashCurrency() {
         return value.symbol();
+    }
+
+    public Deposit withValue(Value value)
+    {
+        return new Deposit(date, account, value, comment, originalLine);
     }
 }

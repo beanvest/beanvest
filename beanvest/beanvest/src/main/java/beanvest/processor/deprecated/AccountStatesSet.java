@@ -25,7 +25,7 @@ public class AccountStatesSet {
     }
 
     public void process(AccountOperation op) {
-        var key = op.account2().stringId();
+        var key = op.account().stringId();
         var account = accounts.getOrDefault(key, new AccountState());
         account.process(op);
         accounts.put(key, account);

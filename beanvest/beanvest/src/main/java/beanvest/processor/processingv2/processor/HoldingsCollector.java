@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class HoldingsCollector implements ProcessorV2 {
@@ -52,6 +53,16 @@ public class HoldingsCollector implements ProcessorV2 {
                 .collect(Collectors.toList());
     }
 
+    public Holding getCashHolding(Entity account, String currency) {
+        return holdings.keySet().stream()
+                .filter(holding -> holding instanceof AccountCashHolding)
+                .map(holding -> (AccountCashHolding)holding)
+                .filter(holding -> account.contains(holding.entity()))
+                .filter(holding -> holding.symbol().equals(currency))
+                .map(holdings::get)
+                .findFirst().get();
+    }
+
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Transaction tr) {
@@ -72,14 +83,14 @@ public class HoldingsCollector implements ProcessorV2 {
         if (op instanceof Withdrawal wth) {
             getHolding(wth.cashAccount()).update(wth.getCashAmount().negate(), wth.getCashAmount());
         }
-        if (op instanceof Interest dep) {
-            getHolding(dep.cashAccount()).updateWhileKeepingTheCost(dep.getCashAmount());
+        if (op instanceof Interest intr) {
+            getHolding(intr.cashAccount()).updateWhileKeepingTheCost(intr.getCashAmount());
         }
         if (op instanceof Fee fee) {
             getHolding(fee.cashAccount()).updateWhileKeepingTheCost(fee.getCashAmount().negate());
         }
-        if (op instanceof Dividend dep) {
-            getHolding(dep.cashAccount()).updateWhileKeepingTheCost(dep.getCashAmount());
+        if (op instanceof Dividend div) {
+            getHolding(div.cashAccount()).updateWhileKeepingTheCost(div.getCashAmount());
         }
     }
 }

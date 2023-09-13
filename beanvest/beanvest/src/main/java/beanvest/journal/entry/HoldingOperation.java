@@ -6,10 +6,10 @@ public sealed interface HoldingOperation extends AccountOperation permits Buy, D
     String holdingSymbol();
 
     default String getAccountWithSymbol() {
-        return this.account() + ":" + this.holdingSymbol();
+        return this.aNameWithGroupOrSomething() + ":" + this.holdingSymbol();
     }
 
     default AccountInstrumentHolding accountHolding() {
-        return new AccountInstrumentHolding(account2(), holdingSymbol());
+        return new AccountInstrumentHolding(account(), holdingSymbol());
     }
 }
