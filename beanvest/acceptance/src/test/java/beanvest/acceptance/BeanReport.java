@@ -21,18 +21,6 @@ public class BeanReport {
     private String stdOut;
     private CmdRunner cmdRunner = new CmdRunner();
 
-    public Map<LocalDate, Value> readBalances(Path ledgerFile, String account) {
-        if (!Files.exists(ledgerFile)) {
-            throw new RuntimeException("`" + ledgerFile + "`" + "does not exist");
-        }
-
-        try {
-            return getBalanceHistory(ledgerFile, account);
-        } catch (IOException | InterruptedException | CsvException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public Holdings readHoldings(Path bcJournal) throws IOException, InterruptedException, CsvException {
         var command = List.of("bean-report",
                 bcJournal.toString(),
@@ -84,26 +72,6 @@ public class BeanReport {
     public record Holding(String account, BigDecimal units, String currency, String costCurrency,
                           BigDecimal averageCost,
                           BigDecimal price, BigDecimal bookValue, BigDecimal marketValue) {
-    }
-
-    private Map<LocalDate, Value> getBalanceHistory(Path ledgerFile, String account) throws IOException, InterruptedException, CsvException {
-        stdOut = cmdRunner.runSuccessfully(List.of("bean-query",
-                "-f", "csv",
-                ledgerFile.toString(),
-                String.format("select date, balance where account ~ '%s'", account)
-        )).stdOut();
-        var reader = readCsv(stdOut);
-        var balances = new HashMap<LocalDate, Value>();
-        reader.readNext(); //skip headers
-
-        reader.readAll().forEach(row -> {
-            try {
-                balances.put(LocalDate.parse(row[0]), Value.of(row[1]));
-            } catch (ValueFormatException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        return balances;
     }
 
     private CSVReader readCsv(String out) {

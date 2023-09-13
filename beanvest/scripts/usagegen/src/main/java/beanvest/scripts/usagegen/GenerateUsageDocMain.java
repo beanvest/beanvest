@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GenerateUsageDocMain {
+    private static final ExampleVarReplacer exampleVarReplacer = new ExampleVarReplacer();
     private static final String END = "--end=2023-07-01";
     private static final String START_YEARLY = "--startDate=2019-01-01";
     private static final String START_QUARTERLY = "--startDate=2022-07-01";
@@ -48,8 +49,6 @@ public class GenerateUsageDocMain {
         );
         return exampleVarReplacer.resolveVars(replacements, EXAMPLES);
     }
-
-    private static ExampleVarReplacer exampleVarReplacer = new ExampleVarReplacer();
 
     public static void main(String[] args) throws IOException {
         var projectDir = Path.of(System.getProperty("project.dir"));
