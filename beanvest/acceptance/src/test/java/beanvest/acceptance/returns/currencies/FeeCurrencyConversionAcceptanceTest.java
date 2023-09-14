@@ -9,7 +9,7 @@ public class FeeCurrencyConversionAcceptanceTest {
     @Test
     void feesReduceHoldingProportionallyKeepingAverageCost() {
         dsl.setCurrency("PLN");
-        dsl.setColumns("deps,wths");
+        dsl.setColumns("deps,wths,fees");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -24,6 +24,7 @@ public class FeeCurrencyConversionAcceptanceTest {
                 2021-01-07 withdraw 9
                 """);
 
+        dsl.verifyFeesTotal("trading", "TOTAL", "5");
         dsl.verifyDeposits("trading", "TOTAL", "50");
         dsl.verifyWithdrawals("trading", "TOTAL", "45");
     }

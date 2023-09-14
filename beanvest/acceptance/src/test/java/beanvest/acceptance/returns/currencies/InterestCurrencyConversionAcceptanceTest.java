@@ -9,7 +9,7 @@ public class InterestCurrencyConversionAcceptanceTest {
     @Test
     void interestIsBasedOnCurrentExchangeRate() {
         dsl.setCurrency("PLN");
-        dsl.setColumns("deps,wths");
+        dsl.setColumns("deps,wths,intr");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -22,6 +22,7 @@ public class InterestCurrencyConversionAcceptanceTest {
                 2021-01-05 withdraw 3
                 """);
 
+        dsl.verifyInterest("trading", "TOTAL", "12");
         dsl.verifyDeposits("trading", "TOTAL", "5");
         dsl.verifyWithdrawals("trading", "TOTAL", "17");
     }
@@ -29,7 +30,7 @@ public class InterestCurrencyConversionAcceptanceTest {
     @Test
     void interestIsBasedOnCurrentExchangeRates() {
         dsl.setCurrency("PLN");
-        dsl.setColumns("deps,wths");
+        dsl.setColumns("deps,wths,intr");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -46,6 +47,7 @@ public class InterestCurrencyConversionAcceptanceTest {
                 2021-01-07 withdraw 3
                 """);
 
+        dsl.verifyInterest("trading", "TOTAL", "13");
         dsl.verifyDeposits("trading", "TOTAL", "5");
         dsl.verifyWithdrawals("trading", "TOTAL", "18"); //5+6+7
     }
@@ -53,7 +55,7 @@ public class InterestCurrencyConversionAcceptanceTest {
     @Test
     void negativeInterestReducesHoldingProportionallyBasedOnAverageCost() {
         dsl.setCurrency("PLN");
-        dsl.setColumns("deps,wths");
+        dsl.setColumns("deps,wths,intr");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -68,6 +70,7 @@ public class InterestCurrencyConversionAcceptanceTest {
                 2021-01-07 withdraw 9
                 """);
 
+        dsl.verifyInterest("trading", "TOTAL", "-5");
         dsl.verifyDeposits("trading", "TOTAL", "50");
         dsl.verifyWithdrawals("trading", "TOTAL", "45");
     }

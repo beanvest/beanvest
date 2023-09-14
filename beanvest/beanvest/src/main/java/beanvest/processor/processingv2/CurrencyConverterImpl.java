@@ -49,7 +49,12 @@ public class CurrencyConverterImpl implements CurrencyConverter {
             var converted = pricesBook.convert(tr.date(), targetCurrency, Value.of(tr.getRawAmountMoved(), tr.getCashCurrency())).value();
             holding.update(tr.getRawAmountMoved(), converted.amount());
 
-            return tr.withValue(converted);
+            if (tr.getRawAmountMoved().compareTo(BigDecimal.ZERO) > 0) {
+                return tr.withValue(converted);
+            } else {
+                var avgCostBasedValue = holding.averageCost().multiply(tr.getRawAmountMoved());
+                return tr.withValue(Value.of(avgCostBasedValue, targetCurrency));
+            }
 
         } else {
             throw new RuntimeException("Unsupported operation: " + op);
