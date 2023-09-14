@@ -1,13 +1,10 @@
 package beanvest.processor.processingv2;
 
 import beanvest.journal.Value;
+import beanvest.journal.entity.Account2;
 import beanvest.journal.entity.AccountHolding;
-import beanvest.journal.entry.AccountOperation;
-import beanvest.journal.entry.Buy;
-import beanvest.journal.entry.Deposit;
-import beanvest.journal.entry.Withdrawal;
+import beanvest.journal.entry.*;
 import beanvest.processor.pricebook.LatestPricesBook;
-import beanvest.processor.processingv2.processor.HoldingsCollector;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -34,12 +31,12 @@ public class CurrencyConverterImpl implements CurrencyConverter {
         if (op instanceof Deposit dep) {
             var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value()).value();
             var converted = dep.withValue(convertedValue);
-            getHolding(dep.account().cashHolding(targetCurrency))
+            getHolding(dep.cashAccount())
                     .update(dep.getCashAmount(), converted.getCashAmount());
             return converted;
 
         } else if (op instanceof Withdrawal wth) {
-            var holding = holdings.get(wth.account().cashHolding(targetCurrency));
+            var holding = holdings.get(wth.cashAccount());
 
             var portionWithdrawn = wth.getCashAmount().divide(holding.amount(), 10, RoundingMode.HALF_UP);
             var withdrawnAmount = portionWithdrawn.multiply(holding.totalCost().negate());
@@ -47,8 +44,20 @@ public class CurrencyConverterImpl implements CurrencyConverter {
             holding.update(wth.getRawAmountMoved(), BigDecimal.ZERO);
             return wth.withValue(Value.of(withdrawnAmount, targetCurrency));
 
+        } else if (op instanceof Interest intr) {
+            var holding = holdings.get(intr.cashAccount());
+            var converted = pricesBook.convert(intr.date(), targetCurrency, intr.value()).value();
+            holding
+                    .update(intr.getCashAmount(), converted.amount());
+
+            return intr.withValue(converted);
+
         } else {
             throw new RuntimeException("Unsupported operation: " + op);
         }
+    }
+
+    public String dump(Account2 account, String cashCurrency) {
+        return getHolding(account.cashHolding(cashCurrency)).toString();
     }
 }

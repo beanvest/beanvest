@@ -1,9 +1,7 @@
 package beanvest.processor.processingv2.processor;
 
 import beanvest.journal.entity.Entity;
-import beanvest.journal.entry.AccountOperation;
-import beanvest.journal.entry.Entry;
-import beanvest.journal.entry.Price;
+import beanvest.journal.entry.*;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.dto.StatsV2;
 import beanvest.processor.processingv2.*;
@@ -56,7 +54,12 @@ public class SelectedAccountStatsCalculator {
             priceBook.process(p);
 
         } else if (entry instanceof AccountOperation op) {
+//            System.out.println("new op: " + op.toJournalLine());
             var convertedOp = currencyConverter.convert(op);
+//            System.out.println("converted: " + convertedOp.toJournalLine());
+//            if (entry instanceof CashOperation co) {
+//                System.out.println("holdings: " + ((CurrencyConverterImpl) currencyConverter).dump(op.account(), co.getCashCurrency()));
+//            }
             accountsTracker.process(convertedOp);
             for (ProcessorV2 processor : processors) {
                 processor.process(convertedOp);
