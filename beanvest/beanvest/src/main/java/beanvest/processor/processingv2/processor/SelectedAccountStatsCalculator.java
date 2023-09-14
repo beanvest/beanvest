@@ -54,8 +54,9 @@ public class SelectedAccountStatsCalculator {
             priceBook.process(p);
 
         } else if (entry instanceof AccountOperation op) {
-//            System.out.println("new op: " + op.toJournalLine());
             var convertedOp = currencyConverter.convert(op);
+            // DEBUG printz
+//            System.out.println("new op: " + op.toJournalLine());
 //            System.out.println("converted: " + convertedOp.toJournalLine());
 //            if (entry instanceof CashOperation co) {
 //                System.out.println("holdings: " + ((CurrencyConverterImpl) currencyConverter).dump(op.account(), co.getCashCurrency()));

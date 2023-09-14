@@ -44,13 +44,12 @@ public class CurrencyConverterImpl implements CurrencyConverter {
             holding.update(wth.getRawAmountMoved(), BigDecimal.ZERO);
             return wth.withValue(Value.of(withdrawnAmount, targetCurrency));
 
-        } else if (op instanceof Interest intr) {
-            var holding = holdings.get(intr.cashAccount());
-            var converted = pricesBook.convert(intr.date(), targetCurrency, intr.value()).value();
-            holding
-                    .update(intr.getCashAmount(), converted.amount());
+        } else if (op instanceof Transfer tr) {
+            var holding = holdings.get(tr.cashAccount());
+            var converted = pricesBook.convert(tr.date(), targetCurrency, Value.of(tr.getRawAmountMoved(), tr.getCashCurrency())).value();
+            holding.update(tr.getRawAmountMoved(), converted.amount());
 
-            return intr.withValue(converted);
+            return tr.withValue(converted);
 
         } else {
             throw new RuntimeException("Unsupported operation: " + op);

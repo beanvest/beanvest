@@ -4,8 +4,10 @@ import beanvest.journal.Value;
 
 import java.util.Optional;
 
-public sealed interface Transfer extends CashOperation permits Deposit, Dividend, Fee, Interest, Withdrawal {
+public sealed interface Transfer extends CashOperation, HasRawAmountMoved permits Deposit, Dividend, Fee, Interest, Withdrawal {
     Value value();
 
     Optional<String> comment();
+
+    Transfer withValue(Value value);
 }
