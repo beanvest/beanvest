@@ -36,13 +36,16 @@ public class AccountCloseValidator implements Validator {
     private static ValidatorError createValidationError(Close close, List<Holding> holdings) {
         return new ValidatorError(
                 "Account `%s` is not empty on %s and can't be closed. Holdings: %s."
-                        .formatted(close.account().path(), close.date(), makeHoldingsPrintable(holdings)), close.originalLine().toString());
+                        .formatted(close.account().path(),
+                                close.date(),
+                                makeHoldingsPrintable(holdings)),
+                close.originalLine().toString());
     }
 
     private static String makeHoldingsPrintable(List<Holding> holdings) {
         return holdings.stream()
                 .map(Holding::asValue)
-                .map(Value::toString)
+                .map(Value::toPlainString)
                 .collect(Collectors.joining(", "));
     }
 

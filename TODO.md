@@ -9,3 +9,4 @@
 - **BeancountUI**: journal UI through export to beancount format and display with fava
 - **ClosedAccountsSubgroup** aggregate closed accounts in each group instead of hiding them
   - they are important piece of data; they have impact on cumulative stats of the group
+- **XirrAlt** implement alternative formula to use when xirr calculation fails

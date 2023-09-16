@@ -259,7 +259,7 @@
         "TOTAL": {
           "stats": {
             "Wths": {
-              "value": 0
+              "value": 0.00
             },
             "Deps": {
               "value": 141227
@@ -284,7 +284,7 @@
         "TOTAL": {
           "stats": {
             "Wths": {
-              "value": 0
+              "value": 0.00
             },
             "Deps": {
               "value": 113727
@@ -309,13 +309,13 @@
         "TOTAL": {
           "stats": {
             "Wths": {
-              "value": 0
+              "value": 0.00
             },
             "Deps": {
               "value": 113727
             },
             "AGain": {
-              "value": 0
+              "value": 0.00
             },
             "Value": {
               "value": 2068
@@ -340,7 +340,7 @@
         "TOTAL": {
           "stats": {
             "Wths": {
-              "value": 0
+              "value": 0.00
             },
             "Deps": {
               "value": 0
@@ -365,7 +365,7 @@
         "TOTAL": {
           "stats": {
             "Wths": {
-              "value": 0
+              "value": 0.00
             },
             "Deps": {
               "value": 27500
@@ -390,13 +390,13 @@
         "TOTAL": {
           "stats": {
             "Wths": {
-              "value": 0
+              "value": 0.00
             },
             "Deps": {
               "value": 27500
             },
             "AGain": {
-              "value": 0
+              "value": 0.00
             },
             "Value": {
               "value": 1608.41
@@ -421,7 +421,7 @@
         "TOTAL": {
           "stats": {
             "Wths": {
-              "value": 0
+              "value": 0.00
             },
             "Deps": {
               "value": 0

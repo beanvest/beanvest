@@ -5,29 +5,28 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @Disabled("TODO")
-public class FeeCurrencyConversionAcceptanceTest {
+public class ValueCurrencyConversionAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
-    void feesReduceHoldingProportionallyKeepingAverageCost() {
+    void unrealizedGainIsReducedAfterSellingPart() {
         dsl.setCurrency("PLN");
-        dsl.setColumns("deps,wths,fees");
+        dsl.setColumns("value");
+        dsl.setYearly();
 
         dsl.runCalculateReturns("""
                 account trading
                 currency GBP
                                 
                 2021-01-01 price GBP 5 PLN
-                2021-01-02 deposit 10
+                2021-01-01 price X 1 GBP
+                2021-01-02 deposit 2
+                2021-01-03 buy 2 X for 2
                 
-                2021-01-03 price GBP 6 PLN
-                2021-01-04 fee 1
-                                
-                2021-01-07 withdraw 9
+                2021-12-31 price GBP 5 PLN
+                2021-12-31 price X 2 GBP
                 """);
 
-        dsl.verifyFeesTotal("trading", "TOTAL", "5");
-        dsl.verifyDeposits("trading", "TOTAL", "50");
-        dsl.verifyWithdrawals("trading", "TOTAL", "45");
+        dsl.verifyUnrealizedGains("trading", "2021", "10");
     }
 }

@@ -22,6 +22,10 @@ public final class Holding {
         updateAvgCost();
     }
 
+    public void update(String amountChange, String newCost) {
+        update(new BigDecimal(amountChange), new BigDecimal(newCost));
+    }
+
     public void update(BigDecimal amountChange, BigDecimal newCost) {
         if (amount.compareTo(BigDecimal.ZERO) == 0) {
             amount = amountChange;
@@ -99,8 +103,8 @@ public final class Holding {
         if (obj == null || obj.getClass() != this.getClass()) return false;
         var that = (Holding) obj;
         return Objects.equals(this.symbol, that.symbol) &&
-               Objects.equals(this.amount, that.amount) &&
-               Objects.equals(this.totalCost, that.totalCost);
+                Objects.equals(this.amount, that.amount) &&
+                Objects.equals(this.totalCost, that.totalCost);
     }
 
     @Override
@@ -112,11 +116,14 @@ public final class Holding {
     @Override
     public String toString() {
         return "Holding[" +
-               "symbol=" + symbol + ", " +
-               "amount=" + amount + ", " +
-               "totalCost=" + totalCost + ']';
+                "symbol=" + symbol + ", " +
+                "amount=" + amount + ", " +
+                "totalCost=" + totalCost + ']';
     }
 
+    public void updateWhileKeepingTheCost(String decimal) {
+        updateWhileKeepingTheCost(new BigDecimal(decimal));
+    }
     public void updateWhileKeepingTheCost(BigDecimal d) {
         amount = amount.add(d);
         updateAvgCost();

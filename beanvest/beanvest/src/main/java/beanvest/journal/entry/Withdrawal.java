@@ -32,7 +32,8 @@ public record Withdrawal(LocalDate date, Account2 account, Value value,
         return value.symbol();
     }
 
-    public Withdrawal withValue(Value value) {
+    @Override
+    public Withdrawal withCashValue(Value value) {
         return new Withdrawal(date, account, value, comment, originalLine);
     }
 }

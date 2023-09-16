@@ -9,5 +9,5 @@ public sealed interface Transfer extends CashOperation, HasRawAmountMoved permit
 
     Optional<String> comment();
 
-    Transfer withValue(Value value);
+    Transfer withCashValue(Value value);
 }

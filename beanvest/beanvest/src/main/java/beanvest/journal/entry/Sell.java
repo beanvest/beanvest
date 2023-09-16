@@ -42,4 +42,8 @@ public record Sell(LocalDate date, Account2 account, Value value, Value totalPri
     public BigDecimal getRawAmountMoved() {
         return totalPrice.amount().negate();
     }
+
+    public Sell withCashValue(Value newPrice) {
+        return new Sell(date, account, value, newPrice, fee, comment, originalLine);
+    }
 }

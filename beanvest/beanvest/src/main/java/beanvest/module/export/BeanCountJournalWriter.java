@@ -180,14 +180,14 @@ public class BeanCountJournalWriter {
 
         var stringBuffer = new StringBuilder();
         stringBuffer.append(String.format("%s txn \"sell%s\"%n", op.date().toString(), getTitleSuffix(op)));
-        stringBuffer.append(String.format("  %s  %s%n", getCashAccount(op), op.totalPrice()));
+        stringBuffer.append(String.format("  %s  %s%n", getCashAccount(op), op.totalPrice().toPlainString()));
         var totalPriceWithFee = op.totalPrice().add(op.fee());
 
         for (Lot lot : lotsToSell) {
             var priceCurrency = op.totalPrice().symbol();
             stringBuffer.append(String.format("  %s  %s %s {%s %s} @ %s %s%n",
                     accountPrefix + op.account().path() + ":" + op.holdingSymbol(),
-                    lot.units().negate(),
+                    lot.units().negate().toPlainString(),
                     op.value().symbol(),
                     lot.price(),
                     priceCurrency,
@@ -238,12 +238,12 @@ public class BeanCountJournalWriter {
                 op.date().toString(),
                 getTitleSuffix(op),
                 getCashAccount(op),
-                op.totalPrice().negate(),
+                op.totalPrice().negate().toPlainString(),
                 accountPrefix + op.account().path() + ":" + op.holdingSymbol(),
-                op.value(),
+                op.value().toPlainString(),
                 lot,
                 op.totalPrice().symbol(),
-                op.totalPrice().add(op.fee().negate())
+                op.totalPrice().add(op.fee().negate()).toPlainString()
         ));
         if (!op.fee().equals(BigDecimal.ZERO)) {
             stringBuilder.append(String.format("""

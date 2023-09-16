@@ -19,11 +19,13 @@ public class StatsCollectingJournalProcessor {
     private final AccountOpenDatesCollector accountOpenDatesCollector;
     private final SelectedAccountStatsCalculator statsCalculator;
     private final LatestPricesBook latestPricesBook = new LatestPricesBook();
+    private final Optional<String> targetCurrency;
 
     public StatsCollectingJournalProcessor(
             AccountsTracker accountsResolver1,
             LinkedHashMap<String, Class<?>> statsToCalculate,
             Optional<String> targetCurrency) {
+        this.targetCurrency = targetCurrency;
         var serviceRegistry = initRegistry(accountsResolver1);
         accountOpenDatesCollector = serviceRegistry.get(AccountOpenDatesCollector.class);
         accountsResolver = accountsResolver1;
@@ -44,7 +46,7 @@ public class StatsCollectingJournalProcessor {
     }
 
     public Map<Entity, StatsV2> getPeriodStats(Period period) {
-        return statsCalculator.calculateStats(period, "GBP");
+        return statsCalculator.calculateStats(period, targetCurrency.orElse("GBP"));
     }
 
     public Map<String, AccountMetadata> getMetadata() {

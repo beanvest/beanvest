@@ -56,11 +56,13 @@ public class SelectedAccountStatsCalculator {
         } else if (entry instanceof AccountOperation op) {
             var convertedOp = currencyConverter.convert(op);
             // DEBUG printz
-//            System.out.println("new op: " + op.toJournalLine());
-//            System.out.println("converted: " + convertedOp.toJournalLine());
-//            if (entry instanceof CashOperation co) {
-//                System.out.println("holdings: " + ((CurrencyConverterImpl) currencyConverter).dump(op.account(), co.getCashCurrency()));
-//            }
+            if (System.getenv("DEBUG") != null) {
+                System.out.println("new op: " + op.toJournalLine());
+                System.out.println("converted: " + convertedOp.toJournalLine());
+                if (entry instanceof CashOperation co) {
+                    System.out.println("holdings: " + ((CurrencyConverterImpl) currencyConverter).dump(op.account(), co.getCashCurrency()));
+                }
+            }
             accountsTracker.process(convertedOp);
             for (ProcessorV2 processor : processors) {
                 processor.process(convertedOp);
