@@ -1,10 +1,8 @@
 package beanvest.acceptance.returns.currencies;
 
 import beanvest.acceptance.returns.ReturnsDsl;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("TODO")
 public class FeeCurrencyConversionAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 

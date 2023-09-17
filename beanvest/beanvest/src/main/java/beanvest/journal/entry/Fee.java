@@ -28,7 +28,7 @@ public record Fee(LocalDate date, Account2 account, Value value, Optional<String
     }
 
     @Override
-    public Fee withCashValue(Value value) {
+    public Fee withValue(Value value) {
         return new Fee(date, account, value, holdingSymbol, comment, originalLine);
     }
 

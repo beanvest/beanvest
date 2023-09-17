@@ -28,3 +28,4 @@ public class BeancountComparisonAcceptanceTest {
         dsl.verifyCashMatchesInBeancountAndBeanvest();
     }
 }
+

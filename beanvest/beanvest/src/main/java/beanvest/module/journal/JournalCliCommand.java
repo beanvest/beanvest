@@ -115,14 +115,10 @@ public class JournalCliCommand implements SubCommand {
         stdOut.format("  stats: %s%n",
                 getStatsString(difference, currentStats.getCash()));
         valuationResult.ifSuccessfulOrElse(
-                (value) -> stdOut.format("  holdings: %.2f GBP %s%n", value, toPrintableString(holdings)),
+                (value) -> stdOut.format("  holdings: %.2f GBP %s%n", value, holdings.asList()),
                 (calculationError) -> {
                 });
         stdOut.println();
-    }
-
-    private static List<String> toPrintableString(Holdings holdings) {
-        return holdings.asList().stream().map(h -> h.toPlainString()).toList();
     }
 
     public CashStats subtract(CashStats first, CashStats other) {

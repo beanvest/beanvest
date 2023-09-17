@@ -1,13 +1,13 @@
 package beanvest.processor.processingv2;
 
-import beanvest.journal.ConvertedValue;
+import beanvest.journal.Value;
 import beanvest.journal.entity.Account2;
 import beanvest.journal.entity.AccountHolding;
-import beanvest.journal.entry.AccountOperation;
-import beanvest.journal.entry.Deposit;
+import beanvest.journal.entry.*;
 import beanvest.processor.pricebook.LatestPricesBook;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,10 +30,34 @@ public class CurrencyConverterImpl implements CurrencyConverter {
     public AccountOperation convert(AccountOperation op) {
         if (op instanceof Deposit dep) {
             var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value()).value();
-            return dep.withCashValue(new ConvertedValue(dep.value(), convertedValue));
+            var converted = dep.withValue(convertedValue);
+            getHolding(dep.cashAccount())
+                    .update(dep.getCashAmount(), converted.getCashAmount());
+            return converted;
+
+        } else if (op instanceof Withdrawal wth) {
+            var holding = holdings.get(wth.cashAccount());
+
+            var portionWithdrawn = wth.getCashAmount().divide(holding.amount(), 10, RoundingMode.HALF_UP);
+            var withdrawnAmount = portionWithdrawn.multiply(holding.totalCost().negate());
+
+            holding.update(wth.getRawAmountMoved(), BigDecimal.ZERO);
+            return wth.withValue(Value.of(withdrawnAmount, targetCurrency));
+
+        } else if (op instanceof Transfer tr) {
+            var holding = holdings.get(tr.cashAccount());
+            var converted = pricesBook.convert(tr.date(), targetCurrency, Value.of(tr.getRawAmountMoved(), tr.getCashCurrency())).value();
+            holding.update(tr.getRawAmountMoved(), converted.amount());
+
+            if (tr.getRawAmountMoved().compareTo(BigDecimal.ZERO) > 0) {
+                return tr.withValue(converted);
+            } else {
+                var avgCostBasedValue = holding.averageCost().multiply(tr.getRawAmountMoved());
+                return tr.withValue(Value.of(avgCostBasedValue, targetCurrency));
+            }
 
         } else {
-            throw new RuntimeException("not supported yet");
+            throw new RuntimeException("Unsupported operation: " + op);
         }
     }
 

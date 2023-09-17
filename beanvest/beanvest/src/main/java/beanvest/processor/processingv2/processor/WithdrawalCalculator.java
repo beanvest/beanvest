@@ -21,6 +21,6 @@ public class WithdrawalCalculator implements ProcessorV2, Calculator {
 
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
-        return simpleBalanceTracker.calculate(params.entity(), params.targetCurrency());
+        return simpleBalanceTracker.calculate(params.entity());
     }
 }

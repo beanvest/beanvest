@@ -2,15 +2,20 @@ package beanvest.acceptance;
 
 import beanvest.lib.util.CmdRunner;
 import beanvest.parser.ValueFormatException;
+import beanvest.journal.Value;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BeanReport {
     private String stdOut;

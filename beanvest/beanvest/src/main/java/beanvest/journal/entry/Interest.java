@@ -26,8 +26,7 @@ public record Interest(LocalDate date, Account2 account, Value value, Optional<S
         return value.symbol();
     }
 
-    @Override
-    public Interest withCashValue(Value newValue) {
+    public Interest withValue(Value newValue) {
         return new Interest(date, account, newValue, comment, originalLine);
     }
 

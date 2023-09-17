@@ -31,8 +31,7 @@ public record Deposit(LocalDate date, Account2 account, Value value,
         return value.symbol();
     }
 
-    @Override
-    public Deposit withCashValue(Value value)
+    public Deposit withValue(Value value)
     {
         return new Deposit(date, account, value, comment, originalLine);
     }

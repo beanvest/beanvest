@@ -28,7 +28,7 @@ public record Dividend(LocalDate date, Account2 account, Value value, String hol
 
 
     @Override
-    public Dividend withCashValue(Value value) {
+    public Dividend withValue(Value value) {
         return new Dividend(date, account, value, holdingSymbol, comment, originalLine);
     }
 
