@@ -46,16 +46,9 @@ public class CurrencyConverterImpl implements CurrencyConverter {
 
         } else if (op instanceof Transfer tr) {
             var holding = holdings.get(tr.cashAccount());
-            var converted = pricesBook.convert(tr.date(), targetCurrency, Value.of(tr.getRawAmountMoved(), tr.getCashCurrency())).value();
-            holding.update(tr.getRawAmountMoved(), converted.amount());
-
-            if (tr.getRawAmountMoved().compareTo(BigDecimal.ZERO) > 0) {
-                return tr.withValue(converted);
-            } else {
-                var avgCostBasedValue = holding.averageCost().multiply(tr.getRawAmountMoved());
-                return tr.withValue(Value.of(avgCostBasedValue, targetCurrency));
-            }
-
+            var newCost = holding.averageCost().multiply(tr.getRawAmountMoved());
+            holding.update(tr.getRawAmountMoved(), newCost);
+            return tr.withValue(Value.of(newCost, targetCurrency));
         } else {
             throw new RuntimeException("Unsupported operation: " + op);
         }
