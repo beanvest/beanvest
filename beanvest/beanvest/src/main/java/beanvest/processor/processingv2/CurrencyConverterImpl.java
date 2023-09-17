@@ -22,16 +22,13 @@ public class CurrencyConverterImpl implements CurrencyConverter {
         this.pricesBook = pricesBook;
     }
 
-    private Holding getHolding(AccountHolding accountHolding) {
-        return holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, BigDecimal.ZERO));
-    }
-
     @Override
     public AccountOperation convert(AccountOperation op) {
         if (op instanceof Deposit dep) {
             var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value()).value();
             var converted = dep.withValue(convertedValue);
-            getHolding(dep.cashAccount())
+            AccountHolding accountHolding = dep.cashAccount();
+            holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, BigDecimal.ZERO))
                     .update(dep.getCashAmount(), converted.getCashAmount());
             return converted;
 
@@ -49,12 +46,14 @@ public class CurrencyConverterImpl implements CurrencyConverter {
             var newCost = holding.averageCost().multiply(tr.getRawAmountMoved());
             holding.update(tr.getRawAmountMoved(), newCost);
             return tr.withValue(Value.of(newCost, targetCurrency));
+
         } else {
             throw new RuntimeException("Unsupported operation: " + op);
         }
     }
 
     public String dump(Account2 account, String cashCurrency) {
-        return getHolding(account.cashHolding(cashCurrency)).toString();
+        AccountHolding accountHolding = account.cashHolding(cashCurrency);
+        return holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, BigDecimal.ZERO)).toString();
     }
 }

@@ -42,5 +42,4 @@ public record Buy(LocalDate date, Account2 account, Value value, Value totalPric
     public BigDecimal getRawAmountMoved() {
         return totalPrice.amount();
     }
-
 }
