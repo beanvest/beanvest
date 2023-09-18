@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class HoldingsCollector implements ProcessorV2 {
@@ -67,30 +66,30 @@ public class HoldingsCollector implements ProcessorV2 {
     public void process(AccountOperation op) {
         if (op instanceof Transaction tr) {
             if (op instanceof Buy buy) {
-                getHolding(tr.cashAccount()).update(buy.totalPrice().amount().negate(), buy.totalPrice().amount());
-                getHolding(tr.accountHolding()).update(buy.units(), buy.totalPrice().amount().negate());
+                getHolding(tr.accountCash()).update(buy.totalPrice().amount().negate(), buy.totalPrice().amount());
+                getHolding(tr.accountHolding()).update(buy.units(), buy.originalCurrencyPrice().amount().negate());
 
             } else if (op instanceof Sell sell) {
                 var holding = getHolding(tr.accountHolding());
                 holding.update(sell.units().negate(), holding.totalCost());
                 var costOfBuy = holding.averageCost().multiply(sell.units());
-                getHolding(tr.cashAccount()).update(sell.totalPrice().amount(), costOfBuy);
+                getHolding(tr.accountCash()).update(sell.originalCurrencyPrice().amount(), costOfBuy);
             }
         }
         if (op instanceof Deposit dep) {
-            getHolding(dep.cashAccount()).update(dep.getCashAmount(), dep.getCashAmount().negate());
+            getHolding(dep.accountCash()).update(dep.getCashAmount(), dep.getCashAmount().negate());
         }
         if (op instanceof Withdrawal wth) {
-            getHolding(wth.cashAccount()).update(wth.getCashAmount().negate(), wth.getCashAmount());
+            getHolding(wth.accountCash()).update(wth.getCashAmount().negate(), wth.getCashAmount());
         }
         if (op instanceof Interest intr) {
-            getHolding(intr.cashAccount()).updateWhileKeepingTheCost(intr.getCashAmount());
+            getHolding(intr.accountCash()).updateWhileKeepingTheCost(intr.getCashAmount());
         }
         if (op instanceof Fee fee) {
-            getHolding(fee.cashAccount()).updateWhileKeepingTheCost(fee.getCashAmount().negate());
+            getHolding(fee.accountCash()).updateWhileKeepingTheCost(fee.getCashAmount().negate());
         }
         if (op instanceof Dividend div) {
-            getHolding(div.cashAccount()).updateWhileKeepingTheCost(div.getCashAmount());
+            getHolding(div.accountCash()).updateWhileKeepingTheCost(div.getCashAmount());
         }
     }
 }

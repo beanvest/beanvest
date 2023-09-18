@@ -283,7 +283,7 @@ public class JournalParser {
         var matcher = PATTERN_BUY_INC_FEE.matcher(remainder);
         if (matcher.matches()) {
             var operations = new ArrayList<AccountOperation>();
-            final Value value = getPriceFromLineOrMeta(matcher.group("price"));
+            final Value totalPrice = getPriceFromLineOrMeta(matcher.group("price"));
 
             var comment = matcher.group("comment");
             var deposit = matcher.group("deposit");
@@ -291,7 +291,7 @@ public class JournalParser {
                 operations.add(new Deposit(
                         date,
                         getAccount(),
-                        value,
+                        totalPrice,
                         Optional.ofNullable(comment), line));
             }
             var fee = getFee(matcher.group("fee"));
@@ -300,8 +300,9 @@ public class JournalParser {
             operations.add(new Buy(date,
                     getAccount(),
                     Value.of(units, symbol),
-                    value,
+                    totalPrice,
                     fee,
+                    totalPrice,
                     Optional.ofNullable(comment), line));
             return operations;
         }
@@ -328,6 +329,7 @@ public class JournalParser {
             operations.add(new Sell(date,
                     getAccount(),
                     Value.of(units, symbol),
+                    value,
                     value,
                     fee,
                     Optional.ofNullable(comment), line));

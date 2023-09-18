@@ -31,7 +31,7 @@ public class AccountOpenDatesCollector implements ProcessorV2 {
             storeFirstActivityIfNotStored(op, group);
         }
         if (op instanceof CashOperation c) {
-            storeFirstActivityIfNotStored(op, c.cashAccount());
+            storeFirstActivityIfNotStored(op, c.accountCash());
         }
         if (op instanceof Transaction t) {
             storeFirstActivityIfNotStored(op, t.accountHolding());

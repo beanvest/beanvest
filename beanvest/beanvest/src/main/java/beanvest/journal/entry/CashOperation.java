@@ -9,7 +9,7 @@ public sealed interface CashOperation extends AccountOperation permits Transacti
 
     String getCashCurrency();
 
-    default AccountCashHolding cashAccount()
+    default AccountCashHolding accountCash()
     {
         return this.account().cashHolding(getCashCurrency());
     }

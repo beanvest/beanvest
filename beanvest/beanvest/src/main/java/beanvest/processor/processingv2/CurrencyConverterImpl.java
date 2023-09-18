@@ -27,13 +27,13 @@ public class CurrencyConverterImpl implements CurrencyConverter {
         if (op instanceof Deposit dep) {
             var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value()).value();
             var converted = dep.withValue(convertedValue);
-            AccountHolding accountHolding = dep.cashAccount();
+            AccountHolding accountHolding = dep.accountCash();
             holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, BigDecimal.ZERO))
                     .update(dep.getCashAmount(), converted.getCashAmount());
             return converted;
 
         } else if (op instanceof Withdrawal wth) {
-            var holding = holdings.get(wth.cashAccount());
+            var holding = holdings.get(wth.accountCash());
 
             var portionWithdrawn = wth.getCashAmount().divide(holding.amount(), 10, RoundingMode.HALF_UP);
             var withdrawnAmount = portionWithdrawn.multiply(holding.totalCost().negate());
@@ -42,9 +42,17 @@ public class CurrencyConverterImpl implements CurrencyConverter {
             return wth.withValue(Value.of(withdrawnAmount, targetCurrency));
 
         } else if (op instanceof Transfer tr) {
-            var holding = holdings.get(tr.cashAccount());
+            var holding = holdings.get(tr.accountCash());
             var newCost = holding.averageCost().multiply(tr.getRawAmountMoved());
             holding.update(tr.getRawAmountMoved(), newCost);
+
+            return tr.withValue(Value.of(newCost, targetCurrency));
+
+        } else if (op instanceof Transaction tr) {
+            var cashHolding = holdings.get(tr.accountCash());
+            var newCost = cashHolding.averageCost().multiply(tr.getRawAmountMoved());
+            cashHolding.update(tr.getRawAmountMoved().negate(), newCost);
+
             return tr.withValue(Value.of(newCost, targetCurrency));
 
         } else {

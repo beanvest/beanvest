@@ -24,4 +24,6 @@ public sealed interface Transaction extends CashOperation, HoldingOperation, Has
     default AccountInstrumentHolding getInstrumentHolding() {
         return new AccountInstrumentHolding(account(), this.holdingSymbol());
     }
+
+    Transaction withValue(Value newValue);
 }

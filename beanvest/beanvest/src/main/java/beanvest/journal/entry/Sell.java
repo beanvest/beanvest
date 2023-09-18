@@ -3,12 +3,13 @@ package beanvest.journal.entry;
 import beanvest.journal.entity.Account2;
 import beanvest.parser.SourceLine;
 import beanvest.journal.Value;
+import beanvest.processor.processingv2.Holding;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record Sell(LocalDate date, Account2 account, Value value, Value totalPrice,
+public record Sell(LocalDate date, Account2 account, Value value, Value totalPrice,Value originalCurrencyTotalPrice,
                    BigDecimal fee, Optional<String> comment,
                    SourceLine originalLine) implements Transaction, HoldingOperation {
     @Override
@@ -41,5 +42,13 @@ public record Sell(LocalDate date, Account2 account, Value value, Value totalPri
     @Override
     public BigDecimal getRawAmountMoved() {
         return totalPrice.amount().negate();
+    }
+
+    public Sell withValue(Value newTotalPrice) {
+        return new Sell(date, account, value, newTotalPrice, totalPrice, fee, comment, originalLine);
+    }
+
+    public Value originalCurrencyPrice() {
+        return originalCurrencyTotalPrice;
     }
 }

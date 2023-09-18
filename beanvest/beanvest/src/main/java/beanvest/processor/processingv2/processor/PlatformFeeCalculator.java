@@ -16,7 +16,7 @@ public class PlatformFeeCalculator implements ProcessorV2, Calculator {
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Fee fee) {
-            simpleBalanceTracker.add(fee.cashAccount(), fee.getCashAmount().negate());
+            simpleBalanceTracker.add(fee.accountCash(), fee.getCashAmount().negate());
         }
     }
 
