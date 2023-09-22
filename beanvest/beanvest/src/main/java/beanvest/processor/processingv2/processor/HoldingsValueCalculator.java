@@ -11,10 +11,10 @@ import beanvest.result.StatErrors;
 import java.math.BigDecimal;
 
 public class HoldingsValueCalculator implements Calculator {
-    private final HoldingsCollector holdingsCollector;
+    private final HoldingsCollectorInterface holdingsCollector;
     private final LatestPricesBook pricesBook;
 
-    public HoldingsValueCalculator(HoldingsCollector holdingsCollector, LatestPricesBook pricesBook) {
+    public HoldingsValueCalculator(HoldingsCollectorInterface holdingsCollector, LatestPricesBook pricesBook) {
         this.holdingsCollector = holdingsCollector;
         this.pricesBook = pricesBook;
     }

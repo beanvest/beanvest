@@ -9,10 +9,11 @@ public record AccountCashHolding(Account2 account2, String holding) implements E
         if (parts.size() == 1) {
             throw new UnsupportedOperationException("holding as to be in an account. StringId given: " + s);
         }
+        var currency = parts.get(parts.size() - 1);
         return new AccountCashHolding(new Account2(
-                new Group(parts.subList(0, parts.size() - 2)),
-                parts.get(parts.size() - 2)),
-                parts.get(parts.size() - 1)
+                    new Group(parts.subList(0, parts.size() - 2)),
+                    parts.get(parts.size() - 2), currency),
+                currency
         );
     }
 
@@ -58,6 +59,11 @@ public record AccountCashHolding(Account2 account2, String holding) implements E
     @Override
     public String name() {
         return holding;
+    }
+
+    @Override
+    public String currency() {
+        return account2.currency();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package beanvest.processor;
 
+import beanvest.processor.processingv2.CurrencyConverter;
 import beanvest.processor.processingv2.ValueCalculator;
 import beanvest.processor.processingv2.processor.*;
 import beanvest.processor.processingv2.processor.periodic.*;
@@ -19,6 +20,8 @@ public enum StatDefinition {
     XIRR_PERIOD("pXirr", "periodic (periodic)", PeriodXirrCalculator.class, StatType.PERIODIC),
     REALIZED_GAIN("RGain", "realized gain", RealizedGainCalculator.class, StatType.CUMULATIVE),
     REALIZED_GAIN_PERIOD("pRGain", "realized gain per period", PeriodRealizedGainCalculator.class, StatType.PERIODIC),
+    CURRENCY_GAIN("CGain", "currency gain", CurrencyGainCalculator.class, StatType.CUMULATIVE),
+    CURRENCY_GAIN_PERIOD("pCGain", "currency gain per period", PeriodCurrencyGainCalculator.class, StatType.PERIODIC),
     UNREALIZED_GAIN("UGain", "unrealized gain", UnrealizedGainCalculator.class, StatType.CUMULATIVE),
     UNREALIZED_GAIN_PERIOD("pUGain", "unrealized gain per period", PeriodUnrealizedGainCalculator.class, StatType.PERIODIC),
     ACCOUNT_GAIN("AGain", "unrealized gain + realized gain + interest + dividends - fees", AccountGainCalculator.class, StatType.CUMULATIVE),

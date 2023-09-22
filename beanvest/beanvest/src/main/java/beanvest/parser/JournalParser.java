@@ -163,7 +163,7 @@ public class JournalParser {
 
         var currency = meta.get("currency");
         var account = meta.get("account");
-        var acc = account == null ? null : Account2.fromStringId(account);
+        var acc = account == null ? null : Account2.fromStringId(account, currency);
         return new Metadata(
                 acc,
                 currency,
@@ -381,18 +381,8 @@ public class JournalParser {
         return new ArrayList<>();
     }
 
-    interface Entity {
-        String account();
-    }
-
-    interface Instrument extends Entity {
-        String instrument();
-    }
-
     public record InputFile(String path, String content) {
 
     }
 
-    record InstrumentImpl(String account, String instrument) implements Instrument {
-    }
 }

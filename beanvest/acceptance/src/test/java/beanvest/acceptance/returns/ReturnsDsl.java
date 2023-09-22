@@ -62,6 +62,7 @@ public class ReturnsDsl {
     public static final String PERIOD_DEPOSITS_PLUS_WITHDRAWALS = "pDW";
     public static final String ACCOUNT_GAIN = "AGain";
     public static final String ACCOUNT_GAIN_PERIODIC = "pAGain";
+    private static final String CUMULATIVE_CURRENCY_GAINS = "cGain";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "returns");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -254,6 +255,10 @@ public class ReturnsDsl {
 
     public void verifyRealizedGains(String account, String period, String amount) {
         verifyStat(account, period, amount, CUMULATIVE_REALIZED_GAINS);
+    }
+
+    public void verifyCurrencyGain(String account, String period, String amount) {
+        verifyStat(account, period, amount, CUMULATIVE_CURRENCY_GAINS);
     }
 
     public void verifyUnrealizedGains(String account, String period, String amount) {
@@ -597,6 +602,7 @@ public class ReturnsDsl {
     public void verifyInterestError(String s, String total, String s1) {
 
     }
+
 
     enum Groups {
         YES,

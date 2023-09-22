@@ -51,6 +51,9 @@ public class Journal {
     public List<Entry> getEntries() {
         return sortedEntries;
     }
+    public List<AccountOperation> getAccountOperations() {
+        return sortedEntries.stream().filter(e -> e instanceof AccountOperation).map(e -> (AccountOperation)e).toList();
+    }
 
     public void add(Entry entry) {
         var dayEntries = this.entries.getOrDefault(entry.date(), new ArrayList<>());

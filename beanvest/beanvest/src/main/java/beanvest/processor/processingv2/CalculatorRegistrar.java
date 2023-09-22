@@ -27,6 +27,7 @@ public class CalculatorRegistrar {
         registry.register(PeriodCashCalculator.class, reg -> new PeriodCashCalculator(reg.get(CashCalculator.class)));
         registry.register(PeriodDividendCalculator.class, reg -> new PeriodDividendCalculator(reg.get(DividendCalculator.class)));
         registry.register(PeriodValueCalculator.class, reg -> new PeriodValueCalculator(reg.get(ValueCalculator.class)));
+        registry.register(PeriodCurrencyGainCalculator.class, reg -> new PeriodCurrencyGainCalculator(reg.get(CurrencyGainCalculator.class)));
         registry.register(PeriodUnrealizedGainCalculator.class, reg -> new PeriodUnrealizedGainCalculator(reg.get(UnrealizedGainCalculator.class)));
         registry.register(PeriodCashflowCollector.class, reg -> new PeriodCashflowCollector(reg.get(CashflowCollector.class)));
         registry.register(PeriodXirrCalculator.class, reg -> new PeriodXirrCalculator(reg.get(PeriodCashflowCollector.class),
@@ -46,6 +47,7 @@ public class CalculatorRegistrar {
         registry.register(HoldingsCollector.class, reg -> new HoldingsCollector());
         registry.register(RealizedGainCalculator.class, reg -> new RealizedGainCalculator());
         registry.register(DividendCalculator.class, reg -> new DividendCalculator());
+        registry.register(CurrencyGainCalculator.class, reg -> new CurrencyGainCalculator(reg.get(LatestPricesBook.class)));
         registry.register(SpentCalculator.class, reg -> new SpentCalculator());
         registry.register(EarnedCalculator.class, reg -> new EarnedCalculator());
         registry.register(CashCalculator.class, reg -> new CashCalculator(reg.get(HoldingsCollector.class), reg.get(LatestPricesBook.class)));

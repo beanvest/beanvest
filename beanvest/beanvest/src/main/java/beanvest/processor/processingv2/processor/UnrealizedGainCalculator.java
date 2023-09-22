@@ -9,10 +9,10 @@ import beanvest.result.StatErrors;
 import java.math.BigDecimal;
 
 public class UnrealizedGainCalculator implements Calculator {
-    private final HoldingsCollector holdingsCollector;
+    private final HoldingsCollectorInterface holdingsCollector;
     private final HoldingsValueCalculator holdingsValueCalculator;
 
-    public UnrealizedGainCalculator(HoldingsCollector holdingsCollector, HoldingsValueCalculator holdingsValueCalculator) {
+    public UnrealizedGainCalculator(HoldingsCollectorInterface holdingsCollector, HoldingsValueCalculator holdingsValueCalculator) {
         this.holdingsCollector = holdingsCollector;
         this.holdingsValueCalculator = holdingsValueCalculator;
     }

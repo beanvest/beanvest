@@ -18,7 +18,8 @@ public enum CliColumnValue {
     div(new StatColumn(DIVIDENDS, DIVIDENDS_PERIOD, "Dividends", ValueFormatter::money)),
 
     rgain(new StatColumn(REALIZED_GAIN, REALIZED_GAIN_PERIOD, "Realized gain", ValueFormatter::money)),
-    ugain(new StatColumn(UNREALIZED_GAIN, UNREALIZED_GAIN_PERIOD, "Unrealized gain", ValueFormatter::money)),
+    ugain(new StatColumn(UNREALIZED_GAIN, UNREALIZED_GAIN_PERIOD, "Currency gain", ValueFormatter::money)),
+    cgain(new StatColumn(CURRENCY_GAIN, CURRENCY_GAIN_PERIOD, "Currency gain", ValueFormatter::money)),
     again(new StatColumn(ACCOUNT_GAIN, ACCOUNT_GAIN_PERIOD, "Account gain", ValueFormatter::money)),
 
     xirr(new StatColumn(XIRR, XIRR_PERIOD, "Annualized return", ValueFormatter::xirr)),

@@ -17,6 +17,7 @@ public sealed interface Entity permits Account2, AccountCashHolding, AccountInst
             default -> throw new UnsupportedOperationException("unknown entity: " + id);
         };
     }
+
     boolean contains(Entity entity);
     Group group();
     List<Group> groups();
@@ -46,4 +47,6 @@ public sealed interface Entity permits Account2, AccountCashHolding, AccountInst
         var s = this.stringId();
         return s.substring(2);
     }
+
+    String currency();
 }

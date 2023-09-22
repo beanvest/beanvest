@@ -19,8 +19,8 @@ public class FeesCalculator implements Calculator {
 
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
-        var calculate = transactionFeeCalculator.calculate(new CalculationParams(params.entity(), params.startDate(), params.endDate(), params.targetCurrency()));
-        var calculate1 = platformFeeCalculator.calculate(new CalculationParams(params.entity(), params.startDate(), params.endDate(), params.targetCurrency()));
+        var calculate = transactionFeeCalculator.calculate(params);
+        var calculate1 = platformFeeCalculator.calculate(params);
         return calculate.combine(
                 calculate1, BigDecimal::add, StatErrors::join
         );

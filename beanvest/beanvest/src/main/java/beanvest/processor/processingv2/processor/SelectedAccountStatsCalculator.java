@@ -25,8 +25,8 @@ public class SelectedAccountStatsCalculator {
     private final LatestPricesBook priceBook;
     private final AccountsTracker accountsTracker;
     private final List<Validator> validators;
-    private final Set<ValidatorError> validatorErrors = new LinkedHashSet<>();
     private final CurrencyConverter currencyConverter;
+    private final PrioritisedJournalEntryProcessor journalProcessor;
 
     public SelectedAccountStatsCalculator(
             CalculatorRegistry calculatorRegistry,
@@ -47,32 +47,12 @@ public class SelectedAccountStatsCalculator {
         currencyConverter = targetCurrency.isPresent()
                 ? new CurrencyConverterImpl(targetCurrency.get(), priceBook)
                 : CurrencyConverter.NO_OP;
+
+        journalProcessor = new PrioritisedJournalEntryProcessor(priceBook, currencyConverter, accountsTracker, processors, validators);
     }
 
     public Set<ValidatorError> process(Entry entry) {
-        if (entry instanceof Price p) {
-            priceBook.process(p);
-
-        } else if (entry instanceof AccountOperation op) {
-            var convertedOp = currencyConverter.convert(op);
-            // DEBUG printz
-//            System.out.println("new op: " + op.toJournalLine());
-//            System.out.println("converted: " + convertedOp.toJournalLine());
-//            if (entry instanceof CashOperation co) {
-//                System.out.println("holdings: " + ((CurrencyConverterImpl) currencyConverter).dump(op.account(), co.getCashCurrency()));
-//            }
-            accountsTracker.process(convertedOp);
-            for (ProcessorV2 processor : processors) {
-                processor.process(convertedOp);
-            }
-            for (Validator validator : validators) {
-                validator.validate(convertedOp, validatorErrors::add);
-            }
-
-        } else {
-            throw new UnsupportedOperationException("whats that, then? " + entry.getClass());
-        }
-        return validatorErrors;
+        return journalProcessor.process(entry);
     }
 
     public Map<Entity, StatsV2> calculateStats(Period period, String targetCurrency) {
@@ -83,8 +63,8 @@ public class SelectedAccountStatsCalculator {
             for (var neededStat : neededStats.entrySet()) {
                 var id = neededStat.getKey();
                 var calculator = calculatorRegistry.getCollector(neededStat.getValue());
-                var stat = calculator.calculate(new CalculationParams(account, period.startDate(), period.endDate(), targetCurrency));
-                stats.put(id, stat);
+                var params = new CalculationParams(account, period.startDate(), period.endDate(), targetCurrency);
+                stats.put(id, calculator.calculate(params));
             }
             result.put(account, new StatsV2(stats));
         }

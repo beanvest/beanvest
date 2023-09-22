@@ -26,4 +26,6 @@ public sealed interface Transaction extends CashOperation, HoldingOperation, Has
     }
 
     Transaction withValue(Value newValue);
+
+    Value originalCurrencyTotalPrice();
 }

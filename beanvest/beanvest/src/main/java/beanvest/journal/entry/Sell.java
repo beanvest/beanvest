@@ -47,8 +47,4 @@ public record Sell(LocalDate date, Account2 account, Value value, Value totalPri
     public Sell withValue(Value newTotalPrice) {
         return new Sell(date, account, value, newTotalPrice, totalPrice, fee, comment, originalLine);
     }
-
-    public Value originalCurrencyPrice() {
-        return originalCurrencyTotalPrice;
-    }
 }

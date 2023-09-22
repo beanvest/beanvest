@@ -17,6 +17,9 @@ public class AccountsTracker implements ProcessorV2 {
     public AccountsTracker(EntitiesToInclude entitiesToInclude) {
         this.entitiesToInclude = entitiesToInclude;
     }
+    public AccountsTracker() {
+        this(new EntitiesToInclude(true, true, true));
+    }
 
     @Override
     public void process(AccountOperation op) {

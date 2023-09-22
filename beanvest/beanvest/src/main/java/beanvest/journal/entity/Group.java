@@ -46,6 +46,11 @@ public record Group(List<String> parts) implements Entity {
         return String.join(".", parts);
     }
 
+    @Override
+    public String currency() {
+        throw new RuntimeException("Probably a leaky abstraction. Should groups have currency of their accounts?");
+    }
+
     String actualStringId() {
         if (parts.isEmpty()) {
             return "";

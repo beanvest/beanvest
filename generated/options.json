@@ -38,7 +38,11 @@
     },
     {
       "id": "ugain",
-      "fullName": "Unrealized gain"
+      "fullName": "Currency gain"
+    },
+    {
+      "id": "cgain",
+      "fullName": "Currency gain"
     },
     {
       "id": "again",

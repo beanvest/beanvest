@@ -31,8 +31,8 @@ public final class Holding {
         } else {
             if (willCrossZero(amountChange)) { // goes over 0
                 var negatedAmount = amount.negate();
-                var splitRatio = negatedAmount.divide(amountChange, DEFAULT_SCALE + 2, RoundingMode.HALF_UP);
-                var costToZero = splitRatio.multiply(newCost);
+                var splitRatio = negatedAmount.divide(amountChange, DEFAULT_SCALE*2, RoundingMode.DOWN);
+                var costToZero = splitRatio.multiply(newCost).setScale(DEFAULT_SCALE, RoundingMode.HALF_UP);
                 update(negatedAmount, costToZero);
                 var remainingAmount = amountChange.subtract(negatedAmount);
                 update(remainingAmount, newCost.subtract(costToZero));
@@ -71,10 +71,10 @@ public final class Holding {
     }
 
     private void updateAmountWhileKeepingAvgCost(BigDecimal amountChange) {
-        var ratio = amountChange.negate().divide(amount, DEFAULT_SCALE, RoundingMode.HALF_UP);
+        var ratio = amountChange.negate().divide(amount, 10, RoundingMode.DOWN);
         var keptRatio = BigDecimal.ONE.subtract(ratio);
         this.amount = amount.add(amountChange);
-        this.totalCost = this.totalCost.multiply(keptRatio);
+        this.totalCost = this.totalCost.multiply(keptRatio).setScale(DEFAULT_SCALE, RoundingMode.HALF_UP);
     }
 
     public Value asValue() {

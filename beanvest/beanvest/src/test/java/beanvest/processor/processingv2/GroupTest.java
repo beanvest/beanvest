@@ -23,8 +23,8 @@ class GroupTest {
         assertContains("A/a", "A/a");
         assertContains("A/a", "H/a:x");
         assertContains("A/a:b", "H/a:b:x");
-        assertContains("A/a:b", "C/a:b:cash");
-        assertContains("A/a", "C/a:cash");
+        assertContains("A/a:b", "C/a:b:GBP");
+        assertContains("A/a", "C/a:GBP");
 
         assertNotContains("A/a", "A/a:b");
         assertNotContains("A/a", "A/a:b:c");
@@ -48,7 +48,7 @@ class GroupTest {
         assertNotContains("G/a", "A/b:c:d");
         assertNotContains("G/a", "H/b:b:x");
         assertNotContains("G/a:c", "H/a:b:c:x");
-        assertNotContains("G/b", "C/a:b:cash");
+        assertNotContains("G/b", "C/a:b:GBP");
     }
 
     private void assertContains(String s, String s1) {

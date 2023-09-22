@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public record Buy(LocalDate date, Account2 account, Value value, Value totalPrice,
-                  BigDecimal fee, Value originalCurrencyPrice, Optional<String> comment,
+                  BigDecimal fee, Value originalCurrencyTotalPrice, Optional<String> comment,
                   SourceLine originalLine) implements Transaction, HoldingOperation {
     @Override
     public String holdingSymbol() {
@@ -44,6 +44,6 @@ public record Buy(LocalDate date, Account2 account, Value value, Value totalPric
     }
 
     public Buy withValue(Value totalPrice) {
-        return new Buy(date, account, value, totalPrice, fee, originalCurrencyPrice, comment, originalLine);
+        return new Buy(date, account, value, totalPrice, fee, originalCurrencyTotalPrice, comment, originalLine);
     }
 }
