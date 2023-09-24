@@ -18,13 +18,8 @@ public record Fee(LocalDate date, Account2 account, Value value, Optional<String
     }
 
     @Override
-    public BigDecimal getCashAmount() {
-        return value.amount();
-    }
-
-    @Override
-    public String getCashCurrency() {
-        return value.symbol();
+    public Value getCashValue() {
+        return value;
     }
 
     @Override

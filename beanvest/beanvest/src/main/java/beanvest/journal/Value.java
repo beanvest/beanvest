@@ -3,9 +3,25 @@ package beanvest.journal;
 import beanvest.parser.ValueFormatException;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
-public record Value(BigDecimal amount, String symbol) {
+public record Value(BigDecimal amount, String symbol, Optional<Value> originalValue) {
+    public Value {
+        if (originalValue.isPresent() && originalValue.get().originalValue.isPresent()) {
+            throw new UnsupportedOperationException(
+                    "while it might make sense at some point, currently throwing to point out a mistake");
+        }
+    }
+
+    public Value(BigDecimal amount, String symbol) {
+        this(amount, symbol, Optional.empty());
+    }
+
     public static final Value ZERO = new Value(BigDecimal.ZERO, "");
+
+    public Value(Value value, Value value1) {
+        this(value.amount, value.symbol, Optional.of(value1));
+    }
 
     public static Value of(String value, String symbol) throws ValueFormatException {
         return new Value(new BigDecimal(value), symbol);
@@ -71,5 +87,9 @@ public record Value(BigDecimal amount, String symbol) {
         if (!this.symbol.equals(value.getSymbol())) {
             throw new ArithmeticException(String.format("cant operate on different commodities: %s and %s", this.symbol, value.getSymbol()));
         }
+    }
+
+    public Value withOriginalValue(Value value) {
+        return new Value(this, value);
     }
 }

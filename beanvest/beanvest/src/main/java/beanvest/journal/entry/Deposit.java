@@ -22,14 +22,10 @@ public record Deposit(LocalDate date, Account2 account, Value value,
     }
 
     @Override
-    public BigDecimal getCashAmount() {
-        return value.amount();
+    public Value getCashValue() {
+        return value;
     }
 
-    @Override
-    public String getCashCurrency() {
-        return value.symbol();
-    }
 
     public Deposit withValue(Value value)
     {

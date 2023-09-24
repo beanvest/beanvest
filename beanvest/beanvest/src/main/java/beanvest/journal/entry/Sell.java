@@ -30,13 +30,8 @@ public record Sell(LocalDate date, Account2 account, Value value, Value totalPri
     }
 
     @Override
-    public BigDecimal getCashAmount() {
-        return this.totalPrice.amount();
-    }
-
-    @Override
-    public String getCashCurrency() {
-        return this.totalPrice.symbol();
+    public Value getCashValue() {
+        return totalPrice;
     }
 
     @Override

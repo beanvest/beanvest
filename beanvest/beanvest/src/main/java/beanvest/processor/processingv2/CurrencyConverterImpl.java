@@ -5,6 +5,8 @@ import beanvest.journal.entity.Account2;
 import beanvest.journal.entity.AccountHolding;
 import beanvest.journal.entry.*;
 import beanvest.processor.pricebook.LatestPricesBook;
+import beanvest.result.Result;
+import beanvest.result.StatErrors;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -25,9 +27,9 @@ public class CurrencyConverterImpl implements CurrencyConverter {
     @Override
     public AccountOperation convert(AccountOperation op) {
         if (op instanceof Deposit dep) {
-            var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value()).value();
-            var converted = dep.withValue(convertedValue);
-            AccountHolding accountHolding = dep.accountCash();
+            var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value());
+            var converted = dep.withValue(dep.value().withOriginalValue(convertedValue.value()));
+            var accountHolding = dep.accountCash();
             holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, BigDecimal.ZERO))
                     .update(dep.getCashAmount(), converted.getCashAmount());
             return converted;

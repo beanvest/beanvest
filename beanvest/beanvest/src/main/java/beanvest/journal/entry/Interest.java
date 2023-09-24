@@ -17,13 +17,8 @@ public record Interest(LocalDate date, Account2 account, Value value, Optional<S
     }
 
     @Override
-    public BigDecimal getCashAmount() {
-        return value.amount();
-    }
-
-    @Override
-    public String getCashCurrency() {
-        return value.symbol();
+    public Value getCashValue() {
+        return value;
     }
 
     public Interest withValue(Value newValue) {

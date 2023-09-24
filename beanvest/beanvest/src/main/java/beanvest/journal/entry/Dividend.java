@@ -17,13 +17,8 @@ public record Dividend(LocalDate date, Account2 account, Value value, String hol
     }
 
     @Override
-    public BigDecimal getCashAmount() {
-        return value.amount();
-    }
-
-    @Override
-    public String getCashCurrency() {
-        return value.symbol();
+    public Value getCashValue() {
+        return value;
     }
 
 

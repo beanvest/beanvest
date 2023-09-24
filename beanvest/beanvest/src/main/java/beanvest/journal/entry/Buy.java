@@ -29,21 +29,16 @@ public record Buy(LocalDate date, Account2 account, Value value, Value totalPric
     }
 
     @Override
-    public BigDecimal getCashAmount() {
-        return totalPrice.amount();
-    }
-
-    @Override
-    public String getCashCurrency() {
-        return totalPrice.symbol();
-    }
-
-    @Override
     public BigDecimal getRawAmountMoved() {
         return totalPrice.amount();
     }
 
     public Buy withValue(Value totalPrice) {
         return new Buy(date, account, value, totalPrice, fee, originalCurrencyTotalPrice, comment, originalLine);
+    }
+
+    @Override
+    public Value getCashValue() {
+        return totalPrice;
     }
 }
