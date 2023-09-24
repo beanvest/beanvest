@@ -16,8 +16,7 @@ public class DepositsAndWithdrawalsCurrencyConversionAcceptanceTest {
                 currency GBP
                 2021-01-01 price GBP 5 PLN
                 2021-01-02 deposit 10
-                2021-01-21 price GBP 6 PLN                
-                                
+                2021-01-21 price GBP 6 PLN
                 """);
 
         dsl.verifyDeposits("trading", "TOTAL", "50");

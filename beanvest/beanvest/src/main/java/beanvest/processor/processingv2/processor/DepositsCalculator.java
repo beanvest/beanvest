@@ -15,12 +15,12 @@ public class DepositsCalculator implements ProcessorV2, Calculator {
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Deposit dep) {
-            simpleBalanceTracker.add(dep.accountCash(), dep.getCashAmount());
+            simpleBalanceTracker.add(dep.accountCash(), dep.getCashValue());
         }
     }
 
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
-        return simpleBalanceTracker.calculate(params.entity());
+        return simpleBalanceTracker.calculate(params.entity(), params.targetCurrency());
     }
 }

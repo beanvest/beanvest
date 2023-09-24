@@ -52,7 +52,7 @@ public record Value(BigDecimal amount, String symbol, Optional<Value> originalVa
 
     public Value add(Value value) {
         verifySameSymbol(value);
-        return new Value(value.getAmount().add(this.amount), this.amount.equals(BigDecimal.ZERO) ? value.getSymbol() : this.symbol);
+        return add(value.amount);
     }
 
     public Value add(BigDecimal value) {

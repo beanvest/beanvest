@@ -16,12 +16,12 @@ public class SpentCalculator  implements ProcessorV2, Calculator
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Buy buy) {
-            simpleBalanceTracker.add(buy.accountCash(), buy.getCashAmount().negate());
+            simpleBalanceTracker.add(buy.accountCash(), buy.getCashValue().negate());
         }
     }
 
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
-        return simpleBalanceTracker.calculate(params.entity());
+        return simpleBalanceTracker.calculate(params.entity(), params.targetCurrency());
     }
 }

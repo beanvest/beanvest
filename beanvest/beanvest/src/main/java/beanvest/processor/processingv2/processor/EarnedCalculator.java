@@ -15,13 +15,13 @@ public class EarnedCalculator implements ProcessorV2, Calculator {
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Sell sell) {
-            var add = sell.getCashAmount().subtract(sell.fee());
+            var add = sell.getCashValue().add(sell.fee().negate());
             simpleBalanceTracker.add(sell.accountHolding(), add);
         }
     }
 
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
-        return simpleBalanceTracker.calculate(params.entity());
+        return simpleBalanceTracker.calculate(params.entity(), params.targetCurrency());
     }
 }

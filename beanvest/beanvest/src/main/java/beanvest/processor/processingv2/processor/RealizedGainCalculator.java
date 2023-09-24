@@ -1,5 +1,6 @@
 package beanvest.processor.processingv2.processor;
 
+import beanvest.journal.Value;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Sell;
 import beanvest.processor.processingv2.CalculationParams;
@@ -27,12 +28,12 @@ public class RealizedGainCalculator implements ProcessorV2, Calculator {
             var realizedGain = sell.totalPrice().amount()
                     .subtract(sell.fee())
                     .add(totalCost);
-            simpleBalanceTracker.add(sell.accountHolding(), realizedGain);
+            simpleBalanceTracker.add(sell.accountHolding(), Value.of(realizedGain, sell.getCashCurrency()));
         }
     }
 
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
-        return simpleBalanceTracker.calculate(params.entity());
+        return simpleBalanceTracker.calculate(params.entity(), params.targetCurrency());
     }
 }

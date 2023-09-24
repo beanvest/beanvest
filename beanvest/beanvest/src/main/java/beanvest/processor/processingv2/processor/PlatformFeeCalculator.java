@@ -16,12 +16,12 @@ public class PlatformFeeCalculator implements ProcessorV2, Calculator {
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Fee fee) {
-            simpleBalanceTracker.add(fee.accountCash(), fee.getCashAmount().negate());
+            simpleBalanceTracker.add(fee.accountCash(), fee.getCashValue().negate());
         }
     }
 
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
-        return simpleBalanceTracker.calculate(params.entity());
+        return simpleBalanceTracker.calculate(params.entity(), params.targetCurrency());
     }
 }

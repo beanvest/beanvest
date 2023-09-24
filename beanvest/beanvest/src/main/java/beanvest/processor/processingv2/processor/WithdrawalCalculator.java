@@ -15,12 +15,12 @@ public class WithdrawalCalculator implements ProcessorV2, Calculator {
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Withdrawal dep) {
-            simpleBalanceTracker.add(dep.accountCash(), dep.getCashAmount().negate());
+            simpleBalanceTracker.add(dep.accountCash(), dep.getCashValue().negate());
         }
     }
 
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
-        return simpleBalanceTracker.calculate(params.entity());
+        return simpleBalanceTracker.calculate(params.entity(), params.targetCurrency());
     }
 }

@@ -1,5 +1,6 @@
 package beanvest.processor.processingv2.processor;
 
+import beanvest.journal.Value;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Sell;
 import beanvest.processor.processingv2.CalculationParams;
@@ -23,12 +24,12 @@ public class CostMovedAtSaleCalculator implements ProcessorV2, Calculator {
         if (op instanceof Sell sell) {
 
             var costMoved = holdingsCollector.getHolding(sell.accountHolding()).averageCost().multiply(sell.units());
-            simpleBalanceTracker.add(sell.accountHolding(), costMoved);
+            simpleBalanceTracker.add(sell.accountHolding(), Value.of(costMoved, sell.getCashCurrency()));
         }
     }
 
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
-        return simpleBalanceTracker.calculate(params.entity());
+        return simpleBalanceTracker.calculate(params.entity(), params.targetCurrency());
     }
 }

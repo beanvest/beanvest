@@ -16,12 +16,12 @@ public class DividendCalculator implements ProcessorV2, Calculator {
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Dividend div) {
-            simpleBalanceTracker.add(div.accountHolding(), div.getCashAmount());
+            simpleBalanceTracker.add(div.accountHolding(), div.getCashValue());
         }
     }
 
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
-        return simpleBalanceTracker.calculate(params.entity());
+        return simpleBalanceTracker.calculate(params.entity(), params.targetCurrency());
     }
 }
