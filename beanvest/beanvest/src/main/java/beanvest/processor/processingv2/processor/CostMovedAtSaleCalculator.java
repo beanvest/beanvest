@@ -5,6 +5,7 @@ import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Sell;
 import beanvest.processor.processingv2.CalculationParams;
 import beanvest.processor.processingv2.Calculator;
+import beanvest.processor.processingv2.Holding;
 import beanvest.processor.processingv2.ProcessorV2;
 import beanvest.result.Result;
 import beanvest.result.StatErrors;
@@ -23,7 +24,8 @@ public class CostMovedAtSaleCalculator implements ProcessorV2, Calculator {
     public void process(AccountOperation op) {
         if (op instanceof Sell sell) {
 
-            var costMoved = holdingsCollector.getHolding(sell.accountHolding()).averageCost().multiply(sell.units());
+            Holding holding = holdingsCollector.getHolding(sell.accountHolding());
+            var costMoved = holding.averageCost().amount().multiply(sell.units());
             simpleBalanceTracker.add(sell.accountHolding(), Value.of(costMoved, sell.getCashCurrency()));
         }
     }

@@ -1,6 +1,5 @@
 package beanvest.processor.processingv2.processor;
 
-import beanvest.journal.entity.AccountInstrumentHolding;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.processor.pricebook.LatestPricesBook;
 import beanvest.processor.processingv2.CalculationParams;
@@ -14,41 +13,36 @@ import java.math.BigDecimal;
 import static java.math.BigDecimal.ZERO;
 
 public class CurrencyGainCalculator implements ProcessorV2, Calculator {
-    private final HoldingsCollector holdingsConvertedCollector;
-    private final HoldingsOriginalValueCollector holdingsOriginalCostCollector;
+    private final HoldingsCollector holdingsCollector;
     private final LatestPricesBook pricesBook;
 
     public CurrencyGainCalculator(LatestPricesBook pricesBook) {
         this.pricesBook = pricesBook;
-        this.holdingsConvertedCollector = new HoldingsCollector();
-
-        this.holdingsOriginalCostCollector = new HoldingsOriginalValueCollector();
+        this.holdingsCollector = new HoldingsCollector();
     }
 
     @Override
     public void process(AccountOperation op) {
-        holdingsConvertedCollector.process(op);
-        holdingsOriginalCostCollector.process(op);
-
+        holdingsCollector.process(op);
     }
 
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
-        var holdingAccounts = holdingsOriginalCostCollector.getHoldings(params.entity());
+        var holdings = holdingsCollector.getCashHoldings(params.entity());
 
+        var currencyTC = params.targetCurrency();
 
         BigDecimal gain = ZERO;
-        for (var holdingAccount : holdingAccounts) {
-            var account = holdingAccount.entity();
-            var holding = holdingAccount.holding();
-            var currentBaseCurrencyValue = pricesBook.convert(params.endDate(), params.entity().currency(), holding.asValue()).value();
-            var currentValue = pricesBook.convert(params.endDate(), params.targetCurrency(), holding.asValue()).value();
-            var holdingAverageCostInTargetCurrency = holdingsConvertedCollector
-                    .getInstrumentHolding((AccountInstrumentHolding) account)
-                    .averageCost().negate();
-            var currentValueByCost = currentBaseCurrencyValue.amount().multiply(holdingAverageCostInTargetCurrency);
-            var holdingGain = currentValue.amount().subtract(currentValueByCost);
-            gain = gain.add(holdingGain);
+        for (var holding : holdings) {
+            var isConverted = !holding.symbol().equals(params.targetCurrency());
+            var holdingTC = holding;
+            var currentValueOC = pricesBook.convert(params.endDate(), holdingTC.symbol(), holdingTC.asValue()).value();
+            var averageCostTC = holding.averageCost().originalValue().get().negate();
+            var currentValueBasedOnCostTC = currentValueOC.amount().multiply(averageCostTC.amount());
+
+            var currentValueTC = pricesBook.convert(params.endDate(), currencyTC, holdingTC.asValue()).value();
+            var holdingGainTC = currentValueTC.amount().subtract(currentValueBasedOnCostTC);
+            gain = gain.add(holdingGainTC);
         }
 
         return Result.success(gain);

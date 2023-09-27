@@ -34,8 +34,8 @@ class HoldingsCollectorTest {
         var holding = collector.getHolding(instrumentHolding("trading", "X"));
 
         assertThat(holding.asValue()).isEqualTo(Value.of("2 X"));
-        assertThat(holding.totalCost()).isEqualByComparingTo(d("-22"));
-        assertThat(holding.averageCost()).isEqualByComparingTo(d("-11"));
+        assertThat(holding.totalCost().amount()).isEqualByComparingTo(d("-22"));
+        assertThat(holding.averageCost().amount()).isEqualByComparingTo(d("-11"));
     }
 
     @Test
@@ -49,8 +49,8 @@ class HoldingsCollectorTest {
         var holding = collector.getHolding(cashHolding("trading", "GBP"));
 
         assertThat(holding.asValue()).isEqualTo(Value.of("12 GBP"));
-        assertThat(holding.totalCost()).isEqualByComparingTo(d("-12"));
-        assertThat(holding.averageCost()).isEqualByComparingTo(d("-1"));
+        assertThat(holding.totalCost().amount()).isEqualByComparingTo(d("-12"));
+        assertThat(holding.averageCost().amount()).isEqualByComparingTo(d("-1"));
     }
 
     private static BigDecimal d(String val) {

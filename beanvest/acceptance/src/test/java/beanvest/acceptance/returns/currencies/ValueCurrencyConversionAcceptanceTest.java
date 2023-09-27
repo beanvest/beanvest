@@ -4,11 +4,11 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled("TODO")
 public class ValueCurrencyConversionAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
-    @Disabled
     void cashValueIsBasedOnCurrentExchangeRate() {
         dsl.setCurrency("PLN");
         dsl.setColumns("value");

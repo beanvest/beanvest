@@ -5,8 +5,6 @@ import beanvest.journal.entity.Account2;
 import beanvest.journal.entity.AccountHolding;
 import beanvest.journal.entry.*;
 import beanvest.processor.pricebook.LatestPricesBook;
-import beanvest.result.Result;
-import beanvest.result.StatErrors;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -30,32 +28,32 @@ public class CurrencyConverterImpl implements CurrencyConverter {
             var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value());
             var converted = dep.withValue(dep.value().withOriginalValue(convertedValue.value()));
             var accountHolding = dep.accountCash();
-            holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, BigDecimal.ZERO))
-                    .update(dep.getCashAmount(), converted.getCashAmount());
+            holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, Value.ZERO))
+                    .update(dep.getCashAmount(), converted.getCashValue());
             return converted;
 
         } else if (op instanceof Withdrawal wth) {
             var holding = holdings.get(wth.accountCash());
 
-            var portionWithdrawn = wth.getCashAmount().divide(holding.amount(), 10, RoundingMode.HALF_UP);
-            var withdrawnAmount = portionWithdrawn.multiply(holding.totalCost().negate());
+            var portionWithdrawn = wth.getCashValue().multiply(BigDecimal.ONE.divide(holding.amount(), 10, RoundingMode.HALF_UP));
+            var withdrawnAmount = portionWithdrawn.multiply(holding.totalCost().amount().negate());
 
-            holding.update(wth.getRawAmountMoved(), BigDecimal.ZERO);
-            return wth.withValue(Value.of(withdrawnAmount, targetCurrency));
+            holding.update(wth.getRawAmountMoved(), Value.of(BigDecimal.ZERO, wth.getCashCurrency()));
+            return wth.withValue(withdrawnAmount);
 
         } else if (op instanceof Transfer tr) {
             var holding = holdings.get(tr.accountCash());
             var newCost = holding.averageCost().multiply(tr.getRawAmountMoved());
             holding.update(tr.getRawAmountMoved(), newCost);
 
-            return tr.withValue(Value.of(newCost, targetCurrency));
+            return tr.withValue(newCost);
 
         } else if (op instanceof Transaction tr) {
             var cashHolding = holdings.get(tr.accountCash());
             var newCost = cashHolding.averageCost().multiply(tr.getRawAmountMoved());
             cashHolding.update(tr.getRawAmountMoved().negate(), newCost);
 
-            return tr.withValue(Value.of(newCost, targetCurrency));
+            return tr.withValue(newCost);
 
         } else {
             throw new RuntimeException("Unsupported operation: " + op);
@@ -64,6 +62,6 @@ public class CurrencyConverterImpl implements CurrencyConverter {
 
     public String dump(Account2 account, String cashCurrency) {
         AccountHolding accountHolding = account.cashHolding(cashCurrency);
-        return holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, BigDecimal.ZERO)).toString();
+        return holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, Value.of(BigDecimal.ZERO, accountHolding.symbol()))).toString();
     }
 }

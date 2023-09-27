@@ -302,7 +302,6 @@ public class JournalParser {
                     Value.of(units, symbol),
                     totalPrice,
                     fee,
-                    totalPrice,
                     Optional.ofNullable(comment), line));
             return operations;
         }
@@ -329,7 +328,6 @@ public class JournalParser {
             operations.add(new Sell(date,
                     getAccount(),
                     Value.of(units, symbol),
-                    value,
                     value,
                     fee,
                     Optional.ofNullable(comment), line));

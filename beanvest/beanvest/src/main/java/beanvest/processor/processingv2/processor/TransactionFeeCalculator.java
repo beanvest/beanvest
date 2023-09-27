@@ -16,7 +16,7 @@ public class TransactionFeeCalculator implements ProcessorV2, Calculator {
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Transaction fee) {
-            simpleBalanceTracker.add(fee.accountHolding(), fee.getCashValue().negate());
+            simpleBalanceTracker.add(fee.accountHolding(), fee.feeValue().negate());
         }
     }
 

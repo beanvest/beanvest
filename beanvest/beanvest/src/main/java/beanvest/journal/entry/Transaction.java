@@ -21,11 +21,18 @@ public sealed interface Transaction extends CashOperation, HoldingOperation, Has
 
     BigDecimal fee();
 
+    default Value feeValue() {
+        return Value.of(fee(), getCashCurrency());
+    }
+
     default AccountInstrumentHolding getInstrumentHolding() {
         return new AccountInstrumentHolding(account(), this.holdingSymbol());
     }
 
     Transaction withValue(Value newValue);
 
-    Value originalCurrencyTotalPrice();
+    default Value originalCurrencyTotalPrice()
+    {
+        return totalPrice().originalValue().get();
+    }
 }

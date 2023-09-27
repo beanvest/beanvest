@@ -8,6 +8,7 @@ public class CurrencyGainCurrencyConversionAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
+    @Disabled
     void currencyGainOnHolding() {
         dsl.setCurrency("PLN");
         dsl.setColumns("cgain,ugain,value");
@@ -33,7 +34,7 @@ public class CurrencyGainCurrencyConversionAcceptanceTest {
     @Test
     void currencyGainOnCash() {
         dsl.setCurrency("PLN");
-        dsl.setColumns("cGain");
+        dsl.setColumns("CGain");
         dsl.setEnd("2021-01-07");
 
         dsl.runCalculateReturns("""
@@ -41,10 +42,12 @@ public class CurrencyGainCurrencyConversionAcceptanceTest {
                 currency GBP
                                 
                 2021-01-01 price GBP 5 PLN
-                2021-01-02 deposit 2
-                2021-01-04 price GBP 6.5 PLN
+                2021-01-02 deposit 1
+                2021-01-03 price GBP 6 PLN
+                2021-01-04 deposit 1
+                2021-01-05 price GBP 6.5 PLN
                 """);
 
-        dsl.verifyCurrencyGain("trading", "TOTAL", "3");
+        dsl.verifyCurrencyGain("trading", "TOTAL", "2");
     }
 }

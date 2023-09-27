@@ -1,5 +1,6 @@
 package beanvest.test.processor.processing.collector;
 
+import beanvest.journal.Value;
 import beanvest.processor.processingv2.Holding;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ class HoldingTest {
     }
 
     private void updateHolding(String amountChange, String cost) {
-        holding.update(d(amountChange), d(cost));
+        holding.update(d(amountChange), Value.of(d(cost), "GBP"));
     }
 
     @Test
@@ -73,7 +74,7 @@ class HoldingTest {
     }
 
     private void assertTotalCost(String s) {
-        assertThat(holding.totalCost()).isEqualByComparingTo(new BigDecimal(s));
+        assertThat(holding.totalCost().amount()).isEqualByComparingTo(new BigDecimal(s));
     }
 
     private void updateWithoutTouchingTotalCost(String unitsChange) {
@@ -81,7 +82,7 @@ class HoldingTest {
     }
 
     private void assertAverageCost(String expectedAverageCost) {
-        assertThat(holding.averageCost())
+        assertThat(holding.averageCost().amount())
                 .isEqualByComparingTo(d(expectedAverageCost));
     }
 
@@ -110,11 +111,11 @@ class HoldingTest {
     }
 
     private static Holding holding() {
-        return new Holding("AAPL", ZERO, ZERO);
+        return new Holding("AAPL", ZERO, Value.of(ZERO, "GBP"));
     }
 
     private static Holding getHolding(String amount, String totalCost) {
-        return new Holding("APPL", new BigDecimal(amount), new BigDecimal(totalCost));
+        return new Holding("APPL", new BigDecimal(amount), Value.of(new BigDecimal(totalCost), "GBP"));
     }
 
     private BigDecimal d(String number) {

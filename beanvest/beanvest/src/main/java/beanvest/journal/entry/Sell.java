@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public record Sell(LocalDate date, Account2 account, Value value, Value totalPrice,Value originalCurrencyTotalPrice,
+public record Sell(LocalDate date, Account2 account, Value value, Value totalPrice,
                    BigDecimal fee, Optional<String> comment,
                    SourceLine originalLine) implements Transaction, HoldingOperation {
     @Override
@@ -40,6 +40,6 @@ public record Sell(LocalDate date, Account2 account, Value value, Value totalPri
     }
 
     public Sell withValue(Value newTotalPrice) {
-        return new Sell(date, account, value, newTotalPrice, totalPrice, fee, comment, originalLine);
+        return new Sell(date, account, value, newTotalPrice, fee, comment, originalLine);
     }
 }

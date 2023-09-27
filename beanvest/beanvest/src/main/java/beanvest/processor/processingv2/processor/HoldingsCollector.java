@@ -25,25 +25,24 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class HoldingsCollector implements ProcessorV2, HoldingsCollectorInterface {
-
+    private final Map<AccountHolding, Holding> holdings = new HashMap<>();
     private final Function<Transaction, Value> getter;
+
 
     public HoldingsCollector()
     {
         this(Mode.ConvertedPrice);
     }
+
     public HoldingsCollector(Mode mode) {
         getter = mode == Mode.OriginalPrice
                 ? Transaction::originalCurrencyTotalPrice
                 : Transaction::totalPrice;
     }
 
-    private final Map<AccountHolding, Holding> holdings = new HashMap<>();
-
     @Override
     public Holding getHolding(AccountHolding accountHolding) {
-
-        return holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, BigDecimal.ZERO));
+        return holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, Value.of(BigDecimal.ZERO, "")));
     }
 
     @Override
@@ -94,21 +93,21 @@ public class HoldingsCollector implements ProcessorV2, HoldingsCollectorInterfac
     public void process(AccountOperation op) {
         if (op instanceof Transaction tr) {
             if (op instanceof Buy buy) {
-                getHolding(tr.accountCash()).update(buy.totalPrice().amount().negate(), buy.totalPrice().amount());
-                getHolding(tr.accountHolding()).update(buy.units(), getter.apply(buy).amount().negate());
+                getHolding(tr.accountCash()).update(buy.totalPrice().amount().negate(), buy.totalPrice());
+                getHolding(tr.accountHolding()).update(buy.units(), getter.apply(buy).negate());
 
             } else if (op instanceof Sell sell) {
                 var holding = getHolding(tr.accountHolding());
                 holding.update(sell.units().negate(), holding.totalCost());
                 var costOfBuy = holding.averageCost().multiply(sell.units());
-                getHolding(tr.accountCash()).update(sell.originalCurrencyTotalPrice().amount(), costOfBuy);
+                getHolding(tr.accountCash()).update(sell.totalPrice().amount(), costOfBuy);
             }
         }
         if (op instanceof Deposit dep) {
-            getHolding(dep.accountCash()).update(dep.getCashAmount(), dep.getCashAmount().negate());
+            getHolding(dep.accountCash()).update(dep.getCashAmount(), dep.getCashValue().negate());
         }
         if (op instanceof Withdrawal wth) {
-            getHolding(wth.accountCash()).update(wth.getCashAmount().negate(), wth.getCashAmount());
+            getHolding(wth.accountCash()).update(wth.getCashAmount().negate(), wth.getCashValue());
         }
         if (op instanceof Interest intr) {
             getHolding(intr.accountCash()).updateWhileKeepingTheCost(intr.getCashAmount());

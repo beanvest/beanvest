@@ -70,12 +70,12 @@ class AccountHoldingOpenDatesCollectorTest {
     private static Buy buy(String date, String valueString) {
         var totalPrice = Value.of("120 GBP");
         return new Buy(LocalDate.parse(date), ACCOUNT,
-                Value.of(valueString), totalPrice, BigDecimal.ZERO, totalPrice, Optional.empty(), SourceLine.GENERATED_LINE);
+                Value.of(valueString), totalPrice, BigDecimal.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
     }
 
     private static Sell sell(String date, String valueString) {
         var totalPrice = Value.of("120 GBP");
         return new Sell(LocalDate.parse(date), ACCOUNT,
-                Value.of(valueString), totalPrice, totalPrice, BigDecimal.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
+                Value.of(valueString), totalPrice, BigDecimal.ZERO, Optional.empty(), SourceLine.GENERATED_LINE);
     }
 }

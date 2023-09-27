@@ -19,8 +19,12 @@ public record Value(BigDecimal amount, String symbol, Optional<Value> originalVa
 
     public static final Value ZERO = new Value(BigDecimal.ZERO, "");
 
+    public Value(Value value, Optional<Value> value1) {
+        this(value.amount, value.symbol, value1);
+    }
+
     public Value(Value value, Value value1) {
-        this(value.amount, value.symbol, Optional.of(value1));
+        this(value, Optional.of(value1));
     }
 
     public static Value of(String value, String symbol) throws ValueFormatException {
@@ -52,24 +56,30 @@ public record Value(BigDecimal amount, String symbol, Optional<Value> originalVa
 
     public Value add(Value value) {
         verifySameSymbol(value);
-        return add(value.amount);
+        var actualSymbol = this.amount.compareTo(BigDecimal.ZERO) != 0 ? this.symbol : value.symbol;
+        if (originalValue.isPresent() != value.originalValue.isPresent()) {
+            throw new RuntimeException("only one side has original value");
+        }
+        return new Value(this.amount.add(value.amount), actualSymbol, originalValue.map(ov -> ov.add(value.originalValue.get())));
     }
 
     public Value add(BigDecimal value) {
-        return new Value(this.amount.add(value), this.symbol);
+        if (this.amount.compareTo(BigDecimal.ZERO) == 0) {
+            throw new RuntimeException("currency needed");
+        }
+        return this.add(Value.of(value, symbol));
     }
 
     public Value subtract(Value value) {
-        verifySameSymbol(value);
         return this.add(value.negate());
     }
 
     public Value negate() {
-        return new Value(this.getAmount().negate(), this.symbol);
+        return new Value(this.getAmount().negate(), this.symbol, this.originalValue.map(Value::negate));
     }
 
     public String toString() {
-        return this.amount.toString() + " " + this.symbol;
+        return this.amount.toString() + " " + this.symbol + originalValue.map(v -> " (" + v + ")").orElse("");
     }
 
     public boolean isPositive() {
@@ -84,12 +94,16 @@ public record Value(BigDecimal amount, String symbol, Optional<Value> originalVa
         if (this.amount.equals(BigDecimal.ZERO) || value.amount.equals(BigDecimal.ZERO)) {
             return;
         }
-        if (!this.symbol.equals(value.getSymbol())) {
+        if (!this.symbol.equals(value.getSymbol()) && !symbol.isEmpty() && !value.getSymbol().isEmpty()) {
             throw new ArithmeticException(String.format("cant operate on different commodities: %s and %s", this.symbol, value.getSymbol()));
         }
     }
 
     public Value withOriginalValue(Value value) {
         return new Value(this, value);
+    }
+
+    public Value multiply(BigDecimal units) {
+        return new Value(amount.multiply(units), symbol, originalValue.map(v -> v.multiply(units)));
     }
 }
