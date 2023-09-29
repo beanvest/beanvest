@@ -1,6 +1,8 @@
 package beanvest.processor.processingv2;
 
 import beanvest.journal.Value;
+import beanvest.journal.entity.AccountCashHolding;
+import beanvest.journal.entity.AccountHolding;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -27,6 +29,15 @@ public final class Holding {
             var value = totalCost.originalValue().get();
             holdingCostOC = new HoldingCostImpl(value.symbol());
             this.holdingCostOC.setTotalCost(totalCost.amount(), amount);
+        }
+    }
+
+    static Holding getHoldingOrCreate(Holding v, AccountHolding accountHolding, Value cashValue, Value totalCost) {
+        if (v == null) {
+            return new Holding(accountHolding.symbol(), cashValue.amount(), totalCost);
+        } else {
+            v.update(cashValue.amount(), totalCost);
+            return v;
         }
     }
 

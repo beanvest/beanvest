@@ -8,7 +8,6 @@ public class CurrencyGainCurrencyConversionAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
-    @Disabled
     void currencyGainOnHolding() {
         dsl.setCurrency("PLN");
         dsl.setColumns("cgain,ugain,value");
@@ -27,7 +26,6 @@ public class CurrencyGainCurrencyConversionAcceptanceTest {
                 2021-01-06 price X 1 GBP
                 """);
 
-//        dsl.verifyUnrealizedGains("trading", "TOTAL", "0");
         dsl.verifyCurrencyGain("trading", "TOTAL", "3");
     }
 

@@ -28,23 +28,20 @@ public class CurrencyGainCalculator implements ProcessorV2, Calculator {
 
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
-        var holdings = holdingsCollector.getCashHoldings(params.entity());
-
+        var holdings = holdingsCollector.getHoldingsAndCash(params.entity());
         var currencyTC = params.targetCurrency();
 
-        BigDecimal gain = ZERO;
-        for (var holding : holdings) {
-            var isConverted = !holding.symbol().equals(params.targetCurrency());
-            var holdingTC = holding;
+        BigDecimal holdingGain = ZERO;
+        for (var holdingTC : holdings) {
             var currentValueOC = pricesBook.convert(params.endDate(), holdingTC.symbol(), holdingTC.asValue()).value();
-            var averageCostTC = holding.averageCost().originalValue().get().negate();
+            var averageCostTC = holdingTC.averageCost().originalValue().get().negate();
             var currentValueBasedOnCostTC = currentValueOC.amount().multiply(averageCostTC.amount());
-
             var currentValueTC = pricesBook.convert(params.endDate(), currencyTC, holdingTC.asValue()).value();
             var holdingGainTC = currentValueTC.amount().subtract(currentValueBasedOnCostTC);
-            gain = gain.add(holdingGainTC);
+            holdingGain = holdingGain.add(holdingGainTC);
         }
 
-        return Result.success(gain);
+        return Result.success(holdingGain);
     }
+
 }

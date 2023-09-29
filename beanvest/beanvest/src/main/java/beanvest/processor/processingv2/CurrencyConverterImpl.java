@@ -28,8 +28,7 @@ public class CurrencyConverterImpl implements CurrencyConverter {
             var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value());
             var converted = dep.withValue(dep.value().withOriginalValue(convertedValue.value()));
             var accountHolding = dep.accountCash();
-            holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, Value.ZERO))
-                    .update(dep.getCashAmount(), converted.getCashValue());
+            holdings.compute(accountHolding, (k,v) -> Holding.getHoldingOrCreate(v, accountHolding, dep.getCashValue(), converted.getCashValueConverted()));
             return converted;
 
         } else if (op instanceof Withdrawal wth) {
@@ -50,10 +49,10 @@ public class CurrencyConverterImpl implements CurrencyConverter {
 
         } else if (op instanceof Transaction tr) {
             var cashHolding = holdings.get(tr.accountCash());
-            var newCost = cashHolding.averageCost().multiply(tr.getRawAmountMoved());
+            var newCost = cashHolding.averageCost().multiply(tr.getCashAmount().abs());
             cashHolding.update(tr.getRawAmountMoved().negate(), newCost);
 
-            return tr.withValue(newCost);
+            return tr.withValue(new Value(tr.getCashValue(), newCost));
 
         } else {
             throw new RuntimeException("Unsupported operation: " + op);
