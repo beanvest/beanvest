@@ -6,98 +6,49 @@ import beanvest.journal.entity.AccountHolding;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
-import java.util.Optional;
 
 public final class Holding {
-    static final int DEFAULT_SCALE = 6;
+    private static final int DEFAULT_SCALE = 6;
     private final String symbol;
-    private final HoldingCostImpl holdingCost;
-    private HoldingCost convertedValue;
     private BigDecimal amount;
+    private final Cost cost;
+    private final String costSymbol;
 
-    public Holding(String symbol, BigDecimal amount, Value totalCost) {
+    public Holding(String symbol, BigDecimal amount, Value totalCostwrapped) {
+        costSymbol = totalCostwrapped.symbol();
         amount = amount.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP);
         this.symbol = symbol;
         this.amount = amount;
-        holdingCost = new HoldingCostImpl(totalCost.symbol());
-        this.holdingCost.setTotalCost(totalCost.amount(), amount);
+        this.cost = new Cost(amount, totalCostwrapped.amount().setScale(DEFAULT_SCALE, RoundingMode.HALF_UP));
+    }
 
-        if (totalCost.convertedValue().isEmpty()) {
-            convertedValue = HoldingCost.NO_OP;
+    static Holding getHoldingOrCreate(Holding v, AccountHolding accountHolding, Value cashValue, Value totalCost) {
+        if (v == null) {
+            return new Holding(accountHolding.symbol(), cashValue.amount(), totalCost);
         } else {
-            var value = totalCost.convertedValue().get();
-            convertedValue = new HoldingCostImpl(value.symbol());
-            this.convertedValue.setTotalCost(totalCost.convertedValue().get().amount(), amount);
+            v.update(cashValue.amount(), totalCost);
+            return v;
         }
     }
 
     public void update(BigDecimal amountChange, Value newCost) {
-        if (amount.compareTo(BigDecimal.ZERO) == 0) {
-            amount = amountChange;
-            holdingCost.setTotalCost(newCost.amount(), amount);
-            newCost.convertedValue().ifPresent(oc -> convertedValue = new HoldingCostImpl(oc.symbol()));
-            convertedValue.setTotalCost(getConvertedValueOrDefault(newCost), amount);
-        } else if (isIncreasingHolding(amountChange)) {
-            updateAmountAndAvgCost(amountChange, newCost);
-        } else {
-            if (willCrossZero(amountChange)) { // goes over 0
-                var negatedAmount = amount.negate();
-                var splitRatio = negatedAmount.divide(amountChange, DEFAULT_SCALE * 2, RoundingMode.DOWN);
-                var costToZero = Value.of(newCost.multiply(splitRatio).amount().setScale(DEFAULT_SCALE, RoundingMode.HALF_UP), newCost.symbol());
-                var maybeCostToZeroOC = newCost.convertedValue()
-                        .map(vOC -> Value.of(splitRatio.multiply(vOC.amount())
-                                .setScale(DEFAULT_SCALE, RoundingMode.HALF_UP), symbol));
-                var costToZeroWithOriginalValue = new Value(costToZero, maybeCostToZeroOC);
-                update(negatedAmount, costToZeroWithOriginalValue);
-                var remainingAmount = amountChange.subtract(negatedAmount);
-                update(remainingAmount, newCost.subtract(costToZeroWithOriginalValue));
-                return;
-            }
-            updateAmountWhileKeepingAvgCost(amountChange);
+        if (!newCost.symbol().equals(costSymbol)) {
+            throw new RuntimeException("tried to add cost in `"+newCost.symbol()+"` to `"+costSymbol+"`");
         }
-    }
-
-    private static BigDecimal getConvertedValueOrDefault(Value newCost) {
-        return newCost.convertedValue().map(Value::amount).orElse(BigDecimal.ZERO);
-    }
-
-    private boolean willCrossZero(BigDecimal amountChange) {
-        var newSideOfZero = amount.add(amountChange).compareTo(BigDecimal.ZERO);
-        var currentSideOfZero = amount.compareTo(BigDecimal.ZERO);
-        return newSideOfZero == -currentSideOfZero;
-    }
-
-    private void updateAmountAndAvgCost(BigDecimal amountChange, Value newCost) {
+        cost.update(amount, amountChange, newCost.amount());
         amount = amount.add(amountChange);
-        holdingCost.add(newCost.amount(), amount);
-        convertedValue.add(getConvertedValueOrDefault(newCost), amount);
     }
 
-    private boolean isIncreasingHolding(BigDecimal amountChange) {
-        var isAmountPositive = this.amount.compareTo(BigDecimal.ZERO) > 0;
-        var isChangePositive = amountChange.compareTo(BigDecimal.ZERO) > 0;
-
-        return isAmountPositive == isChangePositive;
+    public void updateWhileKeepingTheCost(BigDecimal d) {
+        amount = amount.add(d);
     }
 
     public Value averageCost() {
-        return new Value(holdingCost.lastAvgCost(), Optional.ofNullable(convertedValue.lastAvgCost()));
-    }
-
-    private void updateAmountWhileKeepingAvgCost(BigDecimal amountChange) {
-        var ratio = amountChange.negate().divide(amount, 10, RoundingMode.DOWN);
-        var keptRatio = BigDecimal.ONE.subtract(ratio);
-        this.amount = amount.add(amountChange);
-        this.holdingCost.bumpCostWhileKeepingAvg(keptRatio);
-        this.convertedValue.bumpCostWhileKeepingAvg(keptRatio);
-    }
-
-    public Value asValue() {
-        return Value.of(amount, symbol);
+        return Value.of(cost.avgCost(amount), costSymbol);
     }
 
     public Value totalCost() {
-        return new Value(holdingCost.totalCost(), Optional.ofNullable(convertedValue.totalCost()));
+        return Value.of(cost.totalCost(), costSymbol);
     }
 
     public String symbol() {
@@ -109,23 +60,20 @@ public final class Holding {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (Holding) obj;
-        return Objects.equals(this.symbol, that.symbol) &&
-                Objects.equals(this.amount, that.amount) &&
-                Objects.equals(this.holdingCost.totalCost(), that.holdingCost.totalCost());
+    public int hashCode() {
+        return Objects.hash(symbol, amount, totalCost());
     }
+
 
     @Override
-    public int hashCode() {
-        return Objects.hash(symbol, amount, holdingCost.totalCost());
+    public String toString() {
+        return "Holding[" +
+                "symbol=" + symbol + ", " +
+                "amount=" + amount + ", " +
+                "cost=" + cost + ']';
     }
 
-
-    public void updateWhileKeepingTheCost(BigDecimal d) {
-        amount = amount.add(d);
-        holdingCost.updateAvgCost(amount);
+    public Value asValue() {
+        return Value.of(amount, symbol);
     }
 }

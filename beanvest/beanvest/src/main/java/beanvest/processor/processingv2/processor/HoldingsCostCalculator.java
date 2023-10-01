@@ -3,7 +3,6 @@ package beanvest.processor.processingv2.processor;
 import beanvest.processor.processingv2.CalculationParams;
 import beanvest.processor.processingv2.Calculator;
 import beanvest.processor.processingv2.Holding;
-import beanvest.processor.processingv2.HoldingWithCost;
 import beanvest.result.Result;
 import beanvest.result.StatErrors;
 
@@ -19,8 +18,8 @@ public class HoldingsCostCalculator implements Calculator {
     @Override
     public Result<BigDecimal, StatErrors> calculate(CalculationParams params) {
         var cost = BigDecimal.ZERO;
-        for (HoldingWithCost holding : holdingsCollector.getHoldingsAndCash(params.entity())) {
-            cost = cost.add(holding.totalCost());
+        for (Holding holding : holdingsCollector.getHoldingsAndCash(params.entity())) {
+            cost = cost.add(holding.totalCost().amount());
         }
         return Result.success(cost);
     }

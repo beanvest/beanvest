@@ -15,7 +15,7 @@ public class CurrencyConverterImpl implements CurrencyConverter {
     private final String targetCurrency;
     private final LatestPricesBook pricesBook;
 
-    Map<AccountHolding, HoldingWithCost> holdings = new HashMap<>();
+    Map<AccountHolding, Holding> holdings = new HashMap<>();
 
     public CurrencyConverterImpl(String targetCurrency, LatestPricesBook pricesBook) {
         this.targetCurrency = targetCurrency;
@@ -28,16 +28,16 @@ public class CurrencyConverterImpl implements CurrencyConverter {
             var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value());
             var converted = dep.withValue(dep.value().withConvertedValue(convertedValue.value()));
             var accountHolding = dep.accountCash();
-            holdings.compute(accountHolding, (k, v) -> HoldingWithCost.getHoldingOrCreate(v, accountHolding, dep.getCashValue(), converted.getCashValueConverted().amount()));
+            holdings.compute(accountHolding, (k, v) -> Holding.getHoldingOrCreate(v, accountHolding, dep.getCashValue(), converted.getCashValueConverted()));
             return converted;
 
         } else if (op instanceof Withdrawal wth) {
             var holding = holdings.get(wth.accountCash());
 
             var portionWithdrawn = wth.getCashValue().multiply(BigDecimal.ONE.divide(holding.amount(), 10, RoundingMode.HALF_UP));
-            var withdrawnAmount = portionWithdrawn.multiply(holding.totalCost().negate());
+            var withdrawnAmount = portionWithdrawn.multiply(holding.totalCost().amount().negate());
 
-            holding.update(wth.getRawAmountMoved(), BigDecimal.ZERO);
+            holding.update(wth.getRawAmountMoved(), Value.of(BigDecimal.ZERO, wth.getCashCurrency()));
             return wth.withValue(withdrawnAmount);
 
         } else if (op instanceof Transfer tr) {
@@ -45,14 +45,14 @@ public class CurrencyConverterImpl implements CurrencyConverter {
             var newCost = holding.averageCost().multiply(tr.getRawAmountMoved());
             holding.update(tr.getRawAmountMoved(), newCost);
 
-            return tr.withValue(Value.of(newCost, targetCurrency));
+            return tr.withValue(Value.of(newCost.amount(), targetCurrency));
 
         } else if (op instanceof Transaction tr) {
             var cashHolding = holdings.get(tr.accountCash());
             var newCost = cashHolding.averageCost().multiply(tr.getCashAmount().abs());
             cashHolding.update(tr.getRawAmountMoved().negate(), newCost);
 
-            var transaction = tr.withValue(new Value(tr.getCashValue(), Value.of(newCost, targetCurrency)));
+            var transaction = tr.withValue(new Value(tr.getCashValue(), Value.of(newCost.amount(), targetCurrency)));
             return transaction;
 
         } else {

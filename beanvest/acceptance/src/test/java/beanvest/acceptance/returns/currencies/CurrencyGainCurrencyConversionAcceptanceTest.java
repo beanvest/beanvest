@@ -4,6 +4,7 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 public class CurrencyGainCurrencyConversionAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 

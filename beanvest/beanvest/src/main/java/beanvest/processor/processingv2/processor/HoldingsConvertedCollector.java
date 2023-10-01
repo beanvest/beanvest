@@ -17,11 +17,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-public class HoldingsCollector implements ProcessorV2, HoldingsCollectorInterface {
+public class HoldingsConvertedCollector implements ProcessorV2, HoldingsCollectorInterface {
     private final Map<AccountHolding, Holding> holdings = new HashMap<>();
 
     @SuppressWarnings("unused")
-    public HoldingsCollector() {
+    public HoldingsConvertedCollector() {
     }
 
     @Override
@@ -79,7 +79,7 @@ public class HoldingsCollector implements ProcessorV2, HoldingsCollectorInterfac
 
             } else if (op instanceof Sell sell) {
                 var holding = getHolding(tr.accountHolding());
-                holding.update(sell.units().negate(), Value.of(BigDecimal.ZERO, sell.getCashCurrency()));
+                holding.update(sell.units().negate(), Value.ZERO);
                 var averagePrice = sell.totalPrice().multiply(BigDecimal.ONE.divide(sell.units(), 10, RoundingMode.HALF_UP));
                 var gainRatio = averagePrice.amount().multiply(BigDecimal.ONE.divide(holding.averageCost().amount(), 10, RoundingMode.HALF_UP));
 
