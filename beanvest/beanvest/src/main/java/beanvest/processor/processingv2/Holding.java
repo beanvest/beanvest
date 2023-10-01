@@ -31,15 +31,6 @@ public final class Holding {
         }
     }
 
-    static Holding getHoldingOrCreate(Holding v, AccountHolding accountHolding, Value cashValue, Value totalCost) {
-        if (v == null) {
-            return new Holding(accountHolding.symbol(), cashValue.amount(), totalCost);
-        } else {
-            v.update(cashValue.amount(), totalCost);
-            return v;
-        }
-    }
-
     public void update(BigDecimal amountChange, Value newCost) {
         if (amount.compareTo(BigDecimal.ZERO) == 0) {
             amount = amountChange;

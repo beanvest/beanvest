@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 
 public class HoldingsCollector implements ProcessorV2, HoldingsCollectorInterface {
     private final Map<AccountHolding, Holding> holdings = new HashMap<>();
-    @SuppressWarnings("unused")
 
+    @SuppressWarnings("unused")
     public HoldingsCollector() {
     }
 
@@ -112,16 +112,6 @@ public class HoldingsCollector implements ProcessorV2, HoldingsCollectorInterfac
             holdings.get(div.accountCash()).updateWhileKeepingTheCost(div.getCashAmount());
         }
     }
-
-    public Holding getInstrumentHolding(AccountInstrumentHolding account) {
-        return holdings.get(account);
-    }
-
-    public enum Mode {
-        ConvertedPrice,
-        regularPrice
-    }
-
 }
 
 
