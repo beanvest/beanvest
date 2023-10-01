@@ -60,7 +60,8 @@ public class CalculatorRegistrar {
                 reg.get(HoldingsValueCalculator.class),
                 reg.get(CashCalculator.class)));
         registry.register(CostMovedAtSaleCalculator.class, reg -> new CostMovedAtSaleCalculator(reg.get(HoldingsCollector.class)));
-        registry.register(HoldingsCostCalculator.class, reg -> new HoldingsCostCalculator(reg.get(HoldingsCollector.class)));
+        registry.register(HoldingsCostCollector.class, reg -> new HoldingsCostCollector());
+        registry.register(HoldingsCostCalculator.class, reg -> new HoldingsCostCalculator(reg.get(HoldingsCostCollector.class)));
         registry.register(NetCostCalculator.class, reg -> new NetCostCalculator(reg.get(HoldingsCostCalculator.class)));
         registry.register(ProfitCalculator.class, reg -> new ProfitCalculator(reg.get(NetCostCalculator.class),
                 reg.get(ValueCalculator.class)));

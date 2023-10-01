@@ -15,6 +15,7 @@ import beanvest.journal.entry.Transaction;
 import beanvest.journal.entry.Withdrawal;
 import beanvest.processor.processingv2.Holding;
 import beanvest.journal.entity.Entity;
+import beanvest.processor.processingv2.HoldingWithCost;
 import beanvest.processor.processingv2.ProcessorV2;
 
 import java.math.BigDecimal;
@@ -24,24 +25,20 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class HoldingsCostCollector implements ProcessorV2 {
-    private final Map<AccountHolding, Holding> holdings = new HashMap<>();
+    private final Map<AccountHolding, HoldingWithCost> holdings = new HashMap<>();
 
-    public HoldingsCostCollector()
-    {
+    public HoldingWithCost getHolding(AccountHolding accountHolding) {
+        return holdings.computeIfAbsent(accountHolding, k -> new HoldingWithCost(accountHolding.symbol(), BigDecimal.ZERO, BigDecimal.ZERO));
     }
 
-    public Holding getHolding(AccountHolding accountHolding) {
-        return holdings.computeIfAbsent(accountHolding, k -> new Holding(accountHolding.symbol(), BigDecimal.ZERO, Value.of(BigDecimal.ZERO, "")));
-    }
-
-    public List<Holding> getHoldingsAndCash(Entity account) {
+    public List<HoldingWithCost> getHoldingsAndCash(Entity account) {
         return holdings.keySet().stream()
                 .filter(holding -> account.contains(holding.entity()))
                 .map(holdings::get)
                 .collect(Collectors.toList());
     }
 
-    public List<Holding> getInstrumentHoldings(Entity account) {
+    public List<HoldingWithCost> getInstrumentHoldings(Entity account) {
         return holdings.keySet().stream()
                 .filter(holding -> holding instanceof AccountInstrumentHolding)
                 .filter(holding -> account.contains(holding.entity()))
@@ -49,14 +46,7 @@ public class HoldingsCostCollector implements ProcessorV2 {
                 .collect(Collectors.toList());
     }
 
-    public List<HoldingAccount> getInstrumentHoldings2(Entity account) {
-        return holdings.keySet().stream()
-                .filter(holding -> account.contains(holding.entity()))
-                .map(holding -> new HoldingAccount(holding.entity(), holdings.get(holding)))
-                .collect(Collectors.toList());
-    }
-
-    public List<Holding> getCashHoldings(Entity account) {
+    public List<HoldingWithCost> getCashHoldings(Entity account) {
         return holdings.keySet().stream()
                 .filter(holding -> holding instanceof AccountCashHolding)
                 .filter(holding -> account.contains(holding.entity()))
@@ -64,21 +54,12 @@ public class HoldingsCostCollector implements ProcessorV2 {
                 .collect(Collectors.toList());
     }
 
-    public Holding getCashHolding(Entity account, String currency) {
-        return holdings.keySet().stream()
-                .filter(holding -> holding instanceof AccountCashHolding)
-                .map(holding -> (AccountCashHolding)holding)
-                .filter(holding -> account.contains(holding.entity()))
-                .filter(holding -> holding.symbol().equals(currency))
-                .map(holdings::get)
-                .findFirst().get();
-    }
-
+    @Override
     public void process(AccountOperation op) {
         if (op instanceof Transaction tr) {
             if (op instanceof Buy buy) {
-                getHolding(tr.accountCash()).update(buy.totalPrice().amount().negate(), buy.totalPrice());
-                getHolding(tr.accountHolding()).update(buy.units(), buy.totalPrice());
+                getHolding(tr.accountCash()).update(buy.totalPrice().amount().negate(), buy.totalPrice().amount());
+                getHolding(tr.accountHolding()).update(buy.units(), buy.totalPrice().amount().negate());
 
             } else if (op instanceof Sell sell) {
                 var holding = getHolding(tr.accountHolding());
@@ -88,38 +69,19 @@ public class HoldingsCostCollector implements ProcessorV2 {
             }
         }
         if (op instanceof Deposit dep) {
-            getHolding(dep.accountCash()).update(dep.getCashAmount(), dep.getCashValue().negate());
+            getHolding(dep.accountCash()).update(dep.getCashAmount(), dep.getCashAmount().negate());
         }
         if (op instanceof Withdrawal wth) {
-            getHolding(wth.accountCash()).update(wth.getCashAmount().negate(), wth.getCashValue());
+            getHolding(wth.accountCash()).update(wth.getCashAmount().negate(), wth.getCashAmount());
         }
-        if (op instanceof Interest intr) {
-            getHolding(intr.accountCash()).updateWhileKeepingTheCost(intr.getCashAmount());
+        if (op instanceof Interest dep) {
+            getHolding(dep.accountCash()).updateWhileKeepingTheCost(dep.getCashAmount());
         }
         if (op instanceof Fee fee) {
             getHolding(fee.accountCash()).updateWhileKeepingTheCost(fee.getCashAmount().negate());
         }
-        if (op instanceof Dividend div) {
-            getHolding(div.accountCash()).updateWhileKeepingTheCost(div.getCashAmount());
+        if (op instanceof Dividend dep) {
+            getHolding(dep.accountCash()).updateWhileKeepingTheCost(dep.getCashAmount());
         }
     }
-
-    public Holding getInstrumentHolding(AccountInstrumentHolding account) {
-        return holdings.get(account);
-    }
-
-    public enum Mode
-    {
-        OriginalPrice,
-        ConvertedPrice
-    }
-
 }
-
-
-
-
-
-
-
-
