@@ -4,6 +4,7 @@ import beanvest.scripts.usagegen.generateusagedoc.ExampleRunner.ExampleWithOutpu
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,8 +37,14 @@ public class SampleJsonWriter {
 
     public static void writeJson(ExampleWithOutput example, String outputPath) throws IOException {
         var jsonString = example.commandOutput();
-        var jsonTree = JsonParser.parseString(jsonString);
-        var prettyPrintedJson = GSON.toJson(jsonTree);
-        Files.writeString(Path.of(outputPath), prettyPrintedJson);
+        try {
+            var jsonTree = JsonParser.parseString(jsonString);
+            var prettyPrintedJson = GSON.toJson(jsonTree);
+            Files.writeString(Path.of(outputPath), prettyPrintedJson);
+        } catch (JsonSyntaxException e) {
+            System.out.println("JsonSyntaxException when parsing json: " + jsonString);
+            throw e;
+        }
+
     }
 }

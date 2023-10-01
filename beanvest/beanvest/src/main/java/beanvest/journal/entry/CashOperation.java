@@ -9,7 +9,7 @@ public sealed interface CashOperation extends AccountOperation permits Transacti
     Value getCashValue();
 
     default Value getCashValueConverted() {
-        return this.getCashValue().originalValue().get();
+        return this.getCashValue().convertedValue().get();
     }
     default BigDecimal getCashAmount() {
         return getCashValue().amount();

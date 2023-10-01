@@ -31,8 +31,8 @@ public sealed interface Transaction extends CashOperation, HoldingOperation, Has
 
     Transaction withValue(Value newValue);
 
-    default Value originalCurrencyTotalPrice()
+    default Value convertedCurrencyTotalPrice()
     {
-        return totalPrice().originalValue().get();
+        return totalPrice().convertedValue().get();
     }
 }

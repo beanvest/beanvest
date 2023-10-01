@@ -1,7 +1,6 @@
 package beanvest.processor.processingv2;
 
 import beanvest.journal.Value;
-import beanvest.journal.entity.AccountCashHolding;
 import beanvest.journal.entity.AccountHolding;
 
 import java.math.BigDecimal;
@@ -13,7 +12,7 @@ public final class Holding {
     static final int DEFAULT_SCALE = 6;
     private final String symbol;
     private final HoldingCostImpl holdingCost;
-    private HoldingCost holdingCostOC;
+    private HoldingCost convertedValue;
     private BigDecimal amount;
 
     public Holding(String symbol, BigDecimal amount, Value totalCost) {
@@ -23,12 +22,12 @@ public final class Holding {
         holdingCost = new HoldingCostImpl(totalCost.symbol());
         this.holdingCost.setTotalCost(totalCost.amount(), amount);
 
-        if (totalCost.originalValue().isEmpty()) {
-            holdingCostOC = HoldingCost.NO_OP;
+        if (totalCost.convertedValue().isEmpty()) {
+            convertedValue = HoldingCost.NO_OP;
         } else {
-            var value = totalCost.originalValue().get();
-            holdingCostOC = new HoldingCostImpl(value.symbol());
-            this.holdingCostOC.setTotalCost(totalCost.amount(), amount);
+            var value = totalCost.convertedValue().get();
+            convertedValue = new HoldingCostImpl(value.symbol());
+            this.convertedValue.setTotalCost(totalCost.convertedValue().get().amount(), amount);
         }
     }
 
@@ -45,8 +44,8 @@ public final class Holding {
         if (amount.compareTo(BigDecimal.ZERO) == 0) {
             amount = amountChange;
             holdingCost.setTotalCost(newCost.amount(), amount);
-            newCost.originalValue().ifPresent(oc -> holdingCostOC = new HoldingCostImpl(oc.symbol()));
-            holdingCostOC.setTotalCost(getOriginalValueCostOrDefault(newCost), amount);
+            newCost.convertedValue().ifPresent(oc -> convertedValue = new HoldingCostImpl(oc.symbol()));
+            convertedValue.setTotalCost(getConvertedValueOrDefault(newCost), amount);
         } else if (isIncreasingHolding(amountChange)) {
             updateAmountAndAvgCost(amountChange, newCost);
         } else {
@@ -54,7 +53,7 @@ public final class Holding {
                 var negatedAmount = amount.negate();
                 var splitRatio = negatedAmount.divide(amountChange, DEFAULT_SCALE * 2, RoundingMode.DOWN);
                 var costToZero = Value.of(newCost.multiply(splitRatio).amount().setScale(DEFAULT_SCALE, RoundingMode.HALF_UP), newCost.symbol());
-                var maybeCostToZeroOC = newCost.originalValue()
+                var maybeCostToZeroOC = newCost.convertedValue()
                         .map(vOC -> Value.of(splitRatio.multiply(vOC.amount())
                                 .setScale(DEFAULT_SCALE, RoundingMode.HALF_UP), symbol));
                 var costToZeroWithOriginalValue = new Value(costToZero, maybeCostToZeroOC);
@@ -67,8 +66,8 @@ public final class Holding {
         }
     }
 
-    private static BigDecimal getOriginalValueCostOrDefault(Value newCost) {
-        return newCost.originalValue().map(Value::amount).orElse(BigDecimal.ZERO);
+    private static BigDecimal getConvertedValueOrDefault(Value newCost) {
+        return newCost.convertedValue().map(Value::amount).orElse(BigDecimal.ZERO);
     }
 
     private boolean willCrossZero(BigDecimal amountChange) {
@@ -80,7 +79,7 @@ public final class Holding {
     private void updateAmountAndAvgCost(BigDecimal amountChange, Value newCost) {
         amount = amount.add(amountChange);
         holdingCost.add(newCost.amount(), amount);
-        holdingCostOC.add(getOriginalValueCostOrDefault(newCost), amount);
+        convertedValue.add(getConvertedValueOrDefault(newCost), amount);
     }
 
     private boolean isIncreasingHolding(BigDecimal amountChange) {
@@ -91,7 +90,7 @@ public final class Holding {
     }
 
     public Value averageCost() {
-        return new Value(holdingCost.lastAvgCost(), Optional.ofNullable(holdingCostOC.lastAvgCost()));
+        return new Value(holdingCost.lastAvgCost(), Optional.ofNullable(convertedValue.lastAvgCost()));
     }
 
     private void updateAmountWhileKeepingAvgCost(BigDecimal amountChange) {
@@ -99,7 +98,7 @@ public final class Holding {
         var keptRatio = BigDecimal.ONE.subtract(ratio);
         this.amount = amount.add(amountChange);
         this.holdingCost.bumpCostWhileKeepingAvg(keptRatio);
-        this.holdingCostOC.bumpCostWhileKeepingAvg(keptRatio);
+        this.convertedValue.bumpCostWhileKeepingAvg(keptRatio);
     }
 
     public Value asValue() {
@@ -107,7 +106,7 @@ public final class Holding {
     }
 
     public Value totalCost() {
-        return new Value(holdingCost.totalCost(), Optional.ofNullable(holdingCostOC.totalCost()));
+        return new Value(holdingCost.totalCost(), Optional.ofNullable(convertedValue.totalCost()));
     }
 
     public String symbol() {

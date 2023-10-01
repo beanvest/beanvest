@@ -33,10 +33,12 @@ public class CurrencyGainCalculator implements ProcessorV2, Calculator {
 
         BigDecimal holdingGain = ZERO;
         for (var holdingTC : holdings) {
-            var currentValueOC = pricesBook.convert(params.endDate(), holdingTC.symbol(), holdingTC.asValue()).value();
-            var averageCostTC = holdingTC.averageCost().originalValue().get().negate();
-            var currentValueBasedOnCostTC = currentValueOC.amount().multiply(averageCostTC.amount());
+            var currencyOC = holdingTC.symbol();
+            var currentValueOC = pricesBook.convert(params.endDate(), currencyOC, holdingTC.asValue()).value();
             var currentValueTC = pricesBook.convert(params.endDate(), currencyTC, holdingTC.asValue()).value();
+
+            var averageCostTC = holdingTC.averageCost().convertedValue().get().negate();
+            var currentValueBasedOnCostTC = currentValueOC.amount().multiply(averageCostTC.amount().abs());
             var holdingGainTC = currentValueTC.amount().subtract(currentValueBasedOnCostTC);
             holdingGain = holdingGain.add(holdingGainTC);
         }

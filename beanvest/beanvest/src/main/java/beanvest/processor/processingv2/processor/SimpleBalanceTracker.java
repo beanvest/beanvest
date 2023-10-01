@@ -14,7 +14,7 @@ public class SimpleBalanceTracker {
 
     public void add(Entity account2, Value value) {
         updateBalance(balancesByCurrency, account2, value);
-        value.originalValue().ifPresent(val -> updateBalance(balancesByCurrency, account2, val));
+        value.convertedValue().ifPresent(val -> updateBalance(balancesByCurrency, account2, val));
     }
 
     private void updateBalance(Map<String, Map<Entity, BigDecimal>> balancesByCurrency1, Entity account2, Value value) {

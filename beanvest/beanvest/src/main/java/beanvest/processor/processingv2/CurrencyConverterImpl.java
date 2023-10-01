@@ -26,7 +26,7 @@ public class CurrencyConverterImpl implements CurrencyConverter {
     public AccountOperation convert(AccountOperation op) {
         if (op instanceof Deposit dep) {
             var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value());
-            var converted = dep.withValue(dep.value().withOriginalValue(convertedValue.value()));
+            var converted = dep.withValue(dep.value().withConvertedValue(convertedValue.value()));
             var accountHolding = dep.accountCash();
             holdings.compute(accountHolding, (k,v) -> Holding.getHoldingOrCreate(v, accountHolding, dep.getCashValue(), converted.getCashValueConverted()));
             return converted;
@@ -52,7 +52,8 @@ public class CurrencyConverterImpl implements CurrencyConverter {
             var newCost = cashHolding.averageCost().multiply(tr.getCashAmount().abs());
             cashHolding.update(tr.getRawAmountMoved().negate(), newCost);
 
-            return tr.withValue(new Value(tr.getCashValue(), newCost));
+            var transaction = tr.withValue(new Value(tr.getCashValue(), newCost));
+            return transaction;
 
         } else {
             throw new RuntimeException("Unsupported operation: " + op);

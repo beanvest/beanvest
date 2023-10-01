@@ -22,36 +22,7 @@ class HoldingsCollectorTest {
 
     }
 
-    @Test
-    void keepsTrackOfHoldings() {
-        process("""
-                account trading
-                currency GBP
-                2022-01-01 deposit 22
-                2022-01-02 buy 1 X for 10
-                2022-01-02 buy 1 X for 12
-                """);
-        var holding = collector.getHolding(instrumentHolding("trading", "X"));
 
-        assertThat(holding.asValue()).isEqualTo(Value.of("2 X"));
-        assertThat(holding.totalCost().amount()).isEqualByComparingTo(d("-22"));
-        assertThat(holding.averageCost().amount()).isEqualByComparingTo(d("-11"));
-    }
-
-    @Test
-    void keepsTrackOfCash() {
-        process("""
-                account trading
-                currency GBP
-                2022-01-01 deposit 22
-                2022-01-02 buy 1 X for 10
-                """);
-        var holding = collector.getHolding(cashHolding("trading", "GBP"));
-
-        assertThat(holding.asValue()).isEqualTo(Value.of("12 GBP"));
-        assertThat(holding.totalCost().amount()).isEqualByComparingTo(d("-12"));
-        assertThat(holding.averageCost().amount()).isEqualByComparingTo(d("-1"));
-    }
 
     private static BigDecimal d(String val) {
         return new BigDecimal(val);

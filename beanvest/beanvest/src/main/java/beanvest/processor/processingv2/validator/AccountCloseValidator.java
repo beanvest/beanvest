@@ -42,6 +42,7 @@ public class AccountCloseValidator implements Validator {
     private static String makeHoldingsPrintable(List<Holding> holdings) {
         return holdings.stream()
                 .map(Holding::asValue)
+                .map(Value::stripTrailingZeros)
                 .map(Value::toString)
                 .collect(Collectors.joining(", "));
     }

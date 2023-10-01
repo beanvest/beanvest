@@ -3,11 +3,12 @@ package beanvest.journal;
 import beanvest.parser.ValueFormatException;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Optional;
 
-public record Value(BigDecimal amount, String symbol, Optional<Value> originalValue) {
+public record Value(BigDecimal amount, String symbol, Optional<Value> convertedValue) {
     public Value {
-        if (originalValue.isPresent() && originalValue.get().originalValue.isPresent()) {
+        if (convertedValue.isPresent() && convertedValue.get().convertedValue.isPresent()) {
             throw new UnsupportedOperationException(
                     "while it might make sense at some point, currently throwing to point out a mistake");
         }
@@ -57,10 +58,10 @@ public record Value(BigDecimal amount, String symbol, Optional<Value> originalVa
     public Value add(Value value) {
         verifySameSymbol(value);
         var actualSymbol = this.amount.compareTo(BigDecimal.ZERO) != 0 ? this.symbol : value.symbol;
-        if (originalValue.isPresent() != value.originalValue.isPresent()) {
+        if (convertedValue.isPresent() != value.convertedValue.isPresent()) {
             throw new RuntimeException("only one side has original value");
         }
-        return new Value(this.amount.add(value.amount), actualSymbol, originalValue.map(ov -> ov.add(value.originalValue.get())));
+        return new Value(this.amount.add(value.amount), actualSymbol, convertedValue.map(ov -> ov.add(value.convertedValue.get())));
     }
 
     public Value add(BigDecimal value) {
@@ -75,11 +76,11 @@ public record Value(BigDecimal amount, String symbol, Optional<Value> originalVa
     }
 
     public Value negate() {
-        return new Value(this.getAmount().negate(), this.symbol, this.originalValue.map(Value::negate));
+        return new Value(this.getAmount().negate(), this.symbol, this.convertedValue.map(Value::negate));
     }
 
     public String toString() {
-        return this.amount.toString() + " " + this.symbol + originalValue.map(v -> " (" + v + ")").orElse("");
+        return this.amount.toString() + " " + this.symbol + convertedValue.map(v -> " (" + v + ")").orElse("");
     }
 
     public boolean isPositive() {
@@ -99,11 +100,42 @@ public record Value(BigDecimal amount, String symbol, Optional<Value> originalVa
         }
     }
 
-    public Value withOriginalValue(Value value) {
+    public Value withConvertedValue(Value value) {
         return new Value(this, value);
     }
 
     public Value multiply(BigDecimal units) {
-        return new Value(amount.multiply(units), symbol, originalValue.map(v -> v.multiply(units)));
+        return new Value(amount.multiply(units), symbol, convertedValue.map(v -> v.multiply(units)));
+    }
+
+    public Value getInCurrency(String symbol) {
+        if (this.symbol.equals(symbol)) {
+            return this;
+        } else if (this.convertedValue.isPresent() && this.convertedValue.get().symbol.equals(symbol)) {
+            return this.convertedValue.get();
+        } else {
+            throw new RuntimeException("Value is in currency `" + this.symbol + "`" + convertedValue.map(v -> " and `" + v.symbol + "`").orElse("") + " but currency `" + symbol + "` was requested");
+        }
+    }
+
+    public Value withoutConvertedValue() {
+        return new Value(amount, symbol);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Value value = (Value) o;
+        return amount.compareTo(value.amount) == 0 && Objects.equals(symbol, value.symbol) && Objects.equals(convertedValue, value.convertedValue);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount, symbol, convertedValue);
+    }
+
+    public Value stripTrailingZeros() {
+        return new Value(amount.stripTrailingZeros(), symbol, convertedValue.map(v -> new Value(v.amount.stripTrailingZeros(), v.symbol)));
     }
 }

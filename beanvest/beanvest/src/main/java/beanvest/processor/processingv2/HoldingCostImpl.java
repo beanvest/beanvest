@@ -50,4 +50,10 @@ public class HoldingCostImpl implements HoldingCost {
     public Value lastAvgCost() {
         return Value.of(lastAvgCost, currency);
     }
+
+    @Override
+    public String toString() {
+        return currency + " totalCost: " + totalCost +
+                " avgCost: " + lastAvgCost;
+    }
 }

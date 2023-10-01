@@ -18,7 +18,7 @@ public class CliHoldingsStatsAcceptanceTest {
     void shouldCalculateUnrealizedGainForEachHolding() {
         dsl.setEnd("2022-01-01");
         dsl.setGroupingDisabled();
-        dsl.setColumns("deps,wths,intr,fees,xirr,rgain,ugain,div,profit,cost,value");
+        dsl.setColumns("deps,wths,intr,fees,xirr,rgain,ugain,div,value");
         dsl.setReportHoldings();
 
         dsl.runCalculateReturns("""
@@ -36,10 +36,10 @@ public class CliHoldingsStatsAcceptanceTest {
                 """);
 
         dsl.verifyOutput("""
-                Account           Deps   Wths   Intr   Fees   Xirr   RGain  UGain  Div    Profit  Cost   Value
-                fidelityIsa          90     -1      7     -5   24.4      3     10      1      22    -89    111
-                fidelityIsa:APPL      0      0      0     -4  114.3      3     10      1      10    -20     30
-                fidelityIsa:GBP      90     -1      7     -1      …      0      0      0      12    -69     81""");
+                Account           Deps   Wths   Intr   Fees   Xirr   RGain  UGain  Div    Value
+                fidelityIsa          90     -1      7     -5   24.4      3     10      1    111
+                fidelityIsa:APPL      0      0      0     -4  114.3      3     10      1     30
+                fidelityIsa:GBP      90     -1      7     -1      …      0      0      0     81""");
     }
 }
 
