@@ -71,4 +71,12 @@ class Cost {
     public BigDecimal totalCost() {
         return totalCost;
     }
+
+    @Override
+    public String toString() {
+        return "Cost{" +
+                "totalCost=" + totalCost +
+                ", lastAvgCost=" + lastAvgCost +
+                '}';
+    }
 }

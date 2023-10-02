@@ -47,7 +47,8 @@ public class CalculatorRegistrar {
         registry.register(HoldingsCollector.class, reg -> new HoldingsCollector());
         registry.register(RealizedGainCalculator.class, reg -> new RealizedGainCalculator());
         registry.register(DividendCalculator.class, reg -> new DividendCalculator());
-        registry.register(CurrencyGainCalculator.class, reg -> new CurrencyGainCalculator(reg.get(LatestPricesBook.class)));
+        registry.register(HoldingsConvertedCollector.class, reg -> new HoldingsConvertedCollector());
+        registry.register(CurrencyGainCalculator.class, reg -> new CurrencyGainCalculator(reg.get(HoldingsConvertedCollector.class), reg.get(LatestPricesBook.class)));
         registry.register(SpentCalculator.class, reg -> new SpentCalculator());
         registry.register(EarnedCalculator.class, reg -> new EarnedCalculator());
         registry.register(CashCalculator.class, reg -> new CashCalculator(reg.get(HoldingsCollector.class), reg.get(LatestPricesBook.class)));

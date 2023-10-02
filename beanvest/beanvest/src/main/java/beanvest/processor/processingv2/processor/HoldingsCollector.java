@@ -65,6 +65,13 @@ public class HoldingsCollector implements ProcessorV2, HoldingsCollectorInterfac
                 .map(holdings::get)
                 .findFirst().get();
     }
+    public Holding getHolding(Entity account, String currency) {
+        return holdings.keySet().stream()
+                .filter(holding -> account.contains(holding.entity()))
+                .filter(holding -> holding.symbol().equals(currency))
+                .map(holdings::get)
+                .findFirst().get();
+    }
 
     @Override
     public void process(AccountOperation op) {

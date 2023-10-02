@@ -14,12 +14,12 @@ public final class Holding {
     private final Cost cost;
     private final String costSymbol;
 
-    public Holding(String symbol, BigDecimal amount, Value totalCostwrapped) {
-        costSymbol = totalCostwrapped.symbol();
+    public Holding(String symbol, BigDecimal amount, Value totalCost) {
+        costSymbol = totalCost.symbol();
         amount = amount.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP);
         this.symbol = symbol;
         this.amount = amount;
-        this.cost = new Cost(amount, totalCostwrapped.amount().setScale(DEFAULT_SCALE, RoundingMode.HALF_UP));
+        this.cost = new Cost(amount, totalCost.amount().setScale(DEFAULT_SCALE, RoundingMode.HALF_UP));
     }
 
     static Holding getHoldingOrCreate(Holding v, AccountHolding accountHolding, Value cashValue, Value totalCost) {

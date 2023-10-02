@@ -14,6 +14,7 @@ import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -34,6 +35,7 @@ public class HoldingsConvertedCollector implements ProcessorV2, HoldingsCollecto
         return holdings.keySet().stream()
                 .filter(holding -> account.contains(holding.entity()))
                 .map(holdings::get)
+                .filter(h -> h.amount().compareTo(BigDecimal.ZERO) != 0)
                 .collect(Collectors.toList());
     }
 
@@ -70,29 +72,31 @@ public class HoldingsConvertedCollector implements ProcessorV2, HoldingsCollecto
     public void process(AccountOperation op) {
         if (op instanceof Transaction tr) {
             if (op instanceof Buy buy) {
-                holdings.get(tr.accountCash()).update(buy.totalPrice().amount().negate(), buy.totalPrice());
+                var convertedValue = tr.totalPrice().convertedValue().get();
+                holdings.get(tr.accountCash()).update(convertedValue.amount().negate(), convertedValue);
                 if (!holdings.containsKey(tr.accountHolding())) {
-                    holdings.put(tr.accountHolding(), new Holding(buy.holdingSymbol(), buy.units(), tr.totalPrice().negate()));
+                    holdings.put(tr.accountHolding(), new Holding(buy.holdingSymbol(), buy.units(), convertedValue.negate()));
                 } else {
-                    holdings.get(tr.accountHolding()).update(buy.units(), tr.totalPrice().negate());
+                    holdings.get(tr.accountHolding()).update(buy.units(), convertedValue.negate());
                 }
 
             } else if (op instanceof Sell sell) {
                 var holding = getHolding(tr.accountHolding());
-                holding.update(sell.units().negate(), Value.ZERO);
-                var averagePrice = sell.totalPrice().multiply(BigDecimal.ONE.divide(sell.units(), 10, RoundingMode.HALF_UP));
+                holding.update(sell.units().negate(), Value.of(BigDecimal.ZERO, sell.getCashValueConverted().symbol()));
+                var averagePrice = sell.totalPrice().convertedValue().get().multiply(BigDecimal.ONE.divide(sell.units(), 10, RoundingMode.HALF_UP));
                 var gainRatio = averagePrice.amount().multiply(BigDecimal.ONE.divide(holding.averageCost().amount(), 10, RoundingMode.HALF_UP));
 
                 var newCost = holding.averageCost().multiply(sell.units()).multiply(gainRatio);
-                var newAmount = sell.totalPrice().amount();
+                var newAmount = sell.totalPrice().convertedValue().get().amount();
                 holdings.get(tr.accountCash()).update(newAmount, newCost);
             }
         }
         else if (op instanceof Deposit dep) {
+            var convertedValue = dep.getCashValue().convertedValue().get();
             if (holdings.get(dep.accountCash()) == null) {
-                holdings.put(dep.accountCash(), new Holding(dep.getCashCurrency(), dep.getCashAmount(), dep.getCashValue().negate()));
+                holdings.put(dep.accountCash(), new Holding(dep.getCashCurrency(), convertedValue.amount(), convertedValue.negate()));
             } else {
-                holdings.get(dep.accountCash()).update(dep.getCashAmount(), dep.getCashValue().negate());
+                holdings.get(dep.accountCash()).update(convertedValue.amount(), convertedValue.negate());
             }
         }
         else if (op instanceof Withdrawal wth) {
