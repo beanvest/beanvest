@@ -25,20 +25,20 @@ public class CurrencyConverterImpl implements CurrencyConverter {
     public AccountOperation convert(AccountOperation op) {
         if (op instanceof Deposit dep) {
             var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value()).value();
-            var converted = dep.withValue(dep.value().withConvertedValue(convertedValue));
-            var accountHolding = dep.accountCash();
-            holdings.compute(accountHolding, (k, v) -> Holding.getHoldingOrCreate(v, accountHolding, dep.getCashValue(), convertedValue));
-            return converted;
+            holdings.compute(dep.accountCash(), (k, v) -> Holding.getHoldingOrCreate(v, dep.accountCash(), dep.getCashValue(), convertedValue));
+            return dep.withValue(dep.value().withConvertedValue(convertedValue));
 
         } else if (op instanceof Withdrawal wth) {
-            var holding = holdings.get(wth.accountCash());
+            var holding = holdings.computeIfAbsent(wth.accountCash(), v -> {
+                var converted = pricesBook.convert(wth.date(), targetCurrency, wth.value());
+                return new Holding(wth.accountCash().symbol(), wth.getCashValue().amount(), converted.value());
+            });
 
-            var portionWithdrawn = wth.getCashValue().amount()
-                    .divide(holding.amount(), 10, RoundingMode.HALF_UP);
-            var withdrawnAmount = portionWithdrawn.multiply(holding.totalCost().amount());
+            var convertedCashValue = convertOrCalculateWithdrawnAmount(wth, holding);
+            holding.update(wth.getRawAmountMoved(), convertedCashValue);
 
-            holding.update(wth.getRawAmountMoved(), Value.of(BigDecimal.ZERO, targetCurrency));
-            return wth.withValue(new Value(wth.getCashValue(), Value.of(withdrawnAmount, targetCurrency)).negate());
+            var valueWithConversion = new Value(wth.getCashValue(), convertedCashValue).negate();
+            return wth.withValue(valueWithConversion);
 
         } else if (op instanceof Transfer tr) {
             var holding = holdings.get(tr.accountCash());
@@ -58,5 +58,18 @@ public class CurrencyConverterImpl implements CurrencyConverter {
         } else {
             throw new RuntimeException("Unsupported operation: " + op);
         }
+    }
+
+    private Value convertOrCalculateWithdrawnAmount(Withdrawal wth, Holding holding) {
+        BigDecimal amount;
+        if (holding.amount().compareTo(BigDecimal.ZERO) != 0) {
+            var portionWithdrawn = wth.getCashValue().amount()
+                    .divide(holding.amount(), 10, RoundingMode.HALF_UP);
+            amount = portionWithdrawn.multiply(holding.totalCost().amount());
+        } else {
+            amount = pricesBook.convert(wth.date(), targetCurrency, wth.getCashValue()).value().amount();
+        }
+        var withdrawnAmount = amount;
+        return Value.of(withdrawnAmount, targetCurrency);
     }
 }
