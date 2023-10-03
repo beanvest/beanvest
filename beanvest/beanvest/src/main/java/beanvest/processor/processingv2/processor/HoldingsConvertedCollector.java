@@ -70,6 +70,9 @@ public class HoldingsConvertedCollector implements ProcessorV2, HoldingsCollecto
 
     @Override
     public void process(AccountOperation op) {
+        if (!(op instanceof CashOperation cop) || cop.getCashValue().convertedValue().isEmpty()) {
+            return;
+        }
         if (op instanceof Transaction tr) {
             if (op instanceof Buy buy) {
                 var convertedValue = tr.totalPrice().convertedValue().get();

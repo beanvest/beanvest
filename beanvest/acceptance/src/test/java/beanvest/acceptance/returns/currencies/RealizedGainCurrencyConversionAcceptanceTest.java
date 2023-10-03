@@ -4,14 +4,13 @@ import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("TODO")
 public class RealizedGainCurrencyConversionAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
     void realizedGainIsBasedOnCommodityGain() {
         dsl.setCurrency("PLN");
-        dsl.setColumns("value");
+        dsl.setColumns("rgain");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -29,7 +28,8 @@ public class RealizedGainCurrencyConversionAcceptanceTest {
     @Test
     void realizedGainIsNotBasedOnCurrencyGain() {
         dsl.setCurrency("PLN");
-        dsl.setColumns("value");
+        dsl.setColumns("rgain");
+        dsl.setEnd("2021-01-10");
 
         dsl.runCalculateReturns("""
                 account trading
@@ -42,6 +42,6 @@ public class RealizedGainCurrencyConversionAcceptanceTest {
                 2021-01-05 sell 1 X for 1
                 """);
 
-        dsl.verifyValue("trading", "TOTAL", "0");
+        dsl.verifyRealizedGains("trading", "TOTAL", "0");
     }
 }
