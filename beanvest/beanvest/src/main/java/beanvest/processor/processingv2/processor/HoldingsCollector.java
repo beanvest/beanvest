@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 public class HoldingsCollector implements ProcessorV2, HoldingsCollectorInterface {
     private final Map<AccountHolding, Holding> holdings = new HashMap<>();
 
-    @SuppressWarnings("unused")
     public HoldingsCollector() {
     }
 

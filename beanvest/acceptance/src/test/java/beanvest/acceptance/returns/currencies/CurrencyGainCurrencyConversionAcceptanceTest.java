@@ -46,12 +46,6 @@ public class CurrencyGainCurrencyConversionAcceptanceTest {
                 2021-01-07 price GBP 6 PLN
                 2021-01-07 price X 1.6 GBP
                 """);
-        //holding X -> 4x @ 2(1) / 10(5)
-        //after selling
-        //holding GBP -> 3x @
-        // - OC, cost 2GBP
-        // - TC -> 15 GBP
-        //value 3 GBP / 18 PLN
 
         dsl.verifyCurrencyGain("trading", "TOTAL", "3");
     }

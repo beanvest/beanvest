@@ -73,7 +73,7 @@ public class HoldingsConvertedCollector implements ProcessorV2, HoldingsCollecto
         if (op instanceof Transaction tr) {
             if (op instanceof Buy buy) {
                 var convertedValue = tr.totalPrice().convertedValue().get();
-                holdings.get(tr.accountCash()).update(convertedValue.amount().negate(), convertedValue);
+                holdings.get(tr.accountCash()).update(convertedValue.amount(), convertedValue);
                 if (!holdings.containsKey(tr.accountHolding())) {
                     holdings.put(tr.accountHolding(), new Holding(buy.holdingSymbol(), buy.units(), convertedValue.negate()));
                 } else {
@@ -86,8 +86,8 @@ public class HoldingsConvertedCollector implements ProcessorV2, HoldingsCollecto
                 var averagePrice = sell.totalPrice().convertedValue().get().multiply(BigDecimal.ONE.divide(sell.units(), 10, RoundingMode.HALF_UP));
                 var gainRatio = averagePrice.amount().multiply(BigDecimal.ONE.divide(holding.averageCost().amount(), 10, RoundingMode.HALF_UP));
 
-                var newCost = holding.averageCost().multiply(sell.units()).multiply(gainRatio);
-                var newAmount = sell.totalPrice().convertedValue().get().amount();
+                var newCost = holding.averageCost().negate().multiply(sell.units()).multiply(gainRatio);
+                var newAmount = sell.totalPrice().convertedValue().get().amount().negate();
                 holdings.get(tr.accountCash()).update(newAmount, newCost);
             }
         }

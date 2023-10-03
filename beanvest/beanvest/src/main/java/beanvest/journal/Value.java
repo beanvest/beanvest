@@ -47,6 +47,10 @@ public record Value(BigDecimal amount, String symbol, Optional<Value> convertedV
         }
     }
 
+    public static Value of(Value value, BigDecimal zero, String targetCurrency) {
+        return new Value(value, Value.of(zero, targetCurrency));
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }

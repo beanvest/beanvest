@@ -1,7 +1,6 @@
 package beanvest.processor.processingv2;
 
 import beanvest.journal.Value;
-import beanvest.journal.entity.Account2;
 import beanvest.journal.entity.AccountHolding;
 import beanvest.journal.entry.*;
 import beanvest.processor.pricebook.LatestPricesBook;
@@ -25,31 +24,32 @@ public class CurrencyConverterImpl implements CurrencyConverter {
     @Override
     public AccountOperation convert(AccountOperation op) {
         if (op instanceof Deposit dep) {
-            var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value());
-            var converted = dep.withValue(dep.value().withConvertedValue(convertedValue.value()));
+            var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value()).value();
+            var converted = dep.withValue(dep.value().withConvertedValue(convertedValue));
             var accountHolding = dep.accountCash();
-            holdings.compute(accountHolding, (k, v) -> Holding.getHoldingOrCreate(v, accountHolding, dep.getCashValue(), converted.getCashValueConverted()));
+            holdings.compute(accountHolding, (k, v) -> Holding.getHoldingOrCreate(v, accountHolding, dep.getCashValue(), convertedValue));
             return converted;
 
         } else if (op instanceof Withdrawal wth) {
             var holding = holdings.get(wth.accountCash());
 
-            var portionWithdrawn = wth.getCashValue().multiply(BigDecimal.ONE.divide(holding.amount(), 10, RoundingMode.HALF_UP));
-            var withdrawnAmount = portionWithdrawn.multiply(holding.totalCost().amount().negate());
+            var portionWithdrawn = wth.getCashValue().amount()
+                    .divide(holding.amount(), 10, RoundingMode.HALF_UP);
+            var withdrawnAmount = portionWithdrawn.multiply(holding.totalCost().amount());
 
-            holding.update(wth.getRawAmountMoved(), Value.of(BigDecimal.ZERO, wth.getCashCurrency()));
-            return wth.withValue(withdrawnAmount);
+            holding.update(wth.getRawAmountMoved(), Value.of(BigDecimal.ZERO, targetCurrency));
+            return wth.withValue(new Value(wth.getCashValue(), Value.of(withdrawnAmount, targetCurrency)).negate());
 
         } else if (op instanceof Transfer tr) {
             var holding = holdings.get(tr.accountCash());
             var newCost = holding.averageCost().multiply(tr.getRawAmountMoved());
             holding.update(tr.getRawAmountMoved(), newCost);
 
-            return tr.withValue(Value.of(newCost.amount(), targetCurrency));
+            return tr.withValue(Value.of(tr.getCashValue(), newCost.amount(), targetCurrency));
 
         } else if (op instanceof Transaction tr) {
             var cashHolding = holdings.get(tr.accountCash());
-            var newCost = cashHolding.averageCost().multiply(tr.getCashAmount().abs());
+            var newCost = cashHolding.averageCost().multiply(tr.getCashAmount().abs()).negate();
             cashHolding.update(tr.getRawAmountMoved().negate(), newCost);
 
             var transaction = tr.withValue(new Value(tr.getCashValue(), Value.of(newCost.amount(), targetCurrency)));

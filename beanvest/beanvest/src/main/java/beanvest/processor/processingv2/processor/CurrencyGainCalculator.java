@@ -35,15 +35,16 @@ public class CurrencyGainCalculator implements ProcessorV2, Calculator {
         BigDecimal holdingGain = ZERO;
         for (var holdingTC : holdingsTC) {
             var holdingOC = holdingsCollector.getHolding(params.entity(), holdingTC.symbol());
+            if (holdingOC.amount().compareTo(ZERO) > 0) {
+                var currencyOC = holdingOC.symbol();
+                var currentValueOC = pricesBook.convert(params.endDate(), currencyOC, holdingOC.asValue()).value();
+                var currentValueTC = pricesBook.convert(params.endDate(), currencyTC, holdingOC.asValue()).value();
 
-            var currencyOC = holdingOC.symbol();
-            var currentValueOC = pricesBook.convert(params.endDate(), currencyOC, holdingOC.asValue()).value();
-            var currentValueTC = pricesBook.convert(params.endDate(), currencyTC, holdingOC.asValue()).value();
-
-            var averageCostTC = holdingTC.totalCost().amount().divide(holdingOC.amount(), 10, RoundingMode.HALF_UP);
-            var currentValueBasedOnCostTC = currentValueOC.amount().multiply(averageCostTC.abs());
-            var holdingGainTC = currentValueTC.amount().subtract(currentValueBasedOnCostTC);
-            holdingGain = holdingGain.add(holdingGainTC);
+                var averageCostTC = holdingTC.totalCost().amount().divide(holdingOC.amount(), 10, RoundingMode.HALF_UP).negate();
+                var currentValueBasedOnCostTC = currentValueOC.amount().multiply(averageCostTC.abs());
+                var holdingGainTC = currentValueTC.amount().subtract(currentValueBasedOnCostTC);
+                holdingGain = holdingGain.add(holdingGainTC);
+            }
         }
 
         return Result.success(holdingGain);

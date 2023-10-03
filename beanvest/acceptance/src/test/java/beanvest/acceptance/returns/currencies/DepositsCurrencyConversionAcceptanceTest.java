@@ -3,7 +3,7 @@ package beanvest.acceptance.returns.currencies;
 import beanvest.acceptance.returns.ReturnsDsl;
 import org.junit.jupiter.api.Test;
 
-public class DepositsAndWithdrawalsCurrencyConversionAcceptanceTest {
+public class DepositsCurrencyConversionAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
