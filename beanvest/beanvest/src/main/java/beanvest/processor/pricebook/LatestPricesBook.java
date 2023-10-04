@@ -15,8 +15,17 @@ import java.util.Optional;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class LatestPricesBook {
-    public static final int DEPTH_LIMIT = 1;
+    public static final int CONVERSION_STEPS_ALLOWED_DEFAULT = 2;
     private final Map<CurrencyPair, Price> prices = new HashMap<>();
+    private final int conversionStepsAllowed;
+
+    public LatestPricesBook() {
+        conversionStepsAllowed = CONVERSION_STEPS_ALLOWED_DEFAULT;
+    }
+
+    public LatestPricesBook(int conversionStepsAllowed) {
+        this.conversionStepsAllowed = conversionStepsAllowed;
+    }
 
     public void process(Price price) {
         var currencyPair = getCurrencyPair(price);
@@ -43,7 +52,7 @@ public class LatestPricesBook {
     }
 
     public Result<Value, StatErrors> convert(LocalDate date, String targetCurrency, Value value) {
-        return convertRecursively(date, targetCurrency, value, 0);
+        return convertRecursively(date, targetCurrency, value, 1);
     }
 
     private CurrencyPair getCurrencyPair(Price p) {
@@ -54,8 +63,8 @@ public class LatestPricesBook {
         return new CurrencyPair(pricedSymbol, priceCurrency);
     }
 
-    private Result<Value, StatErrors> convertRecursively(LocalDate date, String targetCurrency, Value value, int depth) {
-        if (depth > DEPTH_LIMIT) {
+    private Result<Value, StatErrors> convertRecursively(LocalDate date, String targetCurrency, Value value, int conversionStep) {
+        if (conversionStep > conversionStepsAllowed) {
             return Result.failure(StatErrorFactory.priceSearchDepthExhaused());
         }
 
@@ -70,15 +79,16 @@ public class LatestPricesBook {
         var priceResult = this.getPrice(date, value.symbol(), targetCurrency);
         if (priceResult.isSuccessful()) {
             return Result.success(new Value(priceResult.value().amount().multiply(value.amount()), targetCurrency));
+
         } else {
             var maybeConverted = prices.keySet().stream()
                     .filter(pair -> pair.a.equals(value.symbol()))
                     .map(pair -> {
-                        var convert1 = convertRecursively(date, pair.b, value, depth + 1);
+                        var convert1 = convertRecursively(date, pair.b, value, conversionStep + 1);
                         if (!convert1.isSuccessful()) {
                             return convert1;
                         }
-                        return convert(date, targetCurrency, convert1.value());
+                        return convertRecursively(date, targetCurrency, convert1.value(), conversionStep + 1);
                     })
                     .filter(Result::isSuccessful)
                     .map(Result::value)

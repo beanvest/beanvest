@@ -47,6 +47,24 @@ class LatestPricesBookTest {
     }
 
     @Test
+    void conversionStepsAllowedAreLimitedByDepth() {
+        var priceBook = new LatestPricesBook(1);
+        var priceBookDepth2 = new LatestPricesBook(2);
+        var prices = List.of(
+                price("2021-01-01", "MSFT", "1 USD"),
+                price("2021-01-01", "USD", "4 PLN"),
+                price("2021-01-01", "PLN", "1 YEN")
+        );
+        prices.forEach(priceBook::process);
+        prices.forEach(priceBookDepth2::process);
+
+        var converted = priceBook.convert(LocalDate.parse("2021-01-02"), "YEN", Value.of("1 MSFT"));
+        var converted2 = priceBook.convert(LocalDate.parse("2021-01-02"), "YEN", Value.of("1 MSFT"));
+        assertThat(converted.hasError());
+        assertThat(converted2.hasResult());
+    }
+
+    @Test
     void returnsErrorIfPriceNotFound() {
         assertThatThrownBy(() -> priceBook.getPrice(DATE_BEFORE_PRICING, "GBP", "PLN"))
                 .isInstanceOf(UnsupportedOperationException.class);
