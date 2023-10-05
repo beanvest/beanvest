@@ -18,6 +18,7 @@ pkgs.mkShell {
     ''
       export JAVA_HOME=/nix/store/i0a2rrjxhawark7wrf6hh0rkipfdwmk6-graalvm19-ce-22.3.1
       export GRAALVM_HOME=/nix/store/i0a2rrjxhawark7wrf6hh0rkipfdwmk6-graalvm19-ce-22.3.1
+      export PATH=$(pwd)/beanvest/beanvest/build/native/nativeCompile:$PATH
 
     '';
 }
