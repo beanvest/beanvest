@@ -35,7 +35,8 @@ public class StatsCollectingJournalProcessor {
 
     private CalculatorRegistry initRegistry(AccountsTracker accountsResolver1) {
         var serviceRegistry = new CalculatorRegistry();
-        CalculatorRegistrar.registerDefaultCalculatorsFactories(serviceRegistry);
+        var currencyConversion = targetCurrency.isPresent() ? CurrencyConversionState.Enabled : CurrencyConversionState.Disabled;
+        CalculatorRegistrar.registerDefaultCalculatorsFactories(serviceRegistry, currencyConversion);
         serviceRegistry.register(AccountsTracker.class, reg -> accountsResolver1);
         serviceRegistry.register(LatestPricesBook.class, reg -> latestPricesBook);
         return serviceRegistry;

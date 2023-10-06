@@ -3,24 +3,20 @@ package beanvest.processor.processingv2.processor;
 import beanvest.journal.Value;
 import beanvest.journal.entry.AccountOperation;
 import beanvest.journal.entry.Sell;
-import beanvest.processor.processingv2.CalculationParams;
-import beanvest.processor.processingv2.Calculator;
-import beanvest.processor.processingv2.Holding;
-import beanvest.processor.processingv2.ProcessorV2;
+import beanvest.processor.processingv2.*;
 import beanvest.result.Result;
 import beanvest.result.StatErrors;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 public class RealizedGainCalculator implements ProcessorV2, Calculator {
     private final SimpleBalanceTracker simpleBalanceTracker = new SimpleBalanceTracker();
     private final HoldingsCollector holdingsCollector;
     private final HoldingsConvertedCollector holdingsConvertedCollector;
 
-    public RealizedGainCalculator() {
+    public RealizedGainCalculator(CurrencyConversionState conversion) {
         this.holdingsCollector = new HoldingsCollector();
-        this.holdingsConvertedCollector = new HoldingsConvertedCollector();
+        this.holdingsConvertedCollector = new HoldingsConvertedCollector(conversion);
     }
 
     @Override

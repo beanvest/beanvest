@@ -6,6 +6,7 @@ import beanvest.journal.entity.AccountHolding;
 import beanvest.journal.entity.AccountInstrumentHolding;
 import beanvest.journal.entity.Entity;
 import beanvest.journal.entry.*;
+import beanvest.processor.processingv2.CurrencyConversionState;
 import beanvest.processor.processingv2.Holding;
 import beanvest.processor.processingv2.ProcessorV2;
 
@@ -14,15 +15,15 @@ import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
 public class HoldingsConvertedCollector implements ProcessorV2, HoldingsCollectorInterface {
     private final Map<AccountHolding, Holding> holdings = new HashMap<>();
+    private final CurrencyConversionState conversion;
 
-    @SuppressWarnings("unused")
-    public HoldingsConvertedCollector() {
+    public HoldingsConvertedCollector(CurrencyConversionState conversion) {
+        this.conversion = conversion;
     }
 
     @Override
@@ -70,6 +71,12 @@ public class HoldingsConvertedCollector implements ProcessorV2, HoldingsCollecto
 
     @Override
     public void process(AccountOperation op) {
+        if (conversion == CurrencyConversionState.Enabled) {
+            actuallyProcess(op);
+        }
+    }
+
+    private void actuallyProcess(AccountOperation op) {
         if (!(op instanceof CashOperation cop) || cop.getCashValue().convertedValue().isEmpty()) {
             return;
         }

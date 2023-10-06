@@ -10,10 +10,14 @@ import java.math.BigDecimal;
 
 public class UnrealizedGainCalculator implements Calculator {
     private final HoldingsCollectorInterface holdingsCollector;
+    private final HoldingsConvertedCollector holdingsConvertedCollector;
     private final HoldingsValueCalculator holdingsValueCalculator;
 
-    public UnrealizedGainCalculator(HoldingsCollectorInterface holdingsCollector, HoldingsValueCalculator holdingsValueCalculator) {
+    public UnrealizedGainCalculator(HoldingsCollectorInterface holdingsCollector,
+                                    HoldingsConvertedCollector holdingsConvertedCollector,
+                                    HoldingsValueCalculator holdingsValueCalculator) {
         this.holdingsCollector = holdingsCollector;
+        this.holdingsConvertedCollector = holdingsConvertedCollector;
         this.holdingsValueCalculator = holdingsValueCalculator;
     }
 

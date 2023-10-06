@@ -7,8 +7,8 @@ import beanvest.processor.processingv2.validator.BalanceValidator;
 import beanvest.processor.processingv2.validator.AccountCloseValidator;
 
 public class CalculatorRegistrar {
-    public static void registerDefaultCalculatorsFactories(CalculatorRegistry registry) {
-        registerCumulativeCalculators(registry);
+    public static void registerDefaultCalculatorsFactories(CalculatorRegistry registry, CurrencyConversionState conversion) {
+        registerCumulativeCalculators(registry, conversion);
         registerPeriodicCalculators(registry);
         registerValidators(registry);
     }
@@ -36,7 +36,7 @@ public class CalculatorRegistrar {
         registry.register(PeriodAccountGainCalculator.class, reg -> new PeriodAccountGainCalculator(reg.get(AccountGainCalculator.class)));
     }
 
-    private static void registerCumulativeCalculators(CalculatorRegistry registry) {
+    private static void registerCumulativeCalculators(CalculatorRegistry registry, CurrencyConversionState conversion) {
         registry.register(AccountOpenDatesCollector.class, reg -> new AccountOpenDatesCollector());
         registry.register(PlatformFeeCalculator.class, reg -> new PlatformFeeCalculator());
         registry.register(TransactionFeeCalculator.class, reg -> new TransactionFeeCalculator());
@@ -45,15 +45,15 @@ public class CalculatorRegistrar {
         registry.register(DepositsCalculator.class, reg -> new DepositsCalculator());
         registry.register(WithdrawalCalculator.class, reg -> new WithdrawalCalculator());
         registry.register(HoldingsCollector.class, reg -> new HoldingsCollector());
-        registry.register(RealizedGainCalculator.class, reg -> new RealizedGainCalculator());
+        registry.register(RealizedGainCalculator.class, reg -> new RealizedGainCalculator(conversion));
         registry.register(DividendCalculator.class, reg -> new DividendCalculator());
-        registry.register(HoldingsConvertedCollector.class, reg -> new HoldingsConvertedCollector());
+        registry.register(HoldingsConvertedCollector.class, reg -> new HoldingsConvertedCollector(conversion));
         registry.register(CurrencyGainCalculator.class, reg -> new CurrencyGainCalculator(reg.get(HoldingsConvertedCollector.class), reg.get(LatestPricesBook.class)));
         registry.register(SpentCalculator.class, reg -> new SpentCalculator());
         registry.register(EarnedCalculator.class, reg -> new EarnedCalculator());
         registry.register(CashCalculator.class, reg -> new CashCalculator(reg.get(HoldingsCollector.class), reg.get(LatestPricesBook.class)));
         registry.register(HoldingsValueCalculator.class, reg -> new HoldingsValueCalculator(reg.get(HoldingsCollector.class), reg.get(LatestPricesBook.class)));
-        registry.register(UnrealizedGainCalculator.class, reg -> new UnrealizedGainCalculator(reg.get(HoldingsCollector.class), reg.get(HoldingsValueCalculator.class)));
+        registry.register(UnrealizedGainCalculator.class, reg -> new UnrealizedGainCalculator(reg.get(HoldingsCollector.class), reg.get(HoldingsConvertedCollector.class), reg.get(HoldingsValueCalculator.class)));
         registry.register(CashflowCollector.class, reg -> new CashflowCollector());
         registry.register(ValueCalculator.class, reg -> new ValueCalculator(reg.get(HoldingsValueCalculator.class), reg.get(CashCalculator.class)));
         registry.register(XirrCalculator.class, reg -> new XirrCalculator(
@@ -76,4 +76,5 @@ public class CalculatorRegistrar {
                 reg.get(PlatformFeeCalculator.class)
         ));
     }
+
 }
