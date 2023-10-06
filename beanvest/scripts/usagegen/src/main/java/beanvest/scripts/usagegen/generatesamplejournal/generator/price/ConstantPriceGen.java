@@ -1,5 +1,6 @@
 package beanvest.scripts.usagegen.generatesamplejournal.generator.price;
 
+import beanvest.journal.Value;
 import beanvest.scripts.usagegen.generatesamplejournal.CompleteJournal;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.JournalWriter;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.PriceGenerator;
@@ -10,20 +11,26 @@ import java.util.Map;
 
 public class ConstantPriceGen implements PriceGenerator {
 
+    private final String commodity;
+    private final Value constantPrice1;
     private final JournalWriter prices;
-    private final Map<String, BigDecimal> constantPrices;
+    private boolean first = true;
 
-    public ConstantPriceGen(Map<String, BigDecimal> constantPrices, JournalWriter prices1) {
+    public ConstantPriceGen(String commodity, Value constantPrice, JournalWriter prices1) {
+        this.commodity = commodity;
+        constantPrice1 = constantPrice;
         this.prices = prices1;
-        this.constantPrices = constantPrices;
+
     }
 
     @Override
     public void generate(LocalDate current) {
+        if (first) {
+            first = false;
+            prices.addPrice(current, commodity, constantPrice1.symbol(), constantPrice1.amount().toString());
+        }
         if (current.getDayOfMonth() == 28) {
-            for (Map.Entry<String, BigDecimal> entry : constantPrices.entrySet()) {
-                prices.addPrice(current, entry.getKey(), entry.getValue().toString());
-            }
+            prices.addPrice(current, commodity, constantPrice1.symbol(), constantPrice1.amount().toString());
         }
     }
 
@@ -34,6 +41,9 @@ public class ConstantPriceGen implements PriceGenerator {
 
     @Override
     public BigDecimal getPrice(String symbol) {
-        return constantPrices.get(symbol);
+        if (!symbol.equals(commodity)) {
+            return null;
+        }
+        return constantPrice1.amount();
     }
 }

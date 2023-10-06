@@ -33,7 +33,11 @@ public class JournalWriter {
     }
 
     public void addPrice(LocalDate date, String symbol, String price) {
-        entries.add(new JournalEntry(date, "price %s %s GBP".formatted(symbol, price)));
+        addPrice(date, symbol, "GBP", price);
+    }
+
+    public void addPrice(LocalDate date, String symbol, String symbol2, String price) {
+        entries.add(new JournalEntry(date, "price %s %s %s".formatted(symbol, price, symbol2)));
     }
 
 

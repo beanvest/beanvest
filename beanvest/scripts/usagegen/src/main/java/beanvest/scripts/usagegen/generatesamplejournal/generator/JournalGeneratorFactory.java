@@ -1,5 +1,6 @@
 package beanvest.scripts.usagegen.generatesamplejournal.generator;
 
+import beanvest.journal.Value;
 import beanvest.scripts.usagegen.generatesamplejournal.CoveredPeriod;
 import beanvest.scripts.usagegen.generatesamplejournal.GeneratedPricesChecker;
 import beanvest.scripts.usagegen.generatesamplejournal.generator.DisposableCashGenerator.FixedCashGrab;
@@ -54,9 +55,9 @@ public class JournalGeneratorFactory {
     }
 
     private List<PriceGenerator> getPriceGenerators(CoveredPeriod coveredPeriod) {
-        var pln = new ConstantPriceGen(Map.of("PLN", new BigDecimal("0.21")), createPriceWriter("prices_pln"));
+        var pln = new RandomPriceGen("GBP", "PLN", 5.2, 0.1, createPriceWriter("prices_pln"));
         var spx = new LinearPriceGen("SPX", coveredPeriod, "93", "152", createPriceWriter("prices_spx"));
-        var rsk = new RandomPriceGen("RSK", 110, 0.4, createPriceWriter("prices_rsk"));
+        var rsk = new RandomPriceGen("RSK", "GBP", 110, 0.4, createPriceWriter("prices_rsk"));
 
         return List.of(
                 pln,

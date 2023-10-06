@@ -14,6 +14,7 @@ import java.util.Random;
 public class RandomPriceGen implements JournalGenerator, PriceGenerator {
     private final Random random;
     private final String symbol;
+    private final String symbol2;
     private final double startingPrice;
     private final double nextPriceMax;
     private final double nextPriceMin;
@@ -24,9 +25,11 @@ public class RandomPriceGen implements JournalGenerator, PriceGenerator {
     private LocalDate targetPriceDate;
     private double targetPrice;
     private LocalDate currentDate;
+    private boolean first = true;
 
-    public RandomPriceGen(String symbol, double startingPrice, double maxMonthlyMovePercent, JournalWriter journalWriter) {
+    public RandomPriceGen(String symbol, String symbol2, double startingPrice, double maxMonthlyMovePercent, JournalWriter journalWriter) {
         this.symbol = symbol;
+        this.symbol2 = symbol2;
         this.startingPrice = startingPrice;
         this.nextPriceMax = 1 + (maxMonthlyMovePercent / 2.);
         this.nextPriceMin = 1 - (maxMonthlyMovePercent / 2.);
@@ -41,11 +44,12 @@ public class RandomPriceGen implements JournalGenerator, PriceGenerator {
             lastPrice = startingPrice;
         }
         updateTargetPriceIfNeeded(current);
-        if (current.getDayOfMonth() == 28) {
+        if (current.getDayOfMonth() == 28 || first) {
+            first = false;
             var price = calculatePriceForDate(current);
             lastPrice = price.doubleValue();
-            lastPriceDate = currentDate;
-            journalWriter.addPrice(current, symbol, price.toPlainString());
+            lastPriceDate = currentDate == null ? current : currentDate;
+            journalWriter.addPrice(current, symbol, symbol2, price.toPlainString());
         }
         currentDate = current;
     }
@@ -75,7 +79,6 @@ public class RandomPriceGen implements JournalGenerator, PriceGenerator {
         double origin = lastPrice * nextPriceMin;
         double bound = lastPrice * nextPriceMax;
         targetPrice = Math.max(0, random.nextDouble(origin, bound));
-        System.out.println("selected " + targetPrice + " from ("+origin+"," + bound +")");
     }
 
     @Override

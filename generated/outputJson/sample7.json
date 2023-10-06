@@ -1,0 +1,396 @@
+{
+  "accounts": {
+    ".*": {
+      "name": "",
+      "id": "G/.*",
+      "level": 0,
+      "type": "GROUP"
+    },
+    "saving:.*": {
+      "name": "saving",
+      "id": "G/saving:.*",
+      "level": 1,
+      "type": "GROUP"
+    },
+    "saving:regularSaver": {
+      "name": "regularSaver",
+      "id": "A/saving:regularSaver",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
+    "saving:regularSaver2": {
+      "name": "regularSaver2",
+      "id": "A/saving:regularSaver2",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
+    "trading:.*": {
+      "name": "trading",
+      "id": "G/trading:.*",
+      "level": 1,
+      "type": "GROUP"
+    },
+    "trading:index": {
+      "name": "index",
+      "id": "A/trading:index",
+      "level": 1,
+      "type": "ACCOUNT"
+    },
+    "trading:risky": {
+      "name": "risky",
+      "id": "A/trading:risky",
+      "level": 1,
+      "type": "ACCOUNT"
+    }
+  },
+  "periods": [
+    "23m01",
+    "23m02",
+    "23m03",
+    "23m04",
+    "23m05",
+    "23m06"
+  ],
+  "stats": [
+    "pValue"
+  ],
+  "accountDtos": [
+    {
+      "account": ".*",
+      "openingDate": "2019-01-01",
+      "periodStats": {
+        "23m01": {
+          "stats": {
+            "pValue": {
+              "value": 105638.3309300000
+            }
+          }
+        },
+        "23m03": {
+          "stats": {
+            "pValue": {
+              "value": 14331.8015250000
+            }
+          }
+        },
+        "23m02": {
+          "stats": {
+            "pValue": {
+              "value": 20575.0072030000
+            }
+          }
+        },
+        "23m05": {
+          "stats": {
+            "pValue": {
+              "value": 17459.8634540000
+            }
+          }
+        },
+        "23m04": {
+          "stats": {
+            "pValue": {
+              "value": 18401.9054120000
+            }
+          }
+        },
+        "23m06": {
+          "stats": {
+            "pValue": {
+              "value": 17122.3336240000
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:.*",
+      "openingDate": "2020-01-01",
+      "periodStats": {
+        "23m01": {
+          "stats": {
+            "pValue": {
+              "value": 43858.05600000
+            }
+          }
+        },
+        "23m03": {
+          "stats": {
+            "pValue": {
+              "value": -267.02980000
+            }
+          }
+        },
+        "23m02": {
+          "stats": {
+            "pValue": {
+              "value": 267.02980000
+            }
+          }
+        },
+        "23m05": {
+          "stats": {
+            "pValue": {
+              "value": 0E-8
+            }
+          }
+        },
+        "23m04": {
+          "stats": {
+            "pValue": {
+              "value": 0E-8
+            }
+          }
+        },
+        "23m06": {
+          "stats": {
+            "pValue": {
+              "value": 0E-8
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:regularSaver",
+      "openingDate": "2020-01-01",
+      "periodStats": {
+        "23m01": {
+          "stats": {
+            "pValue": {
+              "value": 0E-8
+            }
+          }
+        },
+        "23m03": {
+          "stats": {
+            "pValue": {
+              "value": -93.67780000
+            }
+          }
+        },
+        "23m02": {
+          "stats": {
+            "pValue": {
+              "value": 93.67780000
+            }
+          }
+        },
+        "23m05": {
+          "stats": {
+            "pValue": {
+              "value": 0E-8
+            }
+          }
+        },
+        "23m04": {
+          "stats": {
+            "pValue": {
+              "value": 0E-8
+            }
+          }
+        },
+        "23m06": {
+          "stats": {
+            "pValue": {
+              "value": 0E-8
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "saving:regularSaver2",
+      "openingDate": "2021-01-01",
+      "periodStats": {
+        "23m01": {
+          "stats": {
+            "pValue": {
+              "value": 43858.05600000
+            }
+          }
+        },
+        "23m03": {
+          "stats": {
+            "pValue": {
+              "value": -173.35200000
+            }
+          }
+        },
+        "23m02": {
+          "stats": {
+            "pValue": {
+              "value": 173.35200000
+            }
+          }
+        },
+        "23m05": {
+          "stats": {
+            "pValue": {
+              "value": 0E-8
+            }
+          }
+        },
+        "23m04": {
+          "stats": {
+            "pValue": {
+              "value": 0E-8
+            }
+          }
+        },
+        "23m06": {
+          "stats": {
+            "pValue": {
+              "value": 0E-8
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "trading:.*",
+      "openingDate": "2019-01-01",
+      "periodStats": {
+        "23m01": {
+          "stats": {
+            "pValue": {
+              "value": 61780.2749300000
+            }
+          }
+        },
+        "23m03": {
+          "stats": {
+            "pValue": {
+              "value": 14598.8313250000
+            }
+          }
+        },
+        "23m02": {
+          "stats": {
+            "pValue": {
+              "value": 20307.9774030000
+            }
+          }
+        },
+        "23m05": {
+          "stats": {
+            "pValue": {
+              "value": 17459.8634540000
+            }
+          }
+        },
+        "23m04": {
+          "stats": {
+            "pValue": {
+              "value": 18401.9054120000
+            }
+          }
+        },
+        "23m06": {
+          "stats": {
+            "pValue": {
+              "value": 17122.3336240000
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "trading:index",
+      "openingDate": "2019-01-01",
+      "periodStats": {
+        "23m01": {
+          "stats": {
+            "pValue": {
+              "value": 58778.1187400000
+            }
+          }
+        },
+        "23m03": {
+          "stats": {
+            "pValue": {
+              "value": 13047.3178200000
+            }
+          }
+        },
+        "23m02": {
+          "stats": {
+            "pValue": {
+              "value": 16347.7057720000
+            }
+          }
+        },
+        "23m05": {
+          "stats": {
+            "pValue": {
+              "value": 14977.0651580000
+            }
+          }
+        },
+        "23m04": {
+          "stats": {
+            "pValue": {
+              "value": 14915.7961480000
+            }
+          }
+        },
+        "23m06": {
+          "stats": {
+            "pValue": {
+              "value": 14928.4066800000
+            }
+          }
+        }
+      }
+    },
+    {
+      "account": "trading:risky",
+      "openingDate": "2019-01-01",
+      "periodStats": {
+        "23m01": {
+          "stats": {
+            "pValue": {
+              "value": 3002.1561900000
+            }
+          }
+        },
+        "23m03": {
+          "stats": {
+            "pValue": {
+              "value": 1551.5135050000
+            }
+          }
+        },
+        "23m02": {
+          "stats": {
+            "pValue": {
+              "value": 3960.2716310000
+            }
+          }
+        },
+        "23m05": {
+          "stats": {
+            "pValue": {
+              "value": 2482.7982960000
+            }
+          }
+        },
+        "23m04": {
+          "stats": {
+            "pValue": {
+              "value": 3486.1092640000
+            }
+          }
+        },
+        "23m06": {
+          "stats": {
+            "pValue": {
+              "value": 2193.9269440000
+            }
+          }
+        }
+      }
+    }
+  ],
+  "userErrors": []
+}

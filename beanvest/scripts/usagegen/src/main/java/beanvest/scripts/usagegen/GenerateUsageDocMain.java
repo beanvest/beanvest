@@ -35,7 +35,10 @@ public class GenerateUsageDocMain {
                     "Print value of the accounts and total gains quarterly"),
             new Example(
                     "returns $samplesDir$ $end$ --columns dw --interval=month $startMonth$ --delta",
-                    "Print monthly net deposits (deposits-withdrawals)")
+                    "Print monthly net deposits (deposits-withdrawals)"),
+            new Example(
+                    "returns $samplesDir$ $end$ --columns value --interval=month $startMonth$ --delta --currency PLN",
+                    "Print monthly net deposits and changes in value converted to other currency")
 
     );
 

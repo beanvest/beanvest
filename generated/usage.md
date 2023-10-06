@@ -95,3 +95,18 @@ Journals used to generate these reports are in `sample/` directory.
   trading:index        │ 2,009 │ 2,060 │ 2,034 │ 2,017 │ 2,088 │ 10,759 │
   trading:risky        │   500 │   500 │   500 │   500 │   500 │    500 │
   ```
+- Print monthly net deposits and changes in value converted to other currency
+  ```bash
+  beanvest returns sample/ --end=2023-07-01 --columns value --interval=month --startDate=2023-01-01 --delta --currency PLN
+  ```
+  ```
+                       ╷ 23m06  ╷ 23m05  ╷ 23m04  ╷ 23m03  ╷ 23m02  ╷ 23m01   ╷
+  Account              │ pValue │ pValue │ pValue │ pValue │ pValue │ pValue  │
+  .*                   │ 17,122 │ 17,460 │ 18,402 │ 14,332 │ 20,575 │ 105,638 │
+  saving:.*            │      0 │      0 │      0 │   -267 │    267 │  43,858 │
+  saving:regularSaver  │      0 │      0 │      0 │    -94 │     94 │       0 │
+  saving:regularSaver2 │      0 │      0 │      0 │   -173 │    173 │  43,858 │
+  trading:.*           │ 17,122 │ 17,460 │ 18,402 │ 14,599 │ 20,308 │  61,780 │
+  trading:index        │ 14,928 │ 14,977 │ 14,916 │ 13,047 │ 16,348 │  58,778 │
+  trading:risky        │  2,194 │  2,483 │  3,486 │  1,552 │  3,960 │   3,002 │
+  ```
