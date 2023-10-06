@@ -14,8 +14,8 @@ public class CalculatorRegistrar {
     }
 
     private static void registerValidators(CalculatorRegistry registry) {
-        registry.register(BalanceValidator.class, reg-> new BalanceValidator(reg.get(HoldingsCollector.class)));
-        registry.register(AccountCloseValidator.class, reg-> new AccountCloseValidator(reg.get(HoldingsCollector.class)));
+        registry.register(BalanceValidator.class, reg -> new BalanceValidator(reg.get(HoldingsCollector.class)));
+        registry.register(AccountCloseValidator.class, reg -> new AccountCloseValidator(reg.get(HoldingsCollector.class)));
     }
 
     private static void registerPeriodicCalculators(CalculatorRegistry registry) {
@@ -53,7 +53,7 @@ public class CalculatorRegistrar {
         registry.register(EarnedCalculator.class, reg -> new EarnedCalculator());
         registry.register(CashCalculator.class, reg -> new CashCalculator(reg.get(HoldingsCollector.class), reg.get(LatestPricesBook.class)));
         registry.register(HoldingsValueCalculator.class, reg -> new HoldingsValueCalculator(reg.get(HoldingsCollector.class), reg.get(LatestPricesBook.class)));
-        registry.register(UnrealizedGainCalculator.class, reg -> new UnrealizedGainCalculator(conversion,reg.get(LatestPricesBook.class), reg.get(HoldingsCollector.class), reg.get(HoldingsConvertedCollector.class), reg.get(HoldingsValueCalculator.class)));
+        registry.register(UnrealizedGainCalculator.class, reg -> new UnrealizedGainCalculator(conversion, reg.get(HoldingsCollector.class), reg.get(HoldingsConvertedCollector.class), reg.get(HoldingsValueCalculator.class)));
         registry.register(CashflowCollector.class, reg -> new CashflowCollector());
         registry.register(ValueCalculator.class, reg -> new ValueCalculator(reg.get(HoldingsValueCalculator.class), reg.get(CashCalculator.class)));
         registry.register(XirrCalculator.class, reg -> new XirrCalculator(
