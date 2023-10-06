@@ -72,6 +72,15 @@ public class HoldingsCollector implements ProcessorV2, HoldingsCollectorInterfac
                 .findFirst().get();
     }
 
+    public List<HoldingWithAccount> getHoldingsWithAccounts(Entity account)
+    {
+        return holdings.keySet().stream()
+                .filter(holding -> holding instanceof AccountInstrumentHolding)
+                .filter(holding -> account.contains(holding.entity()))
+                .map(key -> new HoldingWithAccount(key, holdings.get(key)))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public void process(AccountOperation op) {
         if (op instanceof Transaction tr) {

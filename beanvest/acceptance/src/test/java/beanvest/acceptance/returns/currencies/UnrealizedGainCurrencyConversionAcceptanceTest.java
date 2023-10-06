@@ -1,15 +1,13 @@
 package beanvest.acceptance.returns.currencies;
 
 import beanvest.acceptance.returns.ReturnsDsl;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled
 public class UnrealizedGainCurrencyConversionAcceptanceTest {
     protected final ReturnsDsl dsl = new ReturnsDsl();
 
     @Test
-    void unrealizedGainIsBasedOnCommodityGain() {
+    void unrealizedGainIsBasedOnCommodityGainInOriginalCurrencyAndAverageCost() {
         dsl.setCurrency("PLN");
         dsl.setColumns("ugain");
         dsl.setEnd("2021-01-10");
@@ -22,7 +20,6 @@ public class UnrealizedGainCurrencyConversionAcceptanceTest {
                 2021-01-02 deposit 1
                 2021-01-03 buy 1 X for 1
                 2021-01-04 price X 2 GBP
-                2021-01-04 price GBP 7 PLN
                 """);
 
         dsl.verifyUnrealizedGains("trading", "TOTAL", "5");
@@ -42,7 +39,7 @@ public class UnrealizedGainCurrencyConversionAcceptanceTest {
                 2021-01-02 deposit 1
                 2021-01-03 buy 1 X for 1
                 2021-01-04 price X 1 GBP
-                2021-01-04 price GBP 6 PLN
+                2021-01-04 price GBP 6000 PLN
                 """);
 
         dsl.verifyUnrealizedGains("trading", "TOTAL", "0");

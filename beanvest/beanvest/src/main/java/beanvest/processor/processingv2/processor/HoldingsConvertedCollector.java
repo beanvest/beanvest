@@ -69,6 +69,7 @@ public class HoldingsConvertedCollector implements ProcessorV2, HoldingsCollecto
                 .findFirst().get();
     }
 
+
     @Override
     public void process(AccountOperation op) {
         if (conversion == CurrencyConversionState.Enabled) {
