@@ -23,7 +23,7 @@ public class WithdrawalCurrencyConversionAcceptanceTest {
                 2021-01-22 withdraw 10
                 """);
 
-        dsl.verifyWithdrawals("trading", "TOTAL", "50");
+        dsl.verifyWithdrawals("trading", "TOTAL", "-50");
     }
 
     @Test
@@ -43,7 +43,7 @@ public class WithdrawalCurrencyConversionAcceptanceTest {
                 2021-01-23 withdraw 3
                 """);
 
-        dsl.verifyWithdrawals("trading", "TOTAL", "25");
+        dsl.verifyWithdrawals("trading", "TOTAL", "-25");
     }
 
     @Test
@@ -63,7 +63,7 @@ public class WithdrawalCurrencyConversionAcceptanceTest {
                 2021-01-22 withdraw 2
                 """);
 
-        dsl.verifyWithdrawals("trading", "TOTAL", "11");
+        dsl.verifyWithdrawals("trading", "TOTAL", "-11");
     }
 
     @Test
@@ -81,6 +81,6 @@ public class WithdrawalCurrencyConversionAcceptanceTest {
                 2021-01-04 withdraw 10
                 """);
 
-        dsl.verifyWithdrawals("trading", "TOTAL", "110");
+        dsl.verifyWithdrawals("trading", "TOTAL", "-110");
     }
 }

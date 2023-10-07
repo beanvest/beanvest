@@ -24,9 +24,8 @@ public class StatErrorFactory {
     }
 
     public static StatErrors priceNotFound(String symbol, String currency, LocalDate queriedDate, Optional<Price> latestKnown) {
-        var message = latestKnown.map(latest ->
-                        String.format("Price gap is too big for %s/%s on %s. Last price is %s from %s.",
-                                symbol, currency, queriedDate, latest.price(), latest.date()))
+        var message = latestKnown.map(latest -> String.format("Price gap is too big for %s/%s on %s. Last price is %s from %s (%s).",
+                symbol, currency, queriedDate, latest.price(), latest.date(), latest.originalLine().source()))
                 .orElseGet(() -> String.format("No price set for %s/%s before or on %s", symbol, currency, queriedDate));
         return new StatErrors(new StatError(StatErrorEnum.PRICE_NEEDED, message));
     }

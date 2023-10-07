@@ -9,6 +9,9 @@ public record SourceLine(String journalFile, int line, String originalLine) impl
     public String toString() {
         return journalFile + ":" + line + " " + originalLine;
     }
+    public String source() {
+        return journalFile + ":" + line;
+    }
 
     @Override
     public int compareTo(SourceLine o) {

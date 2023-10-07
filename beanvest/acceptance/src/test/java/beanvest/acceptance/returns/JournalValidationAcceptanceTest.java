@@ -41,7 +41,7 @@ public class JournalValidationAcceptanceTest {
                 """);
 
         dsl.verifyStatError("pension", "2020", "Value", "PRICE_NEEDED");
-        dsl.verifyWarningsShown("Price gap is too big for MSFT/GBP on 2020-12-31. Last price is 1001 GBP from 2019-12-31.");
+        dsl.verifyWarningsShown("Price gap is too big for MSFT/GBP on 2020-12-31. Last price is 1001 GBP from 2019-12-31");
     }
 
     @Test

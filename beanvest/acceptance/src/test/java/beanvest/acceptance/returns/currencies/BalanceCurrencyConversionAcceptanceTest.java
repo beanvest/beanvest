@@ -17,8 +17,10 @@ public class BalanceCurrencyConversionAcceptanceTest {
                 currency GBP
                                 
                 2021-01-01 price GBP 5 PLN
-                2021-01-02 deposit 1
-                2021-01-03 balance 1
+                2021-01-02 deposit 2
+                2021-01-03 balance 2
+                2021-01-04 withdraw 1
+                2021-01-05 balance 1
                 """);
 
         dsl.verifyValue("trading", "TOTAL", "5");

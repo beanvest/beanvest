@@ -37,7 +37,7 @@ public class CurrencyConverterImpl implements CurrencyConverter {
             var convertedCashValue = convertOrCalculateWithdrawnAmount(wth, holding);
             holding.update(wth.getRawAmountMoved(), convertedCashValue);
 
-            var valueWithConversion = new Value(wth.getCashValue(), convertedCashValue).negate();
+            var valueWithConversion = new Value(wth.getCashValue(), convertedCashValue);
             return wth.withValue(valueWithConversion);
 
         } else if (op instanceof Transfer tr) {

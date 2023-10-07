@@ -1,5 +1,6 @@
 package beanvest.test.processor.pricebook;
 
+import beanvest.parser.SourceLine;
 import beanvest.result.StatErrorEnum;
 import beanvest.result.StatErrors;
 import beanvest.journal.Value;
@@ -59,6 +60,6 @@ class PriceBookTest {
     }
 
     private static Price price(String dateString, String currency, String valueString) {
-        return new Price(LocalDate.parse(dateString), currency, Value.of(valueString), Optional.empty(), null);
+        return new Price(LocalDate.parse(dateString), currency, Value.of(valueString), Optional.empty(), SourceLine.SINGLE_GIVEN_LINE);
     }
 }

@@ -26,7 +26,7 @@ public class FeeCurrencyConversionAcceptanceTest {
 
         dsl.verifyFeesTotal("trading", "TOTAL", "5");
         dsl.verifyDeposits("trading", "TOTAL", "50");
-        dsl.verifyWithdrawals("trading", "TOTAL", "45");
+        dsl.verifyWithdrawals("trading", "TOTAL", "-45");
     }
 
 
@@ -49,6 +49,6 @@ public class FeeCurrencyConversionAcceptanceTest {
 
         dsl.verifyFeesTotal("trading", "TOTAL", "5.5");
         dsl.verifyDeposits("trading", "TOTAL", "55");
-        dsl.verifyWithdrawals("trading", "TOTAL", "49.5");
+        dsl.verifyWithdrawals("trading", "TOTAL", "-49.5");
     }
 }

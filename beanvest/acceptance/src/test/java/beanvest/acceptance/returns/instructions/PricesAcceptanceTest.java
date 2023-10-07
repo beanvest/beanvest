@@ -21,7 +21,7 @@ public class PricesAcceptanceTest {
                 2021-03-01 price X 10 GBP
                 """);
 
-        dsl.verifyWarningsShown("Price gap is too big for X/GBP on 2021-03-09. Last price is 10 GBP from 2021-03-01.");
+        dsl.verifyWarningsShown("Price gap is too big for X/GBP on 2021-03-09. Last price is 10 GBP from 2021-03-01");
     }
 
     @Test
