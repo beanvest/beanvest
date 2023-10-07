@@ -9,3 +9,5 @@
 - **BeancountUI**: journal UI through export to beancount format and display with fava
 - **ClosedAccountsSubgroup** aggregate closed accounts in each group instead of hiding them
   - they are important piece of data; they have impact on cumulative stats of the group
+- **ConversionValidation**: print some nicer errors instead of throwing about prices needed for currency conversion
+- **AllNeededPrices**: print all needed prices for reports with currency conversion instead of stopping on first encountered

@@ -6,6 +6,4 @@ public interface CurrencyConverter {
     CurrencyConverter NO_OP = c -> c;
 
     AccountOperation convert(AccountOperation op);
-
-    
 }

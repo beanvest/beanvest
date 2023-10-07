@@ -42,6 +42,9 @@ public class CurrencyConverterImpl implements CurrencyConverter {
 
         } else if (op instanceof Transfer tr) {
             var holding = holdings.get(tr.accountCash());
+            if (holding == null) {
+                throw new RuntimeException("no holding when converting line: " + tr.originalLine());
+            }
             var newCost = holding.averageCost().multiply(tr.getRawAmountMoved());
             holding.update(tr.getRawAmountMoved(), newCost);
 
