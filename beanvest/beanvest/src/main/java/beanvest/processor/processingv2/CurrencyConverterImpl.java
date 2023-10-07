@@ -24,7 +24,11 @@ public class CurrencyConverterImpl implements CurrencyConverter {
     @Override
     public AccountOperation convert(AccountOperation op) {
         if (op instanceof Deposit dep) {
-            var convertedValue = pricesBook.convert(dep.date(), targetCurrency, dep.value()).value();
+            var conversionResult = pricesBook.convert(dep.date(), targetCurrency, dep.value());
+            if (conversionResult.hasError()) {
+                throw new RuntimeException("Error `%s` when converting instruction: %s".formatted(conversionResult.error(), dep.originalLine()));
+            }
+            var convertedValue = conversionResult.value();
             holdings.compute(dep.accountCash(), (k, v) -> Holding.getHoldingOrCreate(v, dep.accountCash(), dep.getCashValue(), convertedValue));
             return dep.withValue(dep.value().withConvertedValue(convertedValue));
 
