@@ -55,7 +55,7 @@ public class CurrencyConverterImpl implements CurrencyConverter {
             var transaction = tr.withValue(new Value(tr.getCashValue(), Value.of(newCost.amount(), targetCurrency)));
             return transaction;
 
-        } else if (op instanceof Balance) {
+        } else if (op instanceof Balance || op instanceof Close) {
             return op;
         } else {
             throw new RuntimeException("Unsupported operation: " + op);
