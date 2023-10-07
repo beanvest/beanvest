@@ -9,14 +9,15 @@ import java.util.Objects;
 
 public final class Holding {
     private static final int DEFAULT_SCALE = 6;
+    private static final int EXTRA_SCALE = 4;
     private final String symbol;
     private BigDecimal amount;
     private final Cost cost;
     private final String costSymbol;
+    private int givenCostScale;
 
     public Holding(String symbol, BigDecimal amount, Value totalCost) {
         costSymbol = totalCost.symbol();
-        amount = amount.setScale(DEFAULT_SCALE, RoundingMode.HALF_UP);
         this.symbol = symbol;
         this.amount = amount;
         this.cost = new Cost(amount, totalCost.amount().setScale(DEFAULT_SCALE, RoundingMode.HALF_UP));
