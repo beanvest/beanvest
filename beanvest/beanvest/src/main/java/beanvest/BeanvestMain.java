@@ -4,9 +4,9 @@ import beanvest.lib.apprunner.main.BaseMain;
 import beanvest.module.export.ExportCliCommand;
 import beanvest.module.importer.ImportCliCommand;
 import beanvest.module.journal.JournalCliCommand;
-import beanvest.module.returns.cli.ReturnsCliCommand;
-import beanvest.module.returns.cli.args.CliColumnValue;
-import beanvest.module.returns.cli.args.ColumnCliArgConverter;
+import beanvest.module.report.cli.ReportCliCommand;
+import beanvest.module.report.cli.args.CliColumnValue;
+import beanvest.module.report.cli.args.ColumnCliArgConverter;
 import beanvest.options.OptionsCliCommand;
 import picocli.CommandLine;
 
@@ -19,7 +19,7 @@ public final class BeanvestMain extends BaseMain {
             new ExportCliCommand(),
             new ImportCliCommand(),
             new JournalCliCommand(),
-            new ReturnsCliCommand(),
+            new ReportCliCommand(),
             new OptionsCliCommand()
     );
     private static final CommandLine.Model.CommandSpec SPEC = getSpec();

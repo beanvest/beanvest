@@ -36,7 +36,7 @@ graalvmNative {
         named("main") {
             mainClass.set("beanvest.BeanvestMain")
             quickBuild.set(true)
-            buildArgs.add("-H:Features=beanvest.module.returns.GraalvmReflectionRegistrar")
+            buildArgs.add("-H:Features=beanvest.module.report.GraalvmReflectionRegistrar")
         }
     }
 }

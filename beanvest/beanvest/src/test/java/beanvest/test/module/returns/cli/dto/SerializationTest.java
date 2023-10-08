@@ -1,6 +1,6 @@
 package beanvest.test.module.returns.cli.dto;
 
-import beanvest.module.returns.cli.CliJsonOutputWriter;
+import beanvest.module.report.cli.CliJsonOutputWriter;
 import beanvest.processor.deprecated.dto.AccountDto;
 import beanvest.processor.deprecated.dto.PortfolioStatsDto;
 import beanvest.processor.deprecated.dto.StatsWithDeltasDto;

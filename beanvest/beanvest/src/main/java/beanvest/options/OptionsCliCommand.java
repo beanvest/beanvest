@@ -3,7 +3,7 @@ package beanvest.options;
 
 import beanvest.SubCommand;
 import beanvest.lib.util.gson.GsonFactory;
-import beanvest.module.returns.cli.args.CliColumnValue;
+import beanvest.module.report.cli.args.CliColumnValue;
 import beanvest.processor.time.PeriodInterval;
 import com.google.gson.Gson;
 import org.slf4j.Logger;

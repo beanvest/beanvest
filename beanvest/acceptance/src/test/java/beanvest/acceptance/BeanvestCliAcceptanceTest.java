@@ -16,7 +16,7 @@ public class BeanvestCliAcceptanceTest {
         dsl.run();
 
         dsl.verifyHasPrintedUsage();
-        dsl.verifyHasPrintedSubcommands("export, import, journal, returns");
+        dsl.verifyHasPrintedSubcommands("export, import, journal, report");
     }
 
     @Test

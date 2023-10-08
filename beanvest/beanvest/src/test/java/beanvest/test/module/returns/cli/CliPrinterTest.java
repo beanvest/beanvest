@@ -1,7 +1,7 @@
 package beanvest.test.module.returns.cli;
 
-import beanvest.module.returns.cli.CliTablePrinter;
-import beanvest.module.returns.cli.args.AccountMetaColumn;
+import beanvest.module.report.cli.CliTablePrinter;
+import beanvest.module.report.cli.args.AccountMetaColumn;
 import beanvest.processor.CollectionMode;
 import beanvest.processor.dto.*;
 import beanvest.result.Result;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static beanvest.module.returns.cli.args.CliColumnValue.opened;
+import static beanvest.module.report.cli.args.CliColumnValue.opened;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CliPrinterTest {

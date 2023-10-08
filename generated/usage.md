@@ -3,7 +3,7 @@ Journals used to generate these reports are in `sample/` directory.
 
 - Print gains and returns of each year
   ```bash
-  beanvest returns sample/ --end=2023-07-01 --columns again,xirr --interval=year --startDate=2019-01-01 --delta
+  beanvest report sample/ --end=2023-07-01 --columns again,xirr --interval=year --startDate=2019-01-01 --delta
   ```
   ```
                        ╷ 2022          ╷ 2021          ╷ 2020          ╷ 2019          ╷
@@ -18,7 +18,7 @@ Journals used to generate these reports are in `sample/` directory.
   ```
 - Print cumulative gains and total return of trading accounts after each year
   ```bash
-  beanvest returns sample/ --end=2023-07-01 --columns again,xirr --interval=year --startDate=2019-01-01
+  beanvest report sample/ --end=2023-07-01 --columns again,xirr --interval=year --startDate=2019-01-01
   ```
   ```
                        ╷ 2022          ╷ 2021          ╷ 2020         ╷ 2019         ╷
@@ -33,7 +33,7 @@ Journals used to generate these reports are in `sample/` directory.
   ```
 - Print various stats for all accounts and groups on each level of the accounts
   ```bash
-  beanvest returns sample/ --end=2023-07-01 --columns Deps,Wths,Div,Intr,Fees,Value,rgain,ugain
+  beanvest report sample/ --end=2023-07-01 --columns Deps,Wths,Div,Intr,Fees,Value,rgain,ugain
   ```
   ```
   Account               Deps     Wths     Div    Intr   Fees   Value    RGain  UGain
@@ -47,7 +47,7 @@ Journals used to generate these reports are in `sample/` directory.
   ```
 - Print cash stats on holdings, accounts and groups
   ```bash
-  beanvest returns sample/ --end=2023-07-01 --columns Deps,Wths,Value,again,xirr --report-holdings
+  beanvest report sample/ --end=2023-07-01 --columns Deps,Wths,Value,again,xirr --report-holdings
   ```
   ```
   Account                   Deps     Wths     Value    AGain   Xirr
@@ -67,7 +67,7 @@ Journals used to generate these reports are in `sample/` directory.
   ```
 - Print value of the accounts and total gains quarterly
   ```bash
-  beanvest returns sample/ --end=2023-07-01 --columns value,again --interval=quarter --startDate=2022-07-01
+  beanvest report sample/ --end=2023-07-01 --columns value,again --interval=quarter --startDate=2022-07-01
   ```
   ```
                        ╷ 23q2            ╷ 23q1            ╷ 22q4            ╷ 22q3            ╷
@@ -82,7 +82,7 @@ Journals used to generate these reports are in `sample/` directory.
   ```
 - Print monthly net deposits (deposits-withdrawals)
   ```bash
-  beanvest returns sample/ --end=2023-07-01 --columns dw --interval=month --startDate=2023-01-01 --delta
+  beanvest report sample/ --end=2023-07-01 --columns dw --interval=month --startDate=2023-01-01 --delta
   ```
   ```
                        ╷ 23m06 ╷ 23m05 ╷ 23m04 ╷ 23m03 ╷ 23m02 ╷ 23m01  ╷
@@ -97,7 +97,7 @@ Journals used to generate these reports are in `sample/` directory.
   ```
 - Print monthly net deposits and changes in value converted to other currency
   ```bash
-  beanvest returns sample/ --end=2023-07-01 --columns dw,value --interval=month --startDate=2023-01-01 --delta --currency PLN
+  beanvest report sample/ --end=2023-07-01 --columns dw,value --interval=month --startDate=2023-01-01 --delta --currency PLN
   ```
   ```
                        ╷ 23m06          ╷ 23m05          ╷ 23m04          ╷ 23m03          ╷ 23m02          ╷ 23m01            ╷
