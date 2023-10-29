@@ -39,17 +39,11 @@ public class BeanvestJournalWriter {
 
         if (account.startsWith("Income:")) {
             var amount = transaction.value().amount().negate();
-            writeTransaction(date, account, "interest", amount, comment);
-            if (moveOutCash) {
-                writeTransaction(date, account, "withdraw", amount, comment);
-            }
+            writeWithCashMove(date, account, amount, comment, Type.interest);
 
         } else if (account.startsWith("Expenses:")) {
             var amount = transaction.value().amount();
-            if (moveOutCash) {
-                writeTransaction(date, account, "deposit", amount, comment);
-            }
-            writeTransaction(date, account, "fee", amount, comment);
+            writeWithCashMove(date, account, amount, comment, Type.fee);
 
         } else if (account.startsWith("Assets:")) {
             var type = transaction.value().isPositive() ? "deposit" : "withdraw";
@@ -58,6 +52,29 @@ public class BeanvestJournalWriter {
 
         } else {
             throw new RuntimeException();
+        }
+    }
+
+    private void writeWithCashMove(LocalDate date, String account, BigDecimal amount, String comment, Type type) {
+        var rawMovedAmount = amount.multiply(type.multiplier);
+        if (moveOutCash && rawMovedAmount.compareTo(BigDecimal.ZERO) < 0) {
+            writeTransaction(date, account, "deposit", rawMovedAmount.negate(), comment);
+        }
+        writeTransaction(date, account, type.name(), amount, comment);
+        if (moveOutCash && rawMovedAmount.compareTo(BigDecimal.ZERO) > 0) {
+            writeTransaction(date, account, "withdraw", rawMovedAmount, comment);
+        }
+
+    }
+
+    enum Type {
+        fee(-1),
+        interest(1);
+
+        private final BigDecimal multiplier;
+
+        Type(int multiplier) {
+            this.multiplier = new BigDecimal(multiplier);
         }
     }
 

@@ -187,12 +187,12 @@ public class ImporterAcceptanceTest {
                   Equity:Bank
                   
                 2022-02-12 * "rental income"
-                  Income:Property:Rent    -2000 PLN
-                  Equity:Bank
+                  Income:Property:Rent
+                  Equity:Bank           2000 PLN
                   
                 2022-02-13 * "rental costs"
-                  Expenses:Property:Rent    1000 PLN
-                  Equity:Bank
+                  Expenses:Property:Rent
+                  Equity:Bank             -1000 PLN
                 """);
 
         var CliExecutionResult = runner.runSuccessfully(List.of(path.toString(), ".*Property.*", "NewProp", "--no-cash"));
@@ -206,6 +206,42 @@ public class ImporterAcceptanceTest {
                         2022-02-12 withdraw 2000 "rental income"
                         2022-02-13 deposit 1000 "rental costs"
                         2022-02-13 fee 1000 "rental costs"
+                        """,
+                CliExecutionResult.stdOut());
+    }
+
+    @Test
+    void shouldImportWithNoCashStoredFromInterestAndFeesButMoveMightBeInvertedIfAmountIsNegative() {
+        var path = TestFiles.writeToTempFile("""
+                2022-01-01 open Assets:Property
+                2022-01-01 open Income:Property:Rent
+                2022-01-01 open Equity:Bank
+                2022-01-01 open Expenses:Property:Cost
+                                
+                2022-02-10 * "Zakup"
+                  Assets:Property    240000 PLN
+                  Equity:Bank
+                  
+                2022-02-12 * "rental income overpayment returned"
+                  Income:Property:Rent
+                  Equity:Bank            -20 PLN
+                  
+                2022-02-13 * "rental costs overpayment returned"
+                  Expenses:Property:Cost
+                  Equity:Bank             10 PLN
+                """);
+
+        var CliExecutionResult = runner.runSuccessfully(List.of(path.toString(), ".*Property.*", "NewProp", "--no-cash"));
+
+        assertEquals("""
+                        account NewProp
+                        currency PLN
+                                        
+                        2022-02-10 deposit 240000 "Zakup"
+                        2022-02-12 deposit 20 "rental income overpayment returned"
+                        2022-02-12 interest -20 "rental income overpayment returned"
+                        2022-02-13 fee -10 "rental costs overpayment returned"
+                        2022-02-13 withdraw 10 "rental costs overpayment returned"
                         """,
                 CliExecutionResult.stdOut());
     }
