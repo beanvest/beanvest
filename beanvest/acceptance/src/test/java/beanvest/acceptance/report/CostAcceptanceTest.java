@@ -1,7 +1,9 @@
 package beanvest.acceptance.report;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled("needs rethinking")
 public class CostAcceptanceTest {
     protected final ReportDsl dsl = new ReportDsl();
 

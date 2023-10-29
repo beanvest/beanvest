@@ -32,28 +32,27 @@ public class PrioritisedJournalEntryProcessor {
     }
 
     public Set<ValidatorError> process(Entry entry) {
-        if (entry instanceof Price p) {
-            pricesBook.process(p);
+        try {
+            if (entry instanceof Price p) {
+                pricesBook.process(p);
 
-        } else if (entry instanceof AccountOperation op) {
-            var convertedOp = currencyConverter.convert(op);
-            // DEBUG printz
-//            System.out.println("new op: " + op.toJournalLine());
-//            System.out.println("converted: " + convertedOp.toJournalLine());
-//            if (entry instanceof CashOperation co) {
-//                System.out.println("holdings: " + ((CurrencyConverterImpl) currencyConverter).dump(op.account(), co.getCashCurrency()));
-//            }
-            accountsTracker.process(convertedOp);
-            for (ProcessorV2 processor : processors) {
-                processor.process(convertedOp);
-            }
-            for (Validator validator : validators) {
-                validator.validate(convertedOp, validatorErrors::add);
-            }
+            } else if (entry instanceof AccountOperation op) {
+                var convertedOp = currencyConverter.convert(op);
+                accountsTracker.process(convertedOp);
+                for (ProcessorV2 processor : processors) {
+                    processor.process(convertedOp);
+                }
+                for (Validator validator : validators) {
+                    validator.validate(convertedOp, validatorErrors::add);
+                }
 
-        } else {
-            throw new UnsupportedOperationException("whats that, then? " + entry.getClass());
+            } else {
+                throw new UnsupportedOperationException("whats that, then? " + entry.getClass());
+            }
+            return validatorErrors;
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Failed to process operation: " + entry.originalLine(), e);
         }
-        return validatorErrors;
     }
 }

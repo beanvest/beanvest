@@ -27,7 +27,7 @@ public class OptionsAcceptanceTest {
         var options = gson.fromJson(json, Options.class);
 
         var columnIds = options.columns.stream().map(c -> c.id).collect(Collectors.toSet());
-        assertThat(columnIds).contains("cost", "xirr", "div", "profit");
+        assertThat(columnIds).contains("xirr", "div", "profit");
     }
 
     @Test

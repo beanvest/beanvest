@@ -40,8 +40,8 @@ public class ReportCliCommandSpec {
                     .type(String.class)
                     .auxiliaryTypes(CliColumnValue[].class)
                     .description("Comma-separated column selection. Eg 'rgain,xirr'. Available columns: "
-                            + Arrays.stream(StatDefinition.values())
-                            .map(c -> "\n  * \"" + c.shortName.toLowerCase(Locale.ROOT) + "\" - " + c.description)
+                            + Arrays.stream(CliColumnValue.values())
+                            .map(c -> "\n  * \"" + c.name().toLowerCase(Locale.ROOT) + "\" - " + c.cliColumn.description())
                             .collect(Collectors.joining(", ")))
                     .build())
             .addOption(CommandLine.Model.OptionSpec.builder("--account", "-a")

@@ -23,6 +23,9 @@ public class CurrencyConverterImpl implements CurrencyConverter {
 
     @Override
     public AccountOperation convert(AccountOperation op) {
+        if (op instanceof CashOperation co && co.getCashCurrency().equals(targetCurrency)) {
+            return op;
+        }
         if (op instanceof Deposit dep) {
             var conversionResult = pricesBook.convert(dep.date(), targetCurrency, dep.value());
             if (conversionResult.hasError()) {

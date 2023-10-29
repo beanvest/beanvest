@@ -81,51 +81,46 @@ public class HoldingsConvertedCollector implements ProcessorV2, HoldingsCollecto
         if (!(op instanceof CashOperation cop) || cop.getCashValue().convertedValue().isEmpty()) {
             return;
         }
-        if (op instanceof Transaction tr) {
-            if (op instanceof Buy buy) {
-                var convertedValue = tr.totalPrice().convertedValue().get();
-                holdings.get(tr.accountCash()).update(convertedValue.amount(), convertedValue);
-                if (!holdings.containsKey(tr.accountHolding())) {
-                    holdings.put(tr.accountHolding(), new Holding(buy.holdingSymbol(), buy.units(), convertedValue.negate()));
-                } else {
-                    holdings.get(tr.accountHolding()).update(buy.units(), convertedValue.negate());
+            if (op instanceof Transaction tr) {
+                if (op instanceof Buy buy) {
+                    var convertedValue = tr.totalPrice().convertedValue().get();
+                    holdings.get(tr.accountCash()).update(convertedValue.amount(), convertedValue);
+                    if (!holdings.containsKey(tr.accountHolding())) {
+                        holdings.put(tr.accountHolding(), new Holding(buy.holdingSymbol(), buy.units(), convertedValue.negate()));
+                    } else {
+                        holdings.get(tr.accountHolding()).update(buy.units(), convertedValue.negate());
+                    }
+
+                } else if (op instanceof Sell sell) {
+                    var holding = getHolding(tr.accountHolding());
+                    holding.update(sell.units().negate(), Value.of(BigDecimal.ZERO, sell.getCashValueConverted().symbol()));
+                    var averagePrice = sell.totalPrice().convertedValue().get().multiply(BigDecimal.ONE.divide(sell.units(), 10, RoundingMode.HALF_UP));
+                    var gainRatio = averagePrice.amount().multiply(BigDecimal.ONE.divide(holding.averageCost().amount(), 10, RoundingMode.HALF_UP));
+
+                    var newCost = holding.averageCost().negate().multiply(sell.units()).multiply(gainRatio);
+                    var newAmount = sell.totalPrice().convertedValue().get().amount().negate();
+                    holdings.get(tr.accountCash()).update(newAmount, newCost);
                 }
-
-            } else if (op instanceof Sell sell) {
-                var holding = getHolding(tr.accountHolding());
-                holding.update(sell.units().negate(), Value.of(BigDecimal.ZERO, sell.getCashValueConverted().symbol()));
-                var averagePrice = sell.totalPrice().convertedValue().get().multiply(BigDecimal.ONE.divide(sell.units(), 10, RoundingMode.HALF_UP));
-                var gainRatio = averagePrice.amount().multiply(BigDecimal.ONE.divide(holding.averageCost().amount(), 10, RoundingMode.HALF_UP));
-
-                var newCost = holding.averageCost().negate().multiply(sell.units()).multiply(gainRatio);
-                var newAmount = sell.totalPrice().convertedValue().get().amount().negate();
-                holdings.get(tr.accountCash()).update(newAmount, newCost);
+            } else if (op instanceof Deposit dep) {
+                var convertedValue = dep.getCashValue().convertedValue().get();
+                if (holdings.get(dep.accountCash()) == null) {
+                    holdings.put(dep.accountCash(), new Holding(dep.getCashCurrency(), convertedValue.amount(), convertedValue.negate()));
+                } else {
+                    holdings.get(dep.accountCash()).update(convertedValue.amount(), convertedValue.negate());
+                }
+            } else if (op instanceof Withdrawal wth) {
+                if (!holdings.containsKey(wth.accountCash())) {
+                    holdings.put(wth.accountCash(), new Holding(wth.getCashCurrency(), wth.getCashAmount().negate(), wth.getCashValue()));
+                } else {
+                    holdings.get(wth.accountCash()).update(wth.getCashAmount().negate(), wth.getCashValue());
+                }
+            } else if (op instanceof Interest intr) {
+                holdings.get(intr.accountCash()).updateWhileKeepingTheCost(intr.getCashAmount());
+            } else if (op instanceof Fee fee) {
+                holdings.get(fee.accountCash()).updateWhileKeepingTheCost(fee.getCashAmount().negate());
+            } else if (op instanceof Dividend div) {
+                holdings.get(div.accountCash()).updateWhileKeepingTheCost(div.getCashAmount());
             }
-        }
-        else if (op instanceof Deposit dep) {
-            var convertedValue = dep.getCashValue().convertedValue().get();
-            if (holdings.get(dep.accountCash()) == null) {
-                holdings.put(dep.accountCash(), new Holding(dep.getCashCurrency(), convertedValue.amount(), convertedValue.negate()));
-            } else {
-                holdings.get(dep.accountCash()).update(convertedValue.amount(), convertedValue.negate());
-            }
-        }
-        else if (op instanceof Withdrawal wth) {
-            if (!holdings.containsKey(wth.accountCash())) {
-                holdings.put(wth.accountCash(), new Holding(wth.getCashCurrency(), wth.getCashAmount().negate(), wth.getCashValue()));
-            } else {
-                holdings.get(wth.accountCash()).update(wth.getCashAmount().negate(), wth.getCashValue());
-            }
-        }
-        else if (op instanceof Interest intr) {
-            holdings.get(intr.accountCash()).updateWhileKeepingTheCost(intr.getCashAmount());
-        }
-        else if (op instanceof Fee fee) {
-            holdings.get(fee.accountCash()).updateWhileKeepingTheCost(fee.getCashAmount().negate());
-        }
-        else if (op instanceof Dividend div) {
-            holdings.get(div.accountCash()).updateWhileKeepingTheCost(div.getCashAmount());
-        }
     }
 }
 

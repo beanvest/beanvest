@@ -172,5 +172,42 @@ public class ImporterAcceptanceTest {
                         """,
                 CliExecutionResult.stdOut());
     }
+
+
+    @Test
+    void shouldImportWithNoCashStoredFromInterestAndFees() {
+        var path = TestFiles.writeToTempFile("""
+                2022-01-01 open Assets:Property
+                2022-01-01 open Income:Property:Rent
+                2022-01-01 open Equity:Bank
+                2022-01-01 open Expenses:Property:Rent
+                                
+                2022-02-10 * "Zakup"
+                  Assets:Property    240000 PLN
+                  Equity:Bank
+                  
+                2022-02-12 * "rental income"
+                  Income:Property:Rent    -2000 PLN
+                  Equity:Bank
+                  
+                2022-02-13 * "rental costs"
+                  Expenses:Property:Rent    1000 PLN
+                  Equity:Bank
+                """);
+
+        var CliExecutionResult = runner.runSuccessfully(List.of(path.toString(), ".*Property.*", "NewProp", "--no-cash"));
+
+        assertEquals("""
+                        account NewProp
+                        currency PLN
+                                        
+                        2022-02-10 deposit 240000 "Zakup"
+                        2022-02-12 interest 2000 "rental income"
+                        2022-02-12 withdraw 2000 "rental income"
+                        2022-02-13 deposit 1000 "rental costs"
+                        2022-02-13 fee 1000 "rental costs"
+                        """,
+                CliExecutionResult.stdOut());
+    }
 }
 

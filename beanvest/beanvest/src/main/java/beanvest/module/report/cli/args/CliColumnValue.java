@@ -25,7 +25,7 @@ public enum CliColumnValue {
     xirr(new StatColumn(XIRR, XIRR_PERIOD, "Annualized return", ValueFormatter::xirr)),
 
     value(new StatColumn(VALUE, VALUE_PERIOD, "Value", ValueFormatter::money)),
-    cost(new StatColumn(NET_COST, NET_COST, "Cost", ValueFormatter::money)),
+    cash(new StatColumn(CASH, CASH_PERIOD, "Cost", ValueFormatter::money)),
     profit(new StatColumn(PROFIT, PROFIT_PERIOD, "Profit", ValueFormatter::money));
 
     public final CliColumn cliColumn;

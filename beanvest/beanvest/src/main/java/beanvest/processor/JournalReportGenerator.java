@@ -27,6 +27,7 @@ public class JournalReportGenerator {
             PeriodSpec periodSpec,
             UnfinishedPeriodInclusion unfinishedPeriodInclusion,
             LinkedHashMap<String, Class<?>> statsToCalculate, Set<Entity> accountsClosedEarlier, Optional<String> targetCurrency) {
+
         accountStatsGatherer = new AccountStatsGatherer(accountsResolver, accountsClosedEarlier);
         var journalProcessor2 = new StatsCollectingJournalProcessor(accountsResolver, statsToCalculate, targetCurrency);
         var endOfPeriodTracker = new EndOfPeriodTracker(periodSpec, unfinishedPeriodInclusion,

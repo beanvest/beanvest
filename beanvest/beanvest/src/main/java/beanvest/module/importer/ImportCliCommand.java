@@ -32,6 +32,10 @@ public class ImportCliCommand implements SubCommand {
                     .type(Boolean.class)
                     .description("prints more details")
                     .build())
+            .addOption(CommandLine.Model.OptionSpec.builder("--no-cash")
+                    .type(Boolean.class)
+                    .description("deposit cash for fees and withdraw after interest")
+                    .build())
             .addOption(CommandLine.Model.OptionSpec.builder("--ignore")
                     .type(String.class)
                     .description("ignores given accounts (comma-separated)")
@@ -43,6 +47,7 @@ public class ImportCliCommand implements SubCommand {
         final String accountPattern = subcommand.matchedPositionalValue(1, null);
         final String targetName = subcommand.matchedPositionalValue(2, null);
         final boolean debug = subcommand.matchedOptionValue("--debug", false);
+        final boolean moveOutCash = subcommand.matchedOptionValue("--no-cash", false);
         final List<String> accountsToIgnore = List.of(subcommand.matchedOptionValue("--ignore", "").split(","));
 
         var cmdRunner = new CmdRunner();
@@ -51,7 +56,7 @@ public class ImportCliCommand implements SubCommand {
         var writer = new PrintWriter(stdOut);
 
         var filteredTransfers = transfers.stream().filter(t -> !accountsToIgnore.contains(t.account())).toList();
-        var beanvestJournalWriter = new BeanvestJournalWriter(writer, targetName, transfers.get(0).value().getSymbol(), debug);
+        var beanvestJournalWriter = new BeanvestJournalWriter(writer, targetName, transfers.get(0).value().getSymbol(), debug, moveOutCash);
         beanvestJournalWriter.write(filteredTransfers);
         writer.flush();
         return 0;

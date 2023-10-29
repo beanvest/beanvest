@@ -34,7 +34,7 @@ public final class Holding {
 
     public void update(BigDecimal amountChange, Value newCost) {
         if (!newCost.symbol().equals(costSymbol)) {
-            throw new RuntimeException("tried to add cost in `"+newCost.symbol()+"` to `"+costSymbol+"`");
+            throw new RuntimeException("tried to add cost in `" + newCost.symbol() + "` to `" + costSymbol + "`");
         }
         cost.update(amount, amountChange, newCost.amount());
         amount = amount.add(amountChange);
@@ -69,9 +69,9 @@ public final class Holding {
     @Override
     public String toString() {
         return "Holding[" +
-                "symbol=" + symbol + ", " +
-                "amount=" + amount + ", " +
-                "cost=" + cost + ']';
+               "symbol=" + symbol + ", " +
+               "amount=" + amount + ", " +
+               "cost=" + cost + ']';
     }
 
     public Value asValue() {

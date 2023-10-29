@@ -20,6 +20,8 @@ pkgs.mkShell {
       export GRAALVM_HOME=/nix/store/379k6bs17n5hlcc5w8wmk75vrzgpvhd3-graalvm19-ce-22.3.1
       export PATH=$(pwd)/beanvest/beanvest/build/native/nativeCompile:$PATH
 
+      env > .env
+
     '';
 }
 

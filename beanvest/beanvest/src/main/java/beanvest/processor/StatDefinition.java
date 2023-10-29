@@ -1,6 +1,5 @@
 package beanvest.processor;
 
-import beanvest.processor.processingv2.CurrencyConverter;
 import beanvest.processor.processingv2.ValueCalculator;
 import beanvest.processor.processingv2.processor.*;
 import beanvest.processor.processingv2.processor.periodic.*;
