@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+cp beanvest/beanvest/build/native/nativeCompile/beanvest ~/bin/
