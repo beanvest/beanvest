@@ -29,7 +29,7 @@ class PredicateFactoryTest {
     }
 
     private Price getPrice() {
-        return new Price(LocalDate.parse("2023-01-01"), "MSFT", Value.of("10 GBP"), Optional.empty(), SourceLine.GENERATED_LINE);
+        return new Price(LocalDate.parse("2023-01-01"), "MSFT", Value.of("10 GBP"), Price.Type.VARIABLE, Optional.empty(), SourceLine.GENERATED_LINE);
     }
 
     private static Dividend getDividend(String account) {

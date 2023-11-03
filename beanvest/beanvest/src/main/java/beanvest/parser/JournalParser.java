@@ -37,6 +37,9 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static beanvest.journal.entry.Price.Type.CONSTANT;
+import static beanvest.journal.entry.Price.Type.VARIABLE;
+
 public class JournalParser {
     // partial
     public static final String DATE = "\\d{4}-\\d{2}-\\d{2}";
@@ -51,7 +54,7 @@ public class JournalParser {
     public static final String TRANSACTION_INC_FEE = "\\s+(?<units>" + AMOUNT + ")" + HOLDING + "(|\\s+with\\s+fee\\s+" + "(?<fee>" + AMOUNT + "))" + COMMENT;
     public static final Pattern PATTERN_BUY_INC_FEE = Pattern.compile("^(?<deposit>deposit\\s+and\\s+|)buy" + TRANSACTION_INC_FEE + "$");
     public static final Pattern PATTERN_SELL_INC_FEE = Pattern.compile("^sell(?<withdrawal>\\s+and\\s+withdraw|)" + TRANSACTION_INC_FEE + "$");
-    public static final Pattern PATTERN_PRICE = Pattern.compile("^price" + HOLDING + "(|\\s+)(|(?<currency>" + SYMBOL + "))" + COMMENT + "$"); // TODO use SYMBOL instead ?
+    public static final Pattern PATTERN_PRICE = Pattern.compile("^price" + HOLDING + "(|\\s+)(|(?<currency>" + SYMBOL + "))(?<constant>|\\s+constant)" + COMMENT + "$");
     public static final Pattern PATTERN_FEE = Pattern.compile("^fee\\s+(?<amount>(-|)" + AMOUNT + ")" + COMMENT + "$");
     public static final Pattern PATTERN_DEPOSIT = Pattern.compile("^deposit(|\\s+(?<forfees>for\\s+fees))\\s+(?<amount>" + AMOUNT + ")" + COMMENT + "$");
     public static final Pattern PATTERN_WITHDRAW = Pattern.compile("^withdraw\\s+(?<amount>" + AMOUNT + ")" + COMMENT + "$");
@@ -223,13 +226,14 @@ public class JournalParser {
         var matcher = PATTERN_PRICE.matcher(remainder);
         if (matcher.matches()) {
             var parsedCurrency = matcher.group("currency");
+            var priceType = matcher.group("constant").trim().equals("constant") ? CONSTANT : VARIABLE;
             return List.of(
                     new Price(date,
                             matcher.group("symbol"),
                             new Value(
                                     new BigDecimal(matcher.group("price")),
                                     parsedCurrency != null ? parsedCurrency : metadata.currency()
-                            ), Optional.empty(), line));
+                            ), priceType, Optional.empty(), line));
         }
         return new ArrayList<>();
     }

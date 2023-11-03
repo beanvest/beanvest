@@ -60,6 +60,6 @@ class PriceBookTest {
     }
 
     private static Price price(String dateString, String currency, String valueString) {
-        return new Price(LocalDate.parse(dateString), currency, Value.of(valueString), Optional.empty(), SourceLine.SINGLE_GIVEN_LINE);
+        return new Price(LocalDate.parse(dateString), currency, Value.of(valueString), Price.Type.VARIABLE, Optional.empty(), SourceLine.SINGLE_GIVEN_LINE);
     }
 }

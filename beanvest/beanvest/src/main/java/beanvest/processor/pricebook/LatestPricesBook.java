@@ -43,8 +43,7 @@ public class LatestPricesBook {
             throw new UnsupportedOperationException("Past price requested. Known price is from `%s` but `%s` was requested".formatted(latestPrice, date));
         }
 
-        var daysSinceLastPrice = DAYS.between(latestPrice.date(), date);
-        if (daysSinceLastPrice > 7) {
+        if (latestPrice.isVariable() && DAYS.between(latestPrice.date(), date) > 7) {
             return Result.failure(StatErrorFactory.priceNotFound(symbol, currency, date, Optional.of(latestPrice)));
         }
 

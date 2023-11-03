@@ -40,4 +40,18 @@ public class PricesAcceptanceTest {
 
         dsl.verifyStdErrContains("No price set for X/GBP before or on 2021-03-09");
     }
+
+    @Test
+    void constantPriceDoNotNeedToBeUpdated() {
+        dsl.setColumns("Value");
+        dsl.runCalculateReturns("""
+                account property
+                currency GBP
+                                
+                2021-01-01 deposit and buy 1 PROPERTY for 100000
+                2021-01-01 price PROPERTY 120000 GBP constant
+                """);
+
+        dsl.verifyValue("property", "TOTAL", "120000");
+    }
 }
