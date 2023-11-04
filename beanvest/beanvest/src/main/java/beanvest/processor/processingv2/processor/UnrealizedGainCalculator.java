@@ -52,7 +52,7 @@ public class UnrealizedGainCalculator implements Calculator {
             var currentValue = holdingsValueCalculator.calculate(new CalculationParams(
                     accHolding.accountHolding().entity(), params.startDate(), params.endDate(), currencyOC));
             var unrealizedGainOC = currentValue.value().add(accHolding.holding().totalCost().amount());
-            var unrealizedGainTC = holdingsConvertedCollector.getHolding(accHolding.accountHolding()).averageCost().multiply(unrealizedGainOC);
+            var unrealizedGainTC = holdingsConvertedCollector.getHolding(accHolding.accountHolding()).averageCost().negate().multiply(unrealizedGainOC);
             uGain = uGain.add(unrealizedGainTC.getAmount());
         }
         return Result.success(uGain);

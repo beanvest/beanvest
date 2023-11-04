@@ -59,8 +59,9 @@ public class CurrencyConverterImpl implements CurrencyConverter {
 
         } else if (op instanceof Transaction tr) {
             var cashHolding = holdings.get(tr.accountCash());
-            var newCost = cashHolding.averageCost().multiply(tr.getCashAmount().abs()).negate();
-            cashHolding.update(tr.getRawAmountMoved().negate(), newCost);
+            var newCost = cashHolding.averageCost().multiply(tr.getCashAmount());
+            var negate = tr.getRawAmountMoved().negate();
+            cashHolding.update(negate, newCost);
 
             var transaction = tr.withValue(new Value(tr.getCashValue(), Value.of(newCost.amount(), targetCurrency)));
             return transaction;

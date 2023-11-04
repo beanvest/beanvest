@@ -33,7 +33,7 @@ public class RealizedGainCalculator implements ProcessorV2, Calculator {
 
             var maybeRealizedGainTC = sell.totalPrice().convertedValue().map(v -> {
                 var holdingTC = holdingsConvertedCollector.getHolding(sell.getInstrumentHolding());
-                return holdingTC.averageCost().multiply(realizedGain);
+                return holdingTC.averageCost().negate().multiply(realizedGain);
             });
 
             simpleBalanceTracker.add(sell.accountHolding(), new Value(realizedGain, sell.getCashCurrency(), maybeRealizedGainTC));

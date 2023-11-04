@@ -46,6 +46,25 @@ public class WithdrawalCurrencyConversionAcceptanceTest {
     }
 
     @Test
+    void withdrawalsAterSale() {
+        dsl.setCurrency("PLN");
+        dsl.setColumns("wths");
+
+        dsl.runCalculateReturns("""
+                account trading
+                currency GBP
+                                
+                2021-01-01 price GBP 5 PLN constant
+                2021-01-02 deposit 10
+                2021-01-02 buy 1 X for  10
+                2021-01-02 sell 1 X for  10
+                2021-01-03 withdraw 10
+                """);
+
+        dsl.verifyWithdrawals("trading", "TOTAL", "-50");
+    }
+
+    @Test
     void withdrawalsAreBasedOnAverageUnitCostFromTheExchangeRate() {
         dsl.setCurrency("PLN");
         dsl.setColumns("wths");
