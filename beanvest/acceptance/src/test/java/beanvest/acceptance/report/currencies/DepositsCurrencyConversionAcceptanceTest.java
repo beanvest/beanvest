@@ -11,7 +11,7 @@ public class DepositsCurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("deps");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                 2021-01-01 price GBP 5 PLN
@@ -27,7 +27,7 @@ public class DepositsCurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("deps");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

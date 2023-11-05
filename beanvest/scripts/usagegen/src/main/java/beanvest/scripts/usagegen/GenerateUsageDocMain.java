@@ -1,7 +1,7 @@
 package beanvest.scripts.usagegen;
 
 import beanvest.BeanvestMain;
-import beanvest.lib.apprunner.AppRunnerFactory;
+import beanvest.lib.apprunner.ReflectionRunner;
 import beanvest.scripts.usagegen.generateusagedoc.ExampleRunner;
 import beanvest.scripts.usagegen.generateusagedoc.ExampleRunner.Example;
 import beanvest.scripts.usagegen.generateusagedoc.UsageDocWriter;
@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class GenerateUsageDocMain {
     private static final ExampleVarReplacer exampleVarReplacer = new ExampleVarReplacer();
@@ -61,7 +62,7 @@ public class GenerateUsageDocMain {
                 : Path.of(projectDir + "/sample")).toAbsolutePath();
         var outputFile = Path.of(projectDir + "/generated/usage.md");
 
-        try (var runner = AppRunnerFactory.createRunner(BeanvestMain.class)) {
+        try (var runner = new ReflectionRunner(BeanvestMain.class, Optional.empty())) {
             var exampleRunner = new ExampleRunner(runner, samplesDir);
             var exampleDocWriter = new UsageDocWriter(outputFile, samplesDir);
 

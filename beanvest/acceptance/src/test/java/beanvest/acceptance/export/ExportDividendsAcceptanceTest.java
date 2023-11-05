@@ -1,10 +1,9 @@
 package beanvest.acceptance.export;
 
 import beanvest.BeanvestMain;
+import beanvest.acceptance.report.dsl.BeanvestRunner;
 import beanvest.lib.apprunner.AppRunner;
-import beanvest.lib.apprunner.AppRunnerFactory;
 import beanvest.lib.testing.TestFiles;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ExportDividendsAcceptanceTest {
-    protected AppRunner runner = AppRunnerFactory.createRunner(BeanvestMain.class, "export");
+    protected BeanvestRunner runner = BeanvestRunner.createRunner(BeanvestMain.class, "export");
 
     @Test
     void generatesDividendTransactions() {

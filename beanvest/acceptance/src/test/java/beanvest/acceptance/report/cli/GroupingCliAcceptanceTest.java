@@ -18,7 +18,7 @@ public class GroupingCliAcceptanceTest {
         dsl.setGroupingEnabled();
         dsl.setColumns("deps");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account pension:a
                 currency GBP
                                 

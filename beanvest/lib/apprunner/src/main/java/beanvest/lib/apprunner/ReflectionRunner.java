@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ReflectionRunner implements AppRunner {
+public class ReflectionRunner implements AppRunner, CliAppRunner {
     private final Class<?> mainClass;
     private final Optional<String> maybeSubcommand;
 

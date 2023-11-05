@@ -1,8 +1,6 @@
 package beanvest.acceptance.report.dsl;
 
 import beanvest.BeanvestMain;
-import beanvest.lib.apprunner.AppRunner;
-import beanvest.lib.apprunner.AppRunnerFactory;
 import beanvest.lib.apprunner.CliExecutionResult;
 import beanvest.lib.testing.TestFiles;
 import beanvest.lib.testing.asserts.AssertCliExecutionResult;
@@ -37,90 +35,40 @@ public class ReportDsl {
 
     public static final String TOTAL = "TOTAL";
     public static final String DEFAULT_OFFSET = "0.05";
-    private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "report");
-    private CliExecutionResult cliRunResult;
-    private final CliOptions cliOptions = new CliOptions();
-    private Path tempDirectory;
-    private TestFiles testFiles = new TestFiles();
+    private final BeanvestRunner beanvestRunner = BeanvestRunner.createRunner(BeanvestMain.class, "report");
+    private final ReportOptions reportOptions = new ReportOptions();
+    private final Path tempDirectory;
+    private final TestFiles testFiles = new TestFiles();
 
+    private CliExecutionResult cliRunResult;
+
+    public ReportDsl() {
+        this.tempDirectory = testFiles.createTempDirectory();
+    }
 
     public void verifyOutputIsValidJson() {
-        GsonFactory.builderWithProjectDefaults().create().toJsonTree(cliRunResult.stdOut());
+        GSON.toJsonTree(cliRunResult.stdOut());
     }
 
     public void setEnd(String endDate) {
-        cliOptions.end = endDate;
+        reportOptions.end = endDate;
     }
 
     public void setStartDate(String startDate) {
-        cliOptions.start = startDate;
+        reportOptions.start = startDate;
     }
 
-    public void runCalculateReturnsOnDirectory(String ledgersDir) {
-        runCalculateReturnsWithFilesArgs(List.of(tempDirectory.toString() + "/" + ledgersDir));
+    public void calculateReturns(String ledgersContent) {
+        final List<String> allLedgers = writeToTempFiles(ledgersContent);
+        this.cliRunResult = beanvestRunner.calculateReturns(allLedgers, reportOptions);
     }
 
-    public void runCalculateReturns(String ledgers) {
-        final List<String> allLedgers = writeToTempFiles(ledgers);
-        runCalculateReturnsWithFilesArgs(allLedgers);
+    public void calculateReturnsForDirectory(String ledgersDir) {
+        this.cliRunResult = beanvestRunner.calculateReturns(List.of(tempDirectory.toString() + "/" + ledgersDir), reportOptions);
     }
 
-    public void runCalculateReturnsWithLedgerPaths(String... ledgerPaths) {
-        runCalculateReturnsWithFilesArgs(Arrays.stream(ledgerPaths).toList());
-    }
-
-    private void runCalculateReturnsWithFilesArgs(List<String> ledgerPaths) {
-        var args = new ArrayList<>(ledgerPaths);
-        if (cliOptions.end != null) {
-            args.add("--end=" + cliOptions.end);
-        }
-        if (cliOptions.reportInvestments) {
-            args.add("--report-holdings");
-        }
-        if (cliOptions.start != null) {
-            args.add("--startDate=" + cliOptions.start);
-        }
-        if (cliOptions.jsonOutput) {
-            args.add("--json");
-        }
-        if (cliOptions.noSecurities) {
-            args.add("--no-securities");
-        }
-        if (cliOptions.account != null) {
-            args.add("--account=" + cliOptions.account);
-        }
-        if (cliOptions.groups == Groups.ONLY) {
-            args.add("--groups=only");
-        }
-        if (cliOptions.groups == Groups.NO) {
-            args.add("--groups=no");
-        }
-        if (cliOptions.onlyFinishedPeriods) {
-            args.add("--finished-periods");
-        }
-        if (cliOptions.delta) {
-            args.add("--delta");
-        }
-        if (cliOptions.interval != null) {
-            args.add("--interval=" + cliOptions.interval);
-        }
-        if (cliOptions.currency != null) {
-            args.add("--currency=" + cliOptions.currency);
-        }
-        if (cliOptions.overrideToday != null) {
-            args.add("--override-today=" + cliOptions.overrideToday);
-        }
-        if (cliOptions.showClosed) {
-            args.add("--show-closed");
-        }
-        if (!cliOptions.columns.isEmpty()) {
-            args.add("--columns=" + String.join(",", cliOptions.columns));
-        }
-        if (cliOptions.allowNonZeroExitCodes) {
-            cliRunResult = appRunner.run(args);
-        } else {
-            cliRunResult = appRunner.runSuccessfully(args);
-        }
+    public void calculateReturnsForJournalPaths(String... ledgerPaths) {
+        this.cliRunResult = beanvestRunner.calculateReturns(Arrays.stream(ledgerPaths).toList(), reportOptions);
     }
 
     public ReportDsl verifyStdErrContains(String string) {
@@ -129,7 +77,7 @@ public class ReportDsl {
     }
 
     public void setAllowNonZeroExitCodes() {
-        cliOptions.allowNonZeroExitCodes = true;
+        reportOptions.allowNonZeroExitCodes = true;
     }
 
     public void verifyReturnedAnError(String message) {
@@ -151,7 +99,7 @@ public class ReportDsl {
     }
 
     public void setJsonOutput() {
-        cliOptions.jsonOutput = true;
+        reportOptions.jsonOutput = true;
     }
 
     public void verifyClosingDate(String account, String expectedClosingDate) {
@@ -165,11 +113,11 @@ public class ReportDsl {
     }
 
     public void setAccountFilter(String regexp) {
-        cliOptions.account = regexp;
+        reportOptions.account = regexp;
     }
 
     public void setYearly() {
-        cliOptions.interval = "year";
+        reportOptions.interval = "year";
     }
 
     public void verifyHasStats(String trading, String period) {
@@ -191,7 +139,7 @@ public class ReportDsl {
     }
 
     public void setColumns(String... columns) {
-        cliOptions.columns = List.of(columns);
+        reportOptions.columns = List.of(columns);
     }
 
 
@@ -219,11 +167,11 @@ public class ReportDsl {
     }
 
     public void setGroupsOnly() {
-        cliOptions.groups = Groups.ONLY;
+        reportOptions.groups = ReportOptions.Groups.ONLY;
     }
 
     public void setGroupingDisabled() {
-        this.cliOptions.groups = Groups.NO;
+        this.reportOptions.groups = ReportOptions.Groups.NO;
     }
 
     public void verifyFeesTotal(String account, String period, String amount) {
@@ -251,7 +199,7 @@ public class ReportDsl {
     }
 
     public void setDeltas() {
-        cliOptions.delta = true;
+        reportOptions.delta = true;
     }
 
     public void verifyDeposits(String account, String period, String amount) {
@@ -267,23 +215,23 @@ public class ReportDsl {
     }
 
     public void setGroupingEnabled() {
-        cliOptions.groups = Groups.YES;
+        reportOptions.groups = ReportOptions.Groups.YES;
     }
 
     public void setQuarterly() {
-        cliOptions.interval = "quarter";
+        reportOptions.interval = "quarter";
     }
 
     public void setMonthly() {
-        cliOptions.interval = "month";
+        reportOptions.interval = "month";
     }
 
     public void setCurrency(String currency) {
-        cliOptions.currency = currency;
+        reportOptions.currency = currency;
     }
 
     public void setCurrentDate(String s) {
-        cliOptions.overrideToday = s;
+        reportOptions.overrideToday = s;
     }
 
     private boolean isAccountInResults(String account) {
@@ -392,7 +340,7 @@ public class ReportDsl {
     }
 
     public void setCliOutput() {
-        cliOptions.jsonOutput = false;
+        reportOptions.jsonOutput = false;
     }
 
     private PortfolioStatsDto2 getResultDto() {
@@ -409,7 +357,7 @@ public class ReportDsl {
                 .boxed()
                 .map(i -> "someArgumentValue")
                 .toList());
-        cliRunResult = appRunner.run(args);
+        cliRunResult = beanvestRunner.run(args);
         return this;
     }
 
@@ -550,9 +498,6 @@ public class ReportDsl {
     }
 
     public void storeJournal(String file, String content) {
-        if (tempDirectory == null) {
-            tempDirectory = testFiles.createTempDirectory();
-        }
         try {
             var filePath = Path.of(tempDirectory.toString() + "/" + file);
             Files.createDirectories(filePath.getParent());
@@ -563,7 +508,7 @@ public class ReportDsl {
     }
 
     public void setReportHoldings() {
-        cliOptions.reportInvestments = true;
+        reportOptions.reportInvestments = true;
     }
 
     public void verifyWithdrawalsError(String s, String total, String s1) {
@@ -580,33 +525,7 @@ public class ReportDsl {
 
     }
 
-
-    enum Groups {
-        YES,
-        NO,
-        ONLY
-    }
-
     public void cleanUp() {
         testFiles.cleanUp();
-    }
-
-    static class CliOptions {
-
-        public Groups groups;
-        public boolean onlyFinishedPeriods = false;
-        public boolean delta = false;
-        public String interval = null;
-        public boolean showClosed = false;
-        public String currency;
-        public String overrideToday;
-        public boolean reportInvestments;
-        List<String> columns = new ArrayList<>();
-        String account;
-        String end;
-        String start;
-        boolean allowNonZeroExitCodes = false;
-        boolean jsonOutput = true;
-        boolean noSecurities = false;
     }
 }

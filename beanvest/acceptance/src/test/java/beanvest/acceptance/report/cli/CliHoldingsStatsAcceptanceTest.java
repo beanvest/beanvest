@@ -19,7 +19,7 @@ public class CliHoldingsStatsAcceptanceTest {
         dsl.setColumns("deps,wths,intr,fees,xirr,rgain,ugain,div,value");
         dsl.setReportHoldings();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account fidelityIsa
                 currency GBP
                                 

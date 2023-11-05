@@ -10,7 +10,7 @@ public class InterestAcceptanceTest {
     void calculatesInterestTotal() {
         dsl.setColumns("Intr");
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -28,7 +28,7 @@ public class InterestAcceptanceTest {
     void holdingsCantGenerateInterest() {
         dsl.setColumns("Intr");
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

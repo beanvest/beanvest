@@ -13,7 +13,7 @@ public class PeriodicXirrDeltaAcceptanceTest {
         dsl.setDeltas();
         dsl.setEnd("2024-01-01");
         dsl.setGroupingDisabled();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -35,7 +35,7 @@ public class PeriodicXirrDeltaAcceptanceTest {
         dsl.setDeltas();
         dsl.setEnd("2022-01-01");
         dsl.setGroupingDisabled();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -55,7 +55,7 @@ public class PeriodicXirrDeltaAcceptanceTest {
         dsl.setEnd("2022-01-01");
         dsl.setGroupingDisabled();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                            
@@ -76,7 +76,7 @@ public class PeriodicXirrDeltaAcceptanceTest {
         dsl.setGroupingDisabled();
         dsl.setReportHoldings();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                            
@@ -98,7 +98,7 @@ public class PeriodicXirrDeltaAcceptanceTest {
         dsl.setGroupingDisabled();
         dsl.setReportHoldings();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                            
@@ -117,7 +117,7 @@ public class PeriodicXirrDeltaAcceptanceTest {
         dsl.setEnd("2022-01-01");
         dsl.setGroupingDisabled();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                            

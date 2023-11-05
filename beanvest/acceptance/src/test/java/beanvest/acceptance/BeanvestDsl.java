@@ -1,8 +1,8 @@
 package beanvest.acceptance;
 
 import beanvest.BeanvestMain;
+import beanvest.acceptance.report.dsl.BeanvestRunner;
 import beanvest.lib.apprunner.AppRunner;
-import beanvest.lib.apprunner.AppRunnerFactory;
 import beanvest.lib.apprunner.CliExecutionResult;
 
 import java.util.Arrays;
@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class BeanvestDsl {
     public BeanvestDsl() {
-        appRunner = AppRunnerFactory.createRunner(BeanvestMain.class);
+        appRunner = BeanvestRunner.createRunner(BeanvestMain.class);
     }
 
     public void close()
@@ -21,7 +21,7 @@ public class BeanvestDsl {
         appRunner.close();
     }
 
-    private final AppRunner appRunner;
+    private final BeanvestRunner appRunner;
     private CliExecutionResult cliRunResult;
 
     public void run() {

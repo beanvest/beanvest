@@ -12,7 +12,7 @@ public class ValueDeltaAcceptanceTest {
         dsl.setYearly();
         dsl.setDeltas();
         dsl.setColumns("value");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

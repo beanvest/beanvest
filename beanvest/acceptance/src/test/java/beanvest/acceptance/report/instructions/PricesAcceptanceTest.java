@@ -12,7 +12,7 @@ public class PricesAcceptanceTest {
         dsl.setCliOutput();
         dsl.setColumns("value");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
 
@@ -30,7 +30,7 @@ public class PricesAcceptanceTest {
         dsl.setCliOutput();
         dsl.setColumns("value");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
 
@@ -44,7 +44,7 @@ public class PricesAcceptanceTest {
     @Test
     void constantPriceDoNotNeedToBeUpdated() {
         dsl.setColumns("Value");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account property
                 currency GBP
                                 

@@ -1,8 +1,8 @@
 package beanvest.acceptance.importer;
 
 import beanvest.BeanvestMain;
+import beanvest.acceptance.report.dsl.BeanvestRunner;
 import beanvest.lib.apprunner.AppRunner;
-import beanvest.lib.apprunner.AppRunnerFactory;
 import beanvest.lib.testing.TestFiles;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ImportDuplicatedTransactionsAcceptanceTest {
-    protected AppRunner runner = AppRunnerFactory.createRunner(BeanvestMain.class, "import");
+    protected BeanvestRunner runner = BeanvestRunner.createRunner(BeanvestMain.class, "import");
     @Test
     void preferIncomeExpenseIfDuplicatedTransaction() {
         var path = TestFiles.writeToTempFile("""

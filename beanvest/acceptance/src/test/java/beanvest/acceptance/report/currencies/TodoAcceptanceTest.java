@@ -13,7 +13,7 @@ public class TodoAcceptanceTest {
         dsl.setCurrency("GBP");
         dsl.setYearly();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency PLN
                                 
@@ -34,7 +34,7 @@ public class TodoAcceptanceTest {
         dsl.setYearly();
         dsl.setCurrency("GBP");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency PLN
                                 
@@ -54,7 +54,7 @@ public class TodoAcceptanceTest {
     void realizedGainsCanBeConverted() {
         dsl.setCurrency("GBP");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency PLN
                                 
@@ -74,7 +74,7 @@ public class TodoAcceptanceTest {
         dsl.setEnd("2021-01-22");
         dsl.setCurrency("GBP");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency PLN
                                 
@@ -94,7 +94,7 @@ public class TodoAcceptanceTest {
         dsl.setEnd("2021-01-22");
         dsl.setCurrency("GBP");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency PLN
                                 
@@ -116,7 +116,7 @@ public class TodoAcceptanceTest {
         dsl.setEnd("2021-01-22");
         dsl.setCurrency("GBP");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency QWE
                                 
@@ -132,7 +132,7 @@ public class TodoAcceptanceTest {
 
     @Test
     void irrelevantPricesAreAllowedAnywhere() {
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

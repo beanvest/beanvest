@@ -8,7 +8,7 @@ public class BalanceAcceptanceTest {
 
     @Test
     void nothingHappensIfBalanceMatches() {
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -21,7 +21,7 @@ public class BalanceAcceptanceTest {
     @Test
     void validationFailsIfCashBalanceDoesNotMatch() {
         dsl.setAllowNonZeroExitCodes();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -40,7 +40,7 @@ public class BalanceAcceptanceTest {
     @Test
     void validationFailsIfHoldingBalanceDoesNotMatch() {
         dsl.setAllowNonZeroExitCodes();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -59,7 +59,7 @@ public class BalanceAcceptanceTest {
     @Test
     void balanceIsCheckedForJustOneAccount() {
         dsl.setAllowNonZeroExitCodes();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -79,7 +79,7 @@ public class BalanceAcceptanceTest {
     void orderOfBalanceInstructionWithinTheDayIsImportant() {
         dsl.setAllowNonZeroExitCodes();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading2
                 currency GBP
                                 

@@ -11,7 +11,7 @@ public class WithdrawalCurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("wths");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -30,7 +30,7 @@ public class WithdrawalCurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("wths");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -50,7 +50,7 @@ public class WithdrawalCurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("wths");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -69,7 +69,7 @@ public class WithdrawalCurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("wths");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -89,7 +89,7 @@ public class WithdrawalCurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("wths");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

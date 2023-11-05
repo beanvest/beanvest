@@ -12,7 +12,7 @@ public class ValueCurrencyConversionAcceptanceTest {
         dsl.setColumns("value");
         dsl.setEnd("2021-01-05");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -30,7 +30,7 @@ public class ValueCurrencyConversionAcceptanceTest {
         dsl.setColumns("value");
         dsl.setEnd("2021-01-05");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

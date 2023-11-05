@@ -2,11 +2,8 @@ package beanvest.acceptance.options;
 
 import beanvest.BeanvestMain;
 import beanvest.lib.apprunner.AppRunner;
-import beanvest.lib.apprunner.AppRunnerFactory;
-import beanvest.lib.apprunner.CliExecutionResult;
 import beanvest.lib.apprunner.ReflectionRunner;
 import com.google.gson.Gson;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;

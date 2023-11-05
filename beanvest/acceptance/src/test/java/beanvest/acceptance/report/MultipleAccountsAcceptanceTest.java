@@ -11,7 +11,7 @@ public class MultipleAccountsAcceptanceTest {
         dsl.setEnd("2023-01-01");
         dsl.setColumns("again,xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account pension
                 currency GBP
                                 
@@ -37,7 +37,7 @@ public class MultipleAccountsAcceptanceTest {
         dsl.setGroupingEnabled();
         dsl.setColumns("again,xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account pension
                 currency GBP
                                 
@@ -62,7 +62,7 @@ public class MultipleAccountsAcceptanceTest {
         dsl.setGroupingEnabled();
         dsl.setColumns("again,xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account pension
                 currency GBP
                                 

@@ -12,7 +12,7 @@ public class CurrencyGainCurrencyConversionAcceptanceTest {
         dsl.setColumns("cgain,ugain,value");
         dsl.setEnd("2021-01-07");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -34,7 +34,7 @@ public class CurrencyGainCurrencyConversionAcceptanceTest {
         dsl.setColumns("cgain,ugain,value");
         dsl.setEnd("2021-01-08");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -55,7 +55,7 @@ public class CurrencyGainCurrencyConversionAcceptanceTest {
         dsl.setColumns("CGain");
         dsl.setEnd("2021-01-07");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

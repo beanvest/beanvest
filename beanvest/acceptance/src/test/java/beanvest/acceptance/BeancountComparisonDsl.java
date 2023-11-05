@@ -1,5 +1,6 @@
 package beanvest.acceptance;
 
+import beanvest.acceptance.report.dsl.BeanvestRunner;
 import beanvest.lib.apprunner.AppRunner;
 import beanvest.lib.testing.TestFiles;
 import beanvest.lib.util.gson.GsonFactory;
@@ -13,12 +14,12 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BeancountComparisonDsl {
-    private final AppRunner exportRunner;
-    private final AppRunner returnsRunner;
+    private final BeanvestRunner exportRunner;
+    private final BeanvestRunner returnsRunner;
     private BeanReport.Holdings bcHoldings;
     private PortfolioStatsDto bvStats;
 
-    public BeancountComparisonDsl(AppRunner exportRunner, AppRunner returnsRunner) {
+    public BeancountComparisonDsl(BeanvestRunner exportRunner, BeanvestRunner returnsRunner) {
 
         this.exportRunner = exportRunner;
         this.returnsRunner = returnsRunner;

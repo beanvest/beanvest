@@ -14,7 +14,7 @@ public class XirrPeriodicAcceptanceTest {
         dsl.setDeltas();
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                             
@@ -37,7 +37,7 @@ public class XirrPeriodicAcceptanceTest {
         dsl.setDeltas();
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                             
@@ -60,7 +60,7 @@ public class XirrPeriodicAcceptanceTest {
         dsl.setDeltas();
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                             
@@ -83,7 +83,7 @@ public class XirrPeriodicAcceptanceTest {
         dsl.setColumns("xirr");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account pension
                 currency GBP
                                 

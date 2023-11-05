@@ -10,7 +10,7 @@ public class UnrealizedGainAcceptanceTest {
     void calculatesUnrealizedGain() {
         dsl.setEnd("2021-01-06");
         dsl.setColumns("UGain");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -27,7 +27,7 @@ public class UnrealizedGainAcceptanceTest {
     void unrealizedGainAfterPartialSale() {
         dsl.setEnd("2021-01-06");
         dsl.setColumns("UGain");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -50,7 +50,7 @@ public class UnrealizedGainAcceptanceTest {
     void unrealizedGainIsZeroedWhenSelling() {
         dsl.setEnd("2021-01-06");
         dsl.setColumns("UGain");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -67,7 +67,7 @@ public class UnrealizedGainAcceptanceTest {
     void calculatesUnrealizedGainFromMultipleSecurities() {
         dsl.setEnd("2021-01-06");
         dsl.setColumns("UGain");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -88,7 +88,7 @@ public class UnrealizedGainAcceptanceTest {
         dsl.setReportHoldings();
         dsl.setEnd("2021-01-06");
         dsl.setColumns("UGain");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

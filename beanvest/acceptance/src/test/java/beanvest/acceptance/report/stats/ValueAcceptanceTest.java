@@ -11,7 +11,7 @@ public class ValueAcceptanceTest {
         dsl.setEnd("2023-01-01");
         dsl.setColumns("value");
         dsl.setYearly();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -31,7 +31,7 @@ public class ValueAcceptanceTest {
         dsl.setColumns("value");
         dsl.setYearly();
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -49,7 +49,7 @@ public class ValueAcceptanceTest {
         dsl.setColumns("value");
         dsl.setYearly();
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -68,7 +68,7 @@ public class ValueAcceptanceTest {
         dsl.setColumns("value");
         dsl.setYearly();
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -87,7 +87,7 @@ public class ValueAcceptanceTest {
         dsl.setColumns("value");
         dsl.setYearly();
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -106,7 +106,7 @@ public class ValueAcceptanceTest {
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
         dsl.setGroupingDisabled();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -126,7 +126,7 @@ public class ValueAcceptanceTest {
         dsl.setColumns("value");
         dsl.setEnd("2022-01-01");
         dsl.setYearly();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -152,7 +152,7 @@ public class ValueAcceptanceTest {
         dsl.setColumns("value");
         dsl.setReportHoldings();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account account
                 currency GBP
                     

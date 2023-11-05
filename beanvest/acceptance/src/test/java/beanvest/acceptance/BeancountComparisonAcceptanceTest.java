@@ -1,15 +1,15 @@
 package beanvest.acceptance;
 
 import beanvest.BeanvestMain;
-import beanvest.lib.apprunner.AppRunnerFactory;
+import beanvest.acceptance.report.dsl.BeanvestRunner;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @Disabled("rework v2")
 public class BeancountComparisonAcceptanceTest {
     private final BeancountComparisonDsl dsl = new BeancountComparisonDsl(
-            AppRunnerFactory.createRunner(BeanvestMain.class, "export"),
-            AppRunnerFactory.createRunner(BeanvestMain.class, "returns")
+            BeanvestRunner.createRunner(BeanvestMain.class, "export"),
+            BeanvestRunner.createRunner(BeanvestMain.class, "returns")
     );
 
     @Test

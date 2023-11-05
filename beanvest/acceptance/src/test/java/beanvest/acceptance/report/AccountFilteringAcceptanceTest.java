@@ -11,7 +11,7 @@ public class AccountFilteringAcceptanceTest {
         dsl.setAccountFilter("tra.*");
         dsl.setColumns("deps");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account saving
                 currency GBP
                                 
@@ -37,7 +37,7 @@ public class AccountFilteringAcceptanceTest {
     void totalReturnsAreForOnlyMatchingAccounts() {
         dsl.setAccountFilter("tra.*");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account saving
                 currency GBP
                                 
@@ -65,7 +65,7 @@ public class AccountFilteringAcceptanceTest {
     void mightSkipCalculatingAllTheAccountsSeparately() {
         dsl.setGroupsOnly();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account saving
                 currency GBP
                                 

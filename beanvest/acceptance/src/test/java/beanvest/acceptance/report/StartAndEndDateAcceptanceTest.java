@@ -9,7 +9,7 @@ public class StartAndEndDateAcceptanceTest {
     @Test
     void usesCurrentDateByDefault() {
         dsl.setColumns("AGain");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -26,7 +26,7 @@ public class StartAndEndDateAcceptanceTest {
         dsl.setEnd("2022-05-01");
         dsl.setColumns("profit");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -44,7 +44,7 @@ public class StartAndEndDateAcceptanceTest {
         dsl.setColumns("again");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -61,7 +61,7 @@ public class StartAndEndDateAcceptanceTest {
         dsl.setStartDate("2021-02-01");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -84,7 +84,7 @@ public class StartAndEndDateAcceptanceTest {
     void accountsOpenAfterEndDateAreNotVisible() {
         dsl.setEnd("2016-06-01");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -109,7 +109,7 @@ public class StartAndEndDateAcceptanceTest {
         dsl.setColumns("deps");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account alreadyClosed
                 currency GBP
                                 
@@ -133,7 +133,7 @@ public class StartAndEndDateAcceptanceTest {
         dsl.setStartDate("2022-01-01");
         dsl.setColumns("deps");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account alreadyClosed
                 currency GBP
                                 

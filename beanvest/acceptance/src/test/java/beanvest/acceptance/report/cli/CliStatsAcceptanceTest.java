@@ -17,7 +17,7 @@ public class CliStatsAcceptanceTest {
         dsl.setColumns("fees");
         dsl.setGroupingDisabled();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -44,7 +44,7 @@ public class CliStatsAcceptanceTest {
         dsl.setDeltas();
         dsl.setGroupingDisabled();
         dsl.setColumns("fees");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -71,7 +71,7 @@ public class CliStatsAcceptanceTest {
         dsl.setColumns("aGain");
         dsl.setGroupingDisabled();
         dsl.setYearly();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -96,7 +96,7 @@ public class CliStatsAcceptanceTest {
         dsl.setColumns("xirr");
         dsl.setGroupingDisabled();
         dsl.setYearly();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

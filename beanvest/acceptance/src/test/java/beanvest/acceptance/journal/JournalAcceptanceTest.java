@@ -1,8 +1,8 @@
 package beanvest.acceptance.journal;
 
 import beanvest.BeanvestMain;
+import beanvest.acceptance.report.dsl.BeanvestRunner;
 import beanvest.lib.apprunner.AppRunner;
-import beanvest.lib.apprunner.AppRunnerFactory;
 import beanvest.lib.testing.TestFiles;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class JournalAcceptanceTest {
-    protected AppRunner runner = AppRunnerFactory.createRunner(BeanvestMain.class, "journal");
+    protected BeanvestRunner runner = BeanvestRunner.createRunner(BeanvestMain.class, "journal");
 
     @Test
     @Disabled("borked due to error handling rework")

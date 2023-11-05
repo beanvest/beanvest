@@ -10,7 +10,7 @@ public class DepositsAndWithdrawalsAcceptanceTest {
     void calculatesDeposits() {
         dsl.setColumns("Deps");
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -26,7 +26,7 @@ public class DepositsAndWithdrawalsAcceptanceTest {
     void calculatesWithdrawals() {
         dsl.setColumns("Wths");
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -43,7 +43,7 @@ public class DepositsAndWithdrawalsAcceptanceTest {
     void calculatesDepositsAndWithdrawals() {
         dsl.setColumns("DW");
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -61,7 +61,7 @@ public class DepositsAndWithdrawalsAcceptanceTest {
         dsl.setDeltas();
         dsl.setYearly();
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -77,7 +77,7 @@ public class DepositsAndWithdrawalsAcceptanceTest {
     @Test
     void holdingsHaveNoDepositsOrWithdrawals() {
         dsl.setColumns("Wths,Deps");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -95,7 +95,7 @@ public class DepositsAndWithdrawalsAcceptanceTest {
         dsl.setColumns("Deps");
         dsl.setReportHoldings();
         dsl.setGroupingEnabled();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account shares:fidelity
                 currency GBP
                                 

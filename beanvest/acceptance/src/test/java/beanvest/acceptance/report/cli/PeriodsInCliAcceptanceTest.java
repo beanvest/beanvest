@@ -19,7 +19,7 @@ public class PeriodsInCliAcceptanceTest {
         dsl.setColumns("deps");
         dsl.setGroupingDisabled();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -41,7 +41,7 @@ public class PeriodsInCliAcceptanceTest {
         dsl.setGroupingDisabled();
         dsl.setColumns("deps");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -64,7 +64,7 @@ public class PeriodsInCliAcceptanceTest {
         dsl.setDeltas();
         dsl.setGroupingDisabled();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -88,7 +88,7 @@ public class PeriodsInCliAcceptanceTest {
         dsl.setColumns("deps");
         dsl.setGroupingDisabled();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -111,7 +111,7 @@ public class PeriodsInCliAcceptanceTest {
         dsl.setColumns("Deps");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -135,7 +135,7 @@ public class PeriodsInCliAcceptanceTest {
         dsl.setColumns("Deps");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -156,7 +156,7 @@ public class PeriodsInCliAcceptanceTest {
         dsl.setColumns("value");
         dsl.setGroupingDisabled();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account openedEarlier
                 currency GBP
 
@@ -188,7 +188,7 @@ public class PeriodsInCliAcceptanceTest {
         dsl.setEnd("month");
         dsl.setCurrentDate("2022-12-22");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

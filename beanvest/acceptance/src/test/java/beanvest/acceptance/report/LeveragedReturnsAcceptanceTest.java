@@ -12,7 +12,7 @@ public class LeveragedReturnsAcceptanceTest {
         dsl.setGroupingEnabled();
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account saving
                 currency GBP
                                 
@@ -35,7 +35,7 @@ public class LeveragedReturnsAcceptanceTest {
         dsl.setGroupingEnabled();
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account saving
                 currency GBP
                                 
@@ -58,7 +58,7 @@ public class LeveragedReturnsAcceptanceTest {
         dsl.setGroupingEnabled();
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account saving
                 currency GBP
                                 

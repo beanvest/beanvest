@@ -12,7 +12,7 @@ public class DividendsDeltaAcceptanceTest {
         dsl.setYearly();
         dsl.setColumns("Div");
         dsl.setDeltas();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

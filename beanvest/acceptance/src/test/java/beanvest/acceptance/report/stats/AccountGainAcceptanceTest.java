@@ -11,7 +11,7 @@ public class AccountGainAcceptanceTest {
         dsl.setEnd("2021-01-21");
         dsl.setColumns("again");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -30,7 +30,7 @@ public class AccountGainAcceptanceTest {
     void returnIsCalculatedUpToClosingDateOfTheAccount() {
         dsl.setEnd("2021-03-03");
         dsl.setColumns("again");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -48,7 +48,7 @@ public class AccountGainAcceptanceTest {
         dsl.setEnd("2021-01-21");
         dsl.setReportHoldings();
         dsl.setColumns("again");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

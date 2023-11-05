@@ -23,7 +23,7 @@ public class CliCalculationErrorsAcceptanceTest {
     void printsErrorIfJournalCantBeRead() {
         dsl.setAllowNonZeroExitCodes();
 
-        dsl.runCalculateReturnsWithLedgerPaths("missingJournal");
+        dsl.calculateReturnsForJournalPaths("missingJournal");
         dsl.verifyNonZeroExitCode()
                 .verifyStdErrContains("Journal `missingJournal` not found");
     }
@@ -34,7 +34,7 @@ public class CliCalculationErrorsAcceptanceTest {
         dsl.setColumns("xirr");
         dsl.setGroupingDisabled();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -51,7 +51,7 @@ public class CliCalculationErrorsAcceptanceTest {
         dsl.setEnd("2022-02-01");
         dsl.setColumns("ugain");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -65,7 +65,7 @@ public class CliCalculationErrorsAcceptanceTest {
         dsl.setEnd("2022-02-01");
         dsl.setColumns("ugain");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -84,7 +84,7 @@ public class CliCalculationErrorsAcceptanceTest {
         dsl.setDeltas();
         dsl.setYearly();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -105,7 +105,7 @@ public class CliCalculationErrorsAcceptanceTest {
         dsl.setColumns("deps");
         dsl.setGroupingDisabled();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

@@ -10,7 +10,7 @@ public class FeesAcceptanceTest {
     void calculatesFeesTotal() {
         dsl.setColumns("Fees");
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -28,7 +28,7 @@ public class FeesAcceptanceTest {
     @Test
     void feeMightBeNegativeInCaseOfReturnedFee() {
         dsl.setColumns("Fees");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -45,7 +45,7 @@ public class FeesAcceptanceTest {
         dsl.setColumns("Fees");
         dsl.setReportHoldings();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

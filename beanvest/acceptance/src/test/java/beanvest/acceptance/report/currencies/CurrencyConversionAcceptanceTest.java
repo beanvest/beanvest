@@ -11,7 +11,7 @@ public class CurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("deps");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account tradingPLN
                 currency PLN
                                 

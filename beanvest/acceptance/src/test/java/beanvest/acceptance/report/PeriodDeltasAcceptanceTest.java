@@ -12,7 +12,7 @@ public class PeriodDeltasAcceptanceTest {
         dsl.setColumns("deps");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                                 
@@ -31,7 +31,7 @@ public class PeriodDeltasAcceptanceTest {
         dsl.setStartDate("2021-01-01");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                                 
@@ -49,7 +49,7 @@ public class PeriodDeltasAcceptanceTest {
         dsl.setColumns("deps");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                                 
@@ -66,7 +66,7 @@ public class PeriodDeltasAcceptanceTest {
         dsl.setColumns("deps");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                                 
@@ -85,7 +85,7 @@ public class PeriodDeltasAcceptanceTest {
         dsl.setColumns("deps");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                                 

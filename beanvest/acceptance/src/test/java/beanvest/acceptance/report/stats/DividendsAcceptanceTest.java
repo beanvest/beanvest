@@ -10,7 +10,7 @@ public class DividendsAcceptanceTest {
     void calculatesDividend() {
         dsl.setColumns("Div");
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -29,7 +29,7 @@ public class DividendsAcceptanceTest {
     void calculatesDividendOfHoldings() {
         dsl.setColumns("Div");
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -52,7 +52,7 @@ public class DividendsAcceptanceTest {
         dsl.setColumns("value");
         dsl.setReportHoldings();
         dsl.setEnd("2023-01-01");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

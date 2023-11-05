@@ -11,7 +11,7 @@ public class DecimalPrecisionAcceptanceTest {
         dsl.setYearly();
         dsl.setReportHoldings();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account pension
                 currency GBP
                                 

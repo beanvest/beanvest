@@ -23,7 +23,7 @@ public class CliAcceptanceTest {
         dsl.setColumns("value");
         dsl.setGroupingDisabled();
 
-        dsl.runCalculateReturns(
+        dsl.calculateReturns(
                 """
                         account taxable
                         currency GBP
@@ -42,7 +42,7 @@ public class CliAcceptanceTest {
         dsl.setEnd("2023-01-01");
         dsl.setJsonOutput();
 
-        dsl.runCalculateReturns(
+        dsl.calculateReturns(
                 """
                         account taxable
                         currency GBP
@@ -59,7 +59,7 @@ public class CliAcceptanceTest {
         dsl.setGroupingDisabled();
         dsl.setColumns("value");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -83,7 +83,7 @@ public class CliAcceptanceTest {
         dsl.setGroupingDisabled();
         dsl.setColumns("Deps,Wths");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -120,7 +120,7 @@ public class CliAcceptanceTest {
                         """
         );
 
-        dsl.runCalculateReturnsOnDirectory("myJournals");
+        dsl.calculateReturnsForDirectory("myJournals");
 
         dsl.verifyOutput("""
                 Account  Deps

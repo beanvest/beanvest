@@ -8,7 +8,7 @@ public class OpenAndCloseDatesAcceptanceTest {
 
     @Test
     void returnsAccountOpeningDate() {
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account saving
                 currency GBP
                                 
@@ -28,7 +28,7 @@ public class OpenAndCloseDatesAcceptanceTest {
     void returnsAccountClosingDate() {
         dsl.setEnd("2023-01-01");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account saving
                 currency GBP
                                 
@@ -58,7 +58,7 @@ public class OpenAndCloseDatesAcceptanceTest {
     void shouldReturnOpeningAndClosingDatesOfHoldings() {
         dsl.setColumns("Opened,Closed");
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account saving
                 currency GBP
                                 

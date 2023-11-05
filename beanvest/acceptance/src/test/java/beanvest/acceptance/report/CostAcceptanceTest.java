@@ -12,7 +12,7 @@ public class CostAcceptanceTest {
     void netCostOfAccount_withdrawalsReduceIt() {
         dsl.setEnd("2022-01-01");
         dsl.setColumns("cost");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -27,7 +27,7 @@ public class CostAcceptanceTest {
     void netCostOfAccount_withdrawalsReduceItBasedOnAverageCostPerUnit() {
         dsl.setEnd("2022-01-01");
         dsl.setColumns("cost");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -44,7 +44,7 @@ public class CostAcceptanceTest {
         dsl.setEnd("2022-01-01");
         dsl.setColumns("cost");
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -62,7 +62,7 @@ public class CostAcceptanceTest {
         dsl.setColumns("cost");
         dsl.setReportHoldings();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -81,7 +81,7 @@ public class CostAcceptanceTest {
         dsl.setColumns("cost");
         dsl.setReportHoldings();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -101,7 +101,7 @@ public class CostAcceptanceTest {
         dsl.setColumns("cost");
         dsl.setReportHoldings();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -119,7 +119,7 @@ public class CostAcceptanceTest {
         dsl.setColumns("cost");
         dsl.setReportHoldings();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -137,7 +137,7 @@ public class CostAcceptanceTest {
         dsl.setColumns("cost");
         dsl.setReportHoldings();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account isa
                 currency GBP
                                 
@@ -155,7 +155,7 @@ public class CostAcceptanceTest {
         dsl.setColumns("cost");
         dsl.setGroupingEnabled();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account leveraged:isa
                 currency GBP
                                 
@@ -177,7 +177,7 @@ public class CostAcceptanceTest {
         dsl.setColumns("cost,value");
         dsl.setGroupingEnabled();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

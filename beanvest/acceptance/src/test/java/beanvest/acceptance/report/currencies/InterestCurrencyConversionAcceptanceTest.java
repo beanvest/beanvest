@@ -11,7 +11,7 @@ public class InterestCurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("intr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -29,7 +29,7 @@ public class InterestCurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("intr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

@@ -1,8 +1,8 @@
 package beanvest.acceptance.export;
 
 import beanvest.BeanvestMain;
+import beanvest.acceptance.report.dsl.BeanvestRunner;
 import beanvest.lib.apprunner.AppRunner;
-import beanvest.lib.apprunner.AppRunnerFactory;
 import beanvest.lib.testing.TestFiles;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Disabled("rework v2: relies on string account ids")
 public class ExportSortingAcceptanceTest {
-    protected AppRunner runner = AppRunnerFactory.createRunner(BeanvestMain.class, "export");
+    protected BeanvestRunner runner = BeanvestRunner.createRunner(BeanvestMain.class, "export");
 
     @Test
     void orderOfTransactionsOnOneDayIsPreserved() {

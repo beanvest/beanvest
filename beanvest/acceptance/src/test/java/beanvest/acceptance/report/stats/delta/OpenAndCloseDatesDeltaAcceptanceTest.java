@@ -10,7 +10,7 @@ public class OpenAndCloseDatesDeltaAcceptanceTest {
         dsl.setYearly();
         dsl.setStartDate("2021-01-01");
         dsl.setEnd("2023-01-01");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

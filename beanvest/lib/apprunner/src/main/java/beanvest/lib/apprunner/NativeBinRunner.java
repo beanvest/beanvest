@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class NativeBinRunner implements AppRunner {
+public class NativeBinRunner implements AppRunner, CliAppRunner {
     private final String binaryPath;
     private final Optional<String> maybeSubcommand;
 

@@ -11,7 +11,7 @@ public class RealizedGainCurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("rgain");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -30,7 +30,7 @@ public class RealizedGainCurrencyConversionAcceptanceTest {
         dsl.setColumns("rgain");
         dsl.setEnd("2021-01-10");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

@@ -13,7 +13,7 @@ public class AccountGainDeltaAcceptanceTest {
         dsl.setDeltas();
         dsl.setColumns("again");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -32,7 +32,7 @@ public class AccountGainDeltaAcceptanceTest {
         dsl.setColumns("again");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -53,7 +53,7 @@ public class AccountGainDeltaAcceptanceTest {
         dsl.setColumns("again");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -74,7 +74,7 @@ public class AccountGainDeltaAcceptanceTest {
         dsl.setColumns("again");
         dsl.setDeltas();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -94,7 +94,7 @@ public class AccountGainDeltaAcceptanceTest {
         dsl.setMonthly();
         dsl.setColumns("again");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

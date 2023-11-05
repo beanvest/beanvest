@@ -11,7 +11,7 @@ public class RealizedGainAcceptanceTest {
         dsl.setColumns("RGain");
         dsl.setEnd("2021-01-03");
         dsl.setReportHoldings();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -28,7 +28,7 @@ public class RealizedGainAcceptanceTest {
     @Test
     void realizedGainsAreReducedBySellingFees() {
         dsl.setColumns("RGain");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -43,7 +43,7 @@ public class RealizedGainAcceptanceTest {
     void realizedGainsAreReducedByBuyingFees() {
         dsl.setColumns("RGain");
         dsl.setEnd("2021-01-03");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -60,7 +60,7 @@ public class RealizedGainAcceptanceTest {
     void calculatesGainWhenSellingInParts() {
         dsl.setColumns("RGain");
         dsl.setEnd("2021-01-03");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                               
@@ -76,7 +76,7 @@ public class RealizedGainAcceptanceTest {
         dsl.setColumns("RGain");
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -97,7 +97,7 @@ public class RealizedGainAcceptanceTest {
         dsl.setReportHoldings();
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

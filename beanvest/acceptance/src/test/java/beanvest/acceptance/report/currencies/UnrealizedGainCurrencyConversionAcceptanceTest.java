@@ -12,7 +12,7 @@ public class UnrealizedGainCurrencyConversionAcceptanceTest {
         dsl.setColumns("ugain");
         dsl.setEnd("2021-01-10");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -31,7 +31,7 @@ public class UnrealizedGainCurrencyConversionAcceptanceTest {
         dsl.setColumns("ugain");
         dsl.setEnd("2021-01-10");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

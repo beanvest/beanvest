@@ -11,7 +11,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setEnd("2023-01-01");
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account pension
                 currency GBP
                                 
@@ -27,7 +27,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setEnd("2023-01-01");
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account pension
                 currency GBP
                                 
@@ -43,7 +43,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setEnd("2021-12-31");
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account smallerGain
                 currency GBP
                                 
@@ -68,7 +68,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setYearly();
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                             
@@ -88,7 +88,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setYearly();
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
 
@@ -104,7 +104,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setEnd("2023-01-01");
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -120,7 +120,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setStartDate("2019-01-01");
         dsl.setEnd("2020-01-01");
         dsl.setColumns("xirr");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                                 
@@ -136,7 +136,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setYearly();
         dsl.setEnd("2023-01-01");
         dsl.setColumns("xirr");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                                      
@@ -155,7 +155,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setGroupingEnabled();
         dsl.setEnd("2023-01-01");
         dsl.setColumns("xirr");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                                      
@@ -177,7 +177,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setGroupingEnabled();
         dsl.setEnd("2023-01-01");
         dsl.setColumns("xirr");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                                      
@@ -200,7 +200,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setGroupingEnabled();
         dsl.setColumns("xirr");
         dsl.setEnd("2023-01-01");
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account savings
                 currency GBP
                                      
@@ -223,7 +223,7 @@ public class XirrCumulativeAcceptanceTest {
         dsl.setEnd("2023-01-01");
         dsl.setColumns("xirr");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account pension
                 currency GBP
                                 

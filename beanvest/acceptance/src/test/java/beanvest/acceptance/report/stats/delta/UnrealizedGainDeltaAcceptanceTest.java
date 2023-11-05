@@ -12,7 +12,7 @@ public class UnrealizedGainDeltaAcceptanceTest {
         dsl.setYearly();
         dsl.setColumns("UGain");
         dsl.setDeltas();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

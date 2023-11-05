@@ -13,7 +13,7 @@ public class JournalValidationAcceptanceTest {
         dsl.setColumns("value,xirr");
         dsl.setReportHoldings();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account pension
                 currency GBP
                                 
@@ -32,7 +32,7 @@ public class JournalValidationAcceptanceTest {
         dsl.setYearly();
         dsl.setColumns("value");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account pension
                 currency GBP
                                 
@@ -50,7 +50,7 @@ public class JournalValidationAcceptanceTest {
         dsl.setEnd("2021-12-31");
         dsl.setAllowNonZeroExitCodes();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account pension
                                 
                 2019-01-01 deposit 10

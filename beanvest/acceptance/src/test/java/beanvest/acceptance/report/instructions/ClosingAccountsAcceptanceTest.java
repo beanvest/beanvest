@@ -10,7 +10,7 @@ public class ClosingAccountsAcceptanceTest {
     @Test
     void accountWithCashInItCantBeClosed() {
         dsl.setAllowNonZeroExitCodes();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -29,7 +29,7 @@ public class ClosingAccountsAcceptanceTest {
     @Test
     void accountWithHoldingsInItCantBeClosed() {
         dsl.setAllowNonZeroExitCodes();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -47,7 +47,7 @@ public class ClosingAccountsAcceptanceTest {
 
     @Test
     void closingBalanceIsCheckedForClosedAccountOnly() {
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -70,7 +70,7 @@ public class ClosingAccountsAcceptanceTest {
     void orderOfCloseInstructionWithinTheDayIsImportant() {
         dsl.setAllowNonZeroExitCodes();
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -90,7 +90,7 @@ public class ClosingAccountsAcceptanceTest {
 
     @Test
     void bug_bigDecimalNotEqualsZeroAfterSaleDueToDifferentScale() {
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

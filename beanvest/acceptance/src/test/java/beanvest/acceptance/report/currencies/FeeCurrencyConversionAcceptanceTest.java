@@ -11,7 +11,7 @@ public class FeeCurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("deps,wths,fees");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
@@ -35,7 +35,7 @@ public class FeeCurrencyConversionAcceptanceTest {
         dsl.setCurrency("PLN");
         dsl.setColumns("deps,wths,fees");
 
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 

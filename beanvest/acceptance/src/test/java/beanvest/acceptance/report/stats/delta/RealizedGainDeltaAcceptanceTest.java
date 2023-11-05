@@ -12,7 +12,7 @@ public class RealizedGainDeltaAcceptanceTest {
         dsl.setDeltas();
         dsl.setEnd("2023-01-01");
         dsl.setYearly();
-        dsl.runCalculateReturns("""
+        dsl.calculateReturns("""
                 account trading
                 currency GBP
                                 
