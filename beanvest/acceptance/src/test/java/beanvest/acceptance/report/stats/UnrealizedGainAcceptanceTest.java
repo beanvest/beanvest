@@ -1,6 +1,6 @@
 package beanvest.acceptance.report.stats;
 
-import beanvest.acceptance.report.ReportDsl;
+import beanvest.acceptance.report.dsl.ReportDsl;
 import org.junit.jupiter.api.Test;
 
 public class UnrealizedGainAcceptanceTest {

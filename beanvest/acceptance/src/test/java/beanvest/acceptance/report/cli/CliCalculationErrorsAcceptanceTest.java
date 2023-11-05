@@ -1,6 +1,6 @@
 package beanvest.acceptance.report.cli;
 
-import beanvest.acceptance.report.ReportDsl;
+import beanvest.acceptance.report.dsl.ReportDsl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +23,7 @@ public class CliCalculationErrorsAcceptanceTest {
     void printsErrorIfJournalCantBeRead() {
         dsl.setAllowNonZeroExitCodes();
 
-        dsl.runCalculateReturnsWithFilesArgs("missingJournal");
+        dsl.runCalculateReturnsWithLedgerPaths("missingJournal");
         dsl.verifyNonZeroExitCode()
                 .verifyStdErrContains("Journal `missingJournal` not found");
     }

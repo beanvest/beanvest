@@ -1,4 +1,4 @@
-package beanvest.acceptance.report;
+package beanvest.acceptance.report.dsl;
 
 import beanvest.BeanvestMain;
 import beanvest.lib.apprunner.AppRunner;
@@ -37,32 +37,6 @@ public class ReportDsl {
 
     public static final String TOTAL = "TOTAL";
     public static final String DEFAULT_OFFSET = "0.05";
-    public static final String COL_PERIOD_XIRR = "pXirr";
-    public static final String CUMULATIVE_XIRR = "Xirr";
-    public static final String CUMULATIVE_DIVIDEND = "Div";
-    public static final String PERIOD_DIVIDEND = "pDiv";
-    public static final String CUMULATIVE_FEES = "Fees";
-    public static final String PERIOD_INTEREST = "pIntr";
-    public static final String CUMULATIVE_INTEREST = "Intr";
-    public static final String WITHDRAWALS = "Wths";
-    public static final String PERIOD_WITHDRAWALS = "pWths";
-    public static final String PERIOD_DEPOSITS = "pDeps";
-    public static final String CUMULATIVE_DEPOSITS = "Deps";
-    public static final String CUMULATIVE_REALIZED_GAINS = "RGain";
-    public static final String CUMULATIVE_VALUE = "Value";
-    public static final String PERIOD_VALUE = "pValue";
-    public static final String CUMUALTIVE_CASH = "Cash";
-    public static final String PERIOD_CASH = "pCash";
-    public static final String PERIOD_REALIZED_GAINS = "pRGain";
-    public static final String CUMULATIVE_UNREALIZED_GAINS = "UGain";
-    public static final String PERIOD_UNREALIZED_GAINS = "pUGain";
-    public static final String NET_COST = "Cost";
-    public static final String PROFIT = "Profit";
-    public static final String DEPOSITS_PLUS_WITHDRAWALS = "DW";
-    public static final String PERIOD_DEPOSITS_PLUS_WITHDRAWALS = "pDW";
-    public static final String ACCOUNT_GAIN = "AGain";
-    public static final String ACCOUNT_GAIN_PERIODIC = "pAGain";
-    private static final String CUMULATIVE_CURRENCY_GAINS = "CGain";
     private final AppRunner appRunner = AppRunnerFactory.createRunner(BeanvestMain.class, "report");
     private CliExecutionResult cliRunResult;
     private final CliOptions cliOptions = new CliOptions();
@@ -83,16 +57,20 @@ public class ReportDsl {
     }
 
     public void runCalculateReturnsOnDirectory(String ledgersDir) {
-        runCalculateReturnsWithFilesArgs(tempDirectory.toString() + "/" + ledgersDir);
+        runCalculateReturnsWithFilesArgs(List.of(tempDirectory.toString() + "/" + ledgersDir));
     }
 
     public void runCalculateReturns(String ledgers) {
         final List<String> allLedgers = writeToTempFiles(ledgers);
-        runCalculateReturnsWithFilesArgs(allLedgers.toArray(new String[0]));
+        runCalculateReturnsWithFilesArgs(allLedgers);
     }
 
-    public void runCalculateReturnsWithFilesArgs(String... ledgerFiles) {
-        var args = new ArrayList<String>();
+    public void runCalculateReturnsWithLedgerPaths(String... ledgerPaths) {
+        runCalculateReturnsWithFilesArgs(Arrays.stream(ledgerPaths).toList());
+    }
+
+    private void runCalculateReturnsWithFilesArgs(List<String> ledgerPaths) {
+        var args = new ArrayList<>(ledgerPaths);
         if (cliOptions.end != null) {
             args.add("--end=" + cliOptions.end);
         }
@@ -102,7 +80,6 @@ public class ReportDsl {
         if (cliOptions.start != null) {
             args.add("--startDate=" + cliOptions.start);
         }
-        args.addAll(List.of(ledgerFiles));
         if (cliOptions.jsonOutput) {
             args.add("--json");
         }
@@ -250,27 +227,27 @@ public class ReportDsl {
     }
 
     public void verifyFeesTotal(String account, String period, String amount) {
-        verifyStat(account, period, amount, CUMULATIVE_FEES);
+        verifyStat(account, period, amount, ReportFields.CUMULATIVE_FEES);
     }
 
     public void verifyRealizedGains(String account, String period, String amount) {
-        verifyStat(account, period, amount, CUMULATIVE_REALIZED_GAINS);
+        verifyStat(account, period, amount, ReportFields.CUMULATIVE_REALIZED_GAINS);
     }
 
     public void verifyCurrencyGain(String account, String period, String amount) {
-        verifyStat(account, period, amount, CUMULATIVE_CURRENCY_GAINS);
+        verifyStat(account, period, amount, ReportFields.CUMULATIVE_CURRENCY_GAINS);
     }
 
     public void verifyUnrealizedGains(String account, String period, String amount) {
-        verifyStat(account, period, amount, CUMULATIVE_UNREALIZED_GAINS);
+        verifyStat(account, period, amount, ReportFields.CUMULATIVE_UNREALIZED_GAINS);
     }
 
     public void verifyDividends(String account, String period, String amount) {
-        verifyStat(account, period, amount, CUMULATIVE_DIVIDEND);
+        verifyStat(account, period, amount, ReportFields.CUMULATIVE_DIVIDEND);
     }
 
     public void verifyCash(String account, String period, String amount) {
-        verifyStat(account, period, amount, CUMUALTIVE_CASH);
+        verifyStat(account, period, amount, ReportFields.CUMUALTIVE_CASH);
     }
 
     public void setDeltas() {
@@ -278,15 +255,15 @@ public class ReportDsl {
     }
 
     public void verifyDeposits(String account, String period, String amount) {
-        verifyStat(account, period, amount, CUMULATIVE_DEPOSITS);
+        verifyStat(account, period, amount, ReportFields.CUMULATIVE_DEPOSITS);
     }
 
     public void verifyWithdrawals(String account, String period, String amount) {
-        verifyStat(account, period, amount, WITHDRAWALS);
+        verifyStat(account, period, amount, ReportFields.WITHDRAWALS);
     }
 
     public void verifyInterest(String account, String period, String amount) {
-        this.verifyStat(account, period, amount, CUMULATIVE_INTEREST);
+        this.verifyStat(account, period, amount, ReportFields.CUMULATIVE_INTEREST);
     }
 
     public void setGroupingEnabled() {
@@ -335,26 +312,26 @@ public class ReportDsl {
     }
 
     public ReportDsl verifyAccountGain(String account, String period, String amount) {
-        verifyStat(account, period, amount, ACCOUNT_GAIN);
+        verifyStat(account, period, amount, ReportFields.ACCOUNT_GAIN);
         return this;
     }
 
     public ReportDsl verifyProfit(String account, String period, String amount) {
-        verifyStat(account, period, amount, PROFIT);
+        verifyStat(account, period, amount, ReportFields.PROFIT);
         return this;
     }
 
     public void verifyCost(String account, String period, String amount) {
-        verifyStat(account, period, amount, NET_COST);
+        verifyStat(account, period, amount, ReportFields.NET_COST);
     }
 
     public void verifyDepositsPlusWithdrawals(String account, String period, String amount) {
-        verifyStat(account, period, amount, DEPOSITS_PLUS_WITHDRAWALS);
+        verifyStat(account, period, amount, ReportFields.DEPOSITS_PLUS_WITHDRAWALS);
     }
 
     public void verifyXirrCumulative(String account, String period, String amount) {
         verifyValueStat(account, period, amount, r -> {
-            var result = r.stats().get(CUMULATIVE_XIRR);
+            var result = r.stats().get(ReportFields.CUMULATIVE_XIRR);
             var multiplied = result.value().multiply(new BigDecimal(100));
             return new ValueStatDto(Result.success(multiplied), Optional.empty());
         });
@@ -364,13 +341,13 @@ public class ReportDsl {
         var periodStats = getAccountResults(account).periodStats();
         if (!periodStats.containsKey(period)) {
             throw new RuntimeException("Stats for period `" + period + "` for account `" + account + "` requested but not found. Periods available for this account: "
-                    + periodStats.keySet().stream().sorted().collect(Collectors.joining(", ")));
+                                       + periodStats.keySet().stream().sorted().collect(Collectors.joining(", ")));
         }
         return Optional.ofNullable(periodStats.get(period));
     }
 
     public void verifyXirrNotPresent(String account, String period) {
-        var xirr = getStat(account, period, CUMULATIVE_XIRR);
+        var xirr = getStat(account, period, ReportFields.CUMULATIVE_XIRR);
         assertThat(xirr.hasResult())
                 .as(() -> "Expected no result but got one: " + xirr.value())
                 .isFalse();
@@ -392,8 +369,8 @@ public class ReportDsl {
                 .findFirst();
         assertThat(first)
                 .as("Result expected to contain stats for account `" + account + "` but it doesn't. "
-                        + "Accounts that actually have some stats: `"
-                        + resultDto.accountDtos().stream().map(AccountDto2::account).collect(Collectors.joining("`, `")) + "`")
+                    + "Accounts that actually have some stats: `"
+                    + resultDto.accountDtos().stream().map(AccountDto2::account).collect(Collectors.joining("`, `")) + "`")
                 .isPresent();
         return first.get();
     }
@@ -411,7 +388,7 @@ public class ReportDsl {
     }
 
     public void verifyValue(String account, String period, String amount) {
-        verifyStat(account, period, amount, CUMULATIVE_VALUE);
+        verifyStat(account, period, amount, ReportFields.CUMULATIVE_VALUE);
     }
 
     public void setCliOutput() {
@@ -457,43 +434,43 @@ public class ReportDsl {
     }
 
     public void verifyCashDelta(String account, String period, String expected) {
-        verifyStatDelta(account, period, expected, PERIOD_CASH);
+        verifyStatDelta(account, period, expected, ReportFields.PERIOD_CASH);
     }
 
     public void verifyDepositsPlusWithdrawalsDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, PERIOD_DEPOSITS_PLUS_WITHDRAWALS);
+        verifyStatDelta(account, period, expectedAmount, ReportFields.PERIOD_DEPOSITS_PLUS_WITHDRAWALS);
     }
 
     public void verifyAccountGainDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, ACCOUNT_GAIN_PERIODIC);
+        verifyStatDelta(account, period, expectedAmount, ReportFields.ACCOUNT_GAIN_PERIODIC);
     }
 
     public void verifyDepositsDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, PERIOD_DEPOSITS);
+        verifyStatDelta(account, period, expectedAmount, ReportFields.PERIOD_DEPOSITS);
     }
 
     public void verifyWithdrawalsDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, PERIOD_WITHDRAWALS);
+        verifyStatDelta(account, period, expectedAmount, ReportFields.PERIOD_WITHDRAWALS);
     }
 
     public void verifyDividendsDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, PERIOD_DIVIDEND);
+        verifyStatDelta(account, period, expectedAmount, ReportFields.PERIOD_DIVIDEND);
     }
 
     public void verifyInterestDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, PERIOD_INTEREST);
+        verifyStatDelta(account, period, expectedAmount, ReportFields.PERIOD_INTEREST);
     }
 
     public void verifyRealizedGainsDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, PERIOD_REALIZED_GAINS);
+        verifyStatDelta(account, period, expectedAmount, ReportFields.PERIOD_REALIZED_GAINS);
     }
 
     public void verifyUnrealizedGainsDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, PERIOD_UNREALIZED_GAINS);
+        verifyStatDelta(account, period, expectedAmount, ReportFields.PERIOD_UNREALIZED_GAINS);
     }
 
     public void verifyValueDelta(String account, String period, String expectedAmount) {
-        verifyStatDelta(account, period, expectedAmount, PERIOD_VALUE);
+        verifyStatDelta(account, period, expectedAmount, ReportFields.PERIOD_VALUE);
     }
 
     public void verifyFeesDelta(String account, String period, String expectedAmount) {
@@ -559,7 +536,7 @@ public class ReportDsl {
     public void verifyXirrPeriodic(String account, String period, String expectedAmount) {
         verifyStat(account, period, expectedAmount, statsWithDeltasDto ->
                 new ValueStatDto(
-                        statsWithDeltasDto.stats().get(COL_PERIOD_XIRR).map(x -> x.multiply(new BigDecimal(100))),
+                        statsWithDeltasDto.stats().get(ReportFields.COL_PERIOD_XIRR).map(x -> x.multiply(new BigDecimal(100))),
                         Optional.empty()), "0.5");
     }
 
@@ -567,7 +544,7 @@ public class ReportDsl {
     }
 
     public void verifyXirrError(String account, String period, String error) {
-        var result = getStat(account, period, CUMULATIVE_XIRR);
+        var result = getStat(account, period, ReportFields.CUMULATIVE_XIRR);
         assertThat(result.error().getEnums())
                 .isEqualTo(List.of(StatErrorEnum.valueOf(error)));
     }
@@ -595,7 +572,7 @@ public class ReportDsl {
 
     public void verifyCashError(String account, String period, String error) {
         var result = getAccountPeriodReturns(account, period).get();
-        assertThat(result.stats().get(CUMUALTIVE_CASH).error().getEnums())
+        assertThat(result.stats().get(ReportFields.CUMUALTIVE_CASH).error().getEnums())
                 .isEqualTo(List.of(StatErrorEnum.valueOf(error)));
     }
 

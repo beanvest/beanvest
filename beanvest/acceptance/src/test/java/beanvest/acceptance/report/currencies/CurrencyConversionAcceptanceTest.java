@@ -1,7 +1,6 @@
 package beanvest.acceptance.report.currencies;
 
-import beanvest.acceptance.report.ReportDsl;
-import org.junit.jupiter.api.Disabled;
+import beanvest.acceptance.report.dsl.ReportDsl;
 import org.junit.jupiter.api.Test;
 
 public class CurrencyConversionAcceptanceTest {

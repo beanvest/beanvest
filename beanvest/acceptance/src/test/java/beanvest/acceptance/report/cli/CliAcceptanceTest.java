@@ -1,6 +1,6 @@
 package beanvest.acceptance.report.cli;
 
-import beanvest.acceptance.report.ReportDsl;
+import beanvest.acceptance.report.dsl.ReportDsl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,5 +1,6 @@
 package beanvest.acceptance.report;
 
+import beanvest.acceptance.report.dsl.ReportDsl;
 import org.junit.jupiter.api.Test;
 
 public class MultipleAccountsAcceptanceTest {

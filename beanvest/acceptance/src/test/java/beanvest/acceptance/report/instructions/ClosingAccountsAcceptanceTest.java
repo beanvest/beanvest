@@ -1,6 +1,6 @@
 package beanvest.acceptance.report.instructions;
 
-import beanvest.acceptance.report.ReportDsl;
+import beanvest.acceptance.report.dsl.ReportDsl;
 import beanvest.lib.testing.DocumentsCurrentBehaviour;
 import org.junit.jupiter.api.Test;
 
