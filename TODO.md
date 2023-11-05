@@ -3,11 +3,9 @@
 - **ProperParser**: scrap current regexp-based parser and use some decent parser generator (Antlr?)
 - **Server**: add `beanvest ui` running a webserver with `/options` and `/report`. Load journals once.
 - **UI**: new custom UI displaying cumulative and periodic reports
-- **CurrencyConversion**: add currency conversion to the reports (eg `--currency=GBP`)
-- **MultiCurrency**: support accounts with various currencies by default. Group them at top level and do not aggregate.
 - **LongSamples**: generate sample journals covering longer periods (eg 20 years)
 - **BeancountUI**: journal UI through export to beancount format and display with fava
 - **ClosedAccountsSubgroup** aggregate closed accounts in each group instead of hiding them
   - they are important piece of data; they have impact on cumulative stats of the group
 - **ConversionValidation**: print some nicer errors instead of throwing about prices needed for currency conversion
-- **AllNeededPrices**: print all needed prices for reports with currency conversion instead of stopping on first encountered
+- **StalePricesWarning**: warn about stale prices and do the calculations instead of showing PN 
