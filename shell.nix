@@ -1,4 +1,4 @@
-{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/1e9c7c0203be59651050ab20d624c578f0d3d3f7.tar.gz") {}
+{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/220a5ae4c374703e94a45379ff9d1f866fdb3f1a.tar.gz") {}
 }:
 
 pkgs.mkShell {
@@ -16,8 +16,8 @@ pkgs.mkShell {
   ];
   shellHook =
     ''
-      export JAVA_HOME=/nix/store/379k6bs17n5hlcc5w8wmk75vrzgpvhd3-graalvm19-ce-22.3.1
-      export GRAALVM_HOME=/nix/store/379k6bs17n5hlcc5w8wmk75vrzgpvhd3-graalvm19-ce-22.3.1
+      export JAVA_HOME=/nix/store/7zjvbmdd16j7var3bnxfq75ipz35cmfy-graalvm19-ce-22.3.1
+      export GRAALVM_HOME=/nix/store/7zjvbmdd16j7var3bnxfq75ipz35cmfy-graalvm19-ce-22.3.1
       export PATH=$(pwd)/beanvest/beanvest/build/native/nativeCompile:$PATH
 
       env > .env
