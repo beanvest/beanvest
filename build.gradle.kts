@@ -1,4 +1,5 @@
 import org.gradle.api.JavaVersion.VERSION_19
+import org.gradle.api.JavaVersion.VERSION_21
 
 plugins {
     id("java")
@@ -10,8 +11,8 @@ allprojects {
     apply(plugin = "java")
     apply(plugin = "idea")
     java {
-        sourceCompatibility = VERSION_19
-        targetCompatibility = VERSION_19
+        sourceCompatibility = VERSION_21
+        targetCompatibility = VERSION_21
         version = "1.0-SNAPSHOT"
         repositories {
             mavenCentral()
