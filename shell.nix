@@ -3,7 +3,6 @@
 
 pkgs.mkShell {
   packages = [
-    pkgs.graalvm19-ce
     pkgs.beancount
     pkgs.fava
     pkgs.pre-commit
@@ -16,8 +15,6 @@ pkgs.mkShell {
   ];
   shellHook =
     ''
-      export JAVA_HOME=/nix/store/7zjvbmdd16j7var3bnxfq75ipz35cmfy-graalvm19-ce-22.3.1
-      export GRAALVM_HOME=/nix/store/7zjvbmdd16j7var3bnxfq75ipz35cmfy-graalvm19-ce-22.3.1
       export PATH=$(pwd)/beanvest/beanvest/build/native/nativeCompile:$PATH
 
       env > .env
