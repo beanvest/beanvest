@@ -2,7 +2,7 @@ plugins {
 }
 
 group = "beanvest.ui"
-val npm = "/nix/store/2y52nmyfpsq497cppgc43x9v6lkp3q25-nodejs-20.5.1/bin/npm";
+val npm = "/nix/store/sfwmhcpz0khf2dr98cdys8wq5wx7slcq-nodejs-20.5.1/bin/npm";
 
 tasks.register("uiInstallDeps") {
     doLast {
